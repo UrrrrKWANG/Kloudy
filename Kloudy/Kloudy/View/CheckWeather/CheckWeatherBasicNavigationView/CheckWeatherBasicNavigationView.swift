@@ -51,7 +51,7 @@ class CheckWeatherBasicNavigationView: UIView {
     }
     
     private func configureBellButton() {
-        //TODO: Asset 추가 전 임시 이미지 배치
+        //TODO: Asset/Resource 파일 생성 시 수정
         bellButton.setImage(UIImage(systemName: "bell"), for: .normal)
         self.bellButton.snp.makeConstraints {
             $0.width.equalTo(18)
