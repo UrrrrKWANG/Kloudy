@@ -384,6 +384,7 @@ Dependencies/
 Packages
 xcuserdata
 *.xcodeproj
+*.xcuserstate
 
 
 ### SwiftPM ###
