@@ -61,6 +61,9 @@
 		8BFFE2EB28FD294C00D183CE /* WeatherCellFourByTwoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFFE2EA28FD294C00D183CE /* WeatherCellFourByTwoViewModel.swift */; };
 		8BFFE2EE28FD295900D183CE /* WeatherCellFourByFour.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFFE2ED28FD295900D183CE /* WeatherCellFourByFour.swift */; };
 		8BFFE2F028FD296100D183CE /* WeatherCellFourByFourViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BFFE2EF28FD296100D183CE /* WeatherCellFourByFourViewModel.swift */; };
+		8BFFE2F328FD2EBB00D183CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F228FD2EBB00D183CE /* SnapKit */; };
+		8BFFE2F628FD2FC700D183CE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F528FD2FC700D183CE /* RxSwift */; };
+		8BFFE2F928FD31CE00D183CE /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F828FD31CE00D183CE /* Lottie */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,6 +149,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BFFE2F628FD2FC700D183CE /* RxSwift in Frameworks */,
+				8BFFE2F328FD2EBB00D183CE /* SnapKit in Frameworks */,
+				8BFFE2F928FD31CE00D183CE /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -526,6 +532,11 @@
 			dependencies = (
 			);
 			name = Kloudy;
+			packageProductDependencies = (
+				8BFFE2F228FD2EBB00D183CE /* SnapKit */,
+				8BFFE2F528FD2FC700D183CE /* RxSwift */,
+				8BFFE2F828FD31CE00D183CE /* Lottie */,
+			);
 			productName = Kloudy;
 			productReference = 8BFFE23728F8534400D183CE /* Kloudy.app */;
 			productType = "com.apple.product-type.application";
@@ -598,6 +609,11 @@
 				Base,
 			);
 			mainGroup = 8BFFE22E28F8534400D183CE;
+			packageReferences = (
+				8BFFE2F128FD2EBB00D183CE /* XCRemoteSwiftPackageReference "SnapKit" */,
+				8BFFE2F428FD2FC700D183CE /* XCRemoteSwiftPackageReference "RxSwift" */,
+				8BFFE2F728FD31CD00D183CE /* XCRemoteSwiftPackageReference "lottie-ios" */,
+			);
 			productRefGroup = 8BFFE23828F8534400D183CE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -873,7 +889,6 @@
 				INFOPLIST_FILE = Kloudy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -906,7 +921,6 @@
 				INFOPLIST_FILE = Kloudy/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
-				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1040,6 +1054,51 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		8BFFE2F128FD2EBB00D183CE /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		8BFFE2F428FD2FC700D183CE /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		8BFFE2F728FD31CD00D183CE /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		8BFFE2F228FD2EBB00D183CE /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFFE2F128FD2EBB00D183CE /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		8BFFE2F528FD2FC700D183CE /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFFE2F428FD2FC700D183CE /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		8BFFE2F828FD31CE00D183CE /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 8BFFE2F728FD31CD00D183CE /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8BFFE24328F8534400D183CE /* Kloudy.xcdatamodeld */ = {
