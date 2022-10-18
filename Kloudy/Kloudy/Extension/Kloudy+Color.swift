@@ -5,7 +5,7 @@
 //  Created by 이영준 on 2022/10/16.
 //
 
-import Foundation
+import UIKit
 
 extension UIColor {
     // 사용 방법 : UIColor.KColor.primaryDarkGreen
