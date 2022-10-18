@@ -10,6 +10,7 @@ import UIKit
 class CheckWeatherPageView: UIView{
 //TODO: 페이지 개수 받아오는 부분 (임시)
     let pageControlNum = 4
+    
     private lazy var pageSlider: UIPageControl = {
         let pageControl = UIPageControl()
         pageControl.numberOfPages = pageControlNum // 페이지 개수
@@ -30,6 +31,7 @@ class CheckWeatherPageView: UIView{
         scrollView.contentSize = CGSize(width: CGFloat(pageControlNum) * UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 컨텐츠사이즈
         return scrollView
     }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -51,8 +53,10 @@ class CheckWeatherPageView: UIView{
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(83)
         }
-        for pageIndex in 0 ..< self.pageControlNum {
-        }
+        
+//TODO: 페이지 별로 UIView를 올릴 부분
+//        for pageIndex in 0 ..< self.pageControlNum {
+//        }
     }
 }
 extension CheckWeatherPageView: UIScrollViewDelegate {
