@@ -8,7 +8,12 @@ from .serializers import WeatherSerializer
 @api_view(["GET"])
 def getWeathers(request):
 
-    weather = weatherAPI.weatherAPI()
+    day = request.GET.get("day")
+    time = request.GET.get("time")
+    x_coordinate = request.GET.get("x")
+    y_coordinate = request.GET.get("y")
+    
+    weather = weatherAPI.weatherAPI(day, time, x_coordinate, y_coordinate)
     serializer = WeatherSerializer(weather)
 
     return Response(serializer.data)
