@@ -15,11 +15,10 @@ struct Weather: Codable {
 //    let byWeek: ByWeek
     
     struct Main: Codable {
-        // 만약 currentWeather 3 or 4일 때 shortTimeWheater가 0이 아닌 다른 값이 나온다면.
-        
+        // 만약 currentWeather 3 or 4일 때 shortTimeWheater가 0이 아닌 다른 값이 나온다면
         // [0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"]
         let currentWeather: Int
-        
+
         // 현재 섭씨로 제공됨 -> 향후 필요시 화씨 변환 함수를 만들겠음.
         let currentTemperature: Double
         let dayMaxTemperature: Double
