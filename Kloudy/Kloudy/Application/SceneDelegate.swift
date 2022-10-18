@@ -49,7 +49,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Called as the scene transitions from the foreground to the background.
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
-
+        
+        // 갑자기 background로 가게되면 코어데이터에 저장해줌
+        AppDelegate.sharedAppDelegate.coreDataStack.saveContext()
+        
         // Save changes in the application's managed object context when the application transitions to the background.
         (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
