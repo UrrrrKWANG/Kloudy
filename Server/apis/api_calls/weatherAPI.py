@@ -17,9 +17,12 @@ def weatherAPI(day, time, x_coordinate, y_coordinate):
 
     current_weather = getCurrentWeather(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
     current_temperature = getCurrentTemperature(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
-    
+    (day_max_temperature, day_min_temperature) = getMaxMinTemperature(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
+
     print(f"This is current_weather : {current_weather}")    
     print(f"This is current_temperature : {current_temperature}")
+    print(f"This is day_max_temperature : {day_max_temperature}")    
+    print(f"This is day_min_temperature : {day_min_temperature}")
 
     return Weather(name = "test", visibility = "test")
 
@@ -42,6 +45,7 @@ def getCurrentWeather(headers, key, day, time, x_coordinate, y_coordinate):
         # 3번은 nowStatus랑 겹칠 수 있음
         else:
             return "5" if nowRain == "3" else nowRain
+    
     return
 
 def getCurrentTemperature(headers, key, day, time, x_coordinate, y_coordinate):
@@ -53,7 +57,20 @@ def getCurrentTemperature(headers, key, day, time, x_coordinate, y_coordinate):
         if obj.get('category') == 'T1H':
             currentTemperature = obj.get('obsrValue')
 
-    return currentTemperature
+    return float(currentTemperature)
 
 def getMaxMinTemperature(headers, key, day, time, x_coordinate, y_coordinate):
-    return
+    rainURL = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=290&pageNo=1&dataType=JSON&base_date={day}&base_time={time}&nx={x_coordinate}&ny={y_coordinate}'
+    response = requests.get(rainURL, headers=headers)
+    jsonObject = json.loads(response.text)
+
+    max_temperature = 0.0
+    min_temperature = 0.0
+
+    for obj in jsonObject.get('response').get('body').get('items').get('item'):
+        if obj.get('category') == 'TMX':
+            max_temperature = obj.get('fcstValue')
+        if obj.get('category') == 'TMN':
+            min_temperature = obj.get('fcstValue')
+
+    return [float(max_temperature), float(min_temperature)]
