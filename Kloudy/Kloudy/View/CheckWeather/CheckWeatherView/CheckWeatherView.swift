@@ -11,7 +11,6 @@ import SnapKit
 class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let checkWeatherEditNavigationView = CheckWeatherEditNavigationView()
-    
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = true
         
