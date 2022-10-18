@@ -20,6 +20,7 @@ class CheckWeatherPageView: UIView{
 //        pageControl.pageIndicatorTintColor = .systemGray3 // 인디케이터 색상
         return pageControl
     }()
+    
     lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView(frame: self.frame)
         scrollView.showsHorizontalScrollIndicator = false // 가로스크롤인디케이터 숨김
@@ -35,9 +36,11 @@ class CheckWeatherPageView: UIView{
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
+    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
     override func layoutSubviews() {  //레이아웃 서브뷰 공부 더하기
         self.addSubview(pageSlider)
         self.addSubview(scrollView)
@@ -59,6 +62,7 @@ class CheckWeatherPageView: UIView{
 //        }
     }
 }
+
 extension CheckWeatherPageView: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
         let nextPage = Int(targetContentOffset.pointee.x / self.frame.width)
