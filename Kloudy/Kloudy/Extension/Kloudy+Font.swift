@@ -8,7 +8,7 @@
 import UIKit
 
 extension UIFont {
-    // 사용 방법 : UIColor.KColor.lexendExtraLarge
+    // 사용 방법 : UIColor.KFont.lexendExtraLarge
     enum KFont {
         static var lexendExtraLarge: UIFont { UIFont(name: "Lexend-Regular", size: 100)! }
         static var lexendLarge: UIFont { UIFont(name: "Lexend-Regular", size: 34)! }
