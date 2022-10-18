@@ -10,6 +10,8 @@ import SwiftUI
 import Intents
 
 struct Provider: IntentTimelineProvider {
+    typealias Entry = SimpleEntry
+    
     func placeholder(in context: Context) -> SimpleEntry {
         SimpleEntry(date: Date(), configuration: ConfigurationIntent())
     }
@@ -40,7 +42,7 @@ struct SimpleEntry: TimelineEntry {
     let configuration: ConfigurationIntent
 }
 
-struct KloudyWidgetEntryView : View {
+struct KloudyWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
@@ -49,21 +51,28 @@ struct KloudyWidgetEntryView : View {
 }
 
 @main
-struct KloudyWidget: Widget {
-    let kind: String = "KloudyWidget"
+struct KloudyWidget: WidgetBundle {
+    @WidgetBundleBuilder
+        var body: some Widget {
+//            KloudySimpleWidget()
+            KloudyTodayWidget()
+            KloudyWeeklyWidget()
+            KloudyUmbrellaWidget()
+            KloudyMaskWidget()
+        }
+}
+
+
+struct KloudySimpleWidget: Widget {
+    let kind: String = "KloudySimpleWidget"
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: Provider()) { entry in
             KloudyWidgetEntryView(entry: entry)
         }
-        .configurationDisplayName("구르미 위젯 목록")
-        .description("보고 싶은 날씨들을 골라주세요.")
+        .configurationDisplayName("구르미 간단 날씨 위젯 목록")
+        .description("원하는 크기의 위젯을 골라주세요.")
+        .supportedFamilies([.systemLarge])
     }
 }
 
-struct KloudyWidget_Previews: PreviewProvider {
-    static var previews: some View {
-        KloudyWidgetEntryView(entry: SimpleEntry(date: Date(), configuration: ConfigurationIntent()))
-            .previewContext(WidgetPreviewContext(family: .systemSmall))
-    }
-}

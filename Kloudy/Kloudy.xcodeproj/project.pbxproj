@@ -64,13 +64,18 @@
 		8BFFE2F328FD2EBB00D183CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F228FD2EBB00D183CE /* SnapKit */; };
 		8BFFE2F628FD2FC700D183CE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F528FD2FC700D183CE /* RxSwift */; };
 		8BFFE2F928FD31CE00D183CE /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F828FD31CE00D183CE /* Lottie */; };
-		D5130E6F28FD996E00BBAAFD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5130E6E28FD996E00BBAAFD /* WidgetKit.framework */; };
-		D5130E7128FD996E00BBAAFD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5130E7028FD996E00BBAAFD /* SwiftUI.framework */; };
-		D5130E7428FD996E00BBAAFD /* KloudyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5130E7328FD996E00BBAAFD /* KloudyWidget.swift */; };
-		D5130E7728FD996F00BBAAFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D5130E7628FD996F00BBAAFD /* Assets.xcassets */; };
-		D5130E7928FD996F00BBAAFD /* KloudyWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D5130E7528FD996E00BBAAFD /* KloudyWidget.intentdefinition */; };
-		D5130E7A28FD996F00BBAAFD /* KloudyWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D5130E7528FD996E00BBAAFD /* KloudyWidget.intentdefinition */; };
-		D5130E7D28FD996F00BBAAFD /* KloudyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D5130E6C28FD996E00BBAAFD /* KloudyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D513107A28FED0B500BBAAFD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D513107928FED0B500BBAAFD /* SwiftUI.framework */; };
+		D513107D28FED0B500BBAAFD /* kloudyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513107C28FED0B500BBAAFD /* kloudyWidget.swift */; };
+		D513108028FED0B500BBAAFD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = D513107F28FED0B500BBAAFD /* Assets.xcassets */; };
+		D513108228FED0B500BBAAFD /* kloudyWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D513107E28FED0B500BBAAFD /* kloudyWidget.intentdefinition */; };
+		D513108328FED0B500BBAAFD /* kloudyWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = D513107E28FED0B500BBAAFD /* kloudyWidget.intentdefinition */; };
+		D513108628FED0B500BBAAFD /* kloudyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = D513107528FED0B500BBAAFD /* kloudyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D513108B28FED0C100BBAAFD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D513107728FED0B500BBAAFD /* WidgetKit.framework */; };
+		D513108C28FED0C100BBAAFD /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = D513107728FED0B500BBAAFD /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		D513108F28FED0FA00BBAAFD /* KloudyWeeklyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513108E28FED0FA00BBAAFD /* KloudyWeeklyWidget.swift */; };
+		D513109128FED12000BBAAFD /* KloudyTodayWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513109028FED12000BBAAFD /* KloudyTodayWidget.swift */; };
+		D513109428FEDD6200BBAAFD /* KloudyUmbrellaWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513109328FEDD6200BBAAFD /* KloudyUmbrellaWidget.swift */; };
+		D513109628FEDDD800BBAAFD /* KloudyMaskWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D513109528FEDDD800BBAAFD /* KloudyMaskWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -88,25 +93,36 @@
 			remoteGlobalIDString = 8BFFE23628F8534400D183CE;
 			remoteInfo = Kloudy;
 		};
-		D5130E7B28FD996F00BBAAFD /* PBXContainerItemProxy */ = {
+		D513108428FED0B500BBAAFD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 8BFFE22F28F8534400D183CE /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = D5130E6B28FD996E00BBAAFD;
-			remoteInfo = KloudyWidgetExtension;
+			remoteGlobalIDString = D513107428FED0B500BBAAFD;
+			remoteInfo = kloudyWidgetExtension;
 		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		D5130E7E28FD996F00BBAAFD /* Embed Foundation Extensions */ = {
+		D513108728FED0B500BBAAFD /* Embed Foundation Extensions */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				D5130E7D28FD996F00BBAAFD /* KloudyWidgetExtension.appex in Embed Foundation Extensions */,
+				D513108628FED0B500BBAAFD /* kloudyWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D513108D28FED0C100BBAAFD /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				D513108C28FED0C100BBAAFD /* WidgetKit.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -170,13 +186,17 @@
 		8BFFE2EA28FD294C00D183CE /* WeatherCellFourByTwoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellFourByTwoViewModel.swift; sourceTree = "<group>"; };
 		8BFFE2ED28FD295900D183CE /* WeatherCellFourByFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellFourByFour.swift; sourceTree = "<group>"; };
 		8BFFE2EF28FD296100D183CE /* WeatherCellFourByFourViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellFourByFourViewModel.swift; sourceTree = "<group>"; };
-		D5130E6C28FD996E00BBAAFD /* KloudyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KloudyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		D5130E6E28FD996E00BBAAFD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
-		D5130E7028FD996E00BBAAFD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
-		D5130E7328FD996E00BBAAFD /* KloudyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyWidget.swift; sourceTree = "<group>"; };
-		D5130E7528FD996E00BBAAFD /* KloudyWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = KloudyWidget.intentdefinition; sourceTree = "<group>"; };
-		D5130E7628FD996F00BBAAFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		D5130E7828FD996F00BBAAFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D513107528FED0B500BBAAFD /* kloudyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = kloudyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		D513107728FED0B500BBAAFD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		D513107928FED0B500BBAAFD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		D513107C28FED0B500BBAAFD /* kloudyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = kloudyWidget.swift; sourceTree = "<group>"; };
+		D513107E28FED0B500BBAAFD /* kloudyWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = kloudyWidget.intentdefinition; sourceTree = "<group>"; };
+		D513107F28FED0B500BBAAFD /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		D513108128FED0B500BBAAFD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		D513108E28FED0FA00BBAAFD /* KloudyWeeklyWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyWeeklyWidget.swift; sourceTree = "<group>"; };
+		D513109028FED12000BBAAFD /* KloudyTodayWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyTodayWidget.swift; sourceTree = "<group>"; };
+		D513109328FEDD6200BBAAFD /* KloudyUmbrellaWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaWidget.swift; sourceTree = "<group>"; };
+		D513109528FEDDD800BBAAFD /* KloudyMaskWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyMaskWidget.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,12 +224,12 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D5130E6928FD996E00BBAAFD /* Frameworks */ = {
+		D513107228FED0B500BBAAFD /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5130E7128FD996E00BBAAFD /* SwiftUI.framework in Frameworks */,
-				D5130E6F28FD996E00BBAAFD /* WidgetKit.framework in Frameworks */,
+				D513107A28FED0B500BBAAFD /* SwiftUI.framework in Frameworks */,
+				D513108B28FED0C100BBAAFD /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -222,8 +242,8 @@
 				8BFFE23928F8534400D183CE /* Kloudy */,
 				8BFFE25328F8534500D183CE /* KloudyTests */,
 				8BFFE25D28F8534500D183CE /* KloudyUITests */,
-				D5130E7228FD996E00BBAAFD /* KloudyWidget */,
-				D5130E6D28FD996E00BBAAFD /* Frameworks */,
+				D513107B28FED0B500BBAAFD /* kloudyWidget */,
+				D513107628FED0B500BBAAFD /* Frameworks */,
 				8BFFE23828F8534400D183CE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -234,7 +254,7 @@
 				8BFFE23728F8534400D183CE /* Kloudy.app */,
 				8BFFE25028F8534500D183CE /* KloudyTests.xctest */,
 				8BFFE25A28F8534500D183CE /* KloudyUITests.xctest */,
-				D5130E6C28FD996E00BBAAFD /* KloudyWidgetExtension.appex */,
+				D513107528FED0B500BBAAFD /* kloudyWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -563,24 +583,36 @@
 			path = WeatherCellFourByFour;
 			sourceTree = "<group>";
 		};
-		D5130E6D28FD996E00BBAAFD /* Frameworks */ = {
+		D513107628FED0B500BBAAFD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				D5130E6E28FD996E00BBAAFD /* WidgetKit.framework */,
-				D5130E7028FD996E00BBAAFD /* SwiftUI.framework */,
+				D513107728FED0B500BBAAFD /* WidgetKit.framework */,
+				D513107928FED0B500BBAAFD /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		D5130E7228FD996E00BBAAFD /* KloudyWidget */ = {
+		D513107B28FED0B500BBAAFD /* kloudyWidget */ = {
 			isa = PBXGroup;
 			children = (
-				D5130E7328FD996E00BBAAFD /* KloudyWidget.swift */,
-				D5130E7528FD996E00BBAAFD /* KloudyWidget.intentdefinition */,
-				D5130E7628FD996F00BBAAFD /* Assets.xcassets */,
-				D5130E7828FD996F00BBAAFD /* Info.plist */,
+				D513109228FEDD4700BBAAFD /* KloudyIndexWidget */,
+				D513107C28FED0B500BBAAFD /* kloudyWidget.swift */,
+				D513107E28FED0B500BBAAFD /* kloudyWidget.intentdefinition */,
+				D513107F28FED0B500BBAAFD /* Assets.xcassets */,
+				D513108128FED0B500BBAAFD /* Info.plist */,
+				D513108E28FED0FA00BBAAFD /* KloudyWeeklyWidget.swift */,
+				D513109028FED12000BBAAFD /* KloudyTodayWidget.swift */,
 			);
-			path = KloudyWidget;
+			path = kloudyWidget;
+			sourceTree = "<group>";
+		};
+		D513109228FEDD4700BBAAFD /* KloudyIndexWidget */ = {
+			isa = PBXGroup;
+			children = (
+				D513109328FEDD6200BBAAFD /* KloudyUmbrellaWidget.swift */,
+				D513109528FEDDD800BBAAFD /* KloudyMaskWidget.swift */,
+			);
+			path = KloudyIndexWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -593,12 +625,12 @@
 				8BFFE23328F8534400D183CE /* Sources */,
 				8BFFE23428F8534400D183CE /* Frameworks */,
 				8BFFE23528F8534400D183CE /* Resources */,
-				D5130E7E28FD996F00BBAAFD /* Embed Foundation Extensions */,
+				D513108728FED0B500BBAAFD /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				D5130E7C28FD996F00BBAAFD /* PBXTargetDependency */,
+				D513108528FED0B500BBAAFD /* PBXTargetDependency */,
 			);
 			name = Kloudy;
 			packageProductDependencies = (
@@ -646,21 +678,22 @@
 			productReference = 8BFFE25A28F8534500D183CE /* KloudyUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
-		D5130E6B28FD996E00BBAAFD /* KloudyWidgetExtension */ = {
+		D513107428FED0B500BBAAFD /* kloudyWidgetExtension */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = D5130E8128FD996F00BBAAFD /* Build configuration list for PBXNativeTarget "KloudyWidgetExtension" */;
+			buildConfigurationList = D513108A28FED0B500BBAAFD /* Build configuration list for PBXNativeTarget "kloudyWidgetExtension" */;
 			buildPhases = (
-				D5130E6828FD996E00BBAAFD /* Sources */,
-				D5130E6928FD996E00BBAAFD /* Frameworks */,
-				D5130E6A28FD996E00BBAAFD /* Resources */,
+				D513107128FED0B500BBAAFD /* Sources */,
+				D513107228FED0B500BBAAFD /* Frameworks */,
+				D513107328FED0B500BBAAFD /* Resources */,
+				D513108D28FED0C100BBAAFD /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
 			);
-			name = KloudyWidgetExtension;
-			productName = KloudyWidgetExtension;
-			productReference = D5130E6C28FD996E00BBAAFD /* KloudyWidgetExtension.appex */;
+			name = kloudyWidgetExtension;
+			productName = kloudyWidgetExtension;
+			productReference = D513107528FED0B500BBAAFD /* kloudyWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
 /* End PBXNativeTarget section */
@@ -684,7 +717,7 @@
 						CreatedOnToolsVersion = 14.0;
 						TestTargetID = 8BFFE23628F8534400D183CE;
 					};
-					D5130E6B28FD996E00BBAAFD = {
+					D513107428FED0B500BBAAFD = {
 						CreatedOnToolsVersion = 14.0.1;
 					};
 				};
@@ -710,7 +743,7 @@
 				8BFFE23628F8534400D183CE /* Kloudy */,
 				8BFFE24F28F8534500D183CE /* KloudyTests */,
 				8BFFE25928F8534500D183CE /* KloudyUITests */,
-				D5130E6B28FD996E00BBAAFD /* KloudyWidgetExtension */,
+				D513107428FED0B500BBAAFD /* kloudyWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -740,11 +773,11 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D5130E6A28FD996E00BBAAFD /* Resources */ = {
+		D513107328FED0B500BBAAFD /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5130E7728FD996F00BBAAFD /* Assets.xcassets in Resources */,
+				D513108028FED0B500BBAAFD /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -773,8 +806,8 @@
 				8BFFE2D328FD18C600D183CE /* Notification.swift in Sources */,
 				8BFFE2A728FC7D0700D183CE /* CheckWeatherCollectionViewModel.swift in Sources */,
 				8BFFE2D628FD21FE00D183CE /* LocationSelectionView.swift in Sources */,
-				D5130E7A28FD996F00BBAAFD /* KloudyWidget.intentdefinition in Sources */,
 				8BFFE29828FC7C2500D183CE /* CheckLocationWeatherView.swift in Sources */,
+				D513108328FED0B500BBAAFD /* kloudyWidget.intentdefinition in Sources */,
 				8BFFE2A128FC7CBC00D183CE /* CheckCityViewModel.swift in Sources */,
 				8BFFE2C628FC7E5900D183CE /* SelectWeatherCellViewModel.swift in Sources */,
 				8BFFE23F28F8534400D183CE /* ViewController.swift in Sources */,
@@ -824,12 +857,16 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		D5130E6828FD996E00BBAAFD /* Sources */ = {
+		D513107128FED0B500BBAAFD /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				D5130E7928FD996F00BBAAFD /* KloudyWidget.intentdefinition in Sources */,
-				D5130E7428FD996E00BBAAFD /* KloudyWidget.swift in Sources */,
+				D513108F28FED0FA00BBAAFD /* KloudyWeeklyWidget.swift in Sources */,
+				D513108228FED0B500BBAAFD /* kloudyWidget.intentdefinition in Sources */,
+				D513107D28FED0B500BBAAFD /* kloudyWidget.swift in Sources */,
+				D513109628FEDDD800BBAAFD /* KloudyMaskWidget.swift in Sources */,
+				D513109128FED12000BBAAFD /* KloudyTodayWidget.swift in Sources */,
+				D513109428FEDD6200BBAAFD /* KloudyUmbrellaWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -846,10 +883,10 @@
 			target = 8BFFE23628F8534400D183CE /* Kloudy */;
 			targetProxy = 8BFFE25B28F8534500D183CE /* PBXContainerItemProxy */;
 		};
-		D5130E7C28FD996F00BBAAFD /* PBXTargetDependency */ = {
+		D513108528FED0B500BBAAFD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = D5130E6B28FD996E00BBAAFD /* KloudyWidgetExtension */;
-			targetProxy = D5130E7B28FD996F00BBAAFD /* PBXContainerItemProxy */;
+			target = D513107428FED0B500BBAAFD /* kloudyWidgetExtension */;
+			targetProxy = D513108428FED0B500BBAAFD /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -1129,7 +1166,7 @@
 			};
 			name = Release;
 		};
-		D5130E7F28FD996F00BBAAFD /* Debug */ = {
+		D513108828FED0B500BBAAFD /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1141,8 +1178,8 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KloudyWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = KloudyWidget;
+				INFOPLIST_FILE = kloudyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = kloudyWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1151,10 +1188,10 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kloudy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kloudy.kloudyWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = provisioningKloudy;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = WidgetKloudyProvisioning;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1162,7 +1199,7 @@
 			};
 			name = Debug;
 		};
-		D5130E8028FD996F00BBAAFD /* Release */ = {
+		D513108928FED0B500BBAAFD /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
@@ -1174,8 +1211,8 @@
 				DEVELOPMENT_TEAM = "";
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = KloudyWidget/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = KloudyWidget;
+				INFOPLIST_FILE = kloudyWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = kloudyWidget;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1184,10 +1221,10 @@
 					"@executable_path/../../Frameworks",
 				);
 				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = com.Kloudy;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Kloudy.kloudyWidget;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = provisioningKloudy;
+				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = WidgetKloudyProvisioning;
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
@@ -1234,11 +1271,11 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		D5130E8128FD996F00BBAAFD /* Build configuration list for PBXNativeTarget "KloudyWidgetExtension" */ = {
+		D513108A28FED0B500BBAAFD /* Build configuration list for PBXNativeTarget "kloudyWidgetExtension" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
-				D5130E7F28FD996F00BBAAFD /* Debug */,
-				D5130E8028FD996F00BBAAFD /* Release */,
+				D513108828FED0B500BBAAFD /* Debug */,
+				D513108928FED0B500BBAAFD /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
