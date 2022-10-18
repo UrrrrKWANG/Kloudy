@@ -28,8 +28,7 @@ class CheckWeatherView: UIViewController {
         CheckWeatherPageView.snp.makeConstraints {
             $0.height.equalTo(UIScreen.main.bounds.height)
             $0.width.equalTo(UIScreen.main.bounds.width)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.centerX.centerY.equalToSuperview()
         }
     }
     
