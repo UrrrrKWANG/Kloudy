@@ -67,6 +67,10 @@
 		8BFFE2F328FD2EBB00D183CE /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F228FD2EBB00D183CE /* SnapKit */; };
 		8BFFE2F628FD2FC700D183CE /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F528FD2FC700D183CE /* RxSwift */; };
 		8BFFE2F928FD31CE00D183CE /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = 8BFFE2F828FD31CE00D183CE /* Lottie */; };
+		8BFFE2FD28FE894B00D183CE /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BFFE2FC28FE894B00D183CE /* Lexend-Regular.ttf */; };
+		8BFFE2FE28FE894B00D183CE /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BFFE2FC28FE894B00D183CE /* Lexend-Regular.ttf */; };
+		8BFFE2FF28FE894B00D183CE /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BFFE2FC28FE894B00D183CE /* Lexend-Regular.ttf */; };
+		8BFFE30028FE894B00D183CE /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BFFE2FC28FE894B00D183CE /* Lexend-Regular.ttf */; };
 		D5130E6F28FD996E00BBAAFD /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5130E6E28FD996E00BBAAFD /* WidgetKit.framework */; };
 		D5130E7128FD996E00BBAAFD /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D5130E7028FD996E00BBAAFD /* SwiftUI.framework */; };
 		D5130E7428FD996E00BBAAFD /* KloudyWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D5130E7328FD996E00BBAAFD /* KloudyWidget.swift */; };
@@ -176,6 +180,7 @@
 		8BFFE2EA28FD294C00D183CE /* WeatherCellFourByTwoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellFourByTwoViewModel.swift; sourceTree = "<group>"; };
 		8BFFE2ED28FD295900D183CE /* WeatherCellFourByFour.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellFourByFour.swift; sourceTree = "<group>"; };
 		8BFFE2EF28FD296100D183CE /* WeatherCellFourByFourViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherCellFourByFourViewModel.swift; sourceTree = "<group>"; };
+		8BFFE2FC28FE894B00D183CE /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		D5130E6C28FD996E00BBAAFD /* KloudyWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = KloudyWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		D5130E6E28FD996E00BBAAFD /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
 		D5130E7028FD996E00BBAAFD /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
@@ -340,6 +345,7 @@
 		8BFFE27B28FC177A00D183CE /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				8BFFE2FC28FE894B00D183CE /* Lexend-Regular.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -730,6 +736,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BFFE24A28F8534400D183CE /* LaunchScreen.storyboard in Resources */,
+				8BFFE2FD28FE894B00D183CE /* Lexend-Regular.ttf in Resources */,
 				8BFFE24728F8534400D183CE /* Assets.xcassets in Resources */,
 				8BFFE24228F8534400D183CE /* Main.storyboard in Resources */,
 			);
@@ -739,6 +746,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BFFE2FE28FE894B00D183CE /* Lexend-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -746,6 +754,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8BFFE2FF28FE894B00D183CE /* Lexend-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -754,6 +763,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				D5130E7728FD996F00BBAAFD /* Assets.xcassets in Resources */,
+				8BFFE30028FE894B00D183CE /* Lexend-Regular.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
