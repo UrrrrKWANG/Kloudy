@@ -14,6 +14,8 @@ def getWeathers(request):
     y_coordinate = request.GET.get("y")
     
     weather = weatherAPI.weatherAPI(day, time, x_coordinate, y_coordinate)
+    print(weather.main)
+
     serializer = WeatherSerializer(weather)
 
     return Response(serializer.data)
