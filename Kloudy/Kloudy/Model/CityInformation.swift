@@ -9,6 +9,6 @@ import Foundation
 
 struct CityInformation {
     let name: String
-    let x: Int
-    let y: Int
+    let x: Double
+    let y: Double
 }
