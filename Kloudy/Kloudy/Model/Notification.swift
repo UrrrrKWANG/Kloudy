@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+struct Notification {
+    let id: String
+    let title: String
+    let content: String
+    let time: Date
+}
