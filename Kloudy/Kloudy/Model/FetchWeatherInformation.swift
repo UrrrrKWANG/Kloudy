@@ -10,16 +10,16 @@ import Foundation
 class FetchWeatherInformation {
     func startLoad(city: String) {
         // 도시 이름을 받아서 x, y값 받음
-        let xy = findCityCoordinate(city: city)
-        let x = xy[0], y = xy[1]
+        let xyCoordinate = findCityCoordinate(city: city)
+        let xCoordinate = xyCoordinate[0], yCoordinate = xyCoordinate[1]
         let dayTime = getNowTimeForQuery()
         let day = dayTime[0], time = dayTime[1]
         
         // x, y값을 쿼리로 넣은 url을 만듦 (urlComponents)
         var urlComponents = URLComponents(string: "http://127.0.0.1:8000/api/weather")
         
-        let xQuery = URLQueryItem(name: "x", value: x)
-        let yQuery = URLQueryItem(name: "y", value: y)
+        let xQuery = URLQueryItem(name: "x", value: xCoordinate)
+        let yQuery = URLQueryItem(name: "y", value: yCoordinate)
         let dayQuery = URLQueryItem(name: "day", value: day)
         let timeQuery = URLQueryItem(name: "time", value: time)
         
@@ -74,13 +74,29 @@ class FetchWeatherInformation {
     func getNowTimeForQuery() -> [String] {
         let nowDate = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd HHmm"
+        dateFormatter.dateFormat = "yyyyMMdd HH mm"
         let tempString = dateFormatter.string(from: nowDate).split(separator: " ")
         
         let day = String(tempString[0])
-        // 시간은 무조건 30분 단위임 -> 현재 시간을 30으로 나눈 몫 * 30
-        let time = String((Int(tempString[1])! / 30) * 30)
+        let time = calculateTime(timeStrings: tempString.map{ String($0) })
         
         return [day, time]
+    }
+    
+    func calculateTime(timeStrings: [String]) -> String {
+        let hour = timeStrings[1]
+        let minute = timeStrings[2]
+        
+        var result = hour
+        
+        guard let minute = Int(minute) else { return "" }
+        
+        if Int(minute) < 30 {
+            result += "00"
+        } else {
+            result += "30"
+        }
+        
+        return result
     }
 }
