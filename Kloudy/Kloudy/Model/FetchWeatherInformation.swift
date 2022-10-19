@@ -74,13 +74,28 @@ class FetchWeatherInformation {
     func getNowTimeForQuery() -> [String] {
         let nowDate = Date()
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyyMMdd HHmm"
+        dateFormatter.dateFormat = "yyyyMMdd HH mm"
         let tempString = dateFormatter.string(from: nowDate).split(separator: " ")
         
         let day = String(tempString[0])
         // 시간은 무조건 30분 단위임 -> Int(x/30) * 30 == 30 단위
-        let time = String((Int(tempString[1])! / 30) * 30)
+        let time = calculateTime(timeStrings: tempString)
         
         return [day, time]
+    }
+    
+    func calculateTime(timeStrings: [String]) -> String {
+        guard let hour = tempString[1] else { return "" }
+        guard let minute = tempString[2] else { return "" }
+        
+        var result = hour
+        
+        if Int(minute) < 30 {
+            result += "00"
+        } else {
+            result += "30"
+        }
+        
+        return result
     }
 }
