@@ -18,8 +18,8 @@ class FetchWeatherInformation {
         // x, y값을 쿼리로 넣은 url을 만듦 (urlComponents)
         var urlComponents = URLComponents(string: "http://127.0.0.1:8000/api/weather")
         
-        let xQuery = URLQueryItem(name: "x", value: x)
-        let yQuery = URLQueryItem(name: "y", value: y)
+        let xQuery = URLQueryItem(name: "x", value: xCoordinate)
+        let yQuery = URLQueryItem(name: "y", value: yCoordinate)
         let dayQuery = URLQueryItem(name: "day", value: day)
         let timeQuery = URLQueryItem(name: "time", value: time)
         
