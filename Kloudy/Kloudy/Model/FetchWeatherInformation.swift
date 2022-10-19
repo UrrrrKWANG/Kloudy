@@ -28,7 +28,7 @@ class FetchWeatherInformation {
         urlComponents?.queryItems?.append(dayQuery)
         urlComponents?.queryItems?.append(timeQuery)
         
-        // URLSessionConfiguration을 만듬
+        // URLSessionConfiguration을 만듦
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
         
@@ -78,7 +78,7 @@ class FetchWeatherInformation {
         let tempString = dateFormatter.string(from: nowDate).split(separator: " ")
         
         let day = String(tempString[0])
-        // 시간은 무조건 30분 단위임 -> Int(x/30) * 30 == 30 단위
+        // 시간은 무조건 30분 단위임 -> 현재 시간을 30으로 나눈 몫 * 30
         let time = String((Int(tempString[1])! / 30) * 30)
         
         return [day, time]
