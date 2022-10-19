@@ -10,8 +10,8 @@ import Foundation
 class FetchWeatherInformation {
     func startLoad(city: String) {
         // 도시 이름을 받아서 x, y값 받음
-        let xy = findCityCoordinate(city: city)
-        let x = xy[0], y = xy[1]
+        let xyCoordinate = findCityCoordinate(city: city)
+        let xCoordinate = xyCoordinate[0], yCoordinate = xyCoordinate[1]
         let dayTime = getNowTimeForQuery()
         let day = dayTime[0], time = dayTime[1]
         
