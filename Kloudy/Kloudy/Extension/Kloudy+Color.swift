@@ -22,5 +22,8 @@ extension UIColor {
         static var gray05: UIColor { UIColor(named: "Gray05")! }
         static var gray06: UIColor { UIColor(named: "Gray06")! }
         static var gray07: UIColor { UIColor(named: "Gray07")! }
+        static var white: UIColor { UIColor(named: "white")! }
+        static var red: UIColor { UIColor(named: "red")! }
+        static var opacityOverlayBlack: UIColor { UIColor(named: "OpacityOverlayBlack")! }
     }
 }

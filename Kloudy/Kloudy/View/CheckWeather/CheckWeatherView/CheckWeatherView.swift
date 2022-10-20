@@ -13,6 +13,14 @@ class CheckWeatherView: UIViewController {
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = true
 
+        lazy var CheckWeatherPageView = CheckWeatherPageView()
+        view.addSubview(CheckWeatherPageView)
+        CheckWeatherPageView.snp.makeConstraints {
+            $0.height.equalTo(UIScreen.main.bounds.height)
+            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.centerX.centerY.equalToSuperview()
+        }
+        
         self.view.addSubview(checkWeatherBasicNavigationView)
         self.view.addSubview(checkWeatherEditNavigationView)
 
@@ -22,13 +30,13 @@ class CheckWeatherView: UIViewController {
         // 코드 구현을 위해 BasicNavigationView 의 경우 isHidden 처리
         self.checkWeatherBasicNavigationView.isHidden = true
 
-        lazy var CheckWeatherPageView = CheckWeatherPageView()
-        view.addSubview(CheckWeatherPageView)
-        CheckWeatherPageView.snp.makeConstraints {
-            $0.height.equalTo(UIScreen.main.bounds.height)
-            $0.width.equalTo(UIScreen.main.bounds.width)
-            $0.centerX.centerY.equalToSuperview()
-        }
+//        lazy var CheckWeatherPageView = CheckWeatherPageView()
+//        view.addSubview(CheckWeatherPageView)
+//        CheckWeatherPageView.snp.makeConstraints {
+//            $0.height.equalTo(UIScreen.main.bounds.height)
+//            $0.width.equalTo(UIScreen.main.bounds.width)
+//            $0.centerX.centerY.equalToSuperview()
+//        }
     }
     
     private func configureCheckWeatherBasicNavigationView() {
@@ -49,8 +57,11 @@ class CheckWeatherView: UIViewController {
     }
 
     @objc func presentSelectWeatherCellView() {
-        let selectWeatherCellView = SelectWeatherCellView()
-        selectWeatherCellView.modalPresentationStyle = .formSheet
-        self.present(selectWeatherCellView, animated: true)
+//        let selectWeatherCellView = SelectWeatherCellView()
+//        selectWeatherCellView.modalPresentationStyle = .formSheet
+//        self.present(selectWeatherCellView, animated: true)
+        let addLivingIndexView = AddLivingIndexCellView()
+        addLivingIndexView.modalPresentationStyle = .formSheet
+        self.present(addLivingIndexView, animated: true)
     }
 }
