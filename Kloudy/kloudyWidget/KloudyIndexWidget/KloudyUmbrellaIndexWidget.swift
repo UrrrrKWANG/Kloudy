@@ -26,6 +26,7 @@ struct KloudyUmbrellaIndexWidgetEntryView: View {
     var entry: Provider.Entry
 
     var body: some View {
+        Text("\(String(entry.configuration.WidgetLocaion ?? ""))시의 ")
         Text("비 지수")
     }
 }

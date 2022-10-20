@@ -79,6 +79,8 @@
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B8A087C455B88A26567A3D15 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */; };
 		C7DC68C53BFD05B1BFC3C7C4 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1536192E4E0E4A52299146F0 /* Pods_Kloudy_KloudyUITests.framework */; };
+		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
+		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -212,6 +214,8 @@
 		8BC8F81929011E3400EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
+		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE99C4EAECA5D797AC2E3FAD /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -266,7 +270,6 @@
 				E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */,
 				3E4BEFF02AC7C7E605C69030 /* Pods-kloudyWidgetExtension.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -632,12 +635,22 @@
 		8BC8F81529011E3300EF83AE /* kloudyWidget */ = {
 			isa = PBXGroup;
 			children = (
+				D537D2052901BC6800271037 /* KloudyIndexWidget */,
 				8BC8F81629011E3300EF83AE /* kloudyWidget.swift */,
 				8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */,
 				8BC8F81929011E3400EF83AE /* Assets.xcassets */,
 				8BC8F81B29011E3400EF83AE /* Info.plist */,
 			);
 			path = kloudyWidget;
+			sourceTree = "<group>";
+		};
+		D537D2052901BC6800271037 /* KloudyIndexWidget */ = {
+			isa = PBXGroup;
+			children = (
+				D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */,
+				D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */,
+			);
+			path = KloudyIndexWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -1015,6 +1028,8 @@
 			files = (
 				8BC8F81C29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,
+				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
+				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
