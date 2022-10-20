@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SnapKit
 
 class CheckWeatherPageView: UIView{
 //TODO: 페이지 개수 받아오는 부분 (임시)

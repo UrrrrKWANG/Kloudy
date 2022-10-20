@@ -6,23 +6,22 @@
 //
 
 import UIKit
-import SnapKit
 
 class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let checkWeatherEditNavigationView = CheckWeatherEditNavigationView()
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = true
-        
+
         self.view.addSubview(checkWeatherBasicNavigationView)
         self.view.addSubview(checkWeatherEditNavigationView)
-    
+
         self.configureCheckWeatherBasicNavigationView()
         self.configureCheckWeatherEditNavigationView()
-        
+
         // 코드 구현을 위해 BasicNavigationView 의 경우 isHidden 처리
         self.checkWeatherBasicNavigationView.isHidden = true
-        
+
         lazy var CheckWeatherPageView = CheckWeatherPageView()
         view.addSubview(CheckWeatherPageView)
         CheckWeatherPageView.snp.makeConstraints {
@@ -38,7 +37,7 @@ class CheckWeatherView: UIViewController {
             $0.trailing.equalToSuperview().inset(21)
         }
     }
-    
+
     private func configureCheckWeatherEditNavigationView() {
         checkWeatherEditNavigationView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(47)
@@ -48,7 +47,7 @@ class CheckWeatherView: UIViewController {
         }
         checkWeatherEditNavigationView.addCellButton.addTarget(self, action: #selector(presentSelectWeatherCellView), for: .touchUpInside)
     }
-    
+
     @objc func presentSelectWeatherCellView() {
         let selectWeatherCellView = SelectWeatherCellView()
         selectWeatherCellView.modalPresentationStyle = .formSheet
