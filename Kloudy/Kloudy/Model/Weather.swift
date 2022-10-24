@@ -9,10 +9,8 @@ import Foundation
 
 struct Weather: Codable {
     
-    let main: Main
-//    let weatherIndex: WeatherIndex
-//    let byTime: ByTime
-//    let byWeek: ByWeek
+    let main: [Main]
+    let weatherIndex: [WeatherIndex]
     
     struct Main: Codable {
         // [0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"]
@@ -31,18 +29,28 @@ struct Weather: Codable {
         }
     }
     
-//    struct WeatherIndex {
-//        let umbrellaIndex: String
-//        let maskIndex: String
-//    }
-//
-//    struct ByTime {
-//        let currentWeather: [Int]
-//        let houlyPrecipitation: [Int]
-//        let HourlyTemperature: [Int]
-//    }
-//
-//    struct ByWeek {
-//
-//    }
+    struct WeatherIndex: Codable {
+        let umbrellaIndex: Double
+        let maskIndex: [MaskIndex]
+        
+        enum CodingKeys: String, CodingKey {
+            case umbrellaIndex = "umbrella_index"
+            case maskIndex = "mask_index"
+        }
+    }
+    
+    struct MaskIndex: Codable {
+        // (0~15 : 좋음 | 16~35 : 보통 | 36~75 : 나쁨 | 76 : 매우나쁨) 으로 사용하면 됩니다.
+        let airQuality: Int
+        
+        // 0이면 없음 1이면 있음
+        let flowerQuality: Int
+        let DustQuality: Int
+        
+        enum CodingKeys: String, CodingKey {
+            case airQuality = "air_quality"
+            case flowerQuality = "flower_quality"
+            case DustQuality = "dust_quality"
+        }
+    }
 }
