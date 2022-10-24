@@ -7,8 +7,13 @@
 
 import Foundation
 
-struct CityInformation {
-    let name: String
-    let x: Double
-    let y: Double
+struct CityInformation: Codable {
+    let code: String
+    let province: String
+    let city: String
+    let airCoditionMeasuring: String
+    let xCoordination: Int
+    let yCoordination: Int
+    let longitude: Double
+    let latitude: Double
 }
