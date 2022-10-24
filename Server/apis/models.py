@@ -3,12 +3,6 @@ from django.db import models
 
 class Weather(models.Model):
     today = models.CharField(max_length=10)
-    # main = models.ForeignKey(Main, related_name='main', on_delete=models.CASCADE)
-
-    # 나중에 사용 예정
-    # weather_index = models.ForeignKey(WeatherIndex, on_delete=models.CASCADE)
-    # by_time = models.ForeignKey(ByTime, on_delete=models.CASCADE)
-    # by_week = models.ForeignKey(ByWeek, on_delete=models.CASCADE)
 
 class Main(models.Model):
     weather = models.ForeignKey(Weather, related_name="main", on_delete=models.CASCADE)
@@ -17,11 +11,15 @@ class Main(models.Model):
     day_max_temperature = models.FloatField()
     day_min_temperature = models.FloatField()
     
+class WeatherIndex(models.Model):
+    weather = models.ForeignKey(Weather, related_name="weather_index", on_delete=models.CASCADE)
+    umbrella_index = models.FloatField()
 
-# 나중에 사용 예정
-# class WeatherIndex(models.Model):
-#     umbrella_index = models.IntegerField()
-#     mask_index = models.IntegerField()
+class MaskIndex(models.Model):
+    weather_index = models.ForeignKey(WeatherIndex, related_name="mask_index", on_delete=models.CASCADE)
+    air_quality = models.IntegerField()
+    flower_quality = models.IntegerField()
+    dust_quality = models.IntegerField()
 
 # class ByTime(models.Model):
 #     hourly_weather = models.ForeignKey(HourlyWeatherInfo, on_delete=models.CASCADE)

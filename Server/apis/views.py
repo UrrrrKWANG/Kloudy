@@ -12,9 +12,10 @@ def getWeathers(request):
     time = request.GET.get("time")
     x_coordinate = request.GET.get("x")
     y_coordinate = request.GET.get("y")
-    
-    weather = weatherAPI.weatherAPI(day, time, x_coordinate, y_coordinate)
-    print(weather.main)
+    air_condition_measuring = request.GET.get("air")
+    code = request.GET.get("code")
+
+    weather = weatherAPI.weatherAPI(day, time, x_coordinate, y_coordinate, air_condition_measuring, code)
 
     serializer = WeatherSerializer(weather)
 
