@@ -85,8 +85,8 @@ class CheckLocationWeatherView: UIView {
         minStackView.clipsToBounds = true
         minStackView.layer.cornerRadius = 20
         
-        [nameStackView, maxStackView, minStackView].forEach {hStackView(to: $0)}
-        vStackView(to: minmaxStackView)
+        [nameStackView, maxStackView, minStackView].forEach {configureTemperatureLocationStackView(to: $0)}
+        configureminmaxStackView(to: minmaxStackView)
         
         [locationImage, locationLabel].forEach {
             nameStackView.addArrangedSubview($0)
@@ -110,21 +110,23 @@ class CheckLocationWeatherView: UIView {
     }
     
     private func setStackView(to stackView: UIStackView) {
+        stackView.clipsToBounds = true
+        stackView.layer.cornerRadius = 20
         stackView.isLayoutMarginsRelativeArrangement = true
         stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 10)
     }
     
-    private func hStackView(to stackView: UIStackView) {
+    private func configureTemperatureLocationStackView(to stackView: UIStackView) {
         stackView.axis = .horizontal
         stackView.alignment = .center
         stackView.distribution = .fillProportionally
         stackView.spacing = 0
     }
-    private func vStackView(to stackView: UIStackView) {
+    private func configureminmaxStackView(to stackView: UIStackView) {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fillEqually
-        stackView.spacing = 0
+        stackView.spacing = 8
     }
     
 //TODO: 임시로 위치, 온도 넣었습니다.
