@@ -60,15 +60,10 @@ class CheckLocationWeatherView: UIView {
     }
     
     func setUp() {
-        self.addSubview(nameStackView)
-        self.addSubview(weatherImage)
-        self.addSubview(temperatureLabel)
-        self.addSubview(minmaxStackView)
-        self.addSubview(maxStackView)
-        self.addSubview(minStackView)
+        [nameStackView, weatherImage, temperatureLabel, minmaxStackView, maxStackView, minStackView].forEach {self.addSubview($0)}
 
         configureLocationLabel()
-        configuretemperatureLabel()
+        configureTemperatureLabel()
         //TODO: 현재 날씨 이미지 위치가 안잡혀서 임시로 넣었습니다.
         weatherImage.snp.makeConstraints {
             $0.top.equalToSuperview().inset(50)
@@ -90,7 +85,8 @@ class CheckLocationWeatherView: UIView {
         minStackView.clipsToBounds = true
         minStackView.layer.cornerRadius = 20
         
-        configureStackView()
+        [nameStackView, maxStackView, minStackView].forEach {hStackView(to: $0)}
+        vStackView(to: minmaxStackView)
         
         [locationImage, locationLabel].forEach {
             nameStackView.addArrangedSubview($0)
@@ -107,37 +103,30 @@ class CheckLocationWeatherView: UIView {
             $0.top.equalToSuperview().inset(20)
             $0.width.equalTo((locationLabel.text!.count+2) * 15)
         }
-        
-        maxStackView.isLayoutMarginsRelativeArrangement = true
-        maxStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 10)
-        minStackView.isLayoutMarginsRelativeArrangement = true
-        minStackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 10)
+        [maxStackView, minStackView].forEach {setStackView(to: $0)}
         
         configureMaxTemperatureLabel()
         configureMinTemperatureLabel()
     }
-    private func configureStackView() {
-        nameStackView.axis = .horizontal
-        nameStackView.alignment = .center
-        nameStackView.distribution = .fillProportionally
-        nameStackView.spacing = 0
-        
-        minmaxStackView.axis = .vertical
-        minmaxStackView.alignment = .center
-        minmaxStackView.distribution = .fillEqually
-        minmaxStackView.spacing = 8
-
-        maxStackView.axis = .horizontal
-        maxStackView.alignment = .center
-        maxStackView.distribution = .fillProportionally
-        maxStackView.spacing = 0
-        
-        minStackView.axis = .horizontal
-        minStackView.alignment = .center
-        minStackView.distribution = .fillProportionally
-        minStackView.spacing = 0
+    
+    private func setStackView(to stackView: UIStackView) {
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 10)
     }
-
+    
+    private func hStackView(to stackView: UIStackView) {
+        stackView.axis = .horizontal
+        stackView.alignment = .center
+        stackView.distribution = .fillProportionally
+        stackView.spacing = 0
+    }
+    private func vStackView(to stackView: UIStackView) {
+        stackView.axis = .vertical
+        stackView.alignment = .center
+        stackView.distribution = .fillEqually
+        stackView.spacing = 0
+    }
+    
 //TODO: 임시로 위치, 온도 넣었습니다.
     private func configureLocationLabel() {
         locationLabel.text = "서울"
@@ -146,7 +135,7 @@ class CheckLocationWeatherView: UIView {
         locationLabel.textAlignment = .right
     }
     
-    private func configuretemperatureLabel() {
+    private func configureTemperatureLabel() {
         temperatureLabel.text = "19°"
         temperatureLabel.font = UIFont.KFont.lexendExtraLarge
         temperatureLabel.textColor = UIColor.white
