@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		226F4029290655930067B052 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 226F4028290655930067B052 /* CityInformation.csv */; };
 		33DE6E65A1E59A2F5915802F /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802C4255E9D84509EB5BC8A9 /* Pods_KloudyTests.framework */; };
 		86DCA2F58385FA8E565E5827 /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FF8E841732C4F2284F0AAA /* Pods_kloudyWidgetExtension.framework */; };
 		8BC8F7CB29011DB200EF83AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76B29011DB100EF83AE /* ViewController.swift */; };
@@ -136,6 +137,7 @@
 		0642D3FB292CFB0FECB9FA03 /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		10CEA414DDF8C7695D82AFC5 /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
 		1536192E4E0E4A52299146F0 /* Pods_Kloudy_KloudyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy_KloudyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		226F4028290655930067B052 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
 		3C6D7F12234FBBB3835B9A56 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
 		3E4BEFF02AC7C7E605C69030 /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		64FF8E841732C4F2284F0AAA /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -319,6 +321,7 @@
 				8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */,
 				8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */,
 				8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */,
+				226F4028290655930067B052 /* CityInformation.csv */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -787,6 +790,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				226F4029290655930067B052 /* CityInformation.csv in Resources */,
 				8BC8F7D029011DB200EF83AE /* Main.storyboard in Resources */,
 				8BC8F80329011DB200EF83AE /* Lexend-Regular.ttf in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
