@@ -23,7 +23,7 @@ class AddLivingIndexCell: UICollectionViewCell {
     }
     
     func configureCell() {
-        self.backgroundColor = UIColor.KColor.clear
+        self.backgroundColor = UIColor.KColor.gray02
         self.layer.cornerRadius = 10
         self.clipsToBounds = true
         contentView.addSubview(livingIndexCellImage)

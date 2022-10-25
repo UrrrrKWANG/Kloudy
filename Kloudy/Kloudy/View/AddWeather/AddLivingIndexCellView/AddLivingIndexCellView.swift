@@ -32,7 +32,6 @@ class AddLivingIndexCellView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.KColor.cellGray
-        
         self.view.addSubview(titleLabel)
         self.view.addSubview(collectionView)
         self.styleFunction()
@@ -61,8 +60,7 @@ class AddLivingIndexCellView: UIViewController {
             $0.top.equalTo(titleLabel.snp.bottom).offset(20)
             $0.leading.trailing.bottom.equalToSuperview()
         }
-                
-    }\
+    }
 }
 
 extension AddLivingIndexCellView: UICollectionViewDataSource {
