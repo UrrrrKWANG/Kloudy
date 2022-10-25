@@ -84,9 +84,6 @@ class CheckLocationWeatherView: UIView {
             $0.trailing.equalToSuperview().inset(21)
             $0.bottom.equalToSuperview().inset(26)
         }
-        minmaxStackView.backgroundColor = .black
-        maxStackView.backgroundColor = .red
-        minStackView.backgroundColor = .blue
         
         maxStackView.clipsToBounds = true
         maxStackView.layer.cornerRadius = 20
