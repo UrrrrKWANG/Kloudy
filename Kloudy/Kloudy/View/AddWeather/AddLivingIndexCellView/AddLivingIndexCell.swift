@@ -34,6 +34,7 @@ class AddLivingIndexCell: UICollectionViewCell {
             $0.bottom.equalTo(-24)
         }
         livingIndexCellImage.contentMode = .scaleAspectFit
+        livingIndexCellImage.layer.cornerRadius = 15
         
         livingIndexCellLabel.textColor = UIColor.KColor.white
         livingIndexCellLabel.backgroundColor = .clear

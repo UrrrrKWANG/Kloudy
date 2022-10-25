@@ -15,7 +15,14 @@ struct CollectionViewData {
 }
 
 class AddLivingIndexCellView: UIViewController {
-    private let titleLabel = UILabel()
+    let viewModel = AddLivingIndexCellViewModel()
+    private let titleLabel: UILabel = {
+        let titleLabel = UILabel()
+        titleLabel.text = "생활 지수"
+        titleLabel.textColor = UIColor.KColor.white
+        titleLabel.font = UIFont.KFont.appleSDNeoBoldLarge
+        return titleLabel
+    }()
     private let collectionViewImage = CollectionViewData.images
     private let collectionViewLabel = CollectionViewData.labels
     private let collectionView: UICollectionView = {
@@ -28,25 +35,42 @@ class AddLivingIndexCellView: UIViewController {
         collectionView.allowsMultipleSelection = false
         return collectionView
     }()
+    private let completeButton: UIButton = {
+        let completeButton = UIButton()
+        completeButton.setTitle("지수 추가", for: .normal)
+        completeButton.setTitleColor(UIColor.KColor.black, for: .normal)
+        completeButton.titleLabel?.font = UIFont.KFont.appleSDNeoBoldSmall
+        completeButton.backgroundColor = UIColor.KColor.primaryGreen
+        completeButton.layer.cornerRadius = 15
+        return completeButton
+    }()
+    var checkLocationCellTypes: [String:Bool] = ["우산" : false, "마스크" : false]
+    var locationWeatherCellSet = Set<WeatherCell>()
     
+    //MARK: View Lifecycle Function
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.KColor.cellGray
         self.view.addSubview(titleLabel)
         self.view.addSubview(collectionView)
+        self.view.addSubview(completeButton)
         self.styleFunction()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        // 추후 delegate 를 통해 전달 받을 city 이름을 대입
+        self.locationWeatherCellSet = self.viewModel.fetchLocationCells(cityName: "마스크")
+        self.checkLocationHasWeatherCell()
+    }
+    
+    //MARK: Style Function
     private func styleFunction() {
         self.configureTitleLabel()
         self.configureCollectionView()
+        self.configureCompleteButton()
     }
     
     private func configureTitleLabel() {
-        self.titleLabel.text = "생활 지수"
-        self.titleLabel.textColor = UIColor.KColor.white
-        self.titleLabel.font = UIFont.KFont.appleSDNeoBoldLarge
-        
         self.titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(50)
             $0.leading.equalToSuperview().inset(24)
@@ -61,6 +85,30 @@ class AddLivingIndexCellView: UIViewController {
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
+    
+    private func configureCompleteButton() {
+        self.completeButton.snp.makeConstraints {
+            $0.height.equalTo(54)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.bottom.equalTo(collectionView.snp.bottom).offset(-46)
+        }
+        self.completeButton.addTarget(self, action: #selector(tapCompleteButton), for: .touchUpInside)
+    }
+    
+    private func checkLocationHasWeatherCell() {
+        self.locationWeatherCellSet.forEach { weatherCell in
+            if weatherCell.type == "우산" {
+                checkLocationCellTypes["우산"] = true
+            } else if weatherCell.type == "마스크" {
+                checkLocationCellTypes["마스크"] = true
+            }
+        }
+    }
+    
+    @objc private func tapCompleteButton() {
+        self.dismiss(animated: true)
+    }
 }
 
 extension AddLivingIndexCellView: UICollectionViewDataSource {
@@ -74,6 +122,11 @@ extension AddLivingIndexCellView: UICollectionViewDataSource {
         cell.livingIndexCellLabel.text = collectionViewLabel[indexPath.row]
         cell.livingIndexCellImage.image = UIImage(systemName: "\(collectionViewImage[indexPath.row])")
         cell.livingIndexCellImage.tintColor = UIColor.KColor.primaryGreen
+        
+        if self.checkLocationCellTypes["\(cell.livingIndexCellLabel.text)"] ?? false {
+            cell.livingIndexCellImage.layer.borderWidth = 2
+            cell.livingIndexCellImage.layer.borderColor = UIColor.KColor.primaryGreen.cgColor
+        }
         cell.contentView.isUserInteractionEnabled = false
         return cell
     }
