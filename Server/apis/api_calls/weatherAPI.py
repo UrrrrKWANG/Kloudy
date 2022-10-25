@@ -127,7 +127,8 @@ def getUmbrellaIndex(headers, key, day, time, x_coordinate, y_coordinate):
 
 def getMaskIndex(headers, key, air_condition_measuring, code, day, time):
     period = "DAILY"
-    flower_date = day + time[0] + time[1]
+    # 오늘의 꽃가루 정보는 무조건 06시로 보내야함
+    flower_date = day + "06"
 
     air_url = f'https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey={key}&returnType=JSON&numOfRows=1&pageNo=1&stationName={air_condition_measuring}&dataTerm={period}&ver=1.3'
     flower_url = f'https://apis.data.go.kr/1360000/HealthWthrIdxServiceV2/getPinePollenRiskIdxV2?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&areaNo={code}&time={flower_date}'
@@ -138,16 +139,19 @@ def getMaskIndex(headers, key, air_condition_measuring, code, day, time):
     flower_response = requests.get(flower_url, headers=headers, verify=False)
     flower_json_object = json.loads(flower_response.text)
 
-    air_quality = air_json_object.get('response').get('body').get('items')[0].get('pm25Value')
+    air_quality = int(air_json_object.get('response').get('body').get('items')[0].get('pm25Value'))
     flower_quality = 0
-    # TODO : 미세먼지 받아오는 거 아직 못받음
     dust_quality = 0
 
-    # TODO : 현재 주어지지 않는데 주어졌을 때 데이터 형식이 필요함.
-    if flower_json_object.get('response').get('header').get('resultCode') != '99':
-        flower_quality = 0
+    dust = air_json_object.get('response').get('body').get('items')[0].get('pm10Value')
+    if int(dust) >= 400:
+        dust_quality = 1
+    
+    if flower_json_object.get('response').get('header').get('resultCode') == '0':
+        if flower_json_object.get('response').get('body').get('items').get('item').get('today') != '0':
+            flower_quality = 1
 
-    return [int(air_quality), flower_quality, dust_quality]
+    return [air_quality, flower_quality, dust_quality]
 
 def calUmbreallaTime(time):
     time = int(time)
