@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		226F4029290655930067B052 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 226F4028290655930067B052 /* CityInformation.csv */; };
 		33DE6E65A1E59A2F5915802F /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802C4255E9D84509EB5BC8A9 /* Pods_KloudyTests.framework */; };
 		86DCA2F58385FA8E565E5827 /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FF8E841732C4F2284F0AAA /* Pods_kloudyWidgetExtension.framework */; };
 		8B3F691E29025FBD002F554E /* AddLivingIndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */; };
@@ -79,7 +80,10 @@
 		8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; };
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B8A087C455B88A26567A3D15 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */; };
+		BA78C8E22907AC5C00F938FD /* CheckWeatherCellLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */; };
 		C7DC68C53BFD05B1BFC3C7C4 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1536192E4E0E4A52299146F0 /* Pods_Kloudy_KloudyUITests.framework */; };
+		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
+		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +139,7 @@
 		0642D3FB292CFB0FECB9FA03 /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		10CEA414DDF8C7695D82AFC5 /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
 		1536192E4E0E4A52299146F0 /* Pods_Kloudy_KloudyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy_KloudyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		226F4028290655930067B052 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
 		3C6D7F12234FBBB3835B9A56 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
 		3E4BEFF02AC7C7E605C69030 /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		64FF8E841732C4F2284F0AAA /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,7 +218,10 @@
 		8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = kloudyWidget.intentdefinition; sourceTree = "<group>"; };
 		8BC8F81929011E3400EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckWeatherCellLabelView.swift; sourceTree = "<group>"; };
 		BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
+		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE99C4EAECA5D797AC2E3FAD /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -317,6 +325,7 @@
 				8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */,
 				8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */,
 				8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */,
+				226F4028290655930067B052 /* CityInformation.csv */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -417,8 +426,8 @@
 		8BC8F78F29011DB100EF83AE /* AddWeatherCellView */ = {
 			isa = PBXGroup;
 			children = (
-				8BC8F79029011DB100EF83AE /* AddWeatherCellView.swift */,
 				8BC8F79129011DB100EF83AE /* AddWeatherCellViewModel.swift */,
+				8BC8F79029011DB100EF83AE /* AddWeatherCellView.swift */,
 			);
 			path = AddWeatherCellView;
 			sourceTree = "<group>";
@@ -473,6 +482,7 @@
 		8BC8F79F29011DB100EF83AE /* CheckWeather */ = {
 			isa = PBXGroup;
 			children = (
+				BA78C8E02907ABE300F938FD /* CheckWeatherCellLabelsView */,
 				8BC8F7A029011DB100EF83AE /* CheckWeatherPageView */,
 				8BC8F7A329011DB100EF83AE /* CheckWeatherView */,
 				8BC8F7A629011DB100EF83AE /* CheckWeatherCollectionView */,
@@ -634,12 +644,30 @@
 		8BC8F81529011E3300EF83AE /* kloudyWidget */ = {
 			isa = PBXGroup;
 			children = (
+				D537D2052901BC6800271037 /* KloudyIndexWidget */,
 				8BC8F81629011E3300EF83AE /* kloudyWidget.swift */,
 				8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */,
 				8BC8F81929011E3400EF83AE /* Assets.xcassets */,
 				8BC8F81B29011E3400EF83AE /* Info.plist */,
 			);
 			path = kloudyWidget;
+			sourceTree = "<group>";
+		};
+		BA78C8E02907ABE300F938FD /* CheckWeatherCellLabelsView */ = {
+			isa = PBXGroup;
+			children = (
+				BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */,
+			);
+			path = CheckWeatherCellLabelsView;
+			sourceTree = "<group>";
+		};
+		D537D2052901BC6800271037 /* KloudyIndexWidget */ = {
+			isa = PBXGroup;
+			children = (
+				D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */,
+				D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */,
+			);
+			path = KloudyIndexWidget;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -776,6 +804,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				226F4029290655930067B052 /* CityInformation.csv in Resources */,
 				8BC8F7D029011DB200EF83AE /* Main.storyboard in Resources */,
 				8BC8F80329011DB200EF83AE /* Lexend-Regular.ttf in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
@@ -980,6 +1009,7 @@
 				8BC8F7CE29011DB200EF83AE /* Kloudy+Color.swift in Sources */,
 				8BC8F7E729011DB200EF83AE /* WeatherCellFourByOne.swift in Sources */,
 				8B3F691E29025FBD002F554E /* AddLivingIndexCell.swift in Sources */,
+				BA78C8E22907AC5C00F938FD /* CheckWeatherCellLabelView.swift in Sources */,
 				8BC8F7F629011DB200EF83AE /* CheckWeatherEditNavigationViewModel.swift in Sources */,
 				8BC8F7DC29011DB200EF83AE /* SearchWeatherGridView.swift in Sources */,
 				8BC8F7D329011DB200EF83AE /* WeatherCell+CoreDataClass.swift in Sources */,
@@ -1018,6 +1048,8 @@
 			files = (
 				8BC8F81C29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,
+				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
+				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
