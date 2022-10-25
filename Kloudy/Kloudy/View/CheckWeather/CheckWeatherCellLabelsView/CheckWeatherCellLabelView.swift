@@ -11,7 +11,7 @@ class CheckWeatherCellLabelView: UIView{
     
     private lazy var todayIndex: UILabel = {
         let label = UILabel()
-        label.textColor = .gray
+        label.textColor = UIColor.KColor.gray04
         label.text = "오늘의 생활 지수"
         label.font = UIFont.KFont.appleSDNeoSemiBoldSmall
         return label
@@ -24,7 +24,7 @@ class CheckWeatherCellLabelView: UIView{
             UIImage.SymbolConfiguration(pointSize: 14, weight: .light), forImageIn: .normal
         )
         // 버튼 사이즈 및 굵기 조절
-        button.tintColor = .gray
+        button.tintColor = UIColor.KColor.gray04
         //버튼 색상
         //        button.addTarget(self, action: #selector(넘어갈 뷰), for: .touchUpInside)
         return button
@@ -32,7 +32,7 @@ class CheckWeatherCellLabelView: UIView{
     
     private lazy var separatorView: UIView = {
         let line = UIView()
-        line.backgroundColor = .gray
+        line.backgroundColor =  UIColor.KColor.gray02
         return line
     }()
     
@@ -45,20 +45,17 @@ class CheckWeatherCellLabelView: UIView{
     }
     
     override func layoutSubviews() {  //레이아웃 서브뷰 공부 더하기
-        self.addSubview(todayIndex)
-        self.addSubview(addButton)
-        self.addSubview(separatorView)
+        [todayIndex, addButton, separatorView].forEach {
+                self.addSubview($0)
+        }
         self.todayIndex.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.height.equalTo(14)
-            $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.leading.centerY.equalToSuperview()
         }
         self.addButton.snp.makeConstraints {
-            $0.width.equalTo(14)
-            $0.height.equalTo(14)
-            $0.trailing.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.width.height.equalTo(14)
+            $0.trailing.centerY.equalToSuperview()
         }
         self.separatorView.snp.makeConstraints {
             $0.width.equalTo(UIScreen.main.bounds.width*0.9)
