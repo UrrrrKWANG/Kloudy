@@ -31,7 +31,7 @@ class LocationSelectionNavigationView: UIView {
     
     private func configureBackButton() {
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
-        backButton.tintColor = .white
+        backButton.tintColor = UIColor.KColor.white
         self.backButton.snp.makeConstraints {
             $0.width.equalTo(20)
             $0.height.equalTo(20)
@@ -42,7 +42,7 @@ class LocationSelectionNavigationView: UIView {
     func configureNavigationTitle() {
         navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
         navigationTitle.text = "지역"
-        navigationTitle.textColor = .white
+        navigationTitle.textColor = UIColor.KColor.white
         self.navigationTitle.snp.makeConstraints {
             $0.center.equalToSuperview()
         }

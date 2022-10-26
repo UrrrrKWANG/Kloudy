@@ -36,9 +36,7 @@ class LocationSelectionView: UIViewController {
         collectionView.delegate = self
         
         view.addSubview(collectionView)
-                
-        collectionView.translatesAutoresizingMaskIntoConstraints = false
-        
+                        
         collectionView.backgroundColor = .black
         
         self.view.addSubview(locationSelectionNavigationView)
@@ -59,8 +57,6 @@ class LocationSelectionView: UIViewController {
     }
     
     @objc func tapBackButton() {
-//        let locationSelectionView = LocationSelectionView()
-//        self.navigationController?.pushViewController(locationSelectionView, animated: true)
         self.navigationController?.popToRootViewController(animated: true)
     }
     
