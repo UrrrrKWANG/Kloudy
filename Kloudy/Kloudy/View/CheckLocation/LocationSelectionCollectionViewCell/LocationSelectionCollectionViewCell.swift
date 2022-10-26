@@ -9,10 +9,14 @@ import UIKit
 import SnapKit
 
 class LocationSelectionCollectionViewCell: UICollectionViewCell {
+    let locationName: String = "현재위치"
+    let weatherImageInt: Int = 0
+    let temperature: Int = 20
+    let diurnalTemperature: [Int] = [20, 30]
     
     private lazy var locationNameLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "현재위치", font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
+        label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
         return label
     }()
     
@@ -27,13 +31,13 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
     private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "20°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
         return label
     }()
     
     private lazy var diurnalTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "20° | 30°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
         return label
     }()
     
