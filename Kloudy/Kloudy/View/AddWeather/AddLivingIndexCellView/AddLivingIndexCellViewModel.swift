@@ -9,7 +9,7 @@ import UIKit
 import CoreData
 
 class AddLivingIndexCellViewModel {
-    var coreDataStack = CoreDataStack(modelName: "Location")
+    var coreDataStack = CoreDataStack(modelName: "Kloudy")
     
     func fetchLocationCells(cityName: String) -> Set<WeatherCell> {
         let request: NSFetchRequest<Location> = Location.fetchRequest()
