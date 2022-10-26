@@ -21,9 +21,9 @@ class LocationSelectionView: UIViewController {
     let searchBar = UISearchBar()
     let cancelSearchButton = UIButton()
     let tableView = UITableView()
+    let noCityInformationLabel = UILabel()
     
     let cityInformationModel = FetchWeatherInformation()
-    
     var cityInformation = [CityInformation]()
     var locationTableViewModel = [SearchingLocation]()
     var filteredLocationModel = [SearchingLocation]()
@@ -39,15 +39,13 @@ class LocationSelectionView: UIViewController {
         collectionView.delegate = self
         
         view.addSubview(collectionView)
-        [searchBar, cancelSearchButton, tableView].forEach { self.view.addSubview($0) }
-        
-        
-        //test
-        collectionView.isHidden = true
+        [searchBar, cancelSearchButton, tableView, noCityInformationLabel].forEach { self.view.addSubview($0) }
         
         configureCancelSearchButton()
         configureSearchBar()
         configureTableView()
+        configureNoCityInformationLabel()
+        
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
         
@@ -62,17 +60,18 @@ class LocationSelectionView: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+        tableView.isHidden = true
         cancelSearchButton.isHidden = true
+        noCityInformationLabel.isHidden = true
     }
     
     
     //MARK: Configure Function
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(12)
+            $0.leading.trailing.equalToSuperview().inset(8)
             $0.top.equalTo(cancelSearchButton.snp.top)
             $0.height.equalTo(47)
-            $0.trailing.equalTo(cancelSearchButton.snp.leading)
         }
         searchBar.delegate = self
         searchBar.placeholder = "지역을 검색해 보세요"
@@ -116,11 +115,29 @@ class LocationSelectionView: UIViewController {
         }
     }
     
-    @objc func tapCancelSearchButton() {
-        searchBar.endEditing(true)
+    private func configureNoCityInformationLabel() {
+        noCityInformationLabel.text = "검색된 지역이 없습니다."
+        noCityInformationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
+        noCityInformationLabel.textColor = UIColor.KColor.gray06
+        noCityInformationLabel.sizeToFit()
+        
+        noCityInformationLabel.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(31)
+            $0.height.equalTo(22)
+            $0.top.equalTo(searchBar.snp.bottom).offset(20)
+        }
     }
     
-    //MARK: Location
+    @objc func tapCancelSearchButton() {
+        searchBar.endEditing(true)
+        searchBar.text = ""
+        filteredLocationModel = [SearchingLocation]()
+        tableView.isHidden = true
+        tableView.reloadData()
+        collectionView.isHidden = false
+        noCityInformationLabel.isHidden = true
+    }
+    
     private func initializeLocationTableViewModel() {
         cityInformation.forEach { info in
             var addString = String()
@@ -174,21 +191,26 @@ extension LocationSelectionView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
         guard let text = searchBar.text?.lowercased() else { return }
         if text == "" {
+            noCityInformationLabel.isHidden = false
             self.filteredLocationModel = self.locationTableViewModel.filter({ $0.locationString.localizedStandardContains(text)})
         } else {
+            noCityInformationLabel.isHidden = true
             self.filteredLocationModel = self.locationTableViewModel.filter({ $0.locationString.localizedStandardContains(text)})
             if filteredLocationModel.count == 0 {
-                // 추후 저장된 도시 정보가 없다는 Label 이나 Image 가 요구된다
+                noCityInformationLabel.isHidden = false
             }
         }
         self.tableView.reloadData()
     }
     
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
+        tableView.isHidden = false
+        tableView.reloadData()
+        collectionView.isHidden = true
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = false
             searchBar.snp.remakeConstraints {
-                $0.leading.equalToSuperview().inset(12)
+                $0.leading.equalToSuperview().inset(8)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
                 $0.trailing.equalTo(self.cancelSearchButton.snp.leading)
@@ -198,13 +220,15 @@ extension LocationSelectionView: UISearchBarDelegate {
     }
     
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
+        tableView.isHidden = true
+        tableView.reloadData()
+        collectionView.isHidden = false
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = true
-            searchBar.snp.makeConstraints {
-                $0.leading.trailing.equalToSuperview().inset(12)
+            searchBar.snp.remakeConstraints {
+                $0.leading.trailing.equalToSuperview().inset(8)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
-                $0.trailing.equalTo(self.cancelSearchButton.snp.leading)
             }
             searchBar.superview?.layoutIfNeeded()
         }
