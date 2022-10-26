@@ -13,6 +13,7 @@
 		33DE6E65A1E59A2F5915802F /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802C4255E9D84509EB5BC8A9 /* Pods_KloudyTests.framework */; };
 		86DCA2F58385FA8E565E5827 /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FF8E841732C4F2284F0AAA /* Pods_kloudyWidgetExtension.framework */; };
 		8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE412909601C00F80ECB /* LocationTableCell.swift */; };
+		8B1BCE442909D93000F80ECB /* LottieView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE432909D93000F80ECB /* LottieView.swift */; };
 		8B3F691E29025FBD002F554E /* AddLivingIndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */; };
 		8BC8F7CB29011DB200EF83AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76B29011DB100EF83AE /* ViewController.swift */; };
 		8BC8F7CC29011DB200EF83AE /* Kloudy+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */; };
@@ -182,6 +183,7 @@
 		75A3A3ABEFA1315CDCCF1ED1 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		802C4255E9D84509EB5BC8A9 /* Pods_KloudyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KloudyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
+		8B1BCE432909D93000F80ECB /* LottieView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LottieView.swift; sourceTree = "<group>"; };
 		8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLivingIndexCell.swift; sourceTree = "<group>"; };
 		8BC8F73429011D0700EF83AE /* Kloudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kloudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BC8F74D29011D0800EF83AE /* KloudyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KloudyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -736,6 +738,7 @@
 			children = (
 				D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */,
 				D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */,
+				8B1BCE432909D93000F80ECB /* LottieView.swift */,
 			);
 			path = KloudyIndexWidget;
 			sourceTree = "<group>";
@@ -1168,6 +1171,7 @@
 				E03361392909983F0098CF76 /* CityInformation.swift in Sources */,
 				E03361372909980F0098CF76 /* CoreDataStack.swift in Sources */,
 				E033613C290998470098CF76 /* Weather.swift in Sources */,
+				8B1BCE442909D93000F80ECB /* LottieView.swift in Sources */,
 				E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */,
 				E033613B290998440098CF76 /* Notification.swift in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,

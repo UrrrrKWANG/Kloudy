@@ -39,38 +39,23 @@ class LocationSelectionView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor.KColor.black
         
         self.navigationController?.navigationBar.isHidden = true
-        
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        view.addSubview(collectionView)
-                        
-        collectionView.backgroundColor = .black
-        
-        self.view.addSubview(locationSelectionNavigationView)
-        self.configureLocationSelectionNavigationView()
         self.locationSelectionNavigationView.isHidden = false
 
-        // 스냅킷 사용하여 오토레이아웃 간략화하였습니다.
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        [searchBar, cancelSearchButton, tableView, noCityInformationLabel].forEach { self.view.addSubview($0) }
+        [locationSelectionNavigationView, searchBar, cancelSearchButton, tableView, noCityInformationLabel, collectionView].forEach { self.view.addSubview($0) }
         
+        configureLocationSelectionNavigationView()
         configureCancelSearchButton()
         configureSearchBar()
         configureTableView()
         configureNoCityInformationLabel()
+        configureCollecionView()
         
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
                 
-        collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
         
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
@@ -79,6 +64,26 @@ class LocationSelectionView: UIViewController {
     
     @objc func tapBackButton() {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.isHidden = true
+        cancelSearchButton.isHidden = true
+        noCityInformationLabel.isHidden = true
+    }
+    
+    //MARK: Configure Function
+    private func configureCollecionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.KColor.black
+        collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
+
+        // 스냅킷 사용하여 오토레이아웃 간략화하였습니다.
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     private func configureLocationSelectionNavigationView() {
@@ -91,16 +96,9 @@ class LocationSelectionView: UIViewController {
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.isHidden = true
-        cancelSearchButton.isHidden = true
-        noCityInformationLabel.isHidden = true
-    }
-    
-    //MARK: Configure Function
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(8)
+            $0.leading.trailing.equalToSuperview().inset(7)
             $0.top.equalTo(cancelSearchButton.snp.top)
             $0.height.equalTo(47)
         }
@@ -123,7 +121,7 @@ class LocationSelectionView: UIViewController {
         cancelSearchButton.titleLabel?.sizeToFit()
         cancelSearchButton.titleLabel?.font = UIFont.KFont.appleSDNeoRegularLarge
         cancelSearchButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(65)
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(26)
             $0.height.equalTo(47)
             $0.trailing.equalToSuperview().inset(21)
         }
@@ -300,7 +298,7 @@ extension LocationSelectionView: UISearchBarDelegate {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = false
             searchBar.snp.remakeConstraints {
-                $0.leading.equalToSuperview().inset(8)
+                $0.leading.equalToSuperview().inset(7)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
                 $0.trailing.equalTo(self.cancelSearchButton.snp.leading)
