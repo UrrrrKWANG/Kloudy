@@ -10,6 +10,8 @@ import SnapKit
 
 class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
+    static let cellID = "Cell"
+    
     private lazy var locationNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Location"
