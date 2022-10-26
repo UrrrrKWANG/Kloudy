@@ -9,19 +9,11 @@ import UIKit
 
 class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
-    let checkWeatherEditNavigationView = CheckWeatherEditNavigationView()
+    
+    //MARK: View LifeCycle Function
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = true
-
-        self.view.addSubview(checkWeatherBasicNavigationView)
-        self.view.addSubview(checkWeatherEditNavigationView)
-
-        self.configureCheckWeatherBasicNavigationView()
-        self.configureCheckWeatherEditNavigationView()
-
-        // 코드 구현을 위해 BasicNavigationView 의 경우 isHidden 처리
-        self.checkWeatherBasicNavigationView.isHidden = true
-
+        
         lazy var CheckWeatherPageView = CheckWeatherPageView()
         view.addSubview(CheckWeatherPageView)
         CheckWeatherPageView.snp.makeConstraints {
@@ -29,28 +21,27 @@ class CheckWeatherView: UIViewController {
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.centerX.centerY.equalToSuperview()
         }
+        
+        self.view.addSubview(checkWeatherBasicNavigationView)
+        self.configureCheckWeatherBasicNavigationView()
+        
+        // 코드 구현을 위해 BasicNavigationView 의 경우 isHidden 처리
+        self.checkWeatherBasicNavigationView.isHidden = false
     }
     
+    //MARK: Style Function
     private func configureCheckWeatherBasicNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(47)
             $0.trailing.equalToSuperview().inset(21)
+            $0.width.equalTo(106)
+            $0.height.equalTo(20)
         }
+        checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
     }
-
-    private func configureCheckWeatherEditNavigationView() {
-        checkWeatherEditNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(47)
-            $0.leading.equalToSuperview().inset(21)
-            $0.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(52)
-        }
-        checkWeatherEditNavigationView.addCellButton.addTarget(self, action: #selector(presentSelectWeatherCellView), for: .touchUpInside)
-    }
-
-    @objc func presentSelectWeatherCellView() {
-        let selectWeatherCellView = SelectWeatherCellView()
-        selectWeatherCellView.modalPresentationStyle = .formSheet
-        self.present(selectWeatherCellView, animated: true)
+    
+    @objc func tapLocationButton() {
+        let locationSelectionView = LocationSelectionView()
+        self.navigationController?.pushViewController(locationSelectionView, animated: true)
     }
 }
