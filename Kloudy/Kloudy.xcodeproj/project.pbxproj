@@ -86,6 +86,8 @@
 		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 		D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */; };
 		D558FECB2907D987002EEA22 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECA2907D987002EEA22 /* UILabel+.swift */; };
+		D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECC29096B00002EEA22 /* LocationManager.swift */; };
+		D558FECE29096B02002EEA22 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECC29096B00002EEA22 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -226,6 +228,7 @@
 		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
 		D558FECA2907D987002EEA22 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		D558FECC29096B00002EEA22 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE99C4EAECA5D797AC2E3FAD /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -354,6 +357,7 @@
 				8BC8F77B29011DB100EF83AE /* Notification.swift */,
 				8BC8F77C29011DB100EF83AE /* Weather.swift */,
 				8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */,
+				D558FECC29096B00002EEA22 /* LocationManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1034,6 +1038,7 @@
 				8BC8F7DF29011DB200EF83AE /* SearchWeatherViewModel.swift in Sources */,
 				8BC8F7D529011DB200EF83AE /* Location+CoreDataClass.swift in Sources */,
 				8BC8F7E029011DB200EF83AE /* SearchWeatherView.swift in Sources */,
+				D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */,
 				8BC8F7CF29011DB200EF83AE /* Kloudy.xcdatamodeld in Sources */,
 				8BC8F7E329011DB200EF83AE /* AddWeatherCellView.swift in Sources */,
 				8BC8F7E429011DB200EF83AE /* AddWeatherCellViewModel.swift in Sources */,
@@ -1064,6 +1069,7 @@
 			files = (
 				8BC8F81C29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,
+				D558FECE29096B02002EEA22 /* LocationManager.swift in Sources */,
 				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
 				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
 			);
