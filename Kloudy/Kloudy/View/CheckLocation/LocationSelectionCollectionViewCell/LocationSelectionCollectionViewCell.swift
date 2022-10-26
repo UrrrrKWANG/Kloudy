@@ -70,7 +70,7 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
         }
         
         temperatureLabel.snp.makeConstraints {
-            $0.trailing.equalTo(-20)
+            $0.trailing.equalToSuperview().inset(20)
             $0.centerY.equalToSuperview()
         }
         
