@@ -140,9 +140,9 @@ class LocationSelectionView: UIViewController {
     
     private func initializeLocationTableViewModel() {
         cityInformation.forEach { info in
-            var addString = String()
-            addString = "\(info.province) " + "\(info.city)"
-            self.locationTableViewModel.append(SearchingLocation(locationString: addString, locationCode: info.code))
+            var temporalString = String()
+            temporalString = "\(info.province) " + "\(info.city)"
+            self.locationTableViewModel.append(SearchingLocation(locationString: temporalString, locationCode: info.code))
         }
     }
 }
@@ -253,6 +253,5 @@ extension LocationSelectionView: UITableViewDelegate {
         //TODO: CityInformation의 code 를 반환하는 테스트 코드입니다.
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? LocationTableCell else { return }
         let searchingLocation = filteredLocationModel[indexPath.row]
-        print(searchingLocation.locationCode)
     }
 }
