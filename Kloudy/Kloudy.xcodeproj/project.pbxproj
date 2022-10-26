@@ -86,9 +86,19 @@
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
 		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 		D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */; };
+		E0336133290997FE0098CF76 /* Kloudy+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */; };
+		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
+		E0336135290998030098CF76 /* Kloudy+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */; };
+		E03361362909980D0098CF76 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77629011DB100EF83AE /* Location+CoreDataProperties.swift */; };
+		E03361372909980F0098CF76 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77729011DB100EF83AE /* CoreDataStack.swift */; };
+		E0336138290998120098CF76 /* WeatherCell+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77829011DB100EF83AE /* WeatherCell+CoreDataClass.swift */; };
+		E03361392909983F0098CF76 /* CityInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77929011DB100EF83AE /* CityInformation.swift */; };
+		E033613A290998410098CF76 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77A29011DB100EF83AE /* Location+CoreDataClass.swift */; };
+		E033613B290998440098CF76 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77B29011DB100EF83AE /* Notification.swift */; };
+		E033613C290998470098CF76 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77C29011DB100EF83AE /* Weather.swift */; };
+		E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */; };
 		D558FECB2907D987002EEA22 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECA2907D987002EEA22 /* UILabel+.swift */; };
 		D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECC29096B00002EEA22 /* LocationManager.swift */; };
-		D558FECE29096B02002EEA22 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECC29096B00002EEA22 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1071,10 +1081,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E033613A290998410098CF76 /* Location+CoreDataClass.swift in Sources */,
+				E03361362909980D0098CF76 /* Location+CoreDataProperties.swift in Sources */,
+				E0336133290997FE0098CF76 /* Kloudy+Font.swift in Sources */,
 				8BC8F81C29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
+				E03361392909983F0098CF76 /* CityInformation.swift in Sources */,
+				E03361372909980F0098CF76 /* CoreDataStack.swift in Sources */,
+				E033613C290998470098CF76 /* Weather.swift in Sources */,
+				E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */,
+				E033613B290998440098CF76 /* Notification.swift in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,
+				E0336138290998120098CF76 /* WeatherCell+CoreDataClass.swift in Sources */,
 				D558FECE29096B02002EEA22 /* LocationManager.swift in Sources */,
 				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
+				E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */,
+				E0336135290998030098CF76 /* Kloudy+Color.swift in Sources */,
 				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
