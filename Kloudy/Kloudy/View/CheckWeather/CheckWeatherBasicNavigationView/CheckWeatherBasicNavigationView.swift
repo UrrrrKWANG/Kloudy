@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class CheckWeatherBasicNavigationView: UIView {
-    let buttonStackView = UIStackView()
     let bellButton = UIButton()
     let locationButton = UIButton()
     let settingButton = UIButton()
@@ -24,53 +23,38 @@ class CheckWeatherBasicNavigationView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
-        self.addSubview(buttonStackView)
-        
-        [bellButton, locationButton, settingButton].forEach {
-            buttonStackView.addArrangedSubview($0)
-        }
-        
-        configureButtonStackView()
-        
-        buttonStackView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(52)
-        }
-        
-        configureBellButton()
-        configureLocationButton()
+        self.addSubview(settingButton)
+        self.addSubview(locationButton)
+        self.addSubview(bellButton)
         configureSettingButton()
-    }
-    
-    private func configureButtonStackView() {
-        buttonStackView.axis = .horizontal
-        buttonStackView.alignment = .center
-        buttonStackView.distribution = .fillProportionally
-        buttonStackView.spacing = 24
+        configureLocationButton()
+        configureBellButton()
     }
     
     private func configureBellButton() {
-        //TODO: Asset/Resource 파일 생성 시 수정
-        bellButton.setImage(UIImage(systemName: "bell"), for: .normal)
-        self.bellButton.snp.makeConstraints {
+        bellButton.setImage(UIImage(named: "notification"), for: .normal)
+        bellButton.snp.makeConstraints {
             $0.width.equalTo(18)
             $0.height.equalTo(19)
+            $0.trailing.equalTo(locationButton.snp.leading).offset(-24)
         }
     }
     
     private func configureLocationButton() {
-        locationButton.setImage(UIImage(systemName: "location"), for: .normal)
-        self.locationButton.snp.makeConstraints {
+        locationButton.setImage(UIImage(named: "location"), for: .normal)
+        locationButton.snp.makeConstraints {
             $0.size.equalTo(19)
+            $0.trailing.equalTo(settingButton.snp.leading).offset(-24)
         }
+        
     }
     
     private func configureSettingButton() {
-        settingButton.setImage(UIImage(systemName: "seal"), for: .normal)
+        settingButton.setImage(UIImage(named: "setting"), for: .normal)
         self.settingButton.snp.makeConstraints {
             $0.width.equalTo(18)
             $0.height.equalTo(20)
+            $0.trailing.equalToSuperview()
         }
     }
 }
