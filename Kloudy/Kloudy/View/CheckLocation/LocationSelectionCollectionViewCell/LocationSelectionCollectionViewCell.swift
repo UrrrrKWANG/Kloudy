@@ -12,29 +12,28 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
     private lazy var locationNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Location"
-        label.font.withSize(12)
-        
+        label.configureLabel(text: "현재위치", font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
         return label
     }()
     
     private lazy var weatherImage: UIImageView = {
         let uiImageView = UIImageView()
         uiImageView.image = UIImage(systemName: "map")
+        uiImageView.snp.makeConstraints {
+            $0.size.equalTo(26)
+        }
         return uiImageView
     }()
     
     private lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "20"
-        label.font.withSize(12)
+        label.configureLabel(text: "20°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
         return label
     }()
     
     private lazy var diurnalTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.text = "20 | 30"
-        label.font.withSize(12)
+        label.configureLabel(text: "20° | 30°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
         return label
     }()
     
@@ -58,22 +57,22 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     private func setLayOut() {
         locationNameLabel.snp.makeConstraints {
             $0.leading.equalTo(20)
-            $0.top.bottom.equalTo(36)
+            $0.centerY.equalToSuperview()
         }
         
         weatherImage.snp.makeConstraints {
             $0.leading.equalTo(152)
-            $0.top.bottom.equalTo(35)
+            $0.centerY.equalToSuperview()
         }
         
         temperatureLabel.snp.makeConstraints {
-            $0.trailing.equalTo(20)
-            $0.top.equalTo(40)
+            $0.trailing.equalTo(-20)
+            $0.centerY.equalToSuperview()
         }
         
         diurnalTemperatureLabel.snp.makeConstraints {
-            $0.trailing.equalTo(20)
-            $0.top.bottom.equalTo(26)
+            $0.trailing.equalTo(-88)
+            $0.centerY.equalToSuperview()
         }
     }
 }
