@@ -33,8 +33,7 @@ class LocationSelectionNavigationView: UIView {
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         backButton.tintColor = UIColor.KColor.white
         self.backButton.snp.makeConstraints {
-            $0.width.equalTo(20)
-            $0.height.equalTo(20)
+            $0.width.height.equalTo(20)
             $0.leading.equalToSuperview()
         }
     }
