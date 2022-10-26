@@ -12,6 +12,10 @@ import SnapKit
 
 class LocationSelectionView: UIViewController {
     
+    // 수정중일때 셀 바꿔끼우려고 했는데 실패함 - 임시방편으로 관련 코드 주석처리
+//    var isBeingEdited: Bool = false
+    
+    
     let collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
@@ -88,6 +92,7 @@ class LocationSelectionView: UIViewController {
             $0.height.equalTo(20)
         }
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
+    }
         
     override func viewWillAppear(_ animated: Bool) {
         tableView.isHidden = true
@@ -186,13 +191,17 @@ extension LocationSelectionView: UICollectionViewDataSource {
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationSelectionCollectionViewCell.cellID, for: indexPath) as! LocationSelectionCollectionViewCell
-        
-        cell.layer.cornerRadius = 15
-        
-        cell.backgroundColor = UIColor.KColor.gray02
-        
-        return cell
+//        if isBeingEdited == false {
+            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationSelectionCollectionViewCell.cellID, for: indexPath) as! LocationSelectionCollectionViewCell
+            
+            cell.layer.cornerRadius = 15
+            cell.backgroundColor = UIColor.KColor.gray02
+            
+            return cell
+//        } else {
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationSelectionViewEditCell.cellID, for: indexPath) as! LocationSelectionViewEditCell
+//            return cell
+//        }
     }
 }
 
@@ -227,10 +236,10 @@ extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
 // http://yoonbumtae.com/?p=4418
 
 extension LocationSelectionView: UIGestureRecognizerDelegate {
-
+    
     // 롱탭제스쳐 recognizer 함수
     private func setUpLongGestureRecognizerOnCollection() {
-
+        
         // 롱탭제스쳐 기본 설정 코드
         let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
         longPressedGesture.minimumPressDuration = 0.5
@@ -238,12 +247,12 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
         longPressedGesture.delaysTouchesBegan = true
         collectionView.addGestureRecognizer(longPressedGesture)
     }
-
+    
     // 롱탭제스쳐 핸들 함수
     @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-
+        
         let location = gestureRecognizer.location(in: collectionView)
-
+        
         // 롱탭제스쳐 시작할 때의 코드
         if gestureRecognizer.state == .began {
             if let indexPath = collectionView.indexPathForItem(at: location) {
@@ -259,10 +268,12 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
                 UIView.animate(withDuration: 0.2) { [self] in
                     if let cell = self.currentLongPressedCell {
                         cell.transform = .init(scaleX: 1, y: 1)
-
+                        
                         if cell == self.collectionView.cellForItem(at: indexPath) as? LocationSelectionCollectionViewCell {
                             // .began에서 저장했던 cell과 현재 위치에 있는 셀이 같다면 동작을 실행하고, 아니라면 아무것도 하지 않습니다.
                             // 코드 추가 예정
+//                            isBeingEdited = true
+//                            collectionView.reloadData()
                         }
                     }
                 }
@@ -270,6 +281,8 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
         } else {
             return
         }
+    }
+}
 
 extension LocationSelectionView: UISearchBarDelegate {
     func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
