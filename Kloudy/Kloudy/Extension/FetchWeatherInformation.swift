@@ -26,14 +26,7 @@ class FetchWeatherInformation {
         let dayQuery = URLQueryItem(name: "day", value: day)
         let timeQuery = URLQueryItem(name: "time", value: time)
         let codeQuery = URLQueryItem(name: "cityCode", value: cityCode)
-        
-//        urlComponents?.queryItems?.append(dayQuery)
-//        urlComponents?.queryItems?.append(timeQuery)
-//        urlComponents?.queryItems?.append(xQuery)
-//        urlComponents?.queryItems?.append(yQuery)
-//        urlComponents?.queryItems?.append(airQuery)
-//        urlComponents?.queryItems?.append(codeQuery)
-//
+
         urlComponents?.queryItems = [dayQuery, timeQuery, xQuery, yQuery, airQuery, codeQuery]
         // URLSessionConfiguration을 만듦
         let config = URLSessionConfiguration.default
