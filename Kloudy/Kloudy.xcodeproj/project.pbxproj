@@ -12,6 +12,7 @@
 		226F4029290655930067B052 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 226F4028290655930067B052 /* CityInformation.csv */; };
 		33DE6E65A1E59A2F5915802F /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 802C4255E9D84509EB5BC8A9 /* Pods_KloudyTests.framework */; };
 		86DCA2F58385FA8E565E5827 /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 64FF8E841732C4F2284F0AAA /* Pods_kloudyWidgetExtension.framework */; };
+		8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE412909601C00F80ECB /* LocationTableCell.swift */; };
 		8B3F691E29025FBD002F554E /* AddLivingIndexCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */; };
 		8BC8F7CB29011DB200EF83AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76B29011DB100EF83AE /* ViewController.swift */; };
 		8BC8F7CC29011DB200EF83AE /* Kloudy+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */; };
@@ -87,6 +88,19 @@
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
 		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 		D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */; };
+		E0336133290997FE0098CF76 /* Kloudy+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */; };
+		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
+		E0336135290998030098CF76 /* Kloudy+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */; };
+		E03361362909980D0098CF76 /* Location+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77629011DB100EF83AE /* Location+CoreDataProperties.swift */; };
+		E03361372909980F0098CF76 /* CoreDataStack.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77729011DB100EF83AE /* CoreDataStack.swift */; };
+		E0336138290998120098CF76 /* WeatherCell+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77829011DB100EF83AE /* WeatherCell+CoreDataClass.swift */; };
+		E03361392909983F0098CF76 /* CityInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77929011DB100EF83AE /* CityInformation.swift */; };
+		E033613A290998410098CF76 /* Location+CoreDataClass.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77A29011DB100EF83AE /* Location+CoreDataClass.swift */; };
+		E033613B290998440098CF76 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77B29011DB100EF83AE /* Notification.swift */; };
+		E033613C290998470098CF76 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77C29011DB100EF83AE /* Weather.swift */; };
+		E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */; };
+		D558FECB2907D987002EEA22 /* UILabel+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECA2907D987002EEA22 /* UILabel+.swift */; };
+		D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECC29096B00002EEA22 /* LocationManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -151,6 +165,7 @@
 		65938D416B40629A93C9DA23 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		75A3A3ABEFA1315CDCCF1ED1 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		802C4255E9D84509EB5BC8A9 /* Pods_KloudyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KloudyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
 		8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddLivingIndexCell.swift; sourceTree = "<group>"; };
 		8BC8F73429011D0700EF83AE /* Kloudy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Kloudy.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8BC8F74D29011D0800EF83AE /* KloudyTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = KloudyTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -228,6 +243,8 @@
 		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
+		D558FECA2907D987002EEA22 /* UILabel+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+.swift"; sourceTree = "<group>"; };
+		D558FECC29096B00002EEA22 /* LocationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationManager.swift; sourceTree = "<group>"; };
 		E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE99C4EAECA5D797AC2E3FAD /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -348,6 +365,7 @@
 				8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */,
 				8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */,
 				226F4028290655930067B052 /* CityInformation.csv */,
+				D558FECA2907D987002EEA22 /* UILabel+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -371,6 +389,7 @@
 				8BC8F77B29011DB100EF83AE /* Notification.swift */,
 				8BC8F77C29011DB100EF83AE /* Weather.swift */,
 				8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */,
+				D558FECC29096B00002EEA22 /* LocationManager.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -596,6 +615,7 @@
 			children = (
 				8BC8F7B729011DB100EF83AE /* LocationSelectionView.swift */,
 				8BC8F7B829011DB100EF83AE /* LocationSelectionViewModel.swift */,
+				8B1BCE412909601C00F80ECB /* LocationTableCell.swift */,
 			);
 			path = LocationSelectionView;
 			sourceTree = "<group>";
@@ -1008,6 +1028,7 @@
 				8BC8F7DE29011DB200EF83AE /* SelectWeatherCellViewModel.swift in Sources */,
 				8BC8F7E529011DB200EF83AE /* AddLivingIndexCellViewModel.swift in Sources */,
 				8BC8F81D29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
+				8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */,
 				8BC8F80029011DB200EF83AE /* AppDelegate.swift in Sources */,
 				8BC8F7FD29011DB200EF83AE /* LocationSelectionEditView.swift in Sources */,
 				8BC8F7EE29011DB200EF83AE /* CheckWeatherPageView.swift in Sources */,
@@ -1017,6 +1038,7 @@
 				8BC8F7D129011DB200EF83AE /* Location+CoreDataProperties.swift in Sources */,
 				8BC8F7E829011DB200EF83AE /* WeatherCellFourByOneViewModel.swift in Sources */,
 				8BC8F7EF29011DB200EF83AE /* CheckWeatherViewModel.swift in Sources */,
+				D558FECB2907D987002EEA22 /* UILabel+.swift in Sources */,
 				D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */,
 				8BC8F7F529011DB200EF83AE /* CheckWeatherEditNavigationView.swift in Sources */,
 				8BC8F7F729011DB200EF83AE /* CheckWeatherBasicNavigationView.swift in Sources */,
@@ -1054,6 +1076,7 @@
 				8BC8F7D529011DB200EF83AE /* Location+CoreDataClass.swift in Sources */,
 				8BC8F7E029011DB200EF83AE /* SearchWeatherView.swift in Sources */,
 				113D3E342909987200A72594 /* LocationSelectionViewEditCell.swift in Sources */,
+				D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */,
 				8BC8F7CF29011DB200EF83AE /* Kloudy.xcdatamodeld in Sources */,
 				8BC8F7E329011DB200EF83AE /* AddWeatherCellView.swift in Sources */,
 				8BC8F7E429011DB200EF83AE /* AddWeatherCellViewModel.swift in Sources */,
@@ -1082,9 +1105,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E033613A290998410098CF76 /* Location+CoreDataClass.swift in Sources */,
+				E03361362909980D0098CF76 /* Location+CoreDataProperties.swift in Sources */,
+				E0336133290997FE0098CF76 /* Kloudy+Font.swift in Sources */,
 				8BC8F81C29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
+				E03361392909983F0098CF76 /* CityInformation.swift in Sources */,
+				E03361372909980F0098CF76 /* CoreDataStack.swift in Sources */,
+				E033613C290998470098CF76 /* Weather.swift in Sources */,
+				E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */,
+				E033613B290998440098CF76 /* Notification.swift in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,
+				E0336138290998120098CF76 /* WeatherCell+CoreDataClass.swift in Sources */,
+				D558FECE29096B02002EEA22 /* LocationManager.swift in Sources */,
 				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
+				E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */,
+				E0336135290998030098CF76 /* Kloudy+Color.swift in Sources */,
 				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1257,6 +1292,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kloudy/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
@@ -1291,6 +1328,8 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kloudy/Info.plist;
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
