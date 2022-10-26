@@ -33,6 +33,7 @@ class LocationTableCell: UITableViewCell {
     }
  
     private func configureLocationLabel() {
+        self.backgroundColor = UIColor.KColor.black
         self.addSubview(locationLabel)
         
         locationLabel.snp.makeConstraints {

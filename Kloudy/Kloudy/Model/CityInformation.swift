@@ -17,3 +17,9 @@ struct CityInformation: Codable {
     let longitude: Double
     let latitude: Double
 }
+
+// 도시 정보를 찾을 때 사용하는 모델
+struct SearchingLocation {
+    var locationString: String
+    let locationCode: String
+}
