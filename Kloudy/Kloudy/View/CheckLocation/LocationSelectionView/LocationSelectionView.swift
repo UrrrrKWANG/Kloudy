@@ -58,6 +58,12 @@ class LocationSelectionView: UIViewController {
 
     }
     
+    @objc func tapBackButton() {
+//        let locationSelectionView = LocationSelectionView()
+//        self.navigationController?.pushViewController(locationSelectionView, animated: true)
+        self.navigationController?.popToRootViewController(animated: true)
+    }
+    
     private func configureLocationSelectionNavigationView() {
         locationSelectionNavigationView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(47)
@@ -65,7 +71,7 @@ class LocationSelectionView: UIViewController {
             $0.width.equalTo(106)
             $0.height.equalTo(20)
         }
-//        locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
+        locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
     }
     
 }
