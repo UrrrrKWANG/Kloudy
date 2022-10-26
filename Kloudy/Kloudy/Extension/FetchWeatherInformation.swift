@@ -97,7 +97,7 @@ class FetchWeatherInformation {
         return result
     }
     
-    private func parseCSVAt(url: URL) -> [CityInformation] {
+    func parseCSVAt(url: URL) -> [CityInformation] {
         var cityList: [CityInformation] = []
         
         do {
@@ -118,7 +118,7 @@ class FetchWeatherInformation {
         return cityList
     }
     
-    private func loadCityListFromCSV() -> [CityInformation] {
+    func loadCityListFromCSV() -> [CityInformation] {
         // bundle에 있는 경로 > Calorie라는 이름을 가진 csv 파일 경로
         let path = Bundle.main.path(forResource: "CityInformation", ofType: "csv")!
         return parseCSVAt(url: URL(fileURLWithPath: path))
