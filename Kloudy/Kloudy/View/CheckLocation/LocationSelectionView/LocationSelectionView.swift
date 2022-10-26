@@ -22,31 +22,51 @@ class LocationSelectionView: UIViewController {
     // 롱탭의 시작점과 끝점이 같을 경우에만 롱탭제스쳐를 활성화하기 위하여 설정한 변수
     var currentLongPressedCell: LocationSelectionCollectionViewCell?
     
+    let locationSelectionNavigationView = LocationSelectionNavigationView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         view.backgroundColor = .black
         
+        self.navigationController?.navigationBar.isHidden = true
+        
+        
         collectionView.dataSource = self
         collectionView.delegate = self
         
         view.addSubview(collectionView)
-        
+                
         collectionView.translatesAutoresizingMaskIntoConstraints = false
         
         collectionView.backgroundColor = .black
+        
+        self.view.addSubview(locationSelectionNavigationView)
+        self.configureLocationSelectionNavigationView()
+        self.locationSelectionNavigationView.isHidden = false
 
         // 스냅킷 사용하여 오토레이아웃 간략화하였습니다.
         collectionView.snp.makeConstraints {
-            $0.top.left.right.bottom.equalToSuperview()
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
         }
                 
         collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
         
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
+
     }
     
+    private func configureLocationSelectionNavigationView() {
+        locationSelectionNavigationView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(47)
+            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.width.equalTo(106)
+            $0.height.equalTo(20)
+        }
+//        locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
+    }
     
 }
 
@@ -113,6 +133,7 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
         collectionView.addGestureRecognizer(longPressedGesture)
     }
 
+    // 롱탭제스쳐 핸들 함수
     @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
 
         let location = gestureRecognizer.location(in: collectionView)
