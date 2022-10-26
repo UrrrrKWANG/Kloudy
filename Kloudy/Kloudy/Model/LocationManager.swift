@@ -14,7 +14,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
     var currentLocation: String = ""
-    let citys: [String] = ["서울특별시", "대구광역시", "부산광역시", "울산광역시", "광주광역시", "대전광역시", "인천광역시"]
+    let cities: [String] = ["서울특별시", "대구광역시", "부산광역시", "울산광역시", "광주광역시", "대전광역시", "인천광역시"]
     
     override init() {
         super.init()
@@ -34,7 +34,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale) { [weak self] (place, error) in
                 if let address: [CLPlacemark] = place {
                     let locality = "\(address.last?.locality ?? "")"
-                    if !self!.citys.contains(locality) { // 지역명이 특별시, 광역시일 경우 더 자세한 지역명을 저장한다.
+                    if !self!.cities.contains(locality) { // 지역명이 특별시, 광역시일 경우 더 자세한 지역명을 저장한다.
                         self!.currentLocation = locality
                     } else {
                         let subLocality = "\(address.last?.subLocality ?? "")"
