@@ -8,9 +8,18 @@
 import UIKit
 import SnapKit
 
-class CheckWeatherPageView: UIView{
+class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+
+    private var layout : UICollectionViewFlowLayout {
+        let layout = UICollectionViewFlowLayout()
+        layout.scrollDirection = .vertical
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        return layout
+    }
+    
+
     //TODO: 페이지 개수 받아오는 부분 (임시)
-    let pageControlNum = 4
+    let pageControlNum = 1
     
     private lazy var pageSlider: UIPageControl = {
         let pageControl = UIPageControl()
@@ -40,8 +49,10 @@ class CheckWeatherPageView: UIView{
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+
     
     override func layoutSubviews() {  //레이아웃 서브뷰 공부 더하기
+        
         self.addSubview(pageSlider)
         self.addSubview(scrollView)
         self.pageSlider.snp.makeConstraints {
@@ -61,16 +72,67 @@ class CheckWeatherPageView: UIView{
         for pageIndex in 0 ..< self.pageControlNum {
             let checkWeatherFrameView: UIView = UIView(frame: CGRect(x: CGFloat(pageIndex) * UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             self.scrollView.addSubview(checkWeatherFrameView)
-            let checkWeatherCellLabelView = CheckWeatherCellLabelView()
+            checkWeatherFrameView.backgroundColor = .orange
+            
+            let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
             checkWeatherFrameView.addSubview(checkWeatherCellLabelView)
             checkWeatherCellLabelView.snp.makeConstraints{
                 $0.height.equalTo(UIScreen.main.bounds.height)
                 $0.width.equalTo(UIScreen.main.bounds.width)
                 $0.top.left.bottom.right.equalToSuperview().inset(UIScreen.main.bounds.width*0.05) // label, button 패딩
             }
+            
+            let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+            collectionView.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+            collectionView.tintColor = .systemPink
+            collectionView.backgroundColor = .clear
+            
+            collectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+            collectionView.delegate = self
+            collectionView.dataSource = self
+            
+            checkWeatherFrameView.addSubview(collectionView)
+      
+            
         }
     }
+    private func circleImage(imageName: String) -> UIImageView{
+        let imageView = UIImageView()
+        imageView.contentMode = .scaleAspectFit
+        imageView.image = UIImage(systemName: imageName)
+        imageView.translatesAutoresizingMaskIntoConstraints = true
+        imageView.frame = CGRect(x: 0, y: 0, width: 144, height: 144)
+        return imageView
+    }
+    
+    
+    var todayIndexArray: [cellData] = [
+        cellData(indexName: "01.circle"),
+        cellData(indexName: "02.circle"),
+        cellData(indexName: "03.circle"),
+        cellData(indexName: "04.circle"),
+        cellData(indexName: "05.circle"),
+        cellData(indexName: "06.circle"),
+        cellData(indexName: "07.circle")
+    ]
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return todayIndexArray.count
+    }
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        cell.addSubview(circleImage(imageName: todayIndexArray[indexPath[1]].indexName))
+        return cell
+    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return  CGSize(width: 144 , height: 144)
+    }
+    // Re - order
+    func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        let item = todayIndexArray.remove(at: sourceIndexPath.row)
+        todayIndexArray.insert(item, at: destinationIndexPath.row)
+    }
 }
+
 
 extension CheckWeatherPageView: UIScrollViewDelegate {
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
@@ -79,3 +141,11 @@ extension CheckWeatherPageView: UIScrollViewDelegate {
         self.pageSlider.currentPage = nextPage
     }
 }
+
+
+struct cellData : Equatable {
+    var indexName: String
+}
+
+
+
