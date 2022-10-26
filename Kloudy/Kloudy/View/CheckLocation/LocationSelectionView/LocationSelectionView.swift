@@ -29,6 +29,7 @@ class LocationSelectionView: UIViewController {
     let noCityInformationLabel = UILabel()
     
     let cityInformationModel = FetchWeatherInformation()
+    let viewModel = LocationSelectionViewModel()
     var cityInformation = [CityInformation]()
     var locationTableViewModel = [SearchingLocation]()
     var filteredLocationModel = [SearchingLocation]()
@@ -96,7 +97,6 @@ class LocationSelectionView: UIViewController {
         noCityInformationLabel.isHidden = true
     }
     
-    
     //MARK: Configure Function
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
@@ -160,13 +160,7 @@ class LocationSelectionView: UIViewController {
     }
     
     @objc func tapCancelSearchButton() {
-        searchBar.endEditing(true)
-        searchBar.text = ""
-        filteredLocationModel = [SearchingLocation]()
-        tableView.isHidden = true
-        tableView.reloadData()
-        collectionView.isHidden = false
-        noCityInformationLabel.isHidden = true
+        self.endSearchLocation()
     }
     
     private func initializeLocationTableViewModel() {
@@ -176,8 +170,17 @@ class LocationSelectionView: UIViewController {
             self.locationTableViewModel.append(SearchingLocation(locationString: temporalString, locationCode: info.code))
         }
     }
+    
+    private func endSearchLocation() {
+        searchBar.endEditing(true)
+        searchBar.text = ""
+        filteredLocationModel = [SearchingLocation]()
+        tableView.isHidden = true
+        tableView.reloadData()
+        collectionView.isHidden = false
+        noCityInformationLabel.isHidden = true
+    }
 }
-
 
 // MARK: UICollectionViewDataSource 익스텐션
 extension LocationSelectionView: UICollectionViewDataSource {
@@ -337,8 +340,25 @@ extension LocationSelectionView: UITableViewDataSource {
 
 extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO: CityInformation의 code 를 반환하는 테스트 코드입니다.
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? LocationTableCell else { return }
         let searchingLocation = filteredLocationModel[indexPath.row]
+        self.cityInformation.forEach { information in
+            if information.code == searchingLocation.locationCode {
+                if viewModel.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
+                    viewModel.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: viewModel.countLocations())
+                    self.endSearchLocation()
+                } else {
+                    self.isSameLocationAlert()
+                }
+            }
+        }
+    }
+    
+    private func isSameLocationAlert() {
+        let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.", message: "다른 지역을 추가해주세요.", preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+            self.dismiss(animated: true)
+        }
+        alert.addAction(confirm)
+        self.present(alert, animated: true)
     }
 }
