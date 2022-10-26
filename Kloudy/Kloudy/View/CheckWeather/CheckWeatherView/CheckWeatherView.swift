@@ -37,10 +37,10 @@ class CheckWeatherView: UIViewController {
             $0.width.equalTo(106)
             $0.height.equalTo(20)
         }
-        checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocatioButton), for: .touchUpInside)
+        checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
     }
     
-    @objc func tapLocatioButton() {
+    @objc func tapLocationButton() {
         let locationSelectionView = LocationSelectionView()
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
     }
