@@ -13,7 +13,7 @@ class CheckLocationWeatherViewModel {
     let weatherInformationModel = FetchWeatherInformation()
     
     func hello() {
-        var asdf = weatherInformationModel.startLoad(city: "종로구")
+        var asdf = weatherInformationModel.startLoad(province: "대전광역시", city: "중구")
         print("-------------------------")
         print(asdf)
     }

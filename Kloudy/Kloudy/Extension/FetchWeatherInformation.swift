@@ -8,9 +8,9 @@
 import Foundation
 
 class FetchWeatherInformation {
-    func startLoad(city: String) {
+    func startLoad(province:String, city: String) {
         // 도시 이름을 받아서 x, y값 받음
-        let cityInformation = getCityInformaiton(city: city)
+        let cityInformation = getCityInformaiton(province: province, city: city)
         let xCoordinate = cityInformation[0], yCoordinate = cityInformation[1],
             airConditionMeasuring = cityInformation[2], cityCode = cityInformation[3]
         
@@ -62,10 +62,10 @@ class FetchWeatherInformation {
         dataTask.resume()
     }
     
-    func getCityInformaiton(city: String) -> [String] {
+    func getCityInformaiton(province:String, city: String) -> [String] {
         let koreanCities: [CityInformation] = loadCityListFromCSV()
         
-        let nowCity = koreanCities.filter{ $0.city == city }[0]
+        let nowCity = koreanCities.filter{ $0.province == province && $0.city == city }[0]
         
         return [String(nowCity.xCoordination), String(nowCity.yCoordination), String(nowCity.airCoditionMeasuring), String(nowCity.code)]
     }
