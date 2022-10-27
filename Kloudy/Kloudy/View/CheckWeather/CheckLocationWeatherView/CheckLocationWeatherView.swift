@@ -23,7 +23,8 @@ class CheckLocationWeatherView: UIView {
     let locationLabel = UILabel()
     let weatherImage: UIImageView = {
         let aweatherImage = UIImageView()
-        aweatherImage.image = UIImage(systemName: "cloud.fill")
+        aweatherImage.image = UIImage(named: "cloudySun")
+//        aweatherImage.image = UIImage(systemName: "cloud.fill")
         aweatherImage.snp.makeConstraints {
             $0.width.equalTo(150)
             $0.height.equalTo(157)
