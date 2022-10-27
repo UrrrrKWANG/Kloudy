@@ -93,12 +93,6 @@ class LocationSelectionViewEditCell: UICollectionViewCell {
         fatalError("init(coder: NSCoder) fail")
     }
     
-//    private func addView() {
-//        [minusButton, locationNameLabel, temperatureLabel, editLine].forEach() {
-//            contentView.addSubview($0)
-//        }
-//    }
-    
     private func addView() {
         [minusButton, stackView].forEach() {
             contentView.addSubview($0)
