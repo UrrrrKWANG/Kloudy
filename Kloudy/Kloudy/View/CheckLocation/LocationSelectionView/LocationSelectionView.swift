@@ -162,12 +162,6 @@ class LocationSelectionView: UIViewController {
         }
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
     }
-        
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.isHidden = true
-        cancelSearchButton.isHidden = true
-        noCityInformationLabel.isHidden = true
-    }
     
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
@@ -353,7 +347,7 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
                 UIView.animate(withDuration: 0.2) { [self] in
                     if let cell = self.currentLongPressedCell {
                         cell.transform = .init(scaleX: 1, y: 1)
-                        for i in 0..<4 {
+                        for i in 0..<locationList.count {
                             
                             var cell = self.collectionView.cellForItem(at: [0,i]) as? LocationSelectionCollectionViewCell
                             cell!.isBeingEdited.toggle()
