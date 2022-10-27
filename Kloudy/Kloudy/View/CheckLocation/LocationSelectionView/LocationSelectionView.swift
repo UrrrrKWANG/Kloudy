@@ -66,6 +66,7 @@ class LocationSelectionView: UIViewController {
         
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
+        collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
         
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
@@ -160,6 +161,12 @@ class LocationSelectionView: UIViewController {
             $0.height.equalTo(20)
         }
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
+    }
+        
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.isHidden = true
+        cancelSearchButton.isHidden = true
+        noCityInformationLabel.isHidden = true
     }
     
     private func configureSearchBar() {
@@ -342,14 +349,17 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
             }
         } else if gestureRecognizer.state == .ended { // 롱탭제스쳐 끝날 때의 코드
             if let indexPath = collectionView.indexPathForItem(at: location) {
+                print(indexPath)
                 UIView.animate(withDuration: 0.2) { [self] in
                     if let cell = self.currentLongPressedCell {
                         cell.transform = .init(scaleX: 1, y: 1)
-                        
-                        if cell == self.collectionView.cellForItem(at: indexPath) as? LocationSelectionCollectionViewCell {
-                            // .began에서 저장했던 cell과 현재 위치에 있는 셀이 같다면 동작을 실행하고, 아니라면 아무것도 하지 않습니다.
-                            // 코드 추가 예정
+                        for i in 0..<4 {
+                            
+                            var cell = self.collectionView.cellForItem(at: [0,i]) as? LocationSelectionCollectionViewCell
+                            cell!.isBeingEdited.toggle()
                         }
+                        collectionView.reloadData()
+                       
                     }
                 }
             }
