@@ -12,6 +12,7 @@ class CheckWeatherView: UIViewController {
     let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
     let addLivingIndexCellView = AddLivingIndexCellView()
     
+    
     //MARK: View LifeCycle Function
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = true
