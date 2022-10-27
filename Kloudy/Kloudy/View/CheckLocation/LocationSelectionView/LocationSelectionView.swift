@@ -267,7 +267,9 @@ extension LocationSelectionView: UICollectionViewDataSource {
                 cellCity = info.city
             }
         }
-        cell.clearButton.addTarget(self, action: #selector(self.deleteLocationAlert), for: .touchUpInside)
+        
+        cell.delegate = self
+        cell.indexPath = indexPath.row
         cell.locationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
         cell.editLocationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
         if indexPath.row < weatherInfoArrary.count {
@@ -285,19 +287,6 @@ extension LocationSelectionView: UICollectionViewDataSource {
         cell.backgroundColor = UIColor.KColor.black
         cell.layer.cornerRadius = 15
         return cell
-    }
-    
-    @objc private func deleteLocationAlert() {
-        let alert = UIAlertController(title: "해당 지역을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
-        let confirm = UIAlertAction(title: "취소", style: .default) { _ in
-            
-        }
-        let cancel = UIAlertAction(title: "확인", style: .destructive) { _ in
-            self.dismiss(animated: true)
-            // delete
-        }
-        [confirm, cancel].forEach(alert.addAction(_:))
-        self.present(alert, animated: true)
     }
 }
 
@@ -463,6 +452,38 @@ extension LocationSelectionView: UITableViewDelegate {
             self.dismiss(animated: true)
         }
         alert.addAction(confirm)
+        self.present(alert, animated: true)
+    }
+}
+
+extension LocationSelectionView: collectionViewCelDeleteButtonlClicked {
+    func buttonClicked(indexPath: Int) {
+        let alert = UIAlertController(title: "해당 지역을 삭제하시겠습니까?", message: nil, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "취소", style: .default) { _ in
+            self.dismiss(animated: true)
+        }
+        let cancel = UIAlertAction(title: "확인", style: .destructive) { _ in
+            self.viewModel.locationDelete(location: self.locationList[indexPath])
+            self.dismiss(animated: true)
+            self.locationList = self.viewModel.fetchLocations()
+            self.weatherInfoArrary.removeAll()
+            self.collectionView.reloadData()
+
+            self.locationList.forEach { location in
+                var cellProvince: String = String()
+                var cellCity: String = String()
+                
+                self.cityInformation.forEach { info in
+                    if info.code == location.city {
+                        cellProvince = info.province
+                        cellCity = info.city
+                    }
+                }
+                self.fetchedWeatherInfo.startLoad(province: cellProvince, city: cellCity)
+            }
+            // delete
+        }
+        [confirm, cancel].forEach(alert.addAction(_:))
         self.present(alert, animated: true)
     }
 }
