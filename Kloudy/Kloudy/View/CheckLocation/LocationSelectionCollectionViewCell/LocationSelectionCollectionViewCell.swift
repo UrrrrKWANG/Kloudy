@@ -16,6 +16,18 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
     static let cellID = "Cell"
     
+    var isBeingEdited: Bool = false {
+            didSet {
+                if isBeingEdited {
+                    weatherImage.isHidden = true
+                    minusButton.isHidden = false
+                } else {
+                    weatherImage.isHidden = false
+                    minusButton.isHidden = true
+                }
+            }
+        }
+    
     lazy var locationNameLabel: UILabel = {
         let label = UILabel()
         label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
@@ -44,6 +56,71 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
         return label
     }()
     
+    private lazy var minusButton: UIImageView = {
+            let minusInCircle = UIImageView()
+            minusInCircle.image = UIImage(systemName: "minus.circle.fill")
+            minusInCircle.tintColor = UIColor.KColor.red
+                    minusInCircle.snp.makeConstraints {
+                        $0.size.equalTo(26)
+                    }
+            return minusInCircle
+        }()
+        
+        private lazy var editLine: UIImageView = {
+            let lineView = UIImageView()
+            lineView.image = UIImage(systemName: "line.3.horizontal")
+            lineView.contentMode = .scaleAspectFit
+            lineView.tintColor = UIColor.KColor.gray05
+            lineView.snp.makeConstraints {
+                $0.size.equalTo(26)
+            }
+            
+            return lineView
+        }()
+    
+//    private lazy var normalStackView: UIStackView = {
+//            let stackView = UIStackView()
+//            stackView.axis = .horizontal
+//            stackView.distribution = .fillProportionally
+//            stackView.alignment = .fill
+//            stackView.spacing = 5
+//            stackView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
+//            stackView.addArrangedSubview(self.locationNameLabel)
+//            stackView.addArrangedSubview(self.weatherImage)
+//            stackView.addArrangedSubview(self.diurnalTemperatureLabel)
+//            stackView.addArrangedSubview(self.temperatureLabel)
+//
+//            stackView.backgroundColor = UIColor.KColor.gray02
+//            stackView.layer.cornerRadius = 15
+//
+//            stackView.sizeToFit()
+//            stackView.layoutIfNeeded()
+//
+//            return stackView
+//        }()
+//
+//        private lazy var editStackView: UIStackView = {
+//            let stackView = UIStackView()
+//            stackView.axis = .horizontal
+//            stackView.distribution = .fillProportionally
+//            stackView.alignment = .fill
+//            stackView.spacing = 5
+//            stackView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+//
+//            stackView.addArrangedSubview(self.locationNameLabel)
+//            stackView.addArrangedSubview(self.temperatureLabel)
+//            stackView.addArrangedSubview(self.editLine)
+//
+//            stackView.backgroundColor = UIColor.KColor.gray02
+//            stackView.layer.cornerRadius = 15
+//
+//            stackView.sizeToFit()
+//            stackView.layoutIfNeeded()
+//
+//            return stackView
+//        }()
+
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -56,12 +133,24 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     }
     
     private func addView() {
+        addSubview(weatherImage)
+        addSubview(minusButton)
+        
+        
         [locationNameLabel, weatherImage, temperatureLabel, diurnalTemperatureLabel].forEach() {
             contentView.addSubview($0)
         }
     }
     
     private func setLayOut() {
+        
+        minusButton.isHidden = true
+
+        minusButton.snp.makeConstraints {
+            $0.leading.equalToSuperview().inset(10)
+            $0.centerY.equalToSuperview()
+        }
+        
         locationNameLabel.snp.makeConstraints {
             $0.leading.equalTo(20)
             $0.centerY.equalToSuperview()
