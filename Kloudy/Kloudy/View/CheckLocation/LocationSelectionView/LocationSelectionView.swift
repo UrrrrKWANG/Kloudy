@@ -270,6 +270,8 @@ extension LocationSelectionView: UICollectionViewDataSource {
         if indexPath.row < weatherInfoArrary.count {
             cell.diurnalTemperatureLabel.configureLabel(text: "\(weatherInfoArrary[indexPath.row].cellDiurnalTemperature[0])° | \(weatherInfoArrary[indexPath.row].cellDiurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
             cell.temperatureLabel.configureLabel(text: "\(weatherInfoArrary[indexPath.row].cellTemperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+            let cellImage = "weather-\(weatherInfoArrary[indexPath.row].cellWeatherImageInt)"
+            cell.weatherImage.image = UIImage(named: cellImage)?.withTintColor(UIColor.KColor.white, renderingMode: .alwaysOriginal)
         } else {
             cell.diurnalTemperatureLabel.configureLabel(text: "- | -", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
             cell.temperatureLabel.configureLabel(text: "-", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
