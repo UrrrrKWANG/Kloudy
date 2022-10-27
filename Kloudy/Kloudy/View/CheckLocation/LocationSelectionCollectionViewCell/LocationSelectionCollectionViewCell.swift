@@ -9,35 +9,36 @@ import UIKit
 import SnapKit
 
 class LocationSelectionCollectionViewCell: UICollectionViewCell {
-    let locationName: String = "현재위치"
-    let weatherImageInt: Int = 0
-    let temperature: Int = 20
-    let diurnalTemperature: [Int] = [20, 30]
+    var locationName: String = "-"
+    var weatherImageInt: Int = 0
+    var temperature: Int = 0
+    var diurnalTemperature: [Int] = [0, 0]
     
     static let cellID = "Cell"
     
-    private lazy var locationNameLabel: UILabel = {
+    lazy var locationNameLabel: UILabel = {
         let label = UILabel()
         label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
         return label
     }()
     
-    private lazy var weatherImage: UIImageView = {
+    lazy var weatherImage: UIImageView = {
         let uiImageView = UIImageView()
         uiImageView.image = UIImage(systemName: "map")
         uiImageView.snp.makeConstraints {
             $0.size.equalTo(26)
         }
+        // weatherImageInt 에 따른 image 반환을 다르게 구현
         return uiImageView
     }()
     
-    private lazy var temperatureLabel: UILabel = {
+    lazy var temperatureLabel: UILabel = {
         let label = UILabel()
         label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
         return label
     }()
     
-    private lazy var diurnalTemperatureLabel: UILabel = {
+    lazy var diurnalTemperatureLabel: UILabel = {
         let label = UILabel()
         label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
         return label

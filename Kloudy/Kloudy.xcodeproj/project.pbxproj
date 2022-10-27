@@ -83,6 +83,7 @@
 		8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; };
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B8A087C455B88A26567A3D15 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */; };
+		BA73DDC3290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73DDC2290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift */; };
 		BA78C8E22907AC5C00F938FD /* CheckWeatherCellLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */; };
 		C7DC68C53BFD05B1BFC3C7C4 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1536192E4E0E4A52299146F0 /* Pods_Kloudy_KloudyUITests.framework */; };
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
@@ -254,6 +255,7 @@
 		8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = kloudyWidget.intentdefinition; sourceTree = "<group>"; };
 		8BC8F81929011E3400EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		BA73DDC2290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpCheckWeatehrPageView.swift; sourceTree = "<group>"; };
 		BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckWeatherCellLabelView.swift; sourceTree = "<group>"; };
 		BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
@@ -501,7 +503,6 @@
 			isa = PBXGroup;
 			children = (
 				8BC8F79329011DB100EF83AE /* AddLivingIndexCellViewModel.swift */,
-				8BC8F79429011DB100EF83AE /* AddLivingIndexCellView.swift */,
 				8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */,
 			);
 			path = AddLivingIndexCellView;
@@ -538,6 +539,7 @@
 		8BC8F79C29011DB100EF83AE /* WeatherCellFourByTwo */ = {
 			isa = PBXGroup;
 			children = (
+				8BC8F79429011DB100EF83AE /* AddLivingIndexCellView.swift */,
 				8BC8F79D29011DB100EF83AE /* WeatherCellFourByTwoViewModel.swift */,
 				8BC8F79E29011DB100EF83AE /* WeatherCellFourByTwo.swift */,
 			);
@@ -564,6 +566,7 @@
 			children = (
 				8BC8F7A129011DB100EF83AE /* CheckWeatherPageViewModel.swift */,
 				8BC8F7A229011DB100EF83AE /* CheckWeatherPageView.swift */,
+				BA73DDC2290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift */,
 			);
 			path = CheckWeatherPageView;
 			sourceTree = "<group>";
@@ -1084,6 +1087,7 @@
 				8BC8F7DE29011DB200EF83AE /* SelectWeatherCellViewModel.swift in Sources */,
 				8BC8F7E529011DB200EF83AE /* AddLivingIndexCellViewModel.swift in Sources */,
 				8BC8F81D29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
+				BA73DDC3290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift in Sources */,
 				8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */,
 				8BC8F80029011DB200EF83AE /* AppDelegate.swift in Sources */,
 				8BC8F7FD29011DB200EF83AE /* LocationSelectionEditView.swift in Sources */,
