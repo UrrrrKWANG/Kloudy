@@ -51,7 +51,7 @@ class LocationSelectionView: UIViewController {
         super.viewDidLoad()
         
         view.backgroundColor = UIColor.KColor.black
-        
+        collectionView.refreshControl = refreshControl
         self.navigationController?.navigationBar.isHidden = true
         self.locationSelectionNavigationView.isHidden = false
         
@@ -96,7 +96,7 @@ class LocationSelectionView: UIViewController {
         locationList.forEach { location in
             var cellProvince: String = String()
             var cellCity: String = String()
-
+            
             cityInformation.forEach { info in
                 if info.code == location.city {
                     cellProvince = info.province
@@ -107,6 +107,36 @@ class LocationSelectionView: UIViewController {
         }
         
     }
+    
+    
+    private lazy var refreshControl: UIRefreshControl = {
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: #selector(refreshReloadCollectView), for: .valueChanged)
+        
+        return refreshControl
+    }()
+    
+    @objc func refreshReloadCollectView() {
+        
+        locationList = viewModel.fetchLocations()
+        self.weatherInfoArrary.removeAll()
+        self.collectionView.reloadData()
+
+        locationList.forEach { location in
+            var cellProvince: String = String()
+            var cellCity: String = String()
+            
+            cityInformation.forEach { info in
+                if info.code == location.city {
+                    cellProvince = info.province
+                    cellCity = info.city
+                }
+            }
+            fetchedWeatherInfo.startLoad(province: cellProvince, city: cellCity)
+        }
+        self.refreshControl.endRefreshing()
+    }
+    
     
     //MARK: Configure Function
     private func configureCollecionView() {
@@ -229,7 +259,7 @@ extension LocationSelectionView: UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationSelectionCollectionViewCell.cellID, for: indexPath) as! LocationSelectionCollectionViewCell
         let location = locationList[indexPath.row]
         var cellCity: String = String()
-
+        
         //TODO: 메인 화면에서 delegate 를 통해 날씨 정보를 전달해서 Cell 에 표현
         cityInformation.forEach { info in
             if info.code == location.city {
