@@ -7,6 +7,8 @@
 
 import UIKit
 import SnapKit
+import SwiftUI
+import Combine
 
 // https://youtu.be/I7M9V579AaE
 
@@ -40,8 +42,10 @@ class LocationSelectionView: UIViewController {
     var locationTableViewModel = [SearchingLocation]()
     var filteredLocationModel = [SearchingLocation]()
     var cellWeatherData: [LocationCellModel] = [LocationCellModel]()
-    
-    
+    var weatherInfoArrary: [LocationCellModel] = []
+    @ObservedObject var fetchedWeatherInfo = FetchWeatherInformation()
+    var cancelBag = Set<AnyCancellable>()
+    var isCheck: Bool = false
     //MARK: View Lifecycle Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,10 +67,8 @@ class LocationSelectionView: UIViewController {
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
         
-        
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
-        
     }
     
     @objc func tapBackButton() {
@@ -80,32 +82,29 @@ class LocationSelectionView: UIViewController {
         
         locationList = viewModel.fetchLocations()
         collectionView.reloadData()
+        self.fetchedWeatherInfo.$result
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                if self!.isCheck {
+                    self?.weatherInfoArrary.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
+                }
+                self?.isCheck = true
+                self?.collectionView.reloadData()
+            })
+            .store(in: &self.cancelBag)
         
-        //
-        
-        
-//        locationList.forEach { location in
-//            var cellProvince: String = String()
-//            var cellCity: String = String()
-//
-//            cityInformation.forEach { info in
-//                if info.code == location.city {
-//                    cellProvince = info.province
-//                    cellCity = info.city
-//                }
-//            }
-//
-//            Task {
-//                if let data = await cityInformationModel.startLoad(province: cellProvince, city: cellCity) {
-//                    DispatchQueue.main.async {
-//                        let temporalWeatherCellData: LocationCellModel = LocationCellModel(cellLocationName: cellCity, cellTemperature: Int(data.main[0].currentTemperature), cellWeatherImageInt: data.main[0].currentWeather, cellDiurnalTemperature: [Int(data.main[0].dayMinTemperature), Int(data.main[0].dayMaxTemperature)])
-//                        print(data.main[0].currentTemperature)
-//                        self.cellWeatherData.append(temporalWeatherCellData)
-//
-//                    }
-//                }
-//            }
-//        }
+        locationList.forEach { location in
+            var cellProvince: String = String()
+            var cellCity: String = String()
+
+            cityInformation.forEach { info in
+                if info.code == location.city {
+                    cellProvince = info.province
+                    cellCity = info.city
+                }
+            }
+            fetchedWeatherInfo.startLoad(province: cellProvince, city: cellCity)
+        }
         
     }
     
@@ -238,6 +237,14 @@ extension LocationSelectionView: UICollectionViewDataSource {
             }
         }
         cell.locationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
+        if indexPath.row < weatherInfoArrary.count {
+            cell.diurnalTemperatureLabel.configureLabel(text: "\(weatherInfoArrary[indexPath.row].cellDiurnalTemperature[0])° | \(weatherInfoArrary[indexPath.row].cellDiurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+            cell.temperatureLabel.configureLabel(text: "\(weatherInfoArrary[indexPath.row].cellTemperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        } else {
+            cell.diurnalTemperatureLabel.configureLabel(text: "- | -", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+            cell.temperatureLabel.configureLabel(text: "-", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        }
+        
         cell.backgroundColor = UIColor.KColor.gray02
         cell.layer.cornerRadius = 15
         return cell
@@ -394,6 +401,7 @@ extension LocationSelectionView: UITableViewDelegate {
                 }
             }
         }
+        self.viewDidLoad()
     }
     
     private func isSameLocationAlert() {
