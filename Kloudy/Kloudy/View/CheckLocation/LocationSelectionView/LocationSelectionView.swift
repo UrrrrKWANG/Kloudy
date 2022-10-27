@@ -30,55 +30,97 @@ class LocationSelectionView: UIViewController {
     
     let cityInformationModel = FetchWeatherInformation()
     let viewModel = LocationSelectionViewModel()
+    
+    // csv 파일 데이터
     var cityInformation = [CityInformation]()
+    
+    // Fetch CoreData Location Entity
+    var locationList = [Location]()
+    
     var locationTableViewModel = [SearchingLocation]()
     var filteredLocationModel = [SearchingLocation]()
+    var cellWeatherData: [LocationCellModel] = [LocationCellModel]()
     
-
+    
     //MARK: View Lifecycle Function
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = .black
+        view.backgroundColor = UIColor.KColor.black
         
         self.navigationController?.navigationBar.isHidden = true
-        
-        
-        collectionView.dataSource = self
-        collectionView.delegate = self
-        
-        view.addSubview(collectionView)
-                        
-        collectionView.backgroundColor = .black
-        
-        self.view.addSubview(locationSelectionNavigationView)
-        self.configureLocationSelectionNavigationView()
         self.locationSelectionNavigationView.isHidden = false
-
-        // 스냅킷 사용하여 오토레이아웃 간략화하였습니다.
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom)
-            $0.leading.trailing.bottom.equalToSuperview()
-        }
-        [searchBar, cancelSearchButton, tableView, noCityInformationLabel].forEach { self.view.addSubview($0) }
         
+        [locationSelectionNavigationView, searchBar, cancelSearchButton, tableView, noCityInformationLabel, collectionView].forEach { self.view.addSubview($0) }
+        
+        configureLocationSelectionNavigationView()
         configureCancelSearchButton()
         configureSearchBar()
         configureTableView()
         configureNoCityInformationLabel()
+        configureCollecionView()
         
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
-                
-        collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
+        
         
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
-
+        
     }
     
     @objc func tapBackButton() {
         self.navigationController?.popToRootViewController(animated: true)
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.isHidden = true
+        cancelSearchButton.isHidden = true
+        noCityInformationLabel.isHidden = true
+        
+        locationList = viewModel.fetchLocations()
+        collectionView.reloadData()
+        
+        //
+        
+        
+//        locationList.forEach { location in
+//            var cellProvince: String = String()
+//            var cellCity: String = String()
+//
+//            cityInformation.forEach { info in
+//                if info.code == location.city {
+//                    cellProvince = info.province
+//                    cellCity = info.city
+//                }
+//            }
+//
+//            Task {
+//                if let data = await cityInformationModel.startLoad(province: cellProvince, city: cellCity) {
+//                    DispatchQueue.main.async {
+//                        let temporalWeatherCellData: LocationCellModel = LocationCellModel(cellLocationName: cellCity, cellTemperature: Int(data.main[0].currentTemperature), cellWeatherImageInt: data.main[0].currentWeather, cellDiurnalTemperature: [Int(data.main[0].dayMinTemperature), Int(data.main[0].dayMaxTemperature)])
+//                        print(data.main[0].currentTemperature)
+//                        self.cellWeatherData.append(temporalWeatherCellData)
+//
+//                    }
+//                }
+//            }
+//        }
+        
+    }
+    
+    //MARK: Configure Function
+    private func configureCollecionView() {
+        collectionView.dataSource = self
+        collectionView.delegate = self
+        collectionView.backgroundColor = UIColor.KColor.black
+        collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
+        
+        // 스냅킷 사용하여 오토레이아웃 간략화하였습니다.
+        collectionView.snp.makeConstraints {
+            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
     }
     
     private func configureLocationSelectionNavigationView() {
@@ -91,16 +133,9 @@ class LocationSelectionView: UIViewController {
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.isHidden = true
-        cancelSearchButton.isHidden = true
-        noCityInformationLabel.isHidden = true
-    }
-    
-    //MARK: Configure Function
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(8)
+            $0.leading.trailing.equalToSuperview().inset(12)
             $0.top.equalTo(cancelSearchButton.snp.top)
             $0.height.equalTo(47)
         }
@@ -123,7 +158,7 @@ class LocationSelectionView: UIViewController {
         cancelSearchButton.titleLabel?.sizeToFit()
         cancelSearchButton.titleLabel?.font = UIFont.KFont.appleSDNeoRegularLarge
         cancelSearchButton.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(65)
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(26)
             $0.height.equalTo(47)
             $0.trailing.equalToSuperview().inset(21)
         }
@@ -179,6 +214,8 @@ class LocationSelectionView: UIViewController {
         tableView.reloadData()
         collectionView.isHidden = false
         noCityInformationLabel.isHidden = true
+        locationList = viewModel.fetchLocations()
+        collectionView.reloadData()
     }
 }
 
@@ -186,20 +223,26 @@ class LocationSelectionView: UIViewController {
 extension LocationSelectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return locationList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationSelectionCollectionViewCell.cellID, for: indexPath) as! LocationSelectionCollectionViewCell
-        
-        cell.layer.cornerRadius = 15
-        
+        let location = locationList[indexPath.row]
+        var cellCity: String = String()
+
+        //TODO: 메인 화면에서 delegate 를 통해 날씨 정보를 전달해서 Cell 에 표현
+        cityInformation.forEach { info in
+            if info.code == location.city {
+                cellCity = info.city
+            }
+        }
+        cell.locationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
         cell.backgroundColor = UIColor.KColor.gray02
-        
+        cell.layer.cornerRadius = 15
         return cell
     }
 }
-
 
 // MARK: UICollectionViewDelegate 익스텐션
 extension LocationSelectionView: UICollectionViewDelegate {
@@ -211,7 +254,7 @@ extension LocationSelectionView: UICollectionViewDelegate {
 extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width - 30, height: view.frame.width / 4)
+        return CGSize(width: view.frame.width - 42, height: 96)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -219,11 +262,11 @@ extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
+        return 16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 30, left: 10, bottom: 10, right: 10)
+        return UIEdgeInsets(top: 18, left: 10, bottom: 10, right: 10)
     }
 }
 
@@ -300,7 +343,7 @@ extension LocationSelectionView: UISearchBarDelegate {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = false
             searchBar.snp.remakeConstraints {
-                $0.leading.equalToSuperview().inset(8)
+                $0.leading.equalToSuperview().inset(12)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
                 $0.trailing.equalTo(self.cancelSearchButton.snp.leading)
@@ -316,7 +359,7 @@ extension LocationSelectionView: UISearchBarDelegate {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = true
             searchBar.snp.remakeConstraints {
-                $0.leading.trailing.equalToSuperview().inset(8)
+                $0.leading.trailing.equalToSuperview().inset(12)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
             }
