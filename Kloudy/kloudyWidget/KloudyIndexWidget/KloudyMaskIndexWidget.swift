@@ -54,8 +54,11 @@ struct KloudyMaskAccessoryCircularWidgetView1: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("마스크 지수")
+        VStack {
+            Image("mask_1")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
 
@@ -104,8 +107,11 @@ struct KloudyMaskAccessoryCircularWidgetView2: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("마스크 지수")
+        VStack {
+            Image("mask_2")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
 
@@ -154,8 +160,11 @@ struct KloudyMaskAccessoryCircularWidgetView3: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("마스크 지수")
+        VStack {
+            Image("mask_3")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
 
@@ -204,7 +213,10 @@ struct KloudyMaskAccessoryCircularWidgetView4: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("마스크 지수")
+        VStack {
+            Image("mask_4")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
