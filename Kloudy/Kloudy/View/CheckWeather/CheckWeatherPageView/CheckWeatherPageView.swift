@@ -12,47 +12,11 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
     var isViewBuild = true
     //TODO: 더미데이터, 아키텍쳐 확인 후 수정
     var locationTodayIndexArray: [[cellData]] = [
-        [
-            cellData(indexName: "square"),
-            cellData(indexName: "square"),
-            cellData(indexName: "square"),
+            [
+                cellData(indexLevel: ["mask":4]),
+                cellData(indexLevel: ["rain":4])
+                ]
         ]
-        ,
-        [
-            cellData(indexName: "01.circle"),
-            cellData(indexName: "02.circle"),
-        ],
-        [
-            cellData(indexName: "01.circle"),
-            cellData(indexName: "02.circle"),
-            cellData(indexName: "03.circle"),
-            cellData(indexName: "04.circle"),
-        ],
-        [
-            cellData(indexName: "01.circle"),
-            cellData(indexName: "02.circle"),
-            cellData(indexName: "03.circle"),
-            cellData(indexName: "04.circle"),
-            cellData(indexName: "05.circle")
-        ],
-        [
-            cellData(indexName: "01.circle"),
-            cellData(indexName: "02.circle"),
-            cellData(indexName: "03.circle"),
-            cellData(indexName: "04.circle"),
-            cellData(indexName: "05.circle"),
-            cellData(indexName: "06.circle"),
-        ],
-        [
-            cellData(indexName: "01.circle"),
-            cellData(indexName: "02.circle"),
-            cellData(indexName: "03.circle"),
-            cellData(indexName: "04.circle"),
-            cellData(indexName: "05.circle"),
-            cellData(indexName: "06.circle"),
-            cellData(indexName: "07.circle")
-        ]
-    ]
     lazy var viewBuildIndex = locationTodayIndexArray.count // 스크롤 뷰에서 그려질 때 반대로 그려져서, 예 : 더미데이터 7- > 6 -> 5 -> 4 -> 2 -> 3 개가 들어간 셀이 보여짐
     
     // 이미지 반환하는 메서드
@@ -79,13 +43,13 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
     // 셀 그리는 메서드
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
-        if isViewBuild { // 처음 뷰를 빌드할 때
-            cell.addSubview(circleImage(imageName: self.locationTodayIndexArray[viewBuildIndex][indexPath[1]].indexName))
-        } else { // 롱탭 제스쳐 이후
-            if indexPath[1] < self.locationTodayIndexArray[        self.pageSlider.currentPage].count {
-                cell.addSubview(circleImage(imageName: self.locationTodayIndexArray[        self.pageSlider.currentPage][indexPath[1]].indexName))
-            }
-        }
+//        if isViewBuild { // 처음 뷰를 빌드할 때
+//            cell.addSubview(circleImage(imageName: self.locationTodayIndexArray[viewBuildIndex][indexPath[1]].indexLevel))
+//        } else { // 롱탭 제스쳐 이후
+//            if indexPath[1] < self.locationTodayIndexArray[        self.pageSlider.currentPage].count {
+//                cell.addSubview(circleImage(imageName: self.locationTodayIndexArray[        self.pageSlider.currentPage][indexPath[1]].indexLevel))
+//            }
+//        }
         return cell
     }
     
@@ -264,5 +228,6 @@ extension CheckWeatherPageView: UIScrollViewDelegate {
 
 //TODO: 데이터 받아올 임시 struct
 struct cellData : Equatable {
-    var indexName: String
+    var indexLevel: [ String : Int ]
+    
 }

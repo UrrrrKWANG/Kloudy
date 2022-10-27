@@ -7,6 +7,7 @@
 
 import UIKit
 import SnapKit
+import Lottie
 
 class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout{
     var isViewBuild = true
@@ -14,22 +15,30 @@ class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionVie
     //TODO: 더미데이터, 아키텍쳐 확인 후 수정
     var locationTodayIndexArray: [[cellData]] = [
         [
-            cellData(indexName: "square"),
-            cellData(indexName: "square")
+            cellData(indexLevel: ["mask":2]),
+            cellData(indexLevel: ["rain":4])
         ]
     ]
     lazy var viewBuildIndex = locationTodayIndexArray.count // 스크롤 뷰에서 그려질 때 반대로 그려져서, 예 : 더미데이터 7- > 6 -> 5 -> 4 -> 2 -> 3 개가 들어간 셀이 보여짐
     
     // 이미지 반환하는 메서드
-    private func circleImage(imageName: String) -> UIImageView{
+    private func makeLottieView(indexName: String) -> LottieAnimationView{
+        let lottieView = LottieAnimationView(name: indexName)
+        lottieView.contentMode = .scaleAspectFit
+        lottieView.frame = CGRect(x: 0, y: 0, width: 144, height: 144)
+        lottieView.loopMode = .loop
+        lottieView.backgroundBehavior = .pauseAndRestore
+        return lottieView
+    }
+    
+    private func makeImageView(imageName: String) -> UIImageView{
         let imageView = UIImageView()
         imageView.contentMode = .scaleAspectFit
-        imageView.image = UIImage(systemName: imageName)
+        imageView.image = UIImage(named: imageName)
         imageView.translatesAutoresizingMaskIntoConstraints = true
         imageView.frame = CGRect(x: 0, y: 0, width: 144, height: 144)
         return imageView
     }
-    
     
     // 셀 개수 반환
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -45,10 +54,87 @@ class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         if isViewBuild { // 처음 뷰를 빌드할 때
-            cell.addSubview(circleImage(imageName: self.locationTodayIndexArray[viewBuildIndex][indexPath[1]].indexName))
+            let indexName = self.locationTodayIndexArray[viewBuildIndex][indexPath[1]].indexLevel.keys.first!
+            let indexLevel = self.locationTodayIndexArray[viewBuildIndex][indexPath[1]].indexLevel.values.first!
+            
+            
+            switch (indexName, indexLevel) {
+            case ("mask", 1):
+                let imageView = makeImageView(imageName: "마스크_1단계")
+                cell.addSubview(imageView)
+            case ("mask", 2):
+                let imageView = makeImageView(imageName: "마스크_2단계")
+                cell.addSubview(imageView)
+            case ("mask", 3):
+                let imageView = makeImageView(imageName: "마스크_3단계")
+                cell.addSubview(imageView)
+            case ("mask", 4):
+                let lottieView = makeLottieView(indexName: "mask_4grade")
+                cell.addSubview(lottieView)
+                lottieView.play()
+            case ("rain", 1):
+                let lottieView = makeLottieView(indexName: "rain_step1")
+                cell.addSubview(lottieView)
+                lottieView.play()
+            case ("rain", 2):
+                let lottieView = makeLottieView(indexName: "rain_step2")
+                cell.addSubview(lottieView)
+                lottieView.play()
+            case ("rain", 3):
+                let lottieView = makeLottieView(indexName: "rain_step3")
+                cell.addSubview(lottieView)
+                lottieView.play()
+            case ("rain", 4):
+                let lottieView = makeLottieView(indexName: "rain_step4")
+                cell.addSubview(lottieView)
+                lottieView.play()
+            default:
+                let lottieView = makeLottieView(indexName: indexName)
+                cell.addSubview(lottieView)
+                lottieView.play()
+            }
+            
+            
         } else { // 롱탭 제스쳐 이후
             if indexPath[1] < self.locationTodayIndexArray[        self.pageSlider.currentPage].count {
-                cell.addSubview(circleImage(imageName: self.locationTodayIndexArray[        self.pageSlider.currentPage][indexPath[1]].indexName))
+                let indexName = self.locationTodayIndexArray[        self.pageSlider.currentPage][indexPath[1]].indexLevel.keys.first!
+                let indexLevel = self.locationTodayIndexArray[        self.pageSlider.currentPage][indexPath[1]].indexLevel.values.first!
+                
+                switch (indexName, indexLevel) {
+                case ("mask", 1):
+                    let imageView = makeImageView(imageName: "마스크_1단계")
+                    cell.addSubview(imageView)
+                case ("mask", 2):
+                    let imageView = makeImageView(imageName: "마스크_2단계")
+                    cell.addSubview(imageView)
+                case ("mask", 3):
+                    let imageView = makeImageView(imageName: "마스크_3단계")
+                    cell.addSubview(imageView)
+                case ("mask", 4):
+                    let lottieView = makeLottieView(indexName: "mask_4grade")
+                    cell.addSubview(lottieView)
+                    lottieView.play()
+                case ("rain", 1):
+                    let lottieView = makeLottieView(indexName: "rain_step1")
+                    cell.addSubview(lottieView)
+                    lottieView.play()
+                case ("rain", 2):
+                    let lottieView = makeLottieView(indexName: "rain_step2")
+                    cell.addSubview(lottieView)
+                    lottieView.play()
+                case ("rain", 3):
+                    let lottieView = makeLottieView(indexName: "rain_step3")
+                    cell.addSubview(lottieView)
+                    lottieView.play()
+                case ("rain", 4):
+                    let lottieView = makeLottieView(indexName: "rain_step4")
+                    cell.addSubview(lottieView)
+                    lottieView.play()
+                default:
+                    let lottieView = makeLottieView(indexName: indexName)
+                    cell.addSubview(lottieView)
+                    lottieView.play()
+                }
             }
         }
         return cell
@@ -176,7 +262,6 @@ class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionVie
         collectionViews[collectionViews.count-1]?.addGestureRecognizer(gesture)
     }
 }
-
 
 // 현재 페이지 index 받아올 extension
 extension TmpCheckWeatherPageView: UIScrollViewDelegate {

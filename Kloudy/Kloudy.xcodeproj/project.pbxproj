@@ -424,6 +424,7 @@
 		8BC8F77E29011DB100EF83AE /* View */ = {
 			isa = PBXGroup;
 			children = (
+				BA73DDC6290AF3DE0038E717 /* LottieView */,
 				8BC8F77F29011DB100EF83AE /* AddWeather */,
 				8BC8F79529011DB100EF83AE /* WeatherCells */,
 				8BC8F79F29011DB100EF83AE /* CheckWeather */,
@@ -725,6 +726,13 @@
 				8BC8F81B29011E3400EF83AE /* Info.plist */,
 			);
 			path = kloudyWidget;
+			sourceTree = "<group>";
+		};
+		BA73DDC6290AF3DE0038E717 /* LottieView */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = LottieView;
 			sourceTree = "<group>";
 		};
 		BA78C8E02907ABE300F938FD /* CheckWeatherCellLabelsView */ = {
