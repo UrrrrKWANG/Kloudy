@@ -145,7 +145,7 @@ class CheckLocationWeatherView: UIView {
     }
     
     private func configureTemperatureLabel() {
-        temperatureLabel.textAlignment = .center
+        temperatureLabel.textAlignment = .right
         temperatureLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalTo(nameStackView.snp.bottom).offset(5)
