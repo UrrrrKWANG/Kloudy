@@ -12,7 +12,7 @@ extension UIColor {
     enum KColor {
         static var primaryDarkGreen: UIColor { UIColor(named: "PrimaryDarkGreen")! }
         static var primaryGreen: UIColor { UIColor(named: "PrimaryGreen")! }
-        static var backgroundBlack: UIColor { UIColor(named: "BackgrundBlack")! }
+        static var backgroundBlack: UIColor { UIColor(named: "BackgroundBlack")! }
         static var black: UIColor { UIColor(named: "Black")! }
         static var cellGray: UIColor { UIColor(named: "CellGray")! }
         static var gray01: UIColor { UIColor(named: "Gray01")! }
