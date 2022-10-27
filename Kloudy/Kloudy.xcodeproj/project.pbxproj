@@ -506,6 +506,7 @@
 			children = (
 				8BC8F79329011DB100EF83AE /* AddLivingIndexCellViewModel.swift */,
 				8B3F691D29025FBD002F554E /* AddLivingIndexCell.swift */,
+				8BC8F79429011DB100EF83AE /* AddLivingIndexCellView.swift */,
 			);
 			path = AddLivingIndexCellView;
 			sourceTree = "<group>";
@@ -541,7 +542,6 @@
 		8BC8F79C29011DB100EF83AE /* WeatherCellFourByTwo */ = {
 			isa = PBXGroup;
 			children = (
-				8BC8F79429011DB100EF83AE /* AddLivingIndexCellView.swift */,
 				8BC8F79D29011DB100EF83AE /* WeatherCellFourByTwoViewModel.swift */,
 				8BC8F79E29011DB100EF83AE /* WeatherCellFourByTwo.swift */,
 			);

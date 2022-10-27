@@ -13,13 +13,8 @@ class AddLivingIndexCell: UICollectionViewCell{
     static let identifier = "AddLivingIndexCell"
     let livingIndexCellImage = UIImageView()
     let livingIndexCellLabel = UILabel()
-    private let LocationLabel: UILabel = {
-        let label = UILabel()
-        label.text = "생활 지수"
-        label.textColor = UIColor.KColor.white
-        label.font = UIFont.KFont.appleSDNeoBoldLarge
-        return label
-    }()
+    let viewModel = AddLivingIndexCellViewModel()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureCell()
@@ -30,25 +25,26 @@ class AddLivingIndexCell: UICollectionViewCell{
     }
     
     func configureCell() {
-        self.backgroundColor = UIColor.KColor.gray02
-        self.layer.cornerRadius = 10
-        self.clipsToBounds = true
+        self.backgroundColor = UIColor.KColor.black
+        self.layer.masksToBounds = true
+        self.layer.cornerRadius = 15
         contentView.addSubview(livingIndexCellImage)
         contentView.addSubview(livingIndexCellLabel)
         
         livingIndexCellImage.snp.makeConstraints {
-            $0.top.leading.trailing.equalTo(0)
-            $0.bottom.equalTo(-24)
+            $0.top.leading.trailing.equalToSuperview()
         }
         livingIndexCellImage.contentMode = .scaleAspectFit
         livingIndexCellImage.layer.cornerRadius = 15
         
         livingIndexCellLabel.textColor = UIColor.KColor.white
-        livingIndexCellLabel.backgroundColor = .clear
+        livingIndexCellLabel.layer.cornerRadius = 15
+        livingIndexCellLabel.backgroundColor = UIColor.KColor.black
         livingIndexCellLabel.textAlignment = .center
         livingIndexCellLabel.snp.makeConstraints {
+            $0.height.equalTo(36)
             $0.leading.bottom.trailing.equalTo(0)
-            $0.top.equalTo(livingIndexCellImage.snp.bottom)
+            $0.top.equalTo(livingIndexCellImage.snp.bottom).offset(20)
         }
     }
 }
