@@ -135,7 +135,7 @@ class CheckLocationWeatherView: UIView {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fillEqually
-        stackView.spacing = 0
+        stackView.spacing = 8
         stackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(83)
             $0.leading.equalTo(temperatureLabel.snp.trailing).offset(2)
@@ -155,19 +155,21 @@ class CheckLocationWeatherView: UIView {
         nameStackView.axis = .horizontal
         nameStackView.alignment = .center
         nameStackView.distribution = .fillProportionally
-        nameStackView.spacing = 0
+        nameStackView.spacing = 8
+        
         nameStackView.snp.remakeConstraints {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().inset(20)
-            $0.height.equalTo(30)
-            $0.width.equalTo((locationLabel.text!.count) * 14 + 22)
+            $0.height.equalTo(26)
+            $0.width.equalTo(70)
+//            $0.width.equalTo((locationLabel.text!.count) * 15 + 22)
         }
     }
     
     private func configureTemperatureLabel() {
         temperatureLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(nameStackView.snp.bottom).offset(8)
+            $0.top.equalTo(nameStackView.snp.bottom).offset(5)
             $0.width.equalTo(159)
             $0.height.equalTo(125)
         }
