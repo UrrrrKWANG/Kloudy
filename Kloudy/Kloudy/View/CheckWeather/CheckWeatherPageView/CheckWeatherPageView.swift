@@ -195,14 +195,22 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             self.scrollView.addSubview(checkWeatherFrameView)
             checkWeatherFrameView.backgroundColor = .clear
             
+            let checkLocationWeatherView = CheckLocationWeatherView()
+            checkWeatherFrameView.addSubview(checkLocationWeatherView)
+            checkLocationWeatherView.snp.makeConstraints {
+                $0.top.equalToSuperview().inset(0)
+                $0.width.equalTo(UIScreen.main.bounds.width)
+                $0.height.equalTo(181)
+            }
+            
             let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
             checkWeatherFrameView.addSubview(checkWeatherCellLabelView)
             checkWeatherCellLabelView.snp.makeConstraints{
-                $0.height.equalTo(UIScreen.main.bounds.height)
                 $0.width.equalTo(UIScreen.main.bounds.width)
-                $0.top.left.bottom.right.equalToSuperview().inset(UIScreen.main.bounds.width*0.05) // label, button 패딩
+                $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(20)
+                $0.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width*0.05) // label, button 패딩
             }
-            
+
             collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
             collectionView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             collectionView?.tintColor = .systemPink
@@ -212,6 +220,11 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             collectionView?.dataSource = self
             collectionViews.append(collectionView)
             checkWeatherFrameView.addSubview(collectionView!)
+            collectionView!.snp.makeConstraints {
+                $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(20)
+                $0.width.equalTo(UIScreen.main.bounds.width)
+                $0.height.equalTo(UIScreen.main.bounds.height)
+            }
             
             let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))
             gestures.append(gesture)
