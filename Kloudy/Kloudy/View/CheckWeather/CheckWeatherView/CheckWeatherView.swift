@@ -61,14 +61,15 @@ class CheckWeatherView: UIViewController {
         
         self.view.addSubview(checkWeatherCellLabelView)
         checkWeatherCellLabelView.snp.makeConstraints {
-            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(25)
+            $0.leading.trailing.equalToSuperview().inset(21)
             $0.height.equalTo(180)
-            $0.top.equalTo(checkLocationWeatherView.snp.bottom)
         }
         checkWeatherCellLabelView.addSubview(CheckWeatherPageView)
         CheckWeatherPageView.snp.makeConstraints {
-            $0.height.equalTo(UIScreen.main.bounds.height/5)
-            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.height.width.equalToSuperview()
+//            $0.height.equalTo(UIScreen.main.bounds.height/5)
+//            $0.width.equalTo(UIScreen.main.bounds.width)
             $0.top.equalToSuperview().offset(10)
         }
     }

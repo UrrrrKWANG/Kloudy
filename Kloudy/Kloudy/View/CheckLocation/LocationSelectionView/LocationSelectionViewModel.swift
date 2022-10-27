@@ -76,6 +76,11 @@ class LocationSelectionViewModel {
             
             (location as! Location).addToWeatherCell(cellObject)
         }
+    }
+    // 지역을 삭제
+    func locationDelete(location: NSManagedObject) {
+        coreDataStack.managedContext.delete(location)
+
         coreDataStack.saveContext()
     }
 }

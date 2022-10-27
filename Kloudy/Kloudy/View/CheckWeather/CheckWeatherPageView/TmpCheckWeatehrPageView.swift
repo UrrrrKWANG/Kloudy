@@ -157,7 +157,7 @@ class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionVie
     private var layout : UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 45, bottom: 0, right: 45)
         return layout
     }
     
