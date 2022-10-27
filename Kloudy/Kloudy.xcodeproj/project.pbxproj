@@ -83,7 +83,6 @@
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		B8A087C455B88A26567A3D15 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */; };
 		BA73DDC3290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA73DDC2290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift */; };
-		BA73DDC5290AE4150038E717 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA73DDC4290AE4150038E717 /* Lexend-Regular.ttf */; };
 		BA78C8E22907AC5C00F938FD /* CheckWeatherCellLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */; };
 		C7DC68C53BFD05B1BFC3C7C4 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1536192E4E0E4A52299146F0 /* Pods_Kloudy_KloudyUITests.framework */; };
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
@@ -107,6 +106,8 @@
 		D558FEEE2909CC96002EEA22 /* 마스크_3단계.png in Resources */ = {isa = PBXBuildFile; fileRef = D558FEE72909CC96002EEA22 /* 마스크_3단계.png */; };
 		D558FEEF2909CC96002EEA22 /* 마스크_1단계.png in Resources */ = {isa = PBXBuildFile; fileRef = D558FEE82909CC96002EEA22 /* 마스크_1단계.png */; };
 		D558FEF02909CC96002EEA22 /* 마스크_1단계.png in Resources */ = {isa = PBXBuildFile; fileRef = D558FEE82909CC96002EEA22 /* 마스크_1단계.png */; };
+		D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */; };
+		D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */; };
 		E0336133290997FE0098CF76 /* Kloudy+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */; };
 		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
 		E0336135290998030098CF76 /* Kloudy+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */; };
@@ -255,7 +256,6 @@
 		8BC8F81929011E3400EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA73DDC2290AAC8F0038E717 /* TmpCheckWeatehrPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TmpCheckWeatehrPageView.swift; sourceTree = "<group>"; };
-		BA73DDC4290AE4150038E717 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Lexend-Regular.ttf"; path = "../../../../../../../../../Downloads/Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		BA78C8E12907AC5C00F938FD /* CheckWeatherCellLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckWeatherCellLabelView.swift; sourceTree = "<group>"; };
 		BBFDE40FB508AA7A65B68786 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
@@ -271,6 +271,7 @@
 		D558FEE62909CC96002EEA22 /* mask_4grade.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mask_4grade.json; sourceTree = "<group>"; };
 		D558FEE72909CC96002EEA22 /* 마스크_3단계.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "마스크_3단계.png"; sourceTree = "<group>"; };
 		D558FEE82909CC96002EEA22 /* 마스크_1단계.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "마스크_1단계.png"; sourceTree = "<group>"; };
+		D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE99C4EAECA5D797AC2E3FAD /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -679,7 +680,7 @@
 		8BC8F7C329011DB100EF83AE /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				BA73DDC4290AE4150038E717 /* Lexend-Regular.ttf */,
+				D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -905,10 +906,10 @@
 				D558FEEB2909CC96002EEA22 /* mask_4grade.json in Resources */,
 				8BC8F7D029011DB200EF83AE /* Main.storyboard in Resources */,
 				D558FEDF2909CC7C002EEA22 /* rain_step4.json in Resources */,
-				BA73DDC5290AE4150038E717 /* Lexend-Regular.ttf in Resources */,
 				D558FEDD2909CC7C002EEA22 /* rain_step1.json in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
 				D558FEEF2909CC96002EEA22 /* 마스크_1단계.png in Resources */,
+				D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				D558FEE92909CC96002EEA22 /* 마스크_2단계.png in Resources */,
 				D558FEE12909CC7C002EEA22 /* rain_step2.json in Resources */,
 				D558FEED2909CC96002EEA22 /* 마스크_3단계.png in Resources */,
@@ -940,6 +941,7 @@
 				8BC8F81A29011E3400EF83AE /* Assets.xcassets in Resources */,
 				D558FEEA2909CC96002EEA22 /* 마스크_2단계.png in Resources */,
 				D558FEF02909CC96002EEA22 /* 마스크_1단계.png in Resources */,
+				D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				D558FEEC2909CC96002EEA22 /* mask_4grade.json in Resources */,
 				D558FEE22909CC7C002EEA22 /* rain_step2.json in Resources */,
 				D558FEDE2909CC7C002EEA22 /* rain_step1.json in Resources */,
