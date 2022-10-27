@@ -59,7 +59,7 @@ class AddLivingIndexCellView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // 추후 delegate 를 통해 전달 받을 city 이름을 대입
-        self.locationWeatherCellSet = self.viewModel.fetchLocationCells(cityName: "마스크")
+//        self.locationWeatherCellSet = self.viewModel.fetchLocationCells(cityName: "마스크")
         self.checkLocationHasWeatherCell()
     }
     

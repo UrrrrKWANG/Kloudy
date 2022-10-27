@@ -17,7 +17,7 @@ class CheckWeatherCellLabelView: UIView{
         return label
     }()
     
-    private lazy var addButton: UIButton = {
+    lazy var addButton: UIButton = {
         let button = UIButton()
         button.setImage(UIImage(systemName: "plus"), for: .normal)
         button.setPreferredSymbolConfiguration(
