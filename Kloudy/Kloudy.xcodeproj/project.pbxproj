@@ -70,7 +70,6 @@
 		8BC8F80029011DB200EF83AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F7BF29011DB100EF83AE /* AppDelegate.swift */; };
 		8BC8F80129011DB200EF83AE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F7C029011DB100EF83AE /* SceneDelegate.swift */; };
 		8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8BC8F7C229011DB100EF83AE /* Assets.xcassets */; };
-		8BC8F80329011DB200EF83AE /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 8BC8F7C429011DB100EF83AE /* Lexend-Regular.ttf */; };
 		8BC8F80829011DE500EF83AE /* KloudyUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F7C929011DB200EF83AE /* KloudyUITestsLaunchTests.swift */; };
 		8BC8F80929011DE900EF83AE /* KloudyUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F7CA29011DB200EF83AE /* KloudyUITests.swift */; };
 		8BC8F80A29011DEE00EF83AE /* KloudyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F7C729011DB200EF83AE /* KloudyTests.swift */; };
@@ -107,6 +106,8 @@
 		D558FEEE2909CC96002EEA22 /* 마스크_3단계.png in Resources */ = {isa = PBXBuildFile; fileRef = D558FEE72909CC96002EEA22 /* 마스크_3단계.png */; };
 		D558FEEF2909CC96002EEA22 /* 마스크_1단계.png in Resources */ = {isa = PBXBuildFile; fileRef = D558FEE82909CC96002EEA22 /* 마스크_1단계.png */; };
 		D558FEF02909CC96002EEA22 /* 마스크_1단계.png in Resources */ = {isa = PBXBuildFile; fileRef = D558FEE82909CC96002EEA22 /* 마스크_1단계.png */; };
+		D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */; };
+		D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */; };
 		E0336133290997FE0098CF76 /* Kloudy+Font.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Kloudy+Font.swift */; };
 		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
 		E0336135290998030098CF76 /* Kloudy+Color.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Kloudy+Color.swift */; };
@@ -243,7 +244,6 @@
 		8BC8F7BF29011DB100EF83AE /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8BC8F7C029011DB100EF83AE /* SceneDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		8BC8F7C229011DB100EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		8BC8F7C429011DB100EF83AE /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		8BC8F7C529011DB100EF83AE /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8BC8F7C729011DB200EF83AE /* KloudyTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyTests.swift; sourceTree = "<group>"; };
 		8BC8F7C929011DB200EF83AE /* KloudyUITestsLaunchTests.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUITestsLaunchTests.swift; sourceTree = "<group>"; };
@@ -271,6 +271,7 @@
 		D558FEE62909CC96002EEA22 /* mask_4grade.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mask_4grade.json; sourceTree = "<group>"; };
 		D558FEE72909CC96002EEA22 /* 마스크_3단계.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "마스크_3단계.png"; sourceTree = "<group>"; };
 		D558FEE82909CC96002EEA22 /* 마스크_1단계.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "마스크_1단계.png"; sourceTree = "<group>"; };
+		D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		E5F8B65E8FF5359460FC0284 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		EE99C4EAECA5D797AC2E3FAD /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -679,7 +680,7 @@
 		8BC8F7C329011DB100EF83AE /* Font */ = {
 			isa = PBXGroup;
 			children = (
-				8BC8F7C429011DB100EF83AE /* Lexend-Regular.ttf */,
+				D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */,
 			);
 			path = Font;
 			sourceTree = "<group>";
@@ -904,11 +905,11 @@
 				226F4029290655930067B052 /* CityInformation.csv in Resources */,
 				D558FEEB2909CC96002EEA22 /* mask_4grade.json in Resources */,
 				8BC8F7D029011DB200EF83AE /* Main.storyboard in Resources */,
-				8BC8F80329011DB200EF83AE /* Lexend-Regular.ttf in Resources */,
 				D558FEDF2909CC7C002EEA22 /* rain_step4.json in Resources */,
 				D558FEDD2909CC7C002EEA22 /* rain_step1.json in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
 				D558FEEF2909CC96002EEA22 /* 마스크_1단계.png in Resources */,
+				D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				D558FEE92909CC96002EEA22 /* 마스크_2단계.png in Resources */,
 				D558FEE12909CC7C002EEA22 /* rain_step2.json in Resources */,
 				D558FEED2909CC96002EEA22 /* 마스크_3단계.png in Resources */,
@@ -940,6 +941,7 @@
 				8BC8F81A29011E3400EF83AE /* Assets.xcassets in Resources */,
 				D558FEEA2909CC96002EEA22 /* 마스크_2단계.png in Resources */,
 				D558FEF02909CC96002EEA22 /* 마스크_1단계.png in Resources */,
+				D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				D558FEEC2909CC96002EEA22 /* mask_4grade.json in Resources */,
 				D558FEE22909CC7C002EEA22 /* rain_step2.json in Resources */,
 				D558FEDE2909CC7C002EEA22 /* rain_step1.json in Resources */,

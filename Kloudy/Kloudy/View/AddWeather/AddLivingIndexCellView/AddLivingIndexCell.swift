@@ -8,7 +8,8 @@
 import UIKit
 import SnapKit
 
-class AddLivingIndexCell: UICollectionViewCell {
+class AddLivingIndexCell: UICollectionViewCell{
+    
     static let identifier = "AddLivingIndexCell"
     let livingIndexCellImage = UIImageView()
     let livingIndexCellLabel = UILabel()

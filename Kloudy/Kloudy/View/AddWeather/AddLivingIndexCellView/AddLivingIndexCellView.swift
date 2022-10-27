@@ -14,8 +14,14 @@ struct CollectionViewData {
     static let labels = ["우산", "마스크"]
 }
 
-class AddLivingIndexCellView: UIViewController {
+class AddLivingIndexCellView: UIViewController, LocationDataProtocol{
+    
+    func locationData(_ location: String) {
+        sentText = location
+    }
     let viewModel = AddLivingIndexCellViewModel()
+    
+    var sentText = ""
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "생활 지수"
@@ -146,4 +152,8 @@ extension AddLivingIndexCellView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 30
     }
+}
+
+protocol LocationDataProtocol: AnyObject {
+    func locationData(_ location : String)
 }
