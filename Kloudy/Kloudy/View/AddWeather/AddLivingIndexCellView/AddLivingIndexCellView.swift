@@ -51,7 +51,8 @@ class AddLivingIndexCellView: UIViewController {
     // delegate 을 통해 전달받을 City
     var sentLocation: Location = Location() {
         didSet {
-            locationWeatherCellArray = sentLocation.weatherCell?.sortedArray(using: [NSSortDescriptor.init(key: "id", ascending: true)]) as? [WeatherCell] ?? []
+            locationWeatherCellArray = sentLocation.weatherCell?.sortedArray(using: [NSSortDescriptor.init(key: "latitude", ascending: true)]) as? [WeatherCell] ?? []
+            collectionView.reloadData()
         }
     }
     
@@ -130,10 +131,13 @@ extension AddLivingIndexCellView: UICollectionViewDataSource {
 //        cell.layer.borderWidth = 2
 //        cell.layer.borderColor = UIColor.KColor.primaryGreen.cgColor
         
-        if self.checkLocationCellTypes["\(String(describing: cell.livingIndexCellLabel.text))"] ?? false {
-            cell.livingIndexCellImage.layer.borderWidth = 2
-            cell.livingIndexCellImage.layer.borderColor = UIColor.KColor.primaryGreen.cgColor
+        self.locationWeatherCellArray.forEach { weatherCell in
+            if weatherCell.type == collectionViewLabel[indexPath.row] {
+                cell.livingIndexCellImage.layer.borderWidth = 2
+                cell.livingIndexCellImage.layer.borderColor = UIColor.KColor.primaryGreen.cgColor
+            }
         }
+        
         cell.contentView.isUserInteractionEnabled = false
         return cell
     }

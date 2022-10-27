@@ -66,10 +66,21 @@ class LocationSelectionViewModel {
         }
     }
     
+    func saveWeatherCell(location: NSManagedObject, cells: [WeatherCell]) {
+        for cell in cells {
+            let cellObject = NSEntityDescription.insertNewObject(forEntityName: "WeatherCell", into: coreDataStack.managedContext) as! WeatherCell
+            cellObject.type = cell.type
+            cellObject.size = cell.size
+            cellObject.latitude = cell.latitude
+            cellObject.longitude = cell.longitude
+            
+            (location as! Location).addToWeatherCell(cellObject)
+        }
+    }
     // 지역을 삭제
     func locationDelete(location: NSManagedObject) {
         coreDataStack.managedContext.delete(location)
-        
+
         coreDataStack.saveContext()
     }
 }
