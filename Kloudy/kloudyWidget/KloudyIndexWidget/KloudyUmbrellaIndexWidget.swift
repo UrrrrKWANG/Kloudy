@@ -54,8 +54,11 @@ struct KloudyUmbrellaAccessoryCircularWidgetView1: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("비 지수")
+        VStack {
+            Image("rain_1")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
 
@@ -105,8 +108,11 @@ struct KloudyUmbrellaAccessoryCircularWidgetView2: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("비 지수")
+        VStack {
+            Image("rain_2")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
 
@@ -156,8 +162,11 @@ struct KloudyUmbrellaAccessoryCircularWidgetView3: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("비 지수")
+        VStack {
+            Image("rain_3")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
 
@@ -207,7 +216,10 @@ struct KloudyUmbrellaAccessoryCircularWidgetView4: View {
     var entry: Provider.Entry
     
     var body: some View {
-        Text("현재 지역의")
-        Text("비 지수")
+        VStack {
+            Image("rain_4")
+                .resizable()
+                .aspectRatio(contentMode: .fill)
+        }
     }
 }
