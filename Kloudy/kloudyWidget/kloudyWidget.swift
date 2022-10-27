@@ -47,8 +47,14 @@ struct SimpleEntry: TimelineEntry {
 struct KloudyWidget: WidgetBundle {
     @WidgetBundleBuilder
         var body: some Widget {
-            KloudyUmbrellaIndexWidget()
-            KloudyMaskIndexWidget()
+            KloudyUmbrellaIndexWidget1()
+            KloudyUmbrellaIndexWidget2()
+            KloudyUmbrellaIndexWidget3()
+            KloudyUmbrellaIndexWidget4()
+            KloudyMaskIndexWidget1()
+            KloudyMaskIndexWidget2()
+            KloudyMaskIndexWidget3()
+            KloudyMaskIndexWidget4()
 //            KloudyTodayWidget()
 //            KloudyWeeklyWidget()
         }
