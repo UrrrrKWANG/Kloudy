@@ -193,12 +193,12 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
         for pageIndex in 0 ..< self.pageControlNum {
             let checkWeatherFrameView: UIView = UIView(frame: CGRect(x: CGFloat(pageIndex) * UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
             self.scrollView.addSubview(checkWeatherFrameView)
-            checkWeatherFrameView.backgroundColor = .clear
+            checkWeatherFrameView.backgroundColor = UIColor.KColor.clear
             
             let checkLocationWeatherView = CheckLocationWeatherView()
             checkWeatherFrameView.addSubview(checkLocationWeatherView)
             checkLocationWeatherView.snp.makeConstraints {
-                $0.top.equalToSuperview().inset(0)
+                $0.top.equalToSuperview()
                 $0.width.equalTo(UIScreen.main.bounds.width)
                 $0.height.equalTo(181)
             }
@@ -215,7 +215,7 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
             collectionView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
             collectionView?.tintColor = .systemPink
-            collectionView?.backgroundColor = .clear
+            collectionView?.backgroundColor = UIColor.KColor.clear
             collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
             collectionView?.delegate = self
             collectionView?.dataSource = self
