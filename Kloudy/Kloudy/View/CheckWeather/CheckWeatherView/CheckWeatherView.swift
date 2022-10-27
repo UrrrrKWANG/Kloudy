@@ -127,22 +127,7 @@ extension CheckWeatherView {
         
         checkLocationWeatherView.maxTemperatureLabel.configureLabel(text: "최고  \(Int(weatherData.main[0].dayMaxTemperature))°",font:  UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
         checkLocationWeatherView.minTemperatureLabel.configureLabel(text: "최저  \(Int(weatherData.main[0].dayMinTemperature))°", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
-        
-        switch weatherData.main[0].currentWeather {
-        case 0:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "sunny")
-        case 1:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "rainy")
-        case 2:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "snowRain")
-        case 3:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "cloudy")
-        case 4:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "cloudySun")
-        case 5:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "snowy")
-        default:
-            checkLocationWeatherView.weatherImage.image = UIImage(named: "sunny")
-        }
+        let currentWeatherNum = "currentWeather_\(weatherData.main[0].currentWeather)"
+        checkLocationWeatherView.weatherImage.image = UIImage(named: currentWeatherNum)
     }
 }
