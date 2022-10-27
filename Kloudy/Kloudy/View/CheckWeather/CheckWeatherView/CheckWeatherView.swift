@@ -27,6 +27,7 @@ class CheckWeatherView: UIViewController {
         self.configureCheckWeatherBasicNavigationView()
         // 코드 구현을 위해 BasicNavigationView 의 경우 isHidden 처리
         self.checkWeatherBasicNavigationView.isHidden = false
+        
         self.fetchedWeatherInfo.$result
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
@@ -36,7 +37,6 @@ class CheckWeatherView: UIViewController {
             })
             .store(in: &self.cancelBag)
         fetchedWeatherInfo.startLoad(province: "경상북도", city: "포항시")
-      
         
         self.view.addSubview(checkLocationWeatherView)
         checkLocationWeatherView.snp.makeConstraints {
@@ -83,12 +83,11 @@ class CheckWeatherView: UIViewController {
     }
     
     func setLocationWeatherView() {
-        
         checkLocationWeatherView.locationLabel.configureLabel(text: "포항시", font: UIFont.KFont.appleSDNeoSemiBoldLarge, textColor: UIColor.KColor.white)
-        checkLocationWeatherView.temperatureLabel.configureLabel(text: "\(weatherData.main[0].currentTemperature)°", font: UIFont.KFont.lexendExtraLarge, textColor: UIColor.KColor.white)
+        checkLocationWeatherView.temperatureLabel.configureLabel(text: "\(Int(weatherData.main[0].currentTemperature))°", font: UIFont.KFont.lexendExtraLarge, textColor: UIColor.KColor.white)
         
-        checkLocationWeatherView.maxTemperatureLabel.configureLabel(text: "최고 \(weatherData.main[0].dayMaxTemperature)°",font:  UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
-        checkLocationWeatherView.minTemperatureLabel.configureLabel(text: "최저 \(weatherData.main[0].dayMinTemperature)°", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        checkLocationWeatherView.maxTemperatureLabel.configureLabel(text: "최고  \(Int(weatherData.main[0].dayMaxTemperature))°",font:  UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        checkLocationWeatherView.minTemperatureLabel.configureLabel(text: "최저  \(Int(weatherData.main[0].dayMinTemperature))°", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
         switch weatherData.main[0].currentWeather {
         case 0:
             checkLocationWeatherView.weatherImage.image = UIImage(named: "sunny")
@@ -105,6 +104,5 @@ class CheckWeatherView: UIViewController {
         default:
             checkLocationWeatherView.weatherImage.image = UIImage(named: "sunny")
         }
-        
     }
 }
