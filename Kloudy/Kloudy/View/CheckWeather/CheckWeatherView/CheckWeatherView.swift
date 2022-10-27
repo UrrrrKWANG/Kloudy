@@ -11,9 +11,11 @@ class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
     let addLivingIndexCellView = AddLivingIndexCellView()
+    weak var delegate: LocationDataProtocol?
     
     //MARK: View LifeCycle Function
     override func viewDidLoad() {
+        self.delegate = self.addLivingIndexCellView
         self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = UIColor.KColor.backgroundBlack
         
@@ -64,7 +66,12 @@ class CheckWeatherView: UIViewController {
     }
     
     @objc func tapAddIndexButton() {
-        let addLivingIndexCellView = AddLivingIndexCellView()
-        self.present(addLivingIndexCellView, animated: true)
+        self.delegate?.locationData("asdf")
+        self.present(self.addLivingIndexCellView, animated: true)
+    }
+}
+
+extension CheckWeatherView: LocationDataProtocol {
+    func locationData(_ location : String) {
     }
 }
