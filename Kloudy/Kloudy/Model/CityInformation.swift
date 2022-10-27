@@ -23,3 +23,11 @@ struct SearchingLocation {
     var locationString: String
     let locationCode: String
 }
+
+// LocationSelectionView 의 CollectionView 에 넣을 모델
+struct LocationCellModel {
+    var cellLocationName: String
+    var cellTemperature: Int
+    var cellWeatherImageInt: Int
+    var cellDiurnalTemperature: [Int]
+}
