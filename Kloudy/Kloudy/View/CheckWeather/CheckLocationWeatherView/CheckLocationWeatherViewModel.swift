@@ -12,11 +12,14 @@ import CoreData
 class CheckLocationWeatherViewModel {
     let weatherInformationModel = FetchWeatherInformation()
     
-    func hello() {
-        var asdf = weatherInformationModel.startLoad(province: "대전광역시", city: "중구")
+    func getWeather() -> [String]{
+//        var asdf = weatherInformationModel.startLoad(province: "대전광역시", city: "중구")
+//        sleep(2)
         print("-------------------------")
-        print(asdf)
+//        print(asdf)
+//        print(type(of: asdf))
+        let temp = ["서울","13","15","9","snowy"]
+        return temp
     }
-    
 }
 
