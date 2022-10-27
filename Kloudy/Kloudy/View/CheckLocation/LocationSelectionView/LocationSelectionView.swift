@@ -45,7 +45,7 @@ class LocationSelectionView: UIViewController {
     var weatherArr: [LocationCellModel] = []
     @ObservedObject var fetchedWeatherInfo = FetchWeatherInformation()
     var cancelBag = Set<AnyCancellable>()
-    
+    var isCheck: Bool = false
     //MARK: View Lifecycle Function
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,8 +70,11 @@ class LocationSelectionView: UIViewController {
         self.fetchedWeatherInfo.$result
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
+                if self!.isCheck {
+                    self?.weatherArr.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
+                }
+                self?.isCheck = true
                 self?.collectionView.reloadData()
-                self?.weatherArr.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
             })
             .store(in: &self.cancelBag)
         
