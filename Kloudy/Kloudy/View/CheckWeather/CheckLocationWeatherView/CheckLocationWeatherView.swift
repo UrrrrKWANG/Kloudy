@@ -10,6 +10,12 @@ import SnapKit
 
 class CheckLocationWeatherView: UIView {
 //TODO: 임시로 이미지 파일 넣었습니다.
+    let city:String = "서울"
+    let currentWeather = ""
+    let currentTemperature = ""
+    let dayMaxTemperature = ""
+    let dayMinTemperature = ""
+    
     let nameStackView = UIStackView()
     let viewModel = CheckLocationWeatherViewModel()
     let locationImage: UIImageView = {
@@ -21,7 +27,14 @@ class CheckLocationWeatherView: UIView {
         }
         return aLocationIcon
     }()
-    let locationLabel = UILabel()
+    
+    lazy var locationLabel:  UILabel = {
+        let label = UILabel()
+        label.textAlignment = .right
+        label.configureLabel(text: city, font: UIFont.KFont.appleSDNeoSemiBoldLarge, textColor: UIColor.white)
+        return label
+    }()
+    
     let weatherImage: UIImageView = {
         let aweatherImage = UIImageView()
         aweatherImage.image = UIImage(named: "cloudySun")

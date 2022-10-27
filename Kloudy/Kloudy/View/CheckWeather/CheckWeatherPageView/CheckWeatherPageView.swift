@@ -10,7 +10,6 @@ import SnapKit
 
 class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout{
     var isViewBuild = true
-    
     //TODO: 더미데이터, 아키텍쳐 확인 후 수정
     var locationTodayIndexArray: [[cellData]] = [
         [
@@ -188,7 +187,7 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().offset(83)
         }
-        
+        //코어데이터에 있는 location을 차례대로 받아온다.
         //TODO: 페이지 별로 UIView를 올릴 부분
         for pageIndex in 0 ..< self.pageControlNum {
             let checkWeatherFrameView: UIView = UIView(frame: CGRect(x: CGFloat(pageIndex) * UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
@@ -203,13 +202,27 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
                 $0.height.equalTo(181)
             }
             
+//            let checkLocationWeatherView = CheckLocationWeatherView()
+//            checkWeatherFrameView.addSubview(checkLocationWeatherView)
+//            checkLocationWeatherView.snp.makeConstraints {
+//                $0.height.equalTo(181)
+//                $0.width.equalTo(UIScreen.main.bounds.width)
+//                $0.top.equalToSuperview().offset(0)
+//            }
             let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
             checkWeatherFrameView.addSubview(checkWeatherCellLabelView)
             checkWeatherCellLabelView.snp.makeConstraints{
+
                 $0.width.equalTo(UIScreen.main.bounds.width)
                 $0.height.equalTo(400)
                 $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(25)
                 $0.leading.trailing.equalToSuperview().inset(21) // label, button 패딩
+
+//                $0.height.equalTo(UIScreen.main.bounds.height)
+//                $0.width.equalTo(UIScreen.main.bounds.width)
+//                $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(25)
+//                $0.top.left.bottom.right.equalToSuperview().inset(UIScreen.main.bounds.width*0.05) // label, button 패딩
+
             }
 
             collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -220,12 +233,18 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             collectionView?.delegate = self
             collectionView?.dataSource = self
             collectionViews.append(collectionView)
+
             checkWeatherCellLabelView.addSubview(collectionView!)
             collectionView!.snp.makeConstraints {
                 $0.top.equalToSuperview().inset(30) // 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
                 $0.leading.trailing.equalToSuperview()
-                $0.width.equalTo(UIScreen.main.bounds.width)
-                $0.height.equalTo(UIScreen.main.bounds.height)
+
+//            checkWeatherFrameView.addSubview(collectionView!)
+//            collectionView!.snp.makeConstraints {
+//                $0.top.equalTo(checkWeatherCellLabelView.snp.bottom).offset(30)
+//
+//                $0.width.equalTo(UIScreen.main.bounds.width)
+//                $0.height.equalTo(UIScreen.main.bounds.height)
             }
             
             let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))

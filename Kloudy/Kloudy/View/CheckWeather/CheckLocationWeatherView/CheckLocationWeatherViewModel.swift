@@ -11,6 +11,8 @@ import CoreData
 
 class CheckLocationWeatherViewModel {
     let weatherInformationModel = FetchWeatherInformation()
+    //앞에서 받아온 값을 넣어주면 된다.
+    
     
     func getWeather() -> [String]{
 //        var asdf = weatherInformationModel.startLoad(province: "대전광역시", city: "중구")
