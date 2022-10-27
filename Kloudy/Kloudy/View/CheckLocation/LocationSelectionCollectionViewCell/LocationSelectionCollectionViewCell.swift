@@ -24,7 +24,7 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
     lazy var weatherImage: UIImageView = {
         let uiImageView = UIImageView()
-        uiImageView.image = UIImage(systemName: "map")
+        uiImageView.image = UIImage(systemName: "map")?.withTintColor(UIColor.KColor.white, renderingMode: .alwaysOriginal)
         uiImageView.snp.makeConstraints {
             $0.size.equalTo(26)
         }
