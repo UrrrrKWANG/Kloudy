@@ -15,6 +15,7 @@ class CheckWeatherView: UIViewController {
     //MARK: View LifeCycle Function
     override func viewDidLoad() {
         self.navigationController?.navigationBar.isHidden = true
+        self.view.backgroundColor = UIColor.KColor.backgroundBlack
         
         self.view.addSubview(checkWeatherBasicNavigationView)
         self.configureCheckWeatherBasicNavigationView()
@@ -23,7 +24,7 @@ class CheckWeatherView: UIViewController {
         
       
         let checkLocationWeatherView = CheckLocationWeatherView()
-        view.addSubview(checkLocationWeatherView)
+        self.view.addSubview(checkLocationWeatherView)
         checkLocationWeatherView.snp.makeConstraints {
             $0.top.equalTo(checkWeatherBasicNavigationView.snp.bottom)
             $0.width.equalTo(UIScreen.main.bounds.width)
