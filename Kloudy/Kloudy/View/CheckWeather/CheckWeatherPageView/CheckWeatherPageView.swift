@@ -14,9 +14,9 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
     //TODO: 더미데이터, 아키텍쳐 확인 후 수정
     var locationTodayIndexArray: [[cellData]] = [
         [
-            cellData(indexName: "01.circle"),
-            cellData(indexName: "02.circle"),
-            cellData(indexName: "03.circle"),
+            cellData(indexName: "square"),
+            cellData(indexName: "square"),
+            cellData(indexName: "square"),
         ]
         ,
         [
@@ -107,7 +107,7 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
     private var layout : UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 20, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 20, left: 20, bottom: 0, right: 20)
         return layout
     }
     
@@ -131,7 +131,7 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
         scrollView.isPagingEnabled = true // 페이지가 구역에 맞게 넘어가게 만들어줌
         scrollView.delegate = self // scrollView의 델리게이트, 하단 extention에 따로 만듬
         scrollView.contentSize = CGSize(width: CGFloat(pageControlNum) * UIScreen.main.bounds.width, height: UIScreen.main.bounds.height) // 컨텐츠사이즈
-        scrollView.backgroundColor = .black
+        scrollView.backgroundColor = UIColor.KColor.backgroundBlack
         return scrollView
     }()
     
@@ -207,8 +207,9 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             checkWeatherFrameView.addSubview(checkWeatherCellLabelView)
             checkWeatherCellLabelView.snp.makeConstraints{
                 $0.width.equalTo(UIScreen.main.bounds.width)
-                $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(20)
-                $0.leading.trailing.equalToSuperview().inset(UIScreen.main.bounds.width*0.05) // label, button 패딩
+                $0.height.equalTo(400)
+                $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(25)
+                $0.leading.trailing.equalToSuperview().inset(21) // label, button 패딩
             }
 
             collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
@@ -219,9 +220,10 @@ class CheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionViewDa
             collectionView?.delegate = self
             collectionView?.dataSource = self
             collectionViews.append(collectionView)
-            checkWeatherFrameView.addSubview(collectionView!)
+            checkWeatherCellLabelView.addSubview(collectionView!)
             collectionView!.snp.makeConstraints {
-                $0.top.equalTo(checkLocationWeatherView.snp.bottom).offset(20)
+                $0.top.equalToSuperview().inset(30) // 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
+                $0.leading.trailing.equalToSuperview()
                 $0.width.equalTo(UIScreen.main.bounds.width)
                 $0.height.equalTo(UIScreen.main.bounds.height)
             }
