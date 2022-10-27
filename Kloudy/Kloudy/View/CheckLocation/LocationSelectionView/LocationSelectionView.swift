@@ -67,16 +67,7 @@ class LocationSelectionView: UIViewController {
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
         
-        self.fetchedWeatherInfo.$result
-            .receive(on: DispatchQueue.main)
-            .sink(receiveValue: { [weak self] _ in
-                if self!.isCheck {
-                    self?.weatherArr.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
-                }
-                self?.isCheck = true
-                self?.collectionView.reloadData()
-            })
-            .store(in: &self.cancelBag)
+       
         
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
@@ -94,7 +85,16 @@ class LocationSelectionView: UIViewController {
         
         locationList = viewModel.fetchLocations()
         collectionView.reloadData()
-        
+        self.fetchedWeatherInfo.$result
+            .receive(on: DispatchQueue.main)
+            .sink(receiveValue: { [weak self] _ in
+                if self!.isCheck {
+                    self?.weatherArr.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
+                }
+                self?.isCheck = true
+                self?.collectionView.reloadData()
+            })
+            .store(in: &self.cancelBag)
         
         locationList.forEach { location in
             var cellProvince: String = String()
@@ -108,6 +108,7 @@ class LocationSelectionView: UIViewController {
             }
             fetchedWeatherInfo.startLoad(province: cellProvince, city: cellCity)
         }
+        
     }
     
     //MARK: Configure Function
@@ -226,7 +227,7 @@ extension LocationSelectionView: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print("____________________________")
         print(weatherArr.count)
-        return weatherArr.count
+        return locationList.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -241,9 +242,14 @@ extension LocationSelectionView: UICollectionViewDataSource {
             }
         }
         cell.locationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
-        cell.diurnalTemperatureLabel.configureLabel(text: "\(weatherArr[indexPath.row].cellDiurnalTemperature[0])° | \(weatherArr[indexPath.row].cellDiurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
-        cell.temperatureLabel.configureLabel(text: "\(weatherArr[indexPath.row].cellTemperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
-
+        if indexPath.row < weatherArr.count {
+            cell.diurnalTemperatureLabel.configureLabel(text: "\(weatherArr[indexPath.row].cellDiurnalTemperature[0])° | \(weatherArr[indexPath.row].cellDiurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+            cell.temperatureLabel.configureLabel(text: "\(weatherArr[indexPath.row].cellTemperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        } else {
+            cell.diurnalTemperatureLabel.configureLabel(text: "- | -", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+            cell.temperatureLabel.configureLabel(text: "-", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        }
+        
         cell.backgroundColor = UIColor.KColor.gray02
         cell.layer.cornerRadius = 15
         return cell
