@@ -17,6 +17,7 @@ class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
     let addLivingIndexCellView = AddLivingIndexCellView()
+    let CheckWeatherPageView = TmpCheckWeatherPageView()
     
     let cityInformationModel = FetchWeatherInformation()
     let viewModel = LocationSelectionViewModel()
@@ -53,7 +54,7 @@ class CheckWeatherView: UIViewController {
         
         self.view.addSubview(checkLocationWeatherView)
         checkLocationWeatherView.snp.makeConstraints {
-            $0.top.equalTo(checkWeatherBasicNavigationView.snp.bottom)
+            $0.top.equalTo(checkWeatherBasicNavigationView.snp.bottom).offset(16)
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(181)
         }
@@ -64,7 +65,6 @@ class CheckWeatherView: UIViewController {
             $0.height.equalTo(180)
             $0.top.equalTo(checkLocationWeatherView.snp.bottom)
         }
-        let CheckWeatherPageView = TmpCheckWeatherPageView()
         checkWeatherCellLabelView.addSubview(CheckWeatherPageView)
         CheckWeatherPageView.snp.makeConstraints {
             $0.height.equalTo(UIScreen.main.bounds.height/5)
@@ -100,9 +100,9 @@ class CheckWeatherView: UIViewController {
     //MARK: Style Function
     private func configureCheckWeatherBasicNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(47)
+            $0.top.equalToSuperview().inset(63)
             $0.trailing.equalToSuperview().inset(21)
-            $0.width.equalTo(106)
+            $0.width.equalTo(103)
             $0.height.equalTo(20)
         }
         checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)

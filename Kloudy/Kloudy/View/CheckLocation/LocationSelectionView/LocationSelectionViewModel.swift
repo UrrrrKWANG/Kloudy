@@ -65,4 +65,17 @@ class LocationSelectionViewModel {
             return true
         }
     }
+    
+    func saveWeatherCell(location: NSManagedObject, cells: [WeatherCell]) {
+        for cell in cells {
+            let cellObject = NSEntityDescription.insertNewObject(forEntityName: "WeatherCell", into: coreDataStack.managedContext) as! WeatherCell
+            cellObject.type = cell.type
+            cellObject.size = cell.size
+            cellObject.latitude = cell.latitude
+            cellObject.longitude = cell.longitude
+            
+            (location as! Location).addToWeatherCell(cellObject)
+        }
+        coreDataStack.saveContext()
+    }
 }
