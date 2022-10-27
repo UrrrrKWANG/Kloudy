@@ -7,13 +7,11 @@
 
 import Foundation
 
-class FetchWeatherInformation {
+class FetchWeatherInformation: ObservableObject {
     
+    @Published var result: Weather = Weather(today: "", main: [Main(currentWeather: 0, currentTemperature: 0, dayMaxTemperature: 0, dayMinTemperature: 0)], weatherIndex: [WeatherIndex(umbrellaIndex: 0, maskIndex: [MaskIndex(airQuality: 0, flowerQuality: 0, dustQuality: 0)])])
     
-    
-    func startLoad(province:String, city: String) -> Weather? {
-        var result: Weather = Weather(today: "", main: [Main(currentWeather: 0, currentTemperature: 0, dayMaxTemperature: 0, dayMinTemperature: 0)], weatherIndex: [WeatherIndex(umbrellaIndex: 0, maskIndex: [MaskIndex(airQuality: 0, flowerQuality: 0, dustQuality: 0)])])
-        
+    func startLoad(province:String, city: String) {
         // 도시 이름을 받아서 x, y값 받음
         let cityInformation = getCityInformaiton(province: province, city: city)
         let xCoordinate = cityInformation[0], yCoordinate = cityInformation[1],
@@ -38,7 +36,7 @@ class FetchWeatherInformation {
         let session = URLSession(configuration: config)
         
         // 데이터 테스크를 만듦
-        guard let requestURL = urlComponents?.url else { return nil }
+        guard let requestURL = urlComponents?.url else { return }
         
         let dataTask = session.dataTask(with: requestURL) { (data, response, error) in
             
@@ -58,7 +56,7 @@ class FetchWeatherInformation {
                 let decoder = JSONDecoder()
                 
                 let response = try decoder.decode(Weather.self, from: resultData)
-                result = response
+                self.result = response
                 print(response)
                 
             } catch let error {
@@ -66,7 +64,6 @@ class FetchWeatherInformation {
             }
         }
         dataTask.resume()
-        return result
     }
     
     func getCityInformaiton(province:String, city: String) -> [String] {
