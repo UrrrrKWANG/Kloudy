@@ -48,20 +48,23 @@ class CheckWeatherCellLabelView: UIView{
         [todayIndex, addButton, separatorView].forEach {
                 self.addSubview($0)
         }
+        self.backgroundColor = UIColor.KColor.cellGray
+        self.layer.cornerRadius = 15
         self.todayIndex.snp.makeConstraints {
             $0.width.equalTo(100)
             $0.height.equalTo(14)
-            $0.leading.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(10)
+            $0.leading.equalToSuperview().inset(8)
         }
         self.addButton.snp.makeConstraints {
             $0.width.height.equalTo(14)
-            $0.trailing.centerY.equalToSuperview()
+            $0.top.equalToSuperview().inset(10)
+            $0.trailing.equalToSuperview().inset(8)
         }
         self.separatorView.snp.makeConstraints {
-            $0.width.equalTo(UIScreen.main.bounds.width*0.9)
             $0.height.equalTo(1)
-            $0.centerX.equalToSuperview()
-            $0.centerY.equalToSuperview().offset(15)
+            $0.top.equalTo(todayIndex.snp.bottom).offset(4)
+            $0.leading.trailing.equalToSuperview().inset(8)
         }
     }
 }

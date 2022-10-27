@@ -23,10 +23,11 @@ class CheckLocationWeatherView: UIView {
     let locationLabel = UILabel()
     let weatherImage: UIImageView = {
         let aweatherImage = UIImageView()
-        aweatherImage.image = UIImage(systemName: "cloud.fill")
+        aweatherImage.image = UIImage(named: "cloudySun")
+//        aweatherImage.image = UIImage(systemName: "cloud.fill")
         aweatherImage.snp.makeConstraints {
-            $0.width.equalTo(153)
-            $0.height.equalTo(120)
+            $0.width.equalTo(150)
+            $0.height.equalTo(157)
         }
         return aweatherImage
     }()
@@ -36,7 +37,12 @@ class CheckLocationWeatherView: UIView {
     let maxTemperatureLabel = UILabel()
     let maxTemperatureImage: UIImageView = {
         let aMaxTemperatureImage = UIImageView()
-        aMaxTemperatureImage.image = UIImage(systemName: "arrow.up")
+        aMaxTemperatureImage.image = UIImage(named: "arrow_up")
+        aMaxTemperatureImage.snp.makeConstraints {
+            $0.width.equalTo(8)
+            $0.height.equalTo(10)
+        }
+//        aMaxTemperatureImage.image = UIImage(systemName: "arrow.up")
         return aMaxTemperatureImage
     }()
     let minStackView = UIStackView()
@@ -64,36 +70,49 @@ class CheckLocationWeatherView: UIView {
 
         configureLocationLabel()
         configureTemperatureLabel()
-        //TODO: 현재 날씨 이미지 위치가 안잡혀서 임시로 넣었습니다.
         weatherImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(50)
-            $0.leading.equalToSuperview().inset(17)
+            $0.top.equalToSuperview().inset(24)
+            $0.leading.equalToSuperview().inset(21)
         }
         
         [maxStackView, minStackView].forEach {
             minmaxStackView.addArrangedSubview($0)
         }
+        
         minmaxStackView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(83)
             $0.leading.equalTo(temperatureLabel.snp.trailing).offset(2)
-            $0.trailing.equalToSuperview().inset(21)
-            $0.bottom.equalToSuperview().inset(26)
+            $0.width.equalTo(92)
+            $0.height.equalTo(72)
+//            $0.trailing.equalToSuperview().inset(21)
+//            $0.bottom.equalToSuperview().inset(26)
         }
         
-        maxStackView.clipsToBounds = true
-        maxStackView.layer.cornerRadius = 20
-        minStackView.clipsToBounds = true
-        minStackView.layer.cornerRadius = 20
+        
+        
+        maxStackView.backgroundColor = UIColor.KColor.black
+        minStackView.backgroundColor = UIColor.KColor.black
         
         [nameStackView, maxStackView, minStackView].forEach {configureTemperatureLocationStackView(to: $0)}
         configureminmaxStackView(to: minmaxStackView)
         
+        maxStackView.clipsToBounds = true
+        maxStackView.layer.cornerRadius = 20
+        maxStackView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+        }
+        
+        minStackView.clipsToBounds = true
+        minStackView.layer.cornerRadius = 20
+        
         [locationImage, locationLabel].forEach {
             nameStackView.addArrangedSubview($0)
         }
+        
         [maxTemperatureLabel, maxTemperatureImage].forEach {
             maxStackView.addArrangedSubview($0)
         }
+        
         [minTemperatureLabel, minTemperatureImage].forEach {
             minStackView.addArrangedSubview($0)
         }
@@ -113,7 +132,7 @@ class CheckLocationWeatherView: UIView {
         stackView.clipsToBounds = true
         stackView.layer.cornerRadius = 20
         stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 10)
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0)
     }
     
     private func configureTemperatureLocationStackView(to stackView: UIStackView) {
@@ -133,17 +152,17 @@ class CheckLocationWeatherView: UIView {
     private func configureLocationLabel() {
         locationLabel.text = "서울"
         locationLabel.font = UIFont.KFont.appleSDNeoSemiBoldLarge
-        locationLabel.textColor = UIColor.white
+        locationLabel.textColor = UIColor.KColor.white
         locationLabel.textAlignment = .right
     }
     
     private func configureTemperatureLabel() {
         temperatureLabel.text = "19°"
         temperatureLabel.font = UIFont.KFont.lexendExtraLarge
-        temperatureLabel.textColor = UIColor.white
+        temperatureLabel.textColor = UIColor.KColor.white
         temperatureLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(nameStackView.snp.bottom).offset(20)
+            $0.top.equalTo(nameStackView.snp.bottom).offset(8)
             $0.width.equalTo(159)
             $0.height.equalTo(125)
         }
@@ -151,16 +170,26 @@ class CheckLocationWeatherView: UIView {
     
     private func configureMaxTemperatureLabel() {
         maxTemperatureLabel.text = "최고  19°"
+        maxTemperatureLabel.sizeToFit()
+//        maxTemperatureLabel.adjustsFontSizeToFitWidth = true
+//        maxTemperatureLabel.minimumScaleFactor = 0.5
         maxTemperatureLabel.font = UIFont.KFont.appleSDNeoMediumSmall
-        maxTemperatureLabel.textColor = UIColor.white
-        maxTemperatureImage.snp.makeConstraints {
-            $0.size.equalTo(20)
+        maxTemperatureLabel.textColor = UIColor.KColor.gray07
+        maxTemperatureLabel.snp.makeConstraints {
+            $0.trailing.equalTo(maxTemperatureImage).offset(5)
         }
+//        maxTemperatureLabel.snp.makeConstraints {
+//            $0.width.equalTo(30)
+//        }
+//        maxTemperatureImage.snp.makeConstraints {
+//            $0.size.equalTo(20)
+//        }
     }
     private func configureMinTemperatureLabel() {
         minTemperatureLabel.text = "최저  12°"
+        maxTemperatureLabel.sizeToFit()
         minTemperatureLabel.font = UIFont.KFont.appleSDNeoMediumSmall
-        minTemperatureLabel.textColor = UIColor.white
+        minTemperatureLabel.textColor = UIColor.KColor.gray07
         minTemperatureImage.snp.makeConstraints {
             $0.size.equalTo(20)
         }
