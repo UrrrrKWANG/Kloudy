@@ -140,7 +140,7 @@ class CheckLocationWeatherView: UIView {
             $0.centerX.equalToSuperview()
             $0.top.equalToSuperview().inset(20)
             $0.height.equalTo(26)
-            $0.width.equalTo(70)
+            $0.width.equalTo(50) // 수정할 것
         }
     }
     
