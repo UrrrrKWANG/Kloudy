@@ -106,7 +106,7 @@ class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionVie
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-
+    
     private var collectionView: UICollectionView?
     // 롱탭프레스제스쳐를 뷰마다 핸들링하기 위해 만든 collectionView Array
     private lazy var collectionViews = [collectionView]
@@ -151,40 +151,32 @@ class TmpCheckWeatherPageView: UIView, UICollectionViewDelegate, UICollectionVie
             $0.width.equalTo(UIScreen.main.bounds.width)
             $0.height.equalTo(UIScreen.main.bounds.height)
             $0.centerX.equalToSuperview()
-//            $0.top.equalToSuperview().offset(83)
+            //            $0.top.equalToSuperview().offset(83)
         }
         
         //TODO: 페이지 별로 UIView를 올릴 부분
-        for pageIndex in 0 ..< self.pageControlNum {
-            let checkWeatherFrameView: UIView = UIView(frame: CGRect(x: CGFloat(pageIndex) * UIScreen.main.bounds.width, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height))
-            
-            self.scrollView.addSubview(checkWeatherFrameView)
-            checkWeatherFrameView.backgroundColor = UIColor.KColor.clear
-            collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-            collectionView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
-            collectionView?.tintColor = .systemPink
-            collectionView?.backgroundColor = UIColor.KColor.clear
-            collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-            collectionView?.delegate = self
-            collectionView?.dataSource = self
-            collectionViews.append(collectionView)
-            checkWeatherFrameView.addSubview(collectionView!)
-            checkWeatherFrameView.snp.makeConstraints{
-                $0.top.equalToSuperview()
-            }
-            collectionView!.snp.makeConstraints {
-                $0.top.equalToSuperview()// 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
-                $0.leading.trailing.equalToSuperview()
-                $0.width.equalTo(UIScreen.main.bounds.width)
-                $0.height.equalTo(UIScreen.main.bounds.height/5)
-            }
-            
-            let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))
-            gestures.append(gesture)
-            collectionViews[collectionViews.count-1]?.addGestureRecognizer(gesture)
+        collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView?.frame = CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
+        collectionView?.tintColor = .systemPink
+        collectionView?.backgroundColor = UIColor.KColor.clear
+        collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        collectionView?.delegate = self
+        collectionView?.dataSource = self
+        collectionViews.append(collectionView)
+        self.scrollView.addSubview(collectionView!)
+        collectionView!.snp.makeConstraints {
+            $0.top.equalToSuperview()// 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
+            $0.leading.trailing.equalToSuperview()
+            $0.width.equalTo(UIScreen.main.bounds.width)
+            $0.height.equalTo(UIScreen.main.bounds.height/5)
         }
+        
+        let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))
+        gestures.append(gesture)
+        collectionViews[collectionViews.count-1]?.addGestureRecognizer(gesture)
     }
 }
+
 
 // 현재 페이지 index 받아올 extension
 extension TmpCheckWeatherPageView: UIScrollViewDelegate {
