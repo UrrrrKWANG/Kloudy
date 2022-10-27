@@ -11,24 +11,20 @@ import CoreData
 class AddLivingIndexCellViewModel {
     var coreDataStack = CoreDataStack(modelName: "Kloudy")
     
-    func fetchLocationCells(cityName: String) -> Set<WeatherCell> {
-        let request: NSFetchRequest<Location> = Location.fetchRequest()
-        let predicate = NSPredicate(
-            format: "city = %@", "\(cityName)"
-        )
-        var cellSet = Set<WeatherCell>()
-        
+    func fetchLocationCells(cityCode: String) -> Set<WeatherCell> {
+        let request = NSFetchRequest<Location>(entityName: "Location")
         do {
-            request.predicate = predicate
-            let location = try coreDataStack.managedContext.fetch(request).first
-            location!.weatherCellArray.forEach { cell in
-                cellSet.insert(cell)
+            let locations = try coreDataStack.managedContext.fetch(request)
+            var findingLocation = Location()
+            locations.forEach { location in
+                if location.city == cityCode {
+                    findingLocation = location
+                }
             }
-            return cellSet
+            return findingLocation.weatherCellArray
         } catch {
             print("-----fetchLocationCellError-----")
             return Set()
         }
     }
-    
 }
