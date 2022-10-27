@@ -13,8 +13,9 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     var weatherImageInt: Int = 0
     var temperature: Int = 0
     var diurnalTemperature: [Int] = [0, 0]
-    
+    var delegate: collectionViewCelDeleteButtonlClicked?
     static let cellID = "Cell"
+    var indexPath: Int = 0
     
     var isBeingEdited: Bool = false {
         didSet {
@@ -158,6 +159,7 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
                 $0.leading.top.bottom.equalToSuperview()
             }
             clearButton.backgroundColor = UIColor.KColor.clear
+            clearButton.addTarget(self, action: #selector(self.deleteLocationAlert), for: .touchUpInside)
 
             
         } else {
@@ -202,5 +204,8 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
             }
         }
         
+    }
+    @objc private func deleteLocationAlert() {
+        delegate?.buttonClicked(indexPath: indexPath)
     }
 }
