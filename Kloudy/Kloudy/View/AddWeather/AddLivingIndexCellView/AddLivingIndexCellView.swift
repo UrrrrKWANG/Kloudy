@@ -14,14 +14,9 @@ struct CollectionViewData {
     static let labels = ["우산", "마스크"]
 }
 
-class AddLivingIndexCellView: UIViewController, LocationDataProtocol{
+class AddLivingIndexCellView: UIViewController {
     
-    func locationData(_ location: String) {
-        sentText = location
-    }
     let viewModel = AddLivingIndexCellViewModel()
-    
-    var sentText = ""
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "생활 지수"
@@ -51,10 +46,14 @@ class AddLivingIndexCellView: UIViewController, LocationDataProtocol{
         return completeButton
     }()
     var checkLocationCellTypes: [String:Bool] = ["우산" : false, "마스크" : false]
-    var locationWeatherCellSet = Set<WeatherCell>()
+    var locationWeatherCellArray: [WeatherCell] = []
     
     // delegate 을 통해 전달받을 City
-    var cityCode = ""
+    var sentLocation: Location = Location() {
+        didSet {
+            locationWeatherCellArray = sentLocation.weatherCell?.sortedArray(using: [NSSortDescriptor.init(key: "id", ascending: true)]) as? [WeatherCell] ?? []
+        }
+    }
     
     //MARK: View Lifecycle Function
     override func viewDidLoad() {
@@ -64,12 +63,6 @@ class AddLivingIndexCellView: UIViewController, LocationDataProtocol{
         self.view.addSubview(collectionView)
         self.view.addSubview(completeButton)
         self.styleFunction()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        // 추후 delegate 를 통해 전달 받을 city 이름을 대입
-//        self.locationWeatherCellSet = self.viewModel.fetchLocationCells(cityCode: cityCode)
-        self.checkLocationHasWeatherCell()
     }
     
     //MARK: Style Function
@@ -105,14 +98,20 @@ class AddLivingIndexCellView: UIViewController, LocationDataProtocol{
         self.completeButton.addTarget(self, action: #selector(tapCompleteButton), for: .touchUpInside)
     }
     
-    private func checkLocationHasWeatherCell() {
-        self.locationWeatherCellSet.forEach { weatherCell in
-            checkLocationCellTypes[weatherCell.type ?? ""] = true
-        }
-    }
+//    private func checkLocationHasWeatherCell() {
+//        self.locationWeatherCellSet.forEach { weatherCell in
+//            checkLocationCellTypes[weatherCell.type ?? ""] = true
+//        }
+//    }
     
     @objc private func tapCompleteButton() {
         self.dismiss(animated: true)
+    }
+}
+
+extension AddLivingIndexCellView: SendFirstSequenceLocationDelegate {
+    func sendFirstSequenceLocation(_ location: Location) {
+        self.sentLocation = location
     }
 }
 
@@ -154,6 +153,3 @@ extension AddLivingIndexCellView: UICollectionViewDelegateFlowLayout {
     }
 }
 
-protocol LocationDataProtocol: AnyObject {
-    func locationData(_ location : String)
-}

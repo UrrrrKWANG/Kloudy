@@ -9,6 +9,10 @@ import UIKit
 import SwiftUI
 import Combine
 
+protocol SendFirstSequenceLocationDelegate: AnyObject {
+    func sendFirstSequenceLocation(_ location : Location)
+}
+
 class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let checkWeatherCellLabelView = CheckWeatherCellLabelView()  //생활지수 라벨
@@ -28,7 +32,7 @@ class CheckWeatherView: UIViewController {
     var cancelBag = Set<AnyCancellable>()
     var weatherData: Weather = Weather(today: "", main: [], weatherIndex: [])
     let checkLocationWeatherView = CheckLocationWeatherView()
-    weak var delegate: LocationDataProtocol?
+    weak var delegate: SendFirstSequenceLocationDelegate?
     
     //MARK: View LifeCycle Function
     override func viewDidLoad() {
@@ -111,21 +115,19 @@ class CheckWeatherView: UIViewController {
     }
     
     @objc func tapAddIndexButton() {
-        self.delegate?.locationData("asdf")
+        self.delegate?.sendFirstSequenceLocation(self.firstSequenceLocation)
         self.present(self.addLivingIndexCellView, animated: true)
     }
 }
 
-extension CheckWeatherView: LocationDataProtocol {
-    func locationData(_ location : String) {
-    }
-    
+extension CheckWeatherView {
     func setLocationWeatherView() {
         checkLocationWeatherView.locationLabel.configureLabel(text: "\(self.firstSequenceCity)", font: UIFont.KFont.appleSDNeoSemiBoldLarge, textColor: UIColor.KColor.white)
         checkLocationWeatherView.temperatureLabel.configureLabel(text: "\(Int(weatherData.main[0].currentTemperature))°", font: UIFont.KFont.lexendExtraLarge, textColor: UIColor.KColor.white)
         
         checkLocationWeatherView.maxTemperatureLabel.configureLabel(text: "최고  \(Int(weatherData.main[0].dayMaxTemperature))°",font:  UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
         checkLocationWeatherView.minTemperatureLabel.configureLabel(text: "최저  \(Int(weatherData.main[0].dayMinTemperature))°", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        
         switch weatherData.main[0].currentWeather {
         case 0:
             checkLocationWeatherView.weatherImage.image = UIImage(named: "sunny")
