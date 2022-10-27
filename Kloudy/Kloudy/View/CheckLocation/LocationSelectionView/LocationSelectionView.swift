@@ -42,7 +42,7 @@ class LocationSelectionView: UIViewController {
     var locationTableViewModel = [SearchingLocation]()
     var filteredLocationModel = [SearchingLocation]()
     var cellWeatherData: [LocationCellModel] = [LocationCellModel]()
-    var weatherArr: [LocationCellModel] = []
+    var weatherInfoArrary: [LocationCellModel] = []
     @ObservedObject var fetchedWeatherInfo = FetchWeatherInformation()
     var cancelBag = Set<AnyCancellable>()
     var isCheck: Bool = false
@@ -67,11 +67,8 @@ class LocationSelectionView: UIViewController {
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
         
-       
-        
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
-        
     }
     
     @objc func tapBackButton() {
@@ -89,7 +86,7 @@ class LocationSelectionView: UIViewController {
             .receive(on: DispatchQueue.main)
             .sink(receiveValue: { [weak self] _ in
                 if self!.isCheck {
-                    self?.weatherArr.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
+                    self?.weatherInfoArrary.append(LocationCellModel(cellLocationName: "", cellTemperature: Int((self?.fetchedWeatherInfo.result.main[0].currentTemperature)!), cellWeatherImageInt: 0, cellDiurnalTemperature: [Int((self?.fetchedWeatherInfo.result.main[0].dayMaxTemperature)!),Int((self?.fetchedWeatherInfo.result.main[0].dayMinTemperature)!)]))
                 }
                 self?.isCheck = true
                 self?.collectionView.reloadData()
@@ -225,8 +222,6 @@ class LocationSelectionView: UIViewController {
 extension LocationSelectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("____________________________")
-        print(weatherArr.count)
         return locationList.count
     }
     
@@ -242,9 +237,9 @@ extension LocationSelectionView: UICollectionViewDataSource {
             }
         }
         cell.locationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
-        if indexPath.row < weatherArr.count {
-            cell.diurnalTemperatureLabel.configureLabel(text: "\(weatherArr[indexPath.row].cellDiurnalTemperature[0])° | \(weatherArr[indexPath.row].cellDiurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
-            cell.temperatureLabel.configureLabel(text: "\(weatherArr[indexPath.row].cellTemperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        if indexPath.row < weatherInfoArrary.count {
+            cell.diurnalTemperatureLabel.configureLabel(text: "\(weatherInfoArrary[indexPath.row].cellDiurnalTemperature[0])° | \(weatherInfoArrary[indexPath.row].cellDiurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+            cell.temperatureLabel.configureLabel(text: "\(weatherInfoArrary[indexPath.row].cellTemperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
         } else {
             cell.diurnalTemperatureLabel.configureLabel(text: "- | -", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
             cell.temperatureLabel.configureLabel(text: "-", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
