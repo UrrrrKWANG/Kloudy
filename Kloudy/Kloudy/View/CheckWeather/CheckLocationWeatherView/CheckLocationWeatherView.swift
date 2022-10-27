@@ -14,7 +14,7 @@ class CheckLocationWeatherView: UIView {
     let viewModel = CheckLocationWeatherViewModel()
     let locationImage: UIImageView = {
         let aLocationIcon = UIImageView()
-        aLocationIcon.image = UIImage(named: "loaction_mark")
+        aLocationIcon.image = UIImage(named: "location_mark")
         aLocationIcon.snp.makeConstraints {
             $0.width.equalTo(13)
             $0.height.equalTo(16)
