@@ -8,11 +8,18 @@
 import UIKit
 import SnapKit
 
-class AddLivingIndexCell: UICollectionViewCell {
+class AddLivingIndexCell: UICollectionViewCell{
+    
     static let identifier = "AddLivingIndexCell"
     let livingIndexCellImage = UIImageView()
     let livingIndexCellLabel = UILabel()
-    
+    private let LocationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "생활 지수"
+        label.textColor = UIColor.KColor.white
+        label.font = UIFont.KFont.appleSDNeoBoldLarge
+        return label
+    }()
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.configureCell()
