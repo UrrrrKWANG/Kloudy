@@ -7,10 +7,13 @@
 
 import Foundation
 
-class FetchWeatherInformation {
-    func startLoad(city: String) {
+class FetchWeatherInformation: ObservableObject {
+    
+    @Published var result: Weather = Weather(today: "", main: [Main(currentWeather: 0, currentTemperature: 0, dayMaxTemperature: 0, dayMinTemperature: 0)], weatherIndex: [WeatherIndex(umbrellaIndex: 0, maskIndex: [MaskIndex(airQuality: 0, flowerQuality: 0, dustQuality: 0)])])
+    
+    func startLoad(province:String, city: String) {
         // 도시 이름을 받아서 x, y값 받음
-        let cityInformation = getCityInformaiton(city: city)
+        let cityInformation = getCityInformaiton(province: province, city: city)
         let xCoordinate = cityInformation[0], yCoordinate = cityInformation[1],
             airConditionMeasuring = cityInformation[2], cityCode = cityInformation[3]
         
@@ -34,13 +37,13 @@ class FetchWeatherInformation {
         
         // 데이터 테스크를 만듦
         guard let requestURL = urlComponents?.url else { return }
-
+        
         let dataTask = session.dataTask(with: requestURL) { (data, response, error) in
             
             let successRange = 200..<300
             guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange.contains(statusCode)
             else {
-                print((response as? HTTPURLResponse)?.statusCode)
+                print(error?.localizedDescription)
                 return
             }
             
@@ -53,6 +56,7 @@ class FetchWeatherInformation {
                 let decoder = JSONDecoder()
                 
                 let response = try decoder.decode(Weather.self, from: resultData)
+                self.result = response
                 print(response)
                 
             } catch let error {
@@ -62,10 +66,10 @@ class FetchWeatherInformation {
         dataTask.resume()
     }
     
-    func getCityInformaiton(city: String) -> [String] {
+    func getCityInformaiton(province:String, city: String) -> [String] {
         let koreanCities: [CityInformation] = loadCityListFromCSV()
         
-        let nowCity = koreanCities.filter{ $0.city == city }[0]
+        let nowCity = koreanCities.filter{ $0.province == province && $0.city == city }[0]
         
         return [String(nowCity.xCoordination), String(nowCity.yCoordination), String(nowCity.airCoditionMeasuring), String(nowCity.code)]
     }

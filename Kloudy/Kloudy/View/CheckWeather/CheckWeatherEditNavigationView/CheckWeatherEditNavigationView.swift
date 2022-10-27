@@ -26,8 +26,8 @@ class CheckWeatherEditNavigationView: UIView {
         self.addSubview(addCellButton)
         self.addSubview(completeButton)
         
-        configureAddCellButton()
-        configureCompleteButton()
+//        configureAddCellButton()
+//        configureCompleteButton()
     }
     
     private func configureAddCellButton() {
@@ -47,20 +47,20 @@ class CheckWeatherEditNavigationView: UIView {
         }
     }
     
-    private func configureCompleteButton() {
-        completeButton.layer.cornerRadius = 13
-        completeButton.layer.borderWidth = 1.0
-        
-        //TODO: Asset/Resource 파일 생성 시 수정
-        completeButton.layer.borderColor = UIColor.systemGray4.cgColor
-        completeButton.backgroundColor = .systemGray4
-        completeButton.setTitle("완료", for: .normal)
-        completeButton.setTitleColor(UIColor.black, for: .normal)
-        
-        completeButton.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(68)
-            $0.height.equalTo(26)
-        }
-    }
+//    private func configureCompleteButton() {
+//        completeButton.layer.cornerRadius = 13
+//        completeButton.layer.borderWidth = 1.0
+//
+//        //TODO: Asset/Resource 파일 생성 시 수정
+//        completeButton.layer.borderColor = UIColor.systemGray4.cgColor
+//        completeButton.backgroundColor = .systemGray4
+//        completeButton.setTitle("완료", for: .normal)
+//        completeButton.setTitleColor(UIColor.black, for: .normal)
+//
+//        completeButton.snp.makeConstraints {
+//            $0.trailing.equalToSuperview()
+//            $0.width.equalTo(68)
+//            $0.height.equalTo(26)
+//        }
+//    }
 }

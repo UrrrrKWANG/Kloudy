@@ -10,23 +10,37 @@ import SnapKit
 
 class CheckLocationWeatherView: UIView {
 //TODO: 임시로 이미지 파일 넣었습니다.
+    let city:String = "서울"
+    let currentWeather = ""
+    let currentTemperature = ""
+    let dayMaxTemperature = ""
+    let dayMinTemperature = ""
+    
     let nameStackView = UIStackView()
+    let viewModel = CheckLocationWeatherViewModel()
     let locationImage: UIImageView = {
         let aLocationIcon = UIImageView()
-        //        aLocationIcon.image = UIImage(named: "camera.macro")
-        aLocationIcon.image = UIImage(systemName: "location.circle.fill")
+        aLocationIcon.image = UIImage(named: "location_mark")
         aLocationIcon.snp.makeConstraints {
-            $0.size.equalTo(20)
+            $0.width.equalTo(13)
+            $0.height.equalTo(16)
         }
         return aLocationIcon
     }()
-    let locationLabel = UILabel()
+    
+    lazy var locationLabel:  UILabel = {
+        let label = UILabel()
+        label.textAlignment = .right
+        label.configureLabel(text: city, font: UIFont.KFont.appleSDNeoSemiBoldLarge, textColor: UIColor.white)
+        return label
+    }()
+    
     let weatherImage: UIImageView = {
         let aweatherImage = UIImageView()
-        aweatherImage.image = UIImage(systemName: "cloud.fill")
+        aweatherImage.image = UIImage(named: "cloudySun")
         aweatherImage.snp.makeConstraints {
-            $0.width.equalTo(153)
-            $0.height.equalTo(120)
+            $0.width.equalTo(150)
+            $0.height.equalTo(157)
         }
         return aweatherImage
     }()
@@ -36,14 +50,22 @@ class CheckLocationWeatherView: UIView {
     let maxTemperatureLabel = UILabel()
     let maxTemperatureImage: UIImageView = {
         let aMaxTemperatureImage = UIImageView()
-        aMaxTemperatureImage.image = UIImage(systemName: "arrow.up")
+        aMaxTemperatureImage.image = UIImage(named: "arrow_up")
+        aMaxTemperatureImage.snp.makeConstraints {
+            $0.width.equalTo(8)
+            $0.height.equalTo(10)
+        }
         return aMaxTemperatureImage
     }()
     let minStackView = UIStackView()
     let minTemperatureLabel = UILabel()
     let minTemperatureImage: UIImageView = {
         let aMinTemperatureImage = UIImageView()
-        aMinTemperatureImage.image = UIImage(systemName: "arrow.down")
+        aMinTemperatureImage.image = UIImage(named: "arrow_down")
+        aMinTemperatureImage.snp.makeConstraints {
+            $0.width.equalTo(8)
+            $0.height.equalTo(10)
+        }
         return aMinTemperatureImage
     }()
     
@@ -57,112 +79,118 @@ class CheckLocationWeatherView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         setUp()
+        // api받는 부분
+        let text = viewModel.getWeather()
+        locationLabel.configureLabel(text: text[0], font: UIFont.KFont.appleSDNeoSemiBoldLarge, textColor: UIColor.KColor.white)
+        temperatureLabel.configureLabel(text: text[1], font: UIFont.KFont.lexendExtraLarge, textColor: UIColor.KColor.white)
+        temperatureLabel.text = temperatureLabel.text! + "°"
+        maxTemperatureLabel.configureLabel(text: text[2], font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        maxTemperatureLabel.text = "최고  " + maxTemperatureLabel.text! + "°"
+        minTemperatureLabel.configureLabel(text: text[3], font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        minTemperatureLabel.text = "최저  " + minTemperatureLabel.text! + "°"
+        weatherImage.image = UIImage(named: text[4])
+        
+        configureNameStackView()
     }
     
     func setUp() {
-        [nameStackView, weatherImage, temperatureLabel, minmaxStackView, maxStackView, minStackView].forEach {self.addSubview($0)}
-
-        configureLocationLabel()
-        configureTemperatureLabel()
-        //TODO: 현재 날씨 이미지 위치가 안잡혀서 임시로 넣었습니다.
-        weatherImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(50)
-            $0.leading.equalToSuperview().inset(17)
+        [weatherImage, nameStackView, temperatureLabel,minmaxStackView, maxStackView, minStackView ].forEach {
+            self.addSubview($0)
         }
+
+        configureTemperatureLabel()
+        configureweatherImage()
         
         [maxStackView, minStackView].forEach {
             minmaxStackView.addArrangedSubview($0)
         }
-        minmaxStackView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(83)
-            $0.leading.equalTo(temperatureLabel.snp.trailing).offset(2)
-            $0.trailing.equalToSuperview().inset(21)
-            $0.bottom.equalToSuperview().inset(26)
-        }
         
-        maxStackView.clipsToBounds = true
-        maxStackView.layer.cornerRadius = 20
-        minStackView.clipsToBounds = true
-        minStackView.layer.cornerRadius = 20
-        
-        [nameStackView, maxStackView, minStackView].forEach {configureTemperatureLocationStackView(to: $0)}
         configureminmaxStackView(to: minmaxStackView)
+        configureTemperatureStackView(to: maxStackView)
+        configureTemperatureStackView(to: minStackView)
         
         [locationImage, locationLabel].forEach {
             nameStackView.addArrangedSubview($0)
         }
+        
         [maxTemperatureLabel, maxTemperatureImage].forEach {
             maxStackView.addArrangedSubview($0)
         }
+        
         [minTemperatureLabel, minTemperatureImage].forEach {
             minStackView.addArrangedSubview($0)
         }
         
-        nameStackView.snp.makeConstraints {
-            $0.centerX.equalToSuperview()
-            $0.top.equalToSuperview().inset(20)
-            $0.width.equalTo((locationLabel.text!.count+2) * 15)
+        [maxStackView, minStackView].forEach {
+            setStackView(to: $0)
         }
-        [maxStackView, minStackView].forEach {setStackView(to: $0)}
         
-        configureMaxTemperatureLabel()
-        configureMinTemperatureLabel()
+        locationLabel.configureLabel(text: "--", font: UIFont.KFont.appleSDNeoSemiBoldLarge, textColor: UIColor.KColor.white)
+        locationLabel.textAlignment = .right
+        temperatureLabel.configureLabel(text: "--", font: UIFont.KFont.lexendExtraLarge, textColor: UIColor.KColor.white)
+        maxTemperatureLabel.configureLabel(text: "최고  --", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        minTemperatureLabel.configureLabel(text: "최저  --", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.gray07)
+        
+        configureNameStackView()
     }
     
     private func setStackView(to stackView: UIStackView) {
         stackView.clipsToBounds = true
         stackView.layer.cornerRadius = 20
-        stackView.isLayoutMarginsRelativeArrangement = true
-        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 12, bottom: 0, trailing: 10)
-    }
-    
-    private func configureTemperatureLocationStackView(to stackView: UIStackView) {
         stackView.axis = .horizontal
         stackView.alignment = .center
-        stackView.distribution = .fillProportionally
         stackView.spacing = 0
+        stackView.isLayoutMarginsRelativeArrangement = true
+        stackView.directionalLayoutMargins = NSDirectionalEdgeInsets(top: 0, leading: 15, bottom: 0, trailing: 15)
     }
+    
     private func configureminmaxStackView(to stackView: UIStackView) {
         stackView.axis = .vertical
         stackView.alignment = .center
         stackView.distribution = .fillEqually
         stackView.spacing = 8
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(83)
+            $0.leading.equalTo(temperatureLabel.snp.trailing).offset(2)
+            $0.width.equalTo(92)
+            $0.height.equalTo(72)
+        }
     }
-    
-//TODO: 임시로 위치, 온도 넣었습니다.
-    private func configureLocationLabel() {
-        locationLabel.text = "서울"
-        locationLabel.font = UIFont.KFont.appleSDNeoSemiBoldLarge
-        locationLabel.textColor = UIColor.white
-        locationLabel.textAlignment = .right
+    private func configureTemperatureStackView(to stackView: UIStackView) {
+        stackView.clipsToBounds = true
+        stackView.layer.cornerRadius = 20
+        stackView.backgroundColor = UIColor.KColor.black
+        stackView.snp.makeConstraints {
+            $0.width.equalToSuperview()
+        }
+    }
+    func configureNameStackView() {
+        nameStackView.axis = .horizontal
+        nameStackView.alignment = .center
+        nameStackView.distribution = .fillProportionally
+        nameStackView.spacing = 8
+        
+        nameStackView.snp.remakeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().inset(20)
+            $0.height.equalTo(26)
+            $0.width.equalTo(70)
+//            $0.width.equalTo((locationLabel.text!.count) * 15 + 22)
+        }
     }
     
     private func configureTemperatureLabel() {
-        temperatureLabel.text = "19°"
-        temperatureLabel.font = UIFont.KFont.lexendExtraLarge
-        temperatureLabel.textColor = UIColor.white
         temperatureLabel.snp.makeConstraints {
             $0.centerX.equalToSuperview()
-            $0.top.equalTo(nameStackView.snp.bottom).offset(20)
+            $0.top.equalTo(nameStackView.snp.bottom).offset(5)
             $0.width.equalTo(159)
             $0.height.equalTo(125)
         }
     }
-    
-    private func configureMaxTemperatureLabel() {
-        maxTemperatureLabel.text = "최고  19°"
-        maxTemperatureLabel.font = UIFont.KFont.appleSDNeoMediumSmall
-        maxTemperatureLabel.textColor = UIColor.white
-        maxTemperatureImage.snp.makeConstraints {
-            $0.size.equalTo(20)
-        }
-    }
-    private func configureMinTemperatureLabel() {
-        minTemperatureLabel.text = "최저  12°"
-        minTemperatureLabel.font = UIFont.KFont.appleSDNeoMediumSmall
-        minTemperatureLabel.textColor = UIColor.white
-        minTemperatureImage.snp.makeConstraints {
-            $0.size.equalTo(20)
+    private func configureweatherImage() {
+        weatherImage.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(24)
+            $0.leading.equalToSuperview().inset(21)
         }
     }
 }

@@ -14,8 +14,14 @@ struct CollectionViewData {
     static let labels = ["우산", "마스크"]
 }
 
-class AddLivingIndexCellView: UIViewController {
+class AddLivingIndexCellView: UIViewController, LocationDataProtocol{
+    
+    func locationData(_ location: String) {
+        sentText = location
+    }
     let viewModel = AddLivingIndexCellViewModel()
+    
+    var sentText = ""
     private let titleLabel: UILabel = {
         let titleLabel = UILabel()
         titleLabel.text = "생활 지수"
@@ -59,7 +65,7 @@ class AddLivingIndexCellView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         // 추후 delegate 를 통해 전달 받을 city 이름을 대입
-        self.locationWeatherCellSet = self.viewModel.fetchLocationCells(cityName: "마스크")
+//        self.locationWeatherCellSet = self.viewModel.fetchLocationCells(cityName: "마스크")
         self.checkLocationHasWeatherCell()
     }
     
@@ -146,4 +152,8 @@ extension AddLivingIndexCellView: UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 24
     }
+}
+
+protocol LocationDataProtocol: AnyObject {
+    func locationData(_ location : String)
 }
