@@ -11,6 +11,17 @@ import CoreData
 class LocationSelectionViewModel {
     var coreDataStack = CoreDataStack(modelName: "Kloudy")
     
+    func fetchLocations() -> [Location] {
+        let request = NSFetchRequest<Location>(entityName: "Location")
+        do {
+            let locations = try coreDataStack.managedContext.fetch(request)
+            return locations    
+        } catch {
+            print("-----fetchLocationsError-----")
+            return []
+        }
+    }
+    
     func saveLocation(city: String, latitude: Double, longtitude: Double, sequence: Int) {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {

@@ -98,7 +98,7 @@ class LocationSelectionView: UIViewController {
     
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(7)
+            $0.leading.trailing.equalToSuperview().inset(12)
             $0.top.equalTo(cancelSearchButton.snp.top)
             $0.height.equalTo(47)
         }
@@ -177,6 +177,7 @@ class LocationSelectionView: UIViewController {
         tableView.reloadData()
         collectionView.isHidden = false
         noCityInformationLabel.isHidden = true
+        collectionView.reloadData()
     }
 }
 
@@ -184,7 +185,7 @@ class LocationSelectionView: UIViewController {
 extension LocationSelectionView: UICollectionViewDataSource {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return viewModel.countLocations()
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -209,7 +210,7 @@ extension LocationSelectionView: UICollectionViewDelegate {
 extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: view.frame.width - 30, height: view.frame.width / 4)
+        return CGSize(width: view.frame.width - 42, height: 96)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
@@ -217,11 +218,11 @@ extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 15
+        return 16
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 30, left: 10, bottom: 10, right: 10)
+        return UIEdgeInsets(top: 18, left: 10, bottom: 10, right: 10)
     }
 }
 
@@ -298,7 +299,7 @@ extension LocationSelectionView: UISearchBarDelegate {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = false
             searchBar.snp.remakeConstraints {
-                $0.leading.equalToSuperview().inset(7)
+                $0.leading.equalToSuperview().inset(12)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
                 $0.trailing.equalTo(self.cancelSearchButton.snp.leading)
@@ -314,7 +315,7 @@ extension LocationSelectionView: UISearchBarDelegate {
         UIView.animate(withDuration: 0.3, delay: 0, options: .curveEaseIn) {
             self.cancelSearchButton.isHidden = true
             searchBar.snp.remakeConstraints {
-                $0.leading.trailing.equalToSuperview().inset(8)
+                $0.leading.trailing.equalToSuperview().inset(12)
                 $0.top.equalTo(self.cancelSearchButton.snp.top)
                 $0.height.equalTo(47)
             }
