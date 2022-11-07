@@ -60,6 +60,7 @@ class CoreDataManager {
             locations.forEach { location in
                 if location.city == locationCode {
                     returnValue = false
+                    return
                 }
             }
             return returnValue
