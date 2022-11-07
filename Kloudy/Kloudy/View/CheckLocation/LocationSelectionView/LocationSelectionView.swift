@@ -13,32 +13,32 @@ import Combine
 // https://youtu.be/I7M9V579AaE
 
 class LocationSelectionView: UIViewController {
-
+    
     let collectionView: UICollectionView = {
         let flowlayout = UICollectionViewFlowLayout()
         let cv = UICollectionView(frame: .zero, collectionViewLayout: flowlayout)
-
+        
         return cv
     }()
-
+    
     // 롱탭의 시작점과 끝점이 같을 경우에만 롱탭제스쳐를 활성화하기 위하여 설정한 변수
     var currentLongPressedCell: LocationSelectionCollectionViewCell?
-
+    
     let locationSelectionNavigationView = LocationSelectionNavigationView()
     let searchBar = UISearchBar()
     let cancelSearchButton = UIButton()
     let tableView = UITableView()
     let noCityInformationLabel = UILabel()
-
+    
     let cityInformationModel = FetchWeatherInformation()
     let viewModel = LocationSelectionViewModel()
-
+    
     // csv 파일 데이터
     var cityInformation = [CityInformation]()
-
+    
     // Fetch CoreData Location Entity
     var locationList = [Location]()
-
+    
     var locationTableViewModel = [SearchingLocation]()
     var filteredLocationModel = [SearchingLocation]()
     var cellWeatherData: [LocationCellModel] = [LocationCellModel]()
@@ -49,39 +49,39 @@ class LocationSelectionView: UIViewController {
     //MARK: View Lifecycle Function
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor.KColor.black
         collectionView.refreshControl = refreshControl
         self.navigationController?.navigationBar.isHidden = true
         self.locationSelectionNavigationView.isHidden = false
-
+        
         [locationSelectionNavigationView, searchBar, cancelSearchButton, tableView, noCityInformationLabel, collectionView].forEach { self.view.addSubview($0) }
-
+        
         configureLocationSelectionNavigationView()
         configureCancelSearchButton()
         configureSearchBar()
         configureTableView()
         configureNoCityInformationLabel()
         configureCollecionView()
-
+        
         self.cityInformation = cityInformationModel.loadCityListFromCSV()
         self.initializeLocationTableViewModel()
         collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
-
+        
         // 롱탭제스쳐 활성화 함수
         setUpLongGestureRecognizerOnCollection()
     }
-
+    
     @objc func tapBackButton() {
         self.navigationController?.popToRootViewController(animated: true)
     }
-
+    
     override func viewWillAppear(_ animated: Bool) {
         tableView.isHidden = true
         cancelSearchButton.isHidden = true
         noCityInformationLabel.isHidden = true
         
-        locationList = CoreDataManager.shared.fetchLocations()
+        locationList = viewModel.fetchLocations()
         collectionView.reloadData()
         self.fetchedWeatherInfo.$result
             .receive(on: DispatchQueue.main)
@@ -93,11 +93,11 @@ class LocationSelectionView: UIViewController {
                 self?.collectionView.reloadData()
             })
             .store(in: &self.cancelBag)
-
+        
         locationList.forEach { location in
             var cellProvince: String = String()
             var cellCity: String = String()
-
+            
             cityInformation.forEach { info in
                 if info.code == location.city {
                     cellProvince = info.province
@@ -106,27 +106,27 @@ class LocationSelectionView: UIViewController {
             }
             fetchedWeatherInfo.startLoad(province: cellProvince, city: cellCity)
         }
-
+        
     }
-
-
+    
+    
     private lazy var refreshControl: UIRefreshControl = {
         let refreshControl = UIRefreshControl()
         refreshControl.addTarget(self, action: #selector(refreshReloadCollectView), for: .valueChanged)
-
+        
         return refreshControl
     }()
-
+    
     @objc func refreshReloadCollectView() {
-
-        locationList = CoreDataManager.shared.fetchLocations()
+        
+        locationList = viewModel.fetchLocations()
         self.weatherInfoArrary.removeAll()
         self.collectionView.reloadData()
 
         locationList.forEach { location in
             var cellProvince: String = String()
             var cellCity: String = String()
-
+            
             cityInformation.forEach { info in
                 if info.code == location.city {
                     cellProvince = info.province
@@ -137,22 +137,22 @@ class LocationSelectionView: UIViewController {
         }
         self.refreshControl.endRefreshing()
     }
-
-
+    
+    
     //MARK: Configure Function
     private func configureCollecionView() {
         collectionView.dataSource = self
         collectionView.delegate = self
         collectionView.backgroundColor = UIColor.KColor.black
         collectionView.register(LocationSelectionCollectionViewCell.self, forCellWithReuseIdentifier: LocationSelectionCollectionViewCell.cellID)
-
+        
         // 스냅킷 사용하여 오토레이아웃 간략화하였습니다.
         collectionView.snp.makeConstraints {
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.leading.trailing.bottom.equalToSuperview()
         }
     }
-
+    
     private func configureLocationSelectionNavigationView() {
         locationSelectionNavigationView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(47)
@@ -162,7 +162,7 @@ class LocationSelectionView: UIViewController {
         }
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
     }
-
+    
     private func configureSearchBar() {
         searchBar.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(12)
@@ -174,14 +174,14 @@ class LocationSelectionView: UIViewController {
         searchBar.setImage(UIImage(), for: .search, state: .normal)
         searchBar.searchBarStyle = .prominent
         searchBar.backgroundImage = UIImage()
-
+        
         if let textField = searchBar.value(forKey: "searchField") as? UITextField {
             textField.backgroundColor = UIColor.KColor.gray02
             textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.KColor.gray06, NSAttributedString.Key.font : UIFont.KFont.appleSDNeoRegularLarge])
             textField.textColor = UIColor.KColor.white
         }
     }
-
+    
     private func configureCancelSearchButton() {
         cancelSearchButton.setTitle("취소", for: .normal)
         cancelSearchButton.setTitleColor(UIColor.KColor.gray06, for: .normal)
@@ -195,39 +195,39 @@ class LocationSelectionView: UIViewController {
         cancelSearchButton.isHidden = true
         cancelSearchButton.addTarget(self, action: #selector(tapCancelSearchButton), for: .touchUpInside)
     }
-
+    
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.register(LocationTableCell.self, forCellReuseIdentifier: "TableViewCell")
         tableView.separatorStyle = .none
-
+        
         tableView.backgroundColor = UIColor.KColor.black
-
+        
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(21)
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
     }
-
+    
     private func configureNoCityInformationLabel() {
         noCityInformationLabel.text = "검색된 지역이 없습니다."
         noCityInformationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
         noCityInformationLabel.textColor = UIColor.KColor.gray06
         noCityInformationLabel.sizeToFit()
-
+        
         noCityInformationLabel.snp.makeConstraints {
             $0.leading.equalToSuperview().inset(31)
             $0.height.equalTo(22)
             $0.top.equalTo(searchBar.snp.bottom).offset(20)
         }
     }
-
+    
     @objc func tapCancelSearchButton() {
         self.endSearchLocation()
     }
-
+    
     private func initializeLocationTableViewModel() {
         cityInformation.forEach { info in
             var temporalString = String()
@@ -235,7 +235,7 @@ class LocationSelectionView: UIViewController {
             self.locationTableViewModel.append(SearchingLocation(locationString: temporalString, locationCode: info.code))
         }
     }
-
+    
     private func endSearchLocation() {
         searchBar.endEditing(true)
         searchBar.text = ""
@@ -244,30 +244,30 @@ class LocationSelectionView: UIViewController {
         tableView.reloadData()
         collectionView.isHidden = false
         noCityInformationLabel.isHidden = true
-        locationList = CoreDataManager.shared.fetchLocations()
+        locationList = viewModel.fetchLocations()
         collectionView.reloadData()
     }
 }
 
 // MARK: UICollectionViewDataSource 익스텐션
 extension LocationSelectionView: UICollectionViewDataSource {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return locationList.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: LocationSelectionCollectionViewCell.cellID, for: indexPath) as! LocationSelectionCollectionViewCell
         let location = locationList[indexPath.row]
         var cellCity: String = String()
-
+        
         //TODO: 메인 화면에서 delegate 를 통해 날씨 정보를 전달해서 Cell 에 표현
         cityInformation.forEach { info in
             if info.code == location.city {
                 cellCity = info.city
             }
         }
-
+        
         cell.delegate = self
         cell.indexPath = indexPath.row
         cell.locationNameLabel.configureLabel(text: cellCity, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
@@ -283,7 +283,7 @@ extension LocationSelectionView: UICollectionViewDataSource {
             cell.temperatureLabel.configureLabel(text: "-", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
             cell.editTemperatureLabel.configureLabel(text: "-", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
         }
-
+        
         cell.backgroundColor = UIColor.KColor.black
         cell.layer.cornerRadius = 15
         return cell
@@ -292,25 +292,25 @@ extension LocationSelectionView: UICollectionViewDataSource {
 
 // MARK: UICollectionViewDelegate 익스텐션
 extension LocationSelectionView: UICollectionViewDelegate {
-
+    
 }
 
 
 // MARK: UICollectionViewDelegateFlowLayout 익스텐션
 extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: view.frame.width - 42, height: 96)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
         return 10
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 16
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
         return UIEdgeInsets(top: 18, left: 10, bottom: 10, right: 10)
     }
@@ -320,10 +320,10 @@ extension LocationSelectionView: UICollectionViewDelegateFlowLayout {
 // http://yoonbumtae.com/?p=4418
 
 extension LocationSelectionView: UIGestureRecognizerDelegate {
-
+    
     // 롱탭제스쳐 recognizer 함수
     private func setUpLongGestureRecognizerOnCollection() {
-
+        
         // 롱탭제스쳐 기본 설정 코드
         let longPressedGesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPress(gestureRecognizer:)))
         longPressedGesture.minimumPressDuration = 0.5
@@ -331,12 +331,12 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
         longPressedGesture.delaysTouchesBegan = true
         collectionView.addGestureRecognizer(longPressedGesture)
     }
-
+    
     // 롱탭제스쳐 핸들 함수
     @objc func handleLongPress(gestureRecognizer: UILongPressGestureRecognizer) {
-
+        
         let location = gestureRecognizer.location(in: collectionView)
-
+        
         // 롱탭제스쳐 시작할 때의 코드
         if gestureRecognizer.state == .began {
             if let indexPath = collectionView.indexPathForItem(at: location) {
@@ -354,12 +354,12 @@ extension LocationSelectionView: UIGestureRecognizerDelegate {
                     if let cell = self.currentLongPressedCell {
                         cell.transform = .init(scaleX: 1, y: 1)
                         for i in 0..<locationList.count {
-
+                            
                             var cell = self.collectionView.cellForItem(at: [0,i]) as? LocationSelectionCollectionViewCell
                             cell!.isBeingEdited.toggle()
                         }
                         collectionView.reloadData()
-
+                       
                     }
                 }
             }
@@ -384,7 +384,7 @@ extension LocationSelectionView: UISearchBarDelegate {
         }
         self.tableView.reloadData()
     }
-
+    
     func searchBarTextDidBeginEditing(_ searchBar: UISearchBar) {
         tableView.isHidden = false
         tableView.reloadData()
@@ -400,7 +400,7 @@ extension LocationSelectionView: UISearchBarDelegate {
             searchBar.superview?.layoutIfNeeded()
         }
     }
-
+    
     func searchBarTextDidEndEditing(_ searchBar: UISearchBar) {
         tableView.isHidden = true
         tableView.reloadData()
@@ -421,7 +421,7 @@ extension LocationSelectionView: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return filteredLocationModel.count
     }
-
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "TableViewCell", for: indexPath) as? LocationTableCell else { return UITableViewCell() }
         let searchingLocation = filteredLocationModel[indexPath.row]
@@ -435,8 +435,8 @@ extension LocationSelectionView: UITableViewDelegate {
         let searchingLocation = filteredLocationModel[indexPath.row]
         self.cityInformation.forEach { information in
             if information.code == searchingLocation.locationCode {
-                if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                    CoreDataManager.shared.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: CoreDataManager.shared.countLocations())
+                if viewModel.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
+                    viewModel.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: viewModel.countLocations())
                     self.endSearchLocation()
                 } else {
                     self.isSameLocationAlert()
@@ -445,7 +445,7 @@ extension LocationSelectionView: UITableViewDelegate {
         }
         self.viewDidLoad()
     }
-
+    
     private func isSameLocationAlert() {
         let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.", message: "다른 지역을 추가해주세요.", preferredStyle: .alert)
         let confirm = UIAlertAction(title: "확인", style: .default) { _ in
@@ -463,16 +463,16 @@ extension LocationSelectionView: collectionViewCelDeleteButtonlClicked {
             self.dismiss(animated: true)
         }
         let cancel = UIAlertAction(title: "확인", style: .destructive) { _ in
-            CoreDataManager.shared.locationDelete(location: self.locationList[indexPath])
+            self.viewModel.locationDelete(location: self.locationList[indexPath])
             self.dismiss(animated: true)
-            self.locationList = CoreDataManager.shared.fetchLocations()
+            self.locationList = self.viewModel.fetchLocations()
             self.weatherInfoArrary.removeAll()
             self.collectionView.reloadData()
 
             self.locationList.forEach { location in
                 var cellProvince: String = String()
                 var cellCity: String = String()
-
+                
                 self.cityInformation.forEach { info in
                     if info.code == location.city {
                         cellProvince = info.province
