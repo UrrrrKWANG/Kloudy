@@ -11,7 +11,7 @@ target 'Kloudy' do
   pod 'RxCocoa', '6.5.0'
   pod 'lottie-ios'  
   pod 'FSPagerView'
-  pod 'Charts'
+  pod 'Charts', '4.1.0'
 
   target 'KloudyTests' do
     inherit! :search_paths
