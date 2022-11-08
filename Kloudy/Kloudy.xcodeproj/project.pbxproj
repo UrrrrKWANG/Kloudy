@@ -8,11 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		113D3E312909817800A72594 /* LocationSelectionNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */; };
+		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		22072511291A9F9800E01508 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22072510291A9F9800E01508 /* CityInformation.csv */; };
-		2EA3F35FA7E6E22373D10BEE /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D874C7596AC64D02BF3E27B3 /* Pods_Kloudy_KloudyUITests.framework */; };
-		3A663B0B4C0CD03E547C11D0 /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB51A4526E7B5CA9B7C969DF /* Pods_KloudyTests.framework */; };
-		61C551A42ABA383DE6432277 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62C79C286D8571FD0E22D24 /* Pods_Kloudy.framework */; };
+		26832CF4213CDDECD581CA7C /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */; };
 		8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE412909601C00F80ECB /* LocationTableCell.swift */; };
 		8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409822918DA5A00DC2962 /* SearchLocationView.swift */; };
 		8B6409852918DB9700DC2962 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409842918DB9700DC2962 /* CoreDataManager.swift */; };
@@ -58,7 +57,6 @@
 		8BC8F82029011E3400EF83AE /* kloudyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BC8F80F29011E3300EF83AE /* kloudyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; };
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		9CE58FCDFE2183DDD06D7072 /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EF1B8CF611830B2581218C02 /* Pods_kloudyWidgetExtension.framework */; };
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
 		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 		D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */; };
@@ -83,6 +81,7 @@
 		D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */; };
 		D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */; };
 		D592C999290B26FB00C53F06 /* Protocol+.swift in Sources */ = {isa = PBXBuildFile; fileRef = D592C998290B26FB00C53F06 /* Protocol+.swift */; };
+		DE5612E53E6EFF41A23C78AA /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */; };
 		E0336133290997FE0098CF76 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Font+.swift */; };
 		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
 		E0336135290998030098CF76 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Color+.swift */; };
@@ -94,6 +93,7 @@
 		E033613B290998440098CF76 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77B29011DB100EF83AE /* Notification.swift */; };
 		E033613C290998470098CF76 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77C29011DB100EF83AE /* Weather.swift */; };
 		E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */; };
+		FAD9CEBADF8415C4EB78D146 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -146,13 +146,18 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		0218FF489808FE48FFEA57A9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KloudyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionNavigationView.swift; sourceTree = "<group>"; };
-		1580379A870C0BA58EBC70A0 /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2207250F291A322B00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		22072510291A9F9800E01508 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
-		6DDC0EB6B82F0DC4DE5DADF9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.debug.xcconfig"; sourceTree = "<group>"; };
+		5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy_KloudyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
 		8B6409822918DA5A00DC2962 /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		8B6409842918DB9700DC2962 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
@@ -201,11 +206,8 @@
 		8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = kloudyWidget.intentdefinition; sourceTree = "<group>"; };
 		8BC8F81929011E3400EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		A8623460945E88F5D5210613 /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
-		ABD8656DD526B860C95BB10D /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
-		B62C79C286D8571FD0E22D24 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		BB51A4526E7B5CA9B7C969DF /* Pods_KloudyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KloudyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CAABB86559EAC2AE50B8EC15 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
+		93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
+		AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
 		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -221,11 +223,9 @@
 		D558FEE82909CC96002EEA22 /* 마스크_1단계.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "마스크_1단계.png"; sourceTree = "<group>"; };
 		D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Regular.ttf"; sourceTree = "<group>"; };
 		D592C998290B26FB00C53F06 /* Protocol+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Protocol+.swift"; sourceTree = "<group>"; };
-		D874C7596AC64D02BF3E27B3 /* Pods_Kloudy_KloudyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy_KloudyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E2D175062BA72FE43E0F9A8A /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
-		EAC7BF144DAA1B613B7B3F90 /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
-		EF1B8CF611830B2581218C02 /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EFA7BCA4BFA3EC08FA8A73A2 /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
+		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
+		FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -233,7 +233,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				61C551A42ABA383DE6432277 /* Pods_Kloudy.framework in Frameworks */,
+				14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -241,7 +241,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3A663B0B4C0CD03E547C11D0 /* Pods_KloudyTests.framework in Frameworks */,
+				26832CF4213CDDECD581CA7C /* Pods_KloudyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -249,7 +249,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EA3F35FA7E6E22373D10BEE /* Pods_Kloudy_KloudyUITests.framework in Frameworks */,
+				FAD9CEBADF8415C4EB78D146 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -259,7 +259,7 @@
 			files = (
 				8BC8F81429011E3300EF83AE /* SwiftUI.framework in Frameworks */,
 				8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */,
-				9CE58FCDFE2183DDD06D7072 /* Pods_kloudyWidgetExtension.framework in Frameworks */,
+				DE5612E53E6EFF41A23C78AA /* Pods_kloudyWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,14 +286,14 @@
 		713F97B30F6109B08631D880 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				E2D175062BA72FE43E0F9A8A /* Pods-Kloudy.debug.xcconfig */,
-				CAABB86559EAC2AE50B8EC15 /* Pods-Kloudy.release.xcconfig */,
-				6DDC0EB6B82F0DC4DE5DADF9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */,
-				ABD8656DD526B860C95BB10D /* Pods-Kloudy-KloudyUITests.release.xcconfig */,
-				EFA7BCA4BFA3EC08FA8A73A2 /* Pods-KloudyTests.debug.xcconfig */,
-				A8623460945E88F5D5210613 /* Pods-KloudyTests.release.xcconfig */,
-				EAC7BF144DAA1B613B7B3F90 /* Pods-kloudyWidgetExtension.debug.xcconfig */,
-				1580379A870C0BA58EBC70A0 /* Pods-kloudyWidgetExtension.release.xcconfig */,
+				93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */,
+				AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */,
+				0218FF489808FE48FFEA57A9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */,
+				DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */,
+				08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */,
+				184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */,
+				10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */,
+				F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -538,10 +538,10 @@
 			children = (
 				8BC8F81129011E3300EF83AE /* WidgetKit.framework */,
 				8BC8F81329011E3300EF83AE /* SwiftUI.framework */,
-				B62C79C286D8571FD0E22D24 /* Pods_Kloudy.framework */,
-				D874C7596AC64D02BF3E27B3 /* Pods_Kloudy_KloudyUITests.framework */,
-				BB51A4526E7B5CA9B7C969DF /* Pods_KloudyTests.framework */,
-				EF1B8CF611830B2581218C02 /* Pods_kloudyWidgetExtension.framework */,
+				0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */,
+				5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */,
+				0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */,
+				FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -605,12 +605,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F76129011D0800EF83AE /* Build configuration list for PBXNativeTarget "Kloudy" */;
 			buildPhases = (
-				0B8BD6632B982F2968A7D60E /* [CP] Check Pods Manifest.lock */,
+				1224E4DC613C7963D5F54F87 /* [CP] Check Pods Manifest.lock */,
 				8BC8F73029011D0700EF83AE /* Sources */,
 				8BC8F73129011D0700EF83AE /* Frameworks */,
 				8BC8F73229011D0700EF83AE /* Resources */,
 				8BC8F82429011E3400EF83AE /* Embed Foundation Extensions */,
-				7C51B7A9800A659296AD25E4 /* [CP] Embed Pods Frameworks */,
+				5E5E4841313882CDEA55E7E4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -626,7 +626,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F76429011D0800EF83AE /* Build configuration list for PBXNativeTarget "KloudyTests" */;
 			buildPhases = (
-				1C10D545BA4A85DBF7DB3736 /* [CP] Check Pods Manifest.lock */,
+				D7CDE852B028B515A05D1F05 /* [CP] Check Pods Manifest.lock */,
 				8BC8F74929011D0800EF83AE /* Sources */,
 				8BC8F74A29011D0800EF83AE /* Frameworks */,
 				8BC8F74B29011D0800EF83AE /* Resources */,
@@ -645,11 +645,11 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F76729011D0800EF83AE /* Build configuration list for PBXNativeTarget "KloudyUITests" */;
 			buildPhases = (
-				5CDDBC2B2B4BD4E1082238F3 /* [CP] Check Pods Manifest.lock */,
+				05B8DB0D1AF398524B286AAE /* [CP] Check Pods Manifest.lock */,
 				8BC8F75329011D0800EF83AE /* Sources */,
 				8BC8F75429011D0800EF83AE /* Frameworks */,
 				8BC8F75529011D0800EF83AE /* Resources */,
-				0982B7CD66F03EEF936459DA /* [CP] Embed Pods Frameworks */,
+				9DC14AE3169D577C34355371 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -665,7 +665,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F82129011E3400EF83AE /* Build configuration list for PBXNativeTarget "kloudyWidgetExtension" */;
 			buildPhases = (
-				FCFD70514C26D295692DF209 /* [CP] Check Pods Manifest.lock */,
+				293981009B951B10D241A625 /* [CP] Check Pods Manifest.lock */,
 				8BC8F80B29011E3300EF83AE /* Sources */,
 				8BC8F80C29011E3300EF83AE /* Frameworks */,
 				8BC8F80D29011E3300EF83AE /* Resources */,
@@ -783,68 +783,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		0982B7CD66F03EEF936459DA /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		0B8BD6632B982F2968A7D60E /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Kloudy-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1C10D545BA4A85DBF7DB3736 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KloudyTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5CDDBC2B2B4BD4E1082238F3 /* [CP] Check Pods Manifest.lock */ = {
+		05B8DB0D1AF398524B286AAE /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -866,7 +805,51 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		7C51B7A9800A659296AD25E4 /* [CP] Embed Pods Frameworks */ = {
+		1224E4DC613C7963D5F54F87 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Kloudy-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		293981009B951B10D241A625 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-kloudyWidgetExtension-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		5E5E4841313882CDEA55E7E4 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -883,7 +866,24 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kloudy/Pods-Kloudy-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		FCFD70514C26D295692DF209 /* [CP] Check Pods Manifest.lock */ = {
+		9DC14AE3169D577C34355371 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		D7CDE852B028B515A05D1F05 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -898,7 +898,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-kloudyWidgetExtension-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-KloudyTests-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1152,7 +1152,7 @@
 		};
 		8BC8F76229011D0800EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = E2D175062BA72FE43E0F9A8A /* Pods-Kloudy.debug.xcconfig */;
+			baseConfigurationReference = 93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1187,7 +1187,7 @@
 		};
 		8BC8F76329011D0800EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CAABB86559EAC2AE50B8EC15 /* Pods-Kloudy.release.xcconfig */;
+			baseConfigurationReference = AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1222,13 +1222,13 @@
 		};
 		8BC8F76529011D0800EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFA7BCA4BFA3EC08FA8A73A2 /* Pods-KloudyTests.debug.xcconfig */;
+			baseConfigurationReference = 08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V8U96P27D9;
+				DEVELOPMENT_TEAM = JASCMY8XL7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
@@ -1243,13 +1243,13 @@
 		};
 		8BC8F76629011D0800EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = A8623460945E88F5D5210613 /* Pods-KloudyTests.release.xcconfig */;
+			baseConfigurationReference = 184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V8U96P27D9;
+				DEVELOPMENT_TEAM = JASCMY8XL7;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0;
@@ -1264,12 +1264,12 @@
 		};
 		8BC8F76829011D0800EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 6DDC0EB6B82F0DC4DE5DADF9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */;
+			baseConfigurationReference = 0218FF489808FE48FFEA57A9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V8U96P27D9;
+				DEVELOPMENT_TEAM = JASCMY8XL7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KloudyUITests;
@@ -1283,12 +1283,12 @@
 		};
 		8BC8F76929011D0800EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = ABD8656DD526B860C95BB10D /* Pods-Kloudy-KloudyUITests.release.xcconfig */;
+			baseConfigurationReference = DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = V8U96P27D9;
+				DEVELOPMENT_TEAM = JASCMY8XL7;
 				GENERATE_INFOPLIST_FILE = YES;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KloudyUITests;
@@ -1302,7 +1302,7 @@
 		};
 		8BC8F82229011E3400EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EAC7BF144DAA1B613B7B3F90 /* Pods-kloudyWidgetExtension.debug.xcconfig */;
+			baseConfigurationReference = 10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1334,7 +1334,7 @@
 		};
 		8BC8F82329011E3400EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1580379A870C0BA58EBC70A0 /* Pods-kloudyWidgetExtension.release.xcconfig */;
+			baseConfigurationReference = F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
