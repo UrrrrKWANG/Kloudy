@@ -11,11 +11,6 @@ struct CityInformation: Codable {
     let code: String
     let province: String
     let city: String
-    let airCoditionMeasuring: String
-    let xCoordination: Int
-    let yCoordination: Int
-    let longitude: Double
-    let latitude: Double
 }
 
 // 도시 정보를 찾을 때 사용하는 모델

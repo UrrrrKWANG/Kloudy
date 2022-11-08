@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		113D3E312909817800A72594 /* LocationSelectionNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
-		226F4029290655930067B052 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 226F4028290655930067B052 /* CityInformation.csv */; };
+		22072511291A9F9800E01508 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22072510291A9F9800E01508 /* CityInformation.csv */; };
 		2EA3F35FA7E6E22373D10BEE /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = D874C7596AC64D02BF3E27B3 /* Pods_Kloudy_KloudyUITests.framework */; };
 		3A663B0B4C0CD03E547C11D0 /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB51A4526E7B5CA9B7C969DF /* Pods_KloudyTests.framework */; };
 		61C551A42ABA383DE6432277 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B62C79C286D8571FD0E22D24 /* Pods_Kloudy.framework */; };
@@ -151,7 +151,7 @@
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2207250F291A322B00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
-		226F4028290655930067B052 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
+		22072510291A9F9800E01508 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
 		6DDC0EB6B82F0DC4DE5DADF9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.debug.xcconfig"; sourceTree = "<group>"; };
 		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
 		8B6409822918DA5A00DC2962 /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
@@ -277,6 +277,7 @@
 		22072508291A31BC00E01508 /* Localization */ = {
 			isa = PBXGroup;
 			children = (
+				22072510291A9F9800E01508 /* CityInformation.csv */,
 				2207250D291A31DB00E01508 /* Localizable.strings */,
 			);
 			path = Localization;
@@ -499,7 +500,6 @@
 		8BC8F7C129011DB100EF83AE /* Resource */ = {
 			isa = PBXGroup;
 			children = (
-				226F4028290655930067B052 /* CityInformation.csv */,
 				8BC8F7C229011DB100EF83AE /* Assets.xcassets */,
 				22072508291A31BC00E01508 /* Localization */,
 				D558FED82909CC5C002EEA22 /* Lottie */,
@@ -734,10 +734,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				D558FEE32909CC7C002EEA22 /* rain_step3.json in Resources */,
-				226F4029290655930067B052 /* CityInformation.csv in Resources */,
 				D558FEEB2909CC96002EEA22 /* mask_4grade.json in Resources */,
 				D558FEDF2909CC7C002EEA22 /* rain_step4.json in Resources */,
 				D558FEDD2909CC7C002EEA22 /* rain_step1.json in Resources */,
+				22072511291A9F9800E01508 /* CityInformation.csv in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
 				D558FEEF2909CC96002EEA22 /* 마스크_1단계.png in Resources */,
 				D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
