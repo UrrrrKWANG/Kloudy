@@ -81,7 +81,7 @@ class LocationSelectionView: UIViewController {
         cancelSearchButton.isHidden = true
         noCityInformationLabel.isHidden = true
         
-        locationList = viewModel.fetchLocations()
+        locationList = CoreDataManager.shared.fetchLocations()
         collectionView.reloadData()
         self.fetchedWeatherInfo.$result
             .receive(on: DispatchQueue.main)
@@ -119,7 +119,7 @@ class LocationSelectionView: UIViewController {
     
     @objc func refreshReloadCollectView() {
         
-        locationList = viewModel.fetchLocations()
+        locationList = CoreDataManager.shared.fetchLocations()
         self.weatherInfoArrary.removeAll()
         self.collectionView.reloadData()
 
@@ -244,7 +244,7 @@ class LocationSelectionView: UIViewController {
         tableView.reloadData()
         collectionView.isHidden = false
         noCityInformationLabel.isHidden = true
-        locationList = viewModel.fetchLocations()
+        locationList = CoreDataManager.shared.fetchLocations()
         collectionView.reloadData()
     }
 }
@@ -435,8 +435,8 @@ extension LocationSelectionView: UITableViewDelegate {
         let searchingLocation = filteredLocationModel[indexPath.row]
         self.cityInformation.forEach { information in
             if information.code == searchingLocation.locationCode {
-                if viewModel.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                    viewModel.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: viewModel.countLocations())
+                if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
+                    CoreDataManager.shared.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: CoreDataManager.shared.countLocations())
                     self.endSearchLocation()
                 } else {
                     self.isSameLocationAlert()
@@ -463,9 +463,9 @@ extension LocationSelectionView: collectionViewCelDeleteButtonlClicked {
             self.dismiss(animated: true)
         }
         let cancel = UIAlertAction(title: "확인", style: .destructive) { _ in
-            self.viewModel.locationDelete(location: self.locationList[indexPath])
+            CoreDataManager.shared.locationDelete(location: self.locationList[indexPath])
             self.dismiss(animated: true)
-            self.locationList = self.viewModel.fetchLocations()
+            self.locationList = CoreDataManager.shared.fetchLocations()
             self.weatherInfoArrary.removeAll()
             self.collectionView.reloadData()
 
