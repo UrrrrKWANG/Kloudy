@@ -1,5 +1,5 @@
 PODS:
-  - lottie-ios (3.5.0)
+  - lottie-ios (3.4.1)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
     - RxSwift (= 6.5.0)
@@ -23,7 +23,7 @@ SPEC REPOS:
     - SnapKit
 
 SPEC CHECKSUMS:
-  lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
+  lottie-ios: 016449b5d8be0c3dcbcfa0a9988469999cd04c5d
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8

@@ -82,7 +82,7 @@ extension CALayer {
 
   /// A `CAAnimation` that applies the custom value from the `AnyValueProvider`
   /// registered for this specific property's `AnimationKeypath`,
-  /// if one has been registered using `LottieAnimationView.setValueProvider(_:keypath:)`.
+  /// if one has been registered using `AnimationView.setValueProvider(_:keypath:)`.
   @nonobjc
   private func customizedAnimation<ValueRepresentation>(
     for property: LayerProperty<ValueRepresentation>,
@@ -336,7 +336,8 @@ extension CALayer {
         if
           let controlPoint1 = keyframe.spatialOutTangent?.pointValue,
           let controlPoint2 = nextKeyframe.spatialInTangent?.pointValue,
-          !(controlPoint1 == .zero && controlPoint2 == .zero)
+          controlPoint1 != .zero,
+          controlPoint2 != .zero
         {
           path.addCurve(
             to: try keyframeValueMapping(nextKeyframe.value),
