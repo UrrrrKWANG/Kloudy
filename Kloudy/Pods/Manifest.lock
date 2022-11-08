@@ -1,4 +1,9 @@
 PODS:
+  - Charts (4.0.3):
+    - Charts/Core (= 4.0.3)
+  - Charts/Core (4.0.3):
+    - SwiftAlgorithms (~> 1.0)
+  - FSPagerView (0.8.3)
   - lottie-ios (3.5.0)
   - RxCocoa (6.5.0):
     - RxRelay (= 6.5.0)
@@ -7,8 +12,11 @@ PODS:
     - RxSwift (= 6.5.0)
   - RxSwift (6.5.0)
   - SnapKit (5.6.0)
+  - SwiftAlgorithms (1.0.0)
 
 DEPENDENCIES:
+  - Charts
+  - FSPagerView
   - lottie-ios
   - RxCocoa (= 6.5.0)
   - RxSwift (= 6.5.0)
@@ -16,19 +24,25 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
+    - Charts
+    - FSPagerView
     - lottie-ios
     - RxCocoa
     - RxRelay
     - RxSwift
     - SnapKit
+    - SwiftAlgorithms
 
 SPEC CHECKSUMS:
+  Charts: d959d6723c8eedfdd0735dfc28cb0a71762ac4d9
+  FSPagerView: 670405b2f18e2a87fa37f20b00de783e562c25a8
   lottie-ios: c55158d67d0629a260625cc2ded2052b829e3c3e
   RxCocoa: 94f817b71c07517321eb4f9ad299112ca8af743b
   RxRelay: 1de1523e604c72b6c68feadedd1af3b1b4d0ecbd
   RxSwift: 5710a9e6b17f3c3d6e40d6e559b9fa1e813b2ef8
   SnapKit: e01d52ebb8ddbc333eefe2132acf85c8227d9c25
+  SwiftAlgorithms: 38dda4731d19027fdeee1125f973111bf3386b53
 
-PODFILE CHECKSUM: d1b4c0a97e8d8706cac5ef55da472852f75123a2
+PODFILE CHECKSUM: e6c04dd9356248b5d0c40ef2112a0ba8c64b6ea6
 
 COCOAPODS: 1.11.3
