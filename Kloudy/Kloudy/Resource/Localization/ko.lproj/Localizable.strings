@@ -1,9 +1,9 @@
-/* 
+/*
   Localizable.strings
   Kloudy
 
   Created by Geunil Park on 2022/11/08.
-  
+
 */
 
 // MARK: - 지역이름
@@ -90,10 +90,10 @@ Yuseong-gu="유성구";
 Daedeok-gu="대덕구";
 //울산
 Ulsan="울산광역시";
-Nam-gu="남구"
-Dong-gu="동구"
-Buk-gu="북구"
-Ulju-gun="울주군"
+Nam-gu="남구";
+Dong-gu="동구";
+Buk-gu="북구";
+Ulju-gun="울주군";
 //세종
 Sejong-si="세종특별자치시";
 //경기
