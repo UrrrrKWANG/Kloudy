@@ -8,8 +8,8 @@ import QuartzCore
 
 /// A `ShapeItem` that represents a stroke
 protocol StrokeShapeItem: OpacityAnimationModel {
-  var strokeColor: KeyframeGroup<Color>? { get }
-  var width: KeyframeGroup<Vector1D> { get }
+  var strokeColor: KeyframeGroup<LottieColor>? { get }
+  var width: KeyframeGroup<LottieVector1D> { get }
   var lineCap: LineCap { get }
   var lineJoin: LineJoin { get }
   var miterLimit: Double { get }
@@ -19,13 +19,13 @@ protocol StrokeShapeItem: OpacityAnimationModel {
 // MARK: - Stroke + StrokeShapeItem
 
 extension Stroke: StrokeShapeItem {
-  var strokeColor: KeyframeGroup<Color>? { color }
+  var strokeColor: KeyframeGroup<LottieColor>? { color }
 }
 
 // MARK: - GradientStroke + StrokeShapeItem
 
 extension GradientStroke: StrokeShapeItem {
-  var strokeColor: KeyframeGroup<Color>? { nil }
+  var strokeColor: KeyframeGroup<LottieColor>? { nil }
 }
 
 // MARK: - CAShapeLayer + StrokeShapeItem
@@ -55,9 +55,13 @@ extension CAShapeLayer {
     try addOpacityAnimation(for: stroke, context: context)
 
     if let (dashPattern, dashPhase) = stroke.dashPattern?.shapeLayerConfiguration {
-      lineDashPattern = try dashPattern.map {
+      let lineDashPattern = try dashPattern.map {
         try KeyframeGroup(keyframes: $0)
-          .exactlyOneKeyframe(context: context, description: "stroke dashPattern").value.cgFloatValue as NSNumber
+          .exactlyOneKeyframe(context: context, description: "stroke dashPattern").cgFloatValue
+      }
+
+      if lineDashPattern.isSupportedLayerDashPattern {
+        self.lineDashPattern = lineDashPattern as [NSNumber]
       }
 
       try addAnimation(
