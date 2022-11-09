@@ -16,7 +16,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
         
-        let checkWeatherView = LocationSelectionView()
+        let checkWeatherView = CheckWeatherView()
         let rootNavigationController = UINavigationController(rootViewController: checkWeatherView)
         
         self.window?.rootViewController = rootNavigationController

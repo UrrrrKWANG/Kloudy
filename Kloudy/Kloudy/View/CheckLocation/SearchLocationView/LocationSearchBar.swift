@@ -25,10 +25,6 @@ class LocationSearchBar: UISearchBar {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func checkEmailValid(_ email: String) -> Bool {
-        return email.contains("@") && email.contains(".")
-    }
-    
     private func bind() {
         // SearchBar 를 눌렀을 때 생기는 이벤트
         self.searchTextField.rx.controlEvent([.editingDidBegin])
@@ -56,6 +52,7 @@ class LocationSearchBar: UISearchBar {
     private func attribute() {
         self.placeholder = "지역을 검색해 보세요"
         self.setImage(UIImage(), for: .search, state: .normal)
+        self.setImage(UIImage(), for: .clear, state: .normal)
         self.searchBarStyle = .prominent
         self.backgroundImage = UIImage()
 
