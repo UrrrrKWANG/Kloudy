@@ -25,15 +25,15 @@ class CoreDataManager {
         }
     }
     
-    func saveLocation(city: String, latitude: Double, longtitude: Double, sequence: Int) {
+    func saveLocation(code: String, city: String, province: String, sequence: Int) {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
             let locations = try coreDataStack.managedContext.fetch(request)
             let countLocations = locations.count
             let location = NSEntityDescription.insertNewObject(forEntityName: "Location", into: coreDataStack.managedContext)
+            location.setValue(code, forKey: "code")
             location.setValue(city, forKey: "city")
-            location.setValue(latitude, forKey: "latitude")
-            location.setValue(longtitude, forKey: "longtitude")
+            location.setValue(province, forKey: "province")
             location.setValue(countLocations, forKey: "sequence")
             coreDataStack.saveContext()
         } catch {

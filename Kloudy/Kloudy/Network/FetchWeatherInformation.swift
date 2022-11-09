@@ -13,24 +13,16 @@ class FetchWeatherInformation: ObservableObject {
     
     func startLoad(province:String, city: String) {
         // 도시 이름을 받아서 x, y값 받음
-        let cityInformation = getCityInformaiton(province: province, city: city)
-        let xCoordinate = cityInformation[0], yCoordinate = cityInformation[1],
-            airConditionMeasuring = cityInformation[2], cityCode = cityInformation[3]
+        let cityCode = getCityInformaiton(province: province, city: city)
         
         let dayTime = getNowTimeForQuery()
         let day = dayTime[0], time = dayTime[1]
         
         // x, y값을 쿼리로 넣은 url을 만듦 (urlComponents)
         var urlComponents = URLComponents(string: "http://3.35.230.34:8080/apis/weather")
-        print(day, time, xCoordinate, yCoordinate, airConditionMeasuring, cityCode)
-        let xQuery = URLQueryItem(name: "x", value: xCoordinate)
-        let yQuery = URLQueryItem(name: "y", value: yCoordinate)
-        let airQuery = URLQueryItem(name: "air", value: airConditionMeasuring)
-        let dayQuery = URLQueryItem(name: "day", value: day)
-        let timeQuery = URLQueryItem(name: "time", value: time)
         let codeQuery = URLQueryItem(name: "cityCode", value: cityCode)
 
-        urlComponents?.queryItems = [dayQuery, timeQuery, xQuery, yQuery, airQuery, codeQuery]
+        urlComponents?.queryItems = [codeQuery]
         // URLSessionConfiguration을 만듦
         let config = URLSessionConfiguration.default
         let session = URLSession(configuration: config)
@@ -66,12 +58,12 @@ class FetchWeatherInformation: ObservableObject {
         dataTask.resume()
     }
     
-    func getCityInformaiton(province:String, city: String) -> [String] {
+    func getCityInformaiton(province:String, city: String) -> String {
         let koreanCities: [CityInformation] = loadCityListFromCSV()
         
         let nowCity = koreanCities.filter{ $0.province == province && $0.city == city }[0]
         
-        return [String(nowCity.xCoordination), String(nowCity.yCoordination), String(nowCity.airCoditionMeasuring), String(nowCity.code)]
+        return String(nowCity.code)
     }
     
     func getNowTimeForQuery() -> [String] {
@@ -134,7 +126,7 @@ class FetchWeatherInformation: ObservableObject {
             let dataEncoded = String(data: data, encoding: .utf8)
             if let dataArr = dataEncoded?.components(separatedBy: "\n").map({$0.components(separatedBy: ",")}) {
                                 for item in dataArr {
-                                    let city = CityInformation(code: item[0], province: item[1], city: item[2], airCoditionMeasuring: item[3], xCoordination: Int(item[4]) ?? 0, yCoordination: Int(item[5]) ?? 0, longitude: Double(item[6]) ?? 0, latitude: Double(item[7]) ?? 0)
+                                    let city = CityInformation(code: item[0], province: item[1], city: item[2])
                                     cityList.append(city)
                                 }
                             }

@@ -17,10 +17,8 @@ extension Location {
     }
 
     @NSManaged public var id: UUID?
+    @NSManaged public var province: String?
     @NSManaged public var city: String?
-    @NSManaged public var longitude: Double
-    @NSManaged public var latitude: Double
-    @NSManaged public var sequence: Int16
     @NSManaged public var weatherCell: NSSet?
     
     public var weatherCellArray: Set<WeatherCell> {
