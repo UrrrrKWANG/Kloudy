@@ -522,6 +522,21 @@ class LocationSelectionView: UIViewController {
     }
     
     private func bind() {
+        searchBar.searchFieldTapped
+            .subscribe(onNext: {
+                if $0 {
+                    self.cancelSearchButton.isHidden = false
+                } else {
+                    self.cancelSearchButton.isHidden = true
+                }
+            })
+            .disposed(by: disposeBag)
+        
+        searchBar.searchFieldText
+            .subscribe(onNext: {
+                print($0)
+            })
+            .disposed(by: disposeBag)
         
     }
     

@@ -30,7 +30,27 @@ class LocationSearchBar: UISearchBar {
     }
     
     private func bind() {
+        // SearchBar 를 눌렀을 때 생기는 이벤트
+        self.searchTextField.rx.controlEvent([.editingDidBegin])
+            .asObservable()
+            .subscribe(onNext: {
+                self.searchFieldTapped.onNext(true)
+            })
+            .disposed(by: disposeBag)
         
+        // 취소 를 눌렀을 때 생기는 이벤트
+        self.searchTextField.rx.controlEvent([.editingDidEnd])
+            .asObservable()
+            .subscribe(onNext: {
+                self.searchFieldTapped.onNext(false)
+            })
+            .disposed(by: disposeBag)
+        
+        // SearchBar 의 text 방출
+        self.searchTextField.rx.text.orEmpty
+            .distinctUntilChanged()
+            .bind(to: searchFieldText)
+            .disposed(by: disposeBag)
    }
     
     private func attribute() {
