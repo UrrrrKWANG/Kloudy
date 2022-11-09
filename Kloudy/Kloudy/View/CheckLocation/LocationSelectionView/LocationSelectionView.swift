@@ -436,7 +436,7 @@ extension LocationSelectionView: UITableViewDelegate {
         self.cityInformation.forEach { information in
             if information.code == searchingLocation.locationCode {
                 if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                    CoreDataManager.shared.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: CoreDataManager.shared.countLocations())
+                    CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations())
                     self.endSearchLocation()
                 } else {
                     self.isSameLocationAlert()
