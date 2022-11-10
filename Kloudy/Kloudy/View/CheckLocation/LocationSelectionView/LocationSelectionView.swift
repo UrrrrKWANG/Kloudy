@@ -136,10 +136,10 @@ class LocationSelectionView: UIViewController {
     private func changeTableType(_ isSearching: Bool) {
         if isSearching {
             self.tableType = .search
-            print(self.tableType)
         } else {
             self.tableType = .check
             searchBar.text = ""
+            searchBar.endEditing(true)
             nothingSearchedLocationLabel.isHidden = true
             filteredSearchTableTypeData = [SearchingLocation]()
             locationList = CoreDataManager.shared.fetchLocations()
@@ -255,7 +255,7 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return locationList.count
+            return 0
         }
     }
 
@@ -277,19 +277,19 @@ extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         switch tableType {
         case .search:
-            return
-        case .check:
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             self.cityData.forEach { information in
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                        CoreDataManager.shared.saveLocation(city: information.code, latitude: Double(information.latitude), longtitude: Double(information.longitude), sequence: CoreDataManager.shared.countLocations())
+                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations())
                         self.changeTableType(false)
                     } else {
                         self.isSameLocationAlert()
                     }
                 }
             }
+        case .check:
+            return
         }
     }
     
