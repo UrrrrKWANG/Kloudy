@@ -23,9 +23,10 @@ class CheckWeatherBasicNavigationView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.addSubview(settingButton)
-        self.addSubview(locationButton)
-        self.addSubview(bellButton)
+        self.backgroundColor = UIColor.KColor.white
+        [settingButton, locationButton, bellButton].forEach {
+            self.addSubview($0)
+        }
         configureSettingButton()
         configureLocationButton()
         configureBellButton()
@@ -34,17 +35,18 @@ class CheckWeatherBasicNavigationView: UIView {
     private func configureBellButton() {
         bellButton.setImage(UIImage(named: "notification"), for: .normal)
         bellButton.snp.makeConstraints {
-            $0.width.equalTo(18)
-            $0.height.equalTo(19)
-            $0.trailing.equalTo(locationButton.snp.leading).offset(-24)
+            $0.size.equalTo(22)
+            $0.trailing.equalTo(locationButton.snp.leading).offset(-22)
+            $0.centerY.equalToSuperview()
         }
     }
     
     private func configureLocationButton() {
         locationButton.setImage(UIImage(named: "location"), for: .normal)
         locationButton.snp.makeConstraints {
-            $0.size.equalTo(19)
-            $0.trailing.equalTo(settingButton.snp.leading).offset(-24)
+            $0.size.equalTo(24)
+            $0.trailing.equalTo(settingButton.snp.leading).offset(-22)
+            $0.centerY.equalToSuperview()
         }
         
     }
@@ -52,9 +54,10 @@ class CheckWeatherBasicNavigationView: UIView {
     private func configureSettingButton() {
         settingButton.setImage(UIImage(named: "setting"), for: .normal)
         self.settingButton.snp.makeConstraints {
-            $0.width.equalTo(18)
-            $0.height.equalTo(20)
+            $0.width.equalTo(21.6)
+            $0.height.equalTo(24)
             $0.trailing.equalToSuperview()
+            $0.centerY.equalToSuperview()
         }
     }
 }

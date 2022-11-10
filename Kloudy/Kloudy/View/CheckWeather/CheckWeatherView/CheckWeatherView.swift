@@ -81,14 +81,14 @@ class CheckWeatherView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.view.backgroundColor = .white
         loadWeatherView()
-        view.backgroundColor = .white
         navigationController?.navigationBar.isHidden = true
-        view.addSubview(checkWeatherBasicNavigationView)
+        self.view.addSubview(checkWeatherBasicNavigationView)
         configureCheckWeatherNavigationView()
         
         addChild(pageViewController)
-        view.addSubview(pageViewController.view)
+        self.view.addSubview(pageViewController.view)
         pageViewController.dataSource = self
         pageViewController.delegate = self
         configurePageViewController()
@@ -112,14 +112,13 @@ class CheckWeatherView: UIViewController {
     }
     
     func configureCheckWeatherNavigationView() {
-        checkWeatherBasicNavigationView.backgroundColor = .black
         checkWeatherBasicNavigationView.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(16)
-            $0.trailing.equalToSuperview().inset(21)
-            $0.width.equalTo(103)
-            $0.height.equalTo(20)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
+            $0.trailing.equalToSuperview().inset(20)
+            $0.width.equalTo(111)
+            $0.height.equalTo(40)
             
-            //            checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
+            checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
             //            checkWeatherCellLabelView.addButton.addTarget(self, action: #selector(tapAddIndexButton), for: .touchUpInside)
         }
     }
@@ -133,10 +132,10 @@ class CheckWeatherView: UIViewController {
     }
     
     // 네비게이션 버튼
-    //    @objc func tapLocationButton() {
-    //        let locationSelectionView = LocationSelectionView()
-    //        self.navigationController?.pushViewController(locationSelectionView, animated: true)
-    //    }
+        @objc func tapLocationButton() {
+            let locationSelectionView = LocationSelectionView()
+            self.navigationController?.pushViewController(locationSelectionView, animated: true)
+        }
     
     //    @objc func tapAddIndexButton() {
     //        self.delegate?.sendFirstSequenceLocation(self.firstSequenceLocation)
