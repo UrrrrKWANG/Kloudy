@@ -46,7 +46,7 @@ class LocationSelectionView: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         cityData = cityInformationModel.loadCityListFromCSV()
         initSearchTableTypeData()
-        
+
         bind()
         layout()
         attribute()
@@ -69,6 +69,8 @@ class LocationSelectionView: UIViewController {
         searchBar.searchFieldTapped
             .subscribe(onNext: {
                 self.changeTableType($0)
+                print($0)
+                print(self.tableType)
             })
             .disposed(by: disposeBag)
         
@@ -87,6 +89,7 @@ class LocationSelectionView: UIViewController {
         self.configureNothingSearchedLocationLabel()
         self.configureMagnifyingGlassImage()
         self.configureSearchBarBackgroundView()
+        self.configureDragAndDrop()
     }
     
     private func layout() {
@@ -225,12 +228,15 @@ class LocationSelectionView: UIViewController {
         tableView.dataSource = self
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.KColor.black
-        switch tableType {
-        case .search:
-            tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
-        case .check:
-            tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "locationCell")
-        }
+        tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
+        tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "locationCell")
+
+//        switch tableType {
+//        case .search:
+//            tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
+//        case .check:
+//            tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "locationCell")
+//        }
     }
     
     private func configureNothingSearchedLocationLabel() {
@@ -254,9 +260,14 @@ class LocationSelectionView: UIViewController {
     
     // drag, drop delegate 설정
     private func configureDragAndDrop() {
-        tableView.dragInteractionEnabled = true
-        tableView.dragDelegate = self
-        tableView.dropDelegate = self
+        switch tableType {
+        case .search:
+            return
+        case .check:
+            tableView.dragInteractionEnabled = true
+            tableView.dragDelegate = self
+            tableView.dropDelegate = self
+        }
     }
     
     @objc func endSearching() {
@@ -279,15 +290,21 @@ extension LocationSelectionView: UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch tableType {
         case .search:
+            print("+++++++_______search___________")
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchLocationCell", for: indexPath) as? SearchLocationCell else { return UITableViewCell() }
             // snapkit remakeConstraint 처리 유무 체크 필요
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             cell.locationLabel.text = searchingLocation.locationString
             return cell
         case .check:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else { return UITableViewCell() }
+            print("+++++++_check__________________")
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
+                print("+++++++_check_sfsdfsdfsdfsdfsdf____________")
+                return UITableViewCell() }
+            cell.backgroundColor = .red
             cell.textLabel?.text = cities[indexPath.row]
             
             return cell
@@ -297,28 +314,38 @@ extension LocationSelectionView: UITableViewDataSource {
     // MARK: 스와이프해서 삭제하기
     
     func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
-        return true
+        switch tableType {
+        case .search:
+            return false
+        case .check:
+            return true
+        }
     }
         
     // https://nemecek.be/blog/5/how-to-implement-swipe-to-delete-action-with-custom-icon
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        if indexPath.row != 0 {
-            let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                self.cities.remove(at: indexPath.row)
-                tableView.deleteRows(at: [indexPath], with: .fade)
-                completionHandler(true)
-            }
-
-            // https://stackoverflow.com/questions/47502901/is-there-a-recommended-image-size-for-uicontextualaction-icons
-            deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
-                UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 64, height: 93))
-            }
-
-            deleteAction.backgroundColor = .systemBackground
-            let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-            return configuration
-        } else {
+        switch tableType {
+        case .search:
             return nil
+        case .check:
+            if indexPath.row != 0 {
+                let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+                    self.cities.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    completionHandler(true)
+                }
+
+                // https://stackoverflow.com/questions/47502901/is-there-a-recommended-image-size-for-uicontextualaction-icons
+                deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
+                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 64, height: 93))
+                }
+
+                deleteAction.backgroundColor = .systemBackground
+                let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+                return configuration
+            } else {
+                return nil
+            }
         }
     }
 }
@@ -346,7 +373,7 @@ extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch tableType {
         case .search:
-            return 0 //
+            return 100 //
         case .check:
             return 100
         }
@@ -374,10 +401,15 @@ extension LocationSelectionView: UITableViewDragDelegate {
 extension LocationSelectionView: UITableViewDropDelegate {
         
     func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
-        if indexPath.row == 0 {
+        switch tableType {
+        case .search:
             return false
-        } else {
-            return true
+        case .check:
+            if indexPath.row == 0 {
+                return false
+            } else {
+                return true
+            }
         }
     }
     
