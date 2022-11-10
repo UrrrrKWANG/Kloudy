@@ -8,8 +8,8 @@
 import UIKit
 import SnapKit
 
-class LocationTableCell: UITableViewCell {
-    static let identifier = "TableViewCell"
+class SearchLocationCell: UITableViewCell {
+    static let identifier = "SearchLocationCell"
     
     let locationLabel: UILabel = {
         let locationLabel = UILabel()
