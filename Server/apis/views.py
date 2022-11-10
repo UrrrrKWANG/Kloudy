@@ -3,20 +3,24 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from .api_calls import weatherAPI
 from .serializers import WeatherSerializer
+from .models import Locations
 # Create your views here.
 
+# 지역 코드를 기반으로 DB에서 받아옴.
 @api_view(["GET"])
 def getWeathers(request):
 
-    day = request.GET.get("day")
-    time = request.GET.get("time")
-    x_coordinate = request.GET.get("x")
-    y_coordinate = request.GET.get("y")
-    air_condition_measuring = request.GET.get("air")
     code = request.GET.get("code")
+    location = Locations.objects.get(code=code)
 
-    weather = weatherAPI.weatherAPI(day, time, x_coordinate, y_coordinate, air_condition_measuring, code)
+    print(location.xCoordination, location.yCoordination, location.airCoditionMeasuring, location.code)
+    
+    # weather = weatherAPI.weatherAPI(day, time, x_coordinate, y_coordinate, air_condition_measuring, code)
 
-    serializer = WeatherSerializer(weather)
+    # serializer = WeatherSerializer(weather)
 
-    return Response(serializer.data)
+    # return Response(serializer.data)
+    return
+
+def calculateTime():
+    return

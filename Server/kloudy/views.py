@@ -1,40 +1,115 @@
-# import os
-# import django
-# import csv
-# import sys
+from apis.models import *
+import os
+import django
+import csv
+import sys
 
+CSV_PATH = './kloudy/csv/Locations.csv'
 
-# # system setup
-# os.chdir('.')
-# print('Current dir의 경로 : ', end=''), print(os.getcwd())               # os가 파악한 현재 경로를 표기
-# print('os.path.abspath(__file__)의 경로 : ',os.path.abspath(__file__))    # 현재 작업중인 파일을 포함 경로를 구체적으로 표기
-# BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-# print('BASE_DIR=', end=''), print(BASE_DIR)
-# print('똑같나? 다르나?', BASE_DIR == os.getcwd()) # 소문자 c , 대문자 C 차이 때문인것 같네요.
+def csv_reader():    
+    with open(CSV_PATH, newline='', encoding='utf8') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+        for row in data_reader:
+            if not Locations.objects.filter(code=row['code']).exists():
+                Locations.objects.create(
+                    code = row['code'],
+                    daily_status_code = row['daily_status_code'],
+                    daily_temperature_code = row['daily_temperature_code'],
+                    engProvince = row['engProvince'],
+                    province = row['province'],
+                    engCity = row['engCity'],
+                    city = row['city'],
+                    airCoditionMeasuring = row['airCoditionMeasuring'],
+                    xCoordination = row['xCoordination'],
+                    yCoordination = row['yCoordination'],
+                    longitude = row['longitude'],
+                    latitude = row['latitude']
+                    )
 
-# sys.path.append(BASE_DIR)  # sys 모듈은 파이썬을 설치할 때 함께 설치되는 라이브러리 모듈이다. sys에 대해서는 뒤에서 자세하게 다룰 것이다. 이 sys 모듈을 사용하면 파이썬 라이브러리가 설치되어 있는 디렉터리를 확인할 수 있다.
-# os.environ.setdefault("DJANGO_SETTINGS_MODULE", 'kloudy.settings') 
-#  # python이 실행될 때 DJANGO_SETTINGS_MODULE라는 환경 변수에
-# # 현재 프로젝트의 settings.py 파일 경로를 등록
-# django.setup() # python manage.py shell 을 실행하는 것이랑 비슷한 방법이다. 즉 파이썬 파일에서도 django를 실행 시킬수 있다.
+    print('LOCATION DATA UPLOADED SUCCESSFULY!')
 
-# # import model
-# from .models import Location
+    # Main에 아무것도 없으면 DB 처음 킨 것.
+    if Main.objects.count() == 0:
+        generate_first_time()
 
-# # insert data while reading csv file into table
-# CSV_PATH = './csv/Locations.csv'
+    return
 
-# # open csv file and insert row data in MySQL
+# 처음에 날씨 DB 갱신함.
+def generate_first_time():
+    print("It's First Time !")
+    now = ""
+    locations = Locations.objects.all()
+    for location in locations:
+        generateDB(now, location)
 
-# # Menu Table
+    return
 
-# def csv_reader():    
-#     # with open(CSV_PATH, newline='', encoding='utf8') as csvfile:
-#     #     data_reader = csv.DictReader(csvfile)
-#     #     for row in data_reader:
-#     #         if not Menu.objects.filter(name=row['menu']).exists():
-#     #             menu_id = Menu.objects.create(
-#     #                 name = row['menu'] )
-#     print('MENU DATA UPLOADED SUCCESSFULY!')
-#     return
+# 30분마다 30분 DB에 저장.
+def time_interval_weather_30():
+    print("HI. It's 30 minutes")
+    now = ""
+    locations = Locations.objects.all()
+    for location in locations:
+        updateDB(now, location)
+    return
 
+def time_interval_weather_00():
+    print("HI. It's 00 minutes")
+    now = ""
+    locations = Locations.objects.all()
+    for location in locations:
+        updateDB(now, location)
+    return
+
+# create 해줘야 함.
+def generateDB(time, location):
+    # 현재 지역과 시간을 중심으로 DB를 생성한다.
+
+    # main 생성
+
+    # umbrella_index 생성
+
+    # mask_index 생성
+
+    # outer_index 생성
+
+    # laundry_index 생성
+
+    # carwash_index 생성
+
+    # compare_index 생성
+
+    # weekly_index 생성
+    # > 날씨를 기반으로 날짜까지 같이 넣어준다. 나중에 사용할 때는 filter를 코드로 먼저 받고 이 쿼리셋을 돌리면서 날짜별로 넣어주면 됨.
+
+    # hourly_index 생성
+    # > 위클리와 마찬가지임
+
+    return
+
+# update해줘야 함.
+def updateDB():
+    # 현재 지역과 시간을 중심으로 DB를 갱신한다.
+
+    # main 갱신
+
+    # umbrella_index 갱신
+
+    # mask_index 갱신
+
+    # outer_index 갱신
+
+    # laundry_index 갱신
+
+    # carwash_index 갱신
+
+    # compare_index 갱신
+
+    # weekly_index 갱신
+    # > 날씨를 기반으로 날짜까지 같이 넣어준다. 나중에 사용할 때는 filter를 코드로 먼저 받고 이 쿼리셋을 돌리면서 날짜별로 넣어주면 됨.
+
+    # hourly_index 갱신
+    # > 위클리와 마찬가지
+
+    return
+    

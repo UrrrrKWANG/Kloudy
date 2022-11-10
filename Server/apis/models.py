@@ -14,38 +14,96 @@ class Locations(models.Model):
     longitude = models.CharField(max_length=10)
     latitude = models.CharField(max_length=10)
     
+    def __str__(self):
+        return self.city
+    
 class Weather(models.Model):
     today = models.CharField(max_length=10)
 
+class LocalWeather(models.Model):
+    weather = models.ForeignKey(Weather, related_name="local_weather", on_delete=models.CASCADE)
+    local_code = models.CharField(max_length=10)
+    local_name = models.CharField(max_length=10)
+
 class Main(models.Model):
-    weather = models.ForeignKey(Weather, related_name="main", on_delete=models.CASCADE)
+    local_weather = models.ForeignKey(LocalWeather, related_name="main", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
     current_weather = models.IntegerField()
     current_temperature = models.FloatField()
     day_max_temperature = models.FloatField()
     day_min_temperature = models.FloatField()
     
 class WeatherIndex(models.Model):
-    weather = models.ForeignKey(Weather, related_name="weather_index", on_delete=models.CASCADE)
-    umbrella_index = models.FloatField()
+    local_weather = models.ForeignKey(LocalWeather, related_name="weather_index", on_delete=models.CASCADE)
+
+class UmbrellaIndex(models.Model):
+    weather_index = models.ForeignKey(WeatherIndex, related_name="umbrealla_index", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    status = models.IntegerField()
+    precipitaion_24h = models.FloatField()
+    precipitaion_1h_max = models.FloatField()
+    precipitation_3h_max = models.FloatField()
+    wind = models.FloatField()
 
 class MaskIndex(models.Model):
     weather_index = models.ForeignKey(WeatherIndex, related_name="mask_index", on_delete=models.CASCADE)
-    air_quality = models.IntegerField()
-    flower_quality = models.IntegerField()
-    dust_quality = models.IntegerField()
+    code = models.CharField(max_length=10)
+    status = models.IntegerField()
+    pm25value = models.FloatField()
+    pm10value = models.FloatField()
+    pollen_index = models.IntegerField()
 
-# class ByTime(models.Model):
-#     hourly_weather = models.ForeignKey(HourlyWeatherInfo, on_delete=models.CASCADE)
+class OuterIndex(models.Model):
+    weather_index = models.ForeignKey(WeatherIndex, related_name="outer_index", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    status = models.IntegerField()
+    day_min_temperature = models.FloatField()
+    morning_temperature = models.FloatField()
 
-# class ByWeek(models.Model):
-#     daily_weather = models.ForeignKey(DailyWeatherInfo, on_delete=models.CASCADE)
+class LaundryIndex(models.Model):
+    weather_index = models.ForeignKey(WeatherIndex, related_name="laundry_index", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    status = models.IntegerField()
+    humidity = models.FloatField()
+    day_max_temperature = models.FloatField()
+    daily_weather = models.IntegerField()
 
-# class HourlyWeatherInfo(models.Model):
-#     status = model.IntegerField()
-#     rain = model.FloatField()
-#     temperature = model.IntegerField()
+class CarwashIndex(models.Model):
+    weather_index = models.ForeignKey(WeatherIndex, related_name="carwash_index", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    status = models.IntegerField()
+    daily_weather = models.IntegerField()
+    day_max_temperature = models.FloatField()
+    daily_precipitation = models.FloatField()
+    tomorrow_weather = models.IntegerField()
+    tomorrow_precipitation = models.FloatField()
+    weather_3Am7pm = models.CharField(max_length=20)
+    pm10grade = models.IntegerField()
+    pollen_index = models.IntegerField()
 
-# class DailyWeatherInfo(models.Model):
-#     status = model.IntegerField()
-#     max_temperature = models.FloatField()
-#     min_temperature = models.FloatField()
+class CompareIndex(models.Model):
+    weather_index = models.ForeignKey(WeatherIndex, related_name="compare_index", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    yesterday_max_temperature = models.FloatField()
+    yesterday_min_temperature = models.FloatField()
+    today_max_temperature = models.FloatField()
+    today_min_temperature = models.FloatField()
+
+# Week
+class WeeklyWeather(models.Model):
+    local_weather = models.ForeignKey(LocalWeather, related_name="weekly_weather", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    day = models.IntegerField()
+    status = models.IntegerField()
+    max_temperature = models.FloatField()
+    min_temperature = models.FloatField()
+
+# Hour
+class HourlyWeather(models.Model):
+    local_weather = models.ForeignKey(LocalWeather, related_name="hourly_weather", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    hour = models.IntegerField()
+    status = models.IntegerField()
+    temperature = models.FloatField()
+    precipitation = models.FloatField()
+    

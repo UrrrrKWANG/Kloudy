@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     "kloudy",
 
     "rest_framework",
+    'django_apscheduler',
     
     "django.contrib.admin",
     "django.contrib.auth",
