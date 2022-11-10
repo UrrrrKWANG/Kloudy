@@ -35,7 +35,8 @@ class Main(models.Model):
     
 class WeatherIndex(models.Model):
     local_weather = models.ForeignKey(LocalWeather, related_name="weather_index", on_delete=models.CASCADE)
-
+    code = models.CharField(max_length=10)
+    
 class UmbrellaIndex(models.Model):
     weather_index = models.ForeignKey(WeatherIndex, related_name="umbrealla_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)

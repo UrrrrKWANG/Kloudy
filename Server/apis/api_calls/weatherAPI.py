@@ -21,15 +21,6 @@ def weatherAPI(day, time, x_coordinate, y_coordinate, air_condition_measuring, c
     umbrella_index = getUmbrellaIndex(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
     (air_quality, flower_quality, dust_quality) = getMaskIndex(headers, METEOROGICAL_KEY, air_condition_measuring, code, day, time)
 
-    print(f"This is current_weather : {current_weather}, the type is { type(current_weather) }")    
-    print(f"This is current_temperature : {current_temperature}, the type is { type(current_temperature) }")
-    print(f"This is day_max_temperature : {day_max_temperature}, the type is { type(day_max_temperature) }")    
-    print(f"This is day_min_temperature : {day_min_temperature}, the type is { type(day_min_temperature) }")
-    print(f"This is umbrella_index : {umbrella_index}, the type is { type(umbrella_index) } ")
-    print(f"This is air_quality : {air_quality}, the type is { type(air_quality) } ")
-    print(f"This is flower_quality : {flower_quality}, the type is { type(flower_quality) } ")
-    print(f"This is dust_quality : {dust_quality}, the type is { type(dust_quality) } ")
-
     weather = Weather.objects.create(today = day)
     Main.objects.create(weather = weather, current_weather = current_weather, current_temperature = current_temperature, day_max_temperature = day_max_temperature, day_min_temperature = day_min_temperature)
     weather_index = WeatherIndex.objects.create(weather = weather, umbrella_index = umbrella_index)
