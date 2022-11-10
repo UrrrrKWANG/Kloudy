@@ -17,6 +17,7 @@ extension Location {
     }
 
     @NSManaged public var id: UUID?
+    @NSManaged public var code: String?
     @NSManaged public var province: String?
     @NSManaged public var city: String?
     @NSManaged public var weatherCell: NSSet?
