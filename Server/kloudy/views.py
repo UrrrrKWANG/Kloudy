@@ -379,7 +379,9 @@ def get_laundry_index(weather_24h_jsonObject):
     daily_weather = cal_daily_weather(rainy, sky_status[0], sky_status[1])
 
     status = cal_laundry_status(humidity, day_max_temperature, daily_weather)
-
+    
+    print(f'빨래 지수: {status}, {day_max_temperature}, {daily_weather}')
+    
     return [status, humidity, day_max_temperature, daily_weather]
 
 def cal_humidity(humidities)
