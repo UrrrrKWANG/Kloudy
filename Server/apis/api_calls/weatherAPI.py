@@ -18,7 +18,6 @@ def weatherAPI(day, time, x_coordinate, y_coordinate, air_condition_measuring, c
     current_weather = getCurrentWeather(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
     current_temperature = getCurrentTemperature(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
     (day_max_temperature, day_min_temperature) = getMaxMinTemperature(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
-    
     umbrella_index = getUmbrellaIndex(headers, METEOROGICAL_KEY, day, time, x_coordinate, y_coordinate)
     (air_quality, flower_quality, dust_quality) = getMaskIndex(headers, METEOROGICAL_KEY, air_condition_measuring, code, day, time)
 

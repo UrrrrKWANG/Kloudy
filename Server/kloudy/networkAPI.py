@@ -35,9 +35,8 @@ def getDatas(today, time, location):
     weather_48h_url = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=580&pageNo=1&dataType=JSON&base_date={int(today)-1}&base_time=2300&nx={location.xCoordination}&ny={location.yCoordination}'
     main_max_min_url = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=290&pageNo=1&dataType=JSON&base_date={int(today)-1}&base_time=2300&nx={location.xCoordination}&ny={location.yCoordination}'
     
-    # getMaskIndex & getCarWashIndex => 하루 2번 -> 날짜 + 06 or 날짜 + 18 으로 넣음
-    date_0618 = cal_0618_date(today, time)
-    flower_url = f'https://apis.data.go.kr/1360000/HealthWthrIdxServiceV2/getPinePollenRiskIdxV2?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&areaNo={location.code}&time={date_0618}'
+    # getMaskIndex & getCarWashIndex => 하루 2번 -> 날짜 + 06시 18시에만 받을 수 있는데 06시에만 오늘의 꽃가루지수를 받을 수 있음 -> 06시로 고정.
+    flower_url = f'https://apis.data.go.kr/1360000/HealthWthrIdxServiceV2/getPinePollenRiskIdxV2?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&areaNo={location.code}&time={today + "06"}'
     # getCarWashIndex & WeeklyWeather => 시간에 날짜+0600 or 날짜+1800으로만 넣어야함.
     middle_state_url = f'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&regld={location.daily_status_code}&tmFc={date_0618+"00"}'
     # WeeklyWeather => 시간에 날짜+0600 or 날짜+1800으로만 넣어야함.
@@ -68,29 +67,29 @@ def getDatas(today, time, location):
     return [main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, weather_24h_jsonObject, air_jsonObject, weather_48h_jsonObject, main_max_min_jsonObject, flower_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject]
 
 def cal_weather_24h_time(time):
-    time = int(time)
+    timer = int(time)
+    print(f'umbrella time: {timer}')
+    result = ""
     # Base_time : 0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
-    if 2330 <= time < 230:
-        return "2300"
-    elif 2030 <= time < 1730:
-        return "2000"
-    elif 1730 <= time < 1430:
-        return "1700"
-    elif 1430 <= time < 1130:
-        return "1400"
-    elif 1130 <= time < 830:
-        return "1100"
-    elif 830 <= time < 530:
-        return "0800"
-    elif 530 <= time < 230:
-        return "0500"
+    if 2030 <= timer < 2400:
+        result = "2300"
+    elif 1730 <= timer < 2030:
+        result = "2000"
+    elif 1430 <= timer < 1730:
+        result = "1700"
+    elif 1130 <= timer < 1430:
+        result = "1400"
+    elif 830 <= timer < 1130:
+        result = "1100"
+    elif 530 <= timer < 830:
+        result = "0800"
+    elif 230 <= timer < 530:
+        result = "0500"
+    elif 0 <= timer < 230:
+        result = "2300"
     else:
-        return "0200"
+        result = "0200"
 
-def cal_0618_date(today, time):
-    time = int(time)
-    # 하루 06시 18시에만 가능 ! 07시 19시 이후면 18 반환
-    if 700 <= time < 1900:
-        return today + "06"
-    else:
-        return today + "18"
+    print(result)
+    return result
+
