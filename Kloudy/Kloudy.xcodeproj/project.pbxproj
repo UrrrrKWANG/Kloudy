@@ -57,6 +57,8 @@
 		8BC8F82029011E3400EF83AE /* kloudyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BC8F80F29011E3300EF83AE /* kloudyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; };
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BA313764291BFB05008ACC74 /* TodayWeatherdataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA313763291BFB05008ACC74 /* TodayWeatherdataCell.swift */; };
+		BA313766291BFB13008ACC74 /* WeekWeatherdataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA313765291BFB13008ACC74 /* WeekWeatherdataCell.swift */; };
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
 		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 		D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */; };
@@ -208,6 +210,8 @@
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
 		AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
+		BA313763291BFB05008ACC74 /* TodayWeatherdataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodayWeatherdataCell.swift; sourceTree = "<group>"; };
+		BA313765291BFB13008ACC74 /* WeekWeatherdataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekWeatherdataCell.swift; sourceTree = "<group>"; };
 		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -320,6 +324,7 @@
 			children = (
 				8B6409912918F02100DC2962 /* DetailWeatherView.swift */,
 				8B6409932918F02C00DC2962 /* DetailWeatherViewModel.swift */,
+				BA313762291BFADF008ACC74 /* DetailWeatherViewCollectionViewCells */,
 			);
 			path = DetailWeatherView;
 			sourceTree = "<group>";
@@ -556,6 +561,15 @@
 				8BC8F81B29011E3400EF83AE /* Info.plist */,
 			);
 			path = kloudyWidget;
+			sourceTree = "<group>";
+		};
+		BA313762291BFADF008ACC74 /* DetailWeatherViewCollectionViewCells */ = {
+			isa = PBXGroup;
+			children = (
+				BA313763291BFB05008ACC74 /* TodayWeatherdataCell.swift */,
+				BA313765291BFB13008ACC74 /* WeekWeatherdataCell.swift */,
+			);
+			path = DetailWeatherViewCollectionViewCells;
 			sourceTree = "<group>";
 		};
 		D537D2052901BC6800271037 /* KloudyIndexWidget */ = {
@@ -922,6 +936,7 @@
 				8BC8F7D129011DB200EF83AE /* Location+CoreDataProperties.swift in Sources */,
 				8BC8F7EF29011DB200EF83AE /* CheckWeatherViewModel.swift in Sources */,
 				8B6409972918F1DC00DC2962 /* SettingView.swift in Sources */,
+				BA313764291BFB05008ACC74 /* TodayWeatherdataCell.swift in Sources */,
 				D558FECB2907D987002EEA22 /* UILabel+.swift in Sources */,
 				D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */,
 				8BC8F7F729011DB200EF83AE /* CheckWeatherBasicNavigationView.swift in Sources */,
@@ -935,6 +950,7 @@
 				8B64099E2918F26800DC2962 /* WeatherIndexDetailViewModel.swift in Sources */,
 				8B64098F2918EFD000DC2962 /* WeatherIndexViewModel.swift in Sources */,
 				8B64098D2918EFC900DC2962 /* WeatherIndexView.swift in Sources */,
+				BA313766291BFB13008ACC74 /* WeekWeatherdataCell.swift in Sources */,
 				D592C999290B26FB00C53F06 /* Protocol+.swift in Sources */,
 				8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */,
 				8BC8F7FB29011DB200EF83AE /* LocationSelectionView.swift in Sources */,
@@ -1169,7 +1185,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1204,7 +1220,7 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UIUserInterfaceStyle = Dark;
+				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
