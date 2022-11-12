@@ -257,7 +257,7 @@ def get_umbrella_index(weather_24h_jsonObject):
     precipitation_3h_max = PMAX3
     wind = V
     print(f'우산 지수: {status}, {precipitaion_24h}, {precipitaion_1h_max}, {precipitation_3h_max}')
-    
+
     return [status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind]
 
 # 30~ : 경보 특보 급(4) / ~30 : 많이(3) / ~15 : 적당히(2) / ~3 : 조금(1) / 0 : 안 써도 된다.(0)
@@ -291,6 +291,7 @@ def get_mask_index(air_jsonObject, flower_jsonObject):
     pm10value = pm10
     pollen_index = flower_quality
 
+    print(f'마스크 지수: {status}, {pm25value}, {pm10value}, {pollen_index}')
     return [status, pm25value, pm10value, pollen_index]
 
 # 0~15 : 좋음 0 / 16~35 : 보통 1 / 36~75 : 나쁨 2 / 76 : 매우나쁨 3
@@ -328,10 +329,11 @@ def get_outer_index(weather_24h_jsonObject):
                 temperatures[3] = float(obj.get('fcstValue'))
     
     outer_index = (sum(temperatures) + min_temperature) / 5
+
     status = cal_outer_status(outer_index)
     day_min_temperature = min_temperature
     morning_temperature = sum(temperatures) / 4
-    print(f'outer_')
+    print(f'아우터 지수: {status}, {day_min_temperature}, {morning_temperature}')
     return [status, day_min_temperature, morning_temperature]
 
 def cal_outer_status(outer_index):
