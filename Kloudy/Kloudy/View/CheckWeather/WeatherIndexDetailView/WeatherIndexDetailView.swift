@@ -9,88 +9,28 @@ import UIKit
 import SnapKit
 import Charts
 
+enum IndexType {
+    case unbrella
+    case mask
+    case laundry
+    case outer
+    case car
+    case temperatureGap
+}
+
 class WeatherIndexDetailView: UIViewController {
     
     let baseIndexView = UIView()
     let baseBackgroundView = UIView()
     let titleLabel = UILabel()
-    let chartView = LineChartView()
+    let chartView = IndexChartView()
     
-    
-    // chart data
-    let data: [Int : Double] = [ 0 : 0, 1 : 1.0, 2 : 1.0, 3 : 1.0, 4 : 1.0, 5 : 1.0, 6 : 1.0,
-                                 7 : 1.0, 8 : 0, 9 : 1.0, 10 : 1.0, 11 : 1.0, 12 : 1.0,
-                                 13 : 3.0, 14 : 0, 15 : 1.0, 16 : 0, 17 : 1.0, 18 : 1.0,
-                                 19 : 4.0, 20 : 5.0, 21 : 1.0, 22 : 5.0, 23 : 1.0, 24 : 3.0]
-    
-    var lineChartEntry = [ChartDataEntry]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         layout()
         attribute()
-        
-        //
-        for (key, value) in data {
-            let value = ChartDataEntry(x: Double(key), y: value)
-            lineChartEntry.append(value)
-        }
-        lineChartEntry = lineChartEntry.sorted(by: {$0.x < $1.x})
-        
-        let lineChartDataSet = LineChartDataSet(entries: lineChartEntry, label: "")
-        lineChartDataSet.colors = [UIColor.init(red: 102/255, green: 200/255, blue: 1, alpha: 1.0)]
-        lineChartDataSet.drawCirclesEnabled = false
-//        lineChartDataSet.highlightEnabled = false
-        lineChartDataSet.highlightColor = .red
-        lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
-        lineChartDataSet.mode = .linear
-        lineChartDataSet.lineWidth = 2
-        
-        lineChartDataSet.fill = ColorFill(color: NSUIColor(red: 102/255, green: 200/255, blue: 1, alpha: 1.0))
-        lineChartDataSet.fillAlpha = 0.2
-        lineChartDataSet.drawFilledEnabled = true
-        
-        
-        let chartData = LineChartData(dataSet: lineChartDataSet)
-        chartData.setDrawValues(false)
-        chartView.data = chartData
-        
-        // 왼 X
-        chartView.leftAxis.enabled = false
-        chartView.doubleTapToZoomEnabled = false
-        chartView.drawBordersEnabled = true
-        chartView.backgroundColor = .clear
-        chartView.borderColor = .clear
-        
-        let yAxis = chartView.rightAxis
-        yAxis.labelFont = UIFont.KFont.lexendMini
-        yAxis.labelTextColor = .black
-        yAxis.setLabelCount(6, force: false)
-        yAxis.axisMinLabels = 0
-        yAxis.axisMaximum = chartData.yMax + 1
-//        yAxis.setLabelCount(Int(chartData.yMax + 1 / 3), force: true)
-        
-        // background 격자
-        yAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1	)
-        
-        chartView.xAxis.labelPosition = .bottom
-        chartView.xAxis.labelFont = UIFont.KFont.appleSDNeoSemiBoldMini
-        chartView.xAxis.labelTextColor = .black
-        chartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        
-        // 0, 6, 12, 18, 24
-        chartView.xAxis.setLabelCount(5, force: true)
-        chartView.xAxis.forceLabelsEnabled = true
-        // 0, 24 안쪽으로
-        chartView.xAxis.avoidFirstLastClippingEnabled = true
-        
-        chartView.xAxis.axisMinimum = chartData.xMin
-        
-        // x 축 line 제외
-        chartView.xAxis.drawAxisLineEnabled = false
-        chartView.xAxis.drawGridLinesEnabled = false
-        chartView.xAxis.gridLineDashPhase = 1.0
         
     }
     
@@ -144,10 +84,6 @@ class WeatherIndexDetailView: UIViewController {
         titleLabel.textColor = UIColor.KColor.black
         titleLabel.font = UIFont.KFont.appleSDNeoBoldLarge
         titleLabel.sizeToFit()
-    }
-    
-    private func configureChartView() {
-        
     }
     
     @objc private func tapBackgroundView() {

@@ -7,12 +7,14 @@
 
 import UIKit
 import SnapKit
+import RxSwift
+import RxCocoa
 
 // https://www.linkedin.com/pulse/using-ios-pageviewcontroller-without-storyboards-paul-tangen/
 // https://ios-development.tistory.com/623
 
 class CheckWeatherView: UIViewController {
-    
+    let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     
     let pageControl = UIPageControl()
@@ -40,7 +42,7 @@ class CheckWeatherView: UIViewController {
                 //    let weatherIndexView = WeatherIndexView()
                 //    let detailWeatherView = DetailWeatherView()
                 let weatherIndexView = UIView()
-                let detailWeatherView = UIView()
+//                let detailWeatherView = UIView()
                 vc.view.addSubview(test)
                 test.text = city
                 test.snp.makeConstraints {
@@ -49,7 +51,20 @@ class CheckWeatherView: UIViewController {
                 }
                 vc.view.addSubview(locationView)
                 vc.view.addSubview(weatherIndexView)
+//                vc.view.addSubview(detailWeatherView)
+                
+                let detailWeatherView = UIButton()
                 vc.view.addSubview(detailWeatherView)
+                detailWeatherView.rx.tap
+                    .bind {
+                        let detailWeatherView = WeatherIndexDetailView()
+                        detailWeatherView.modalPresentationStyle = .overCurrentContext
+                        detailWeatherView.modalTransitionStyle = .crossDissolve
+                        self.present(detailWeatherView, animated: true)
+                    }
+                    .disposed(by: disposeBag)
+
+                
                 
                 locationView.backgroundColor = .red
                 locationView.snp.makeConstraints {
