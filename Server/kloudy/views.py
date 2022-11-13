@@ -109,7 +109,8 @@ def time_interval_weather():
             # TODO: carwash_index 갱신
             # carwash_index.save()
 
-            compare_info = get_compare_index(weather_24h_jsonObject)
+            compare_info = get_compare_index(weather_24h_jsonObject, today, False, location.code)
+            yesterday, yesterday_max_temperature, yesterday_min_temperature, today, today_max_temperature, today_min_temperature = compare_info
             compare_index = CompareIndex.objects.filter(code = location.code).first()
             # TODO: compare_index 갱신
             compare_index.save()
@@ -166,10 +167,10 @@ def time_interval_weather():
             carwash_index = CarwashIndex.objects.create(weather_index = weather_index, code = location.code, status = status, daily_weather = daily_weather, day_min_temperature = day_min_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
             carwash_index.save()
 
-            # # TODO: 필요한 것
-            # compare_info = get_compare_index(weather_24h_jsonObject)
-            # compare_index = CompareIndex.objects.create(weather_index = weather_index, code = location.code, )
-            # compare_index.save()
+            compare_info = get_compare_index(weather_24h_jsonObject, today, True, location.code)
+            yesterday, yesterday_max_temperature, yesterday_min_temperature, today, today_max_temperature, today_min_temperature = compare_info
+            compare_index = CompareIndex.objects.create(weather_index = weather_index, code = location.code, yesterday = yesterday, yesterday_max_temperature = yesterday_max_temperature, yesterday_min_temperature = yesterday_min_temperature, today = today, today_max_temperature = today_max_temperature, today_min_temperature = today_min_temperature)
+            compare_index.save()
 
             # # TODO: 필요한 것
             # hour_weather_infos = get_hour_weather(weather_24h_jsonObject)
@@ -521,6 +522,7 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
     pollen_index = max(flower_qualities)
     # 0 : 세차하기 좋음, 1: 세차 괜찮음, 2: 세차 미루기, 3: 세차 하지마
     status = cal_carwash_status(when_is_rainy, day_min_temperature, pm10grade, pollen_index)
+
     print(f"세차지수 : {status}, {day_min_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
     return [status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index]
 
@@ -539,7 +541,7 @@ def cal_carwash_status(when_is_rainy, min_temperature, pm10grade, pollen_index):
     
     return result
     
-def get_compare_index(weather_24h_jsonObject, today, isUpdate, code):
+def get_compare_index(weather_24h_jsonObject, day_we_got, isFisrtTime, code):
     # 전전날 날씨는 못받아 오기 때문에 처음 만들 때는 일단 똑같이 보내주고, 
     # 그게 아니면 현재 DB에 저장된 것을 어제로 바꾸고, 현재 날씨를 넣어줘야함.
     # 근데 30분마다 실행되기 때문에 업데이트할 때는 오늘 날짜를 체크해줘야함.
@@ -550,20 +552,44 @@ def get_compare_index(weather_24h_jsonObject, today, isUpdate, code):
     today_max_temperature     = 0.0
     today_min_temperature     = 0.0
 
-    if isUpdate:
-        # code로 compare_index 잡아줌.
-
-        # 업데이트 해야하는지 확인 (가져온 compare_index의 today와 현재 today가 같으면 업데이트 아니면 안함.)
-
-        # 업데이트 해야하면 가져온 compare_index의 today 지수들을 yesterday로 넣어주고
-
-        # 오늘의 min max를 찾아서 today로 넣어줌.
-        pass
-    else:
+    if isFisrtTime:
+        yesterday = day_we_got
+        today = day_we_got
         # min max 찾아서 어제 오늘 똑같이 내뱉어줌.
-        pass
-    
-    
+        for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
+            if obj.get('category') == 'TMX':
+                today_max_temperature = float(obj.get('fcstValue'))
+                yesterday_max_temperature = today_max_temperature
+            elif obj.get('category') == 'TMN':
+                today_min_temperature = float(obj.get('fcstValue'))
+                yesterday_min_temperature = today_min_temperature
+        
+    else:
+        # code로 compare_index 잡아줌.
+        compare_index = CompareIndex.objects.filter(code = code).first()
+        # 업데이트 해야하는지 확인 (가져온 compare_index의 today와 현재 today가 같으면 업데이트 안함.)
+        if compare_index.today == day_we_got:
+            yesterday                 = compare_index.yesterday
+            yesterday_max_temperature = compare_index.yesterday_max_temperature
+            yesterday_min_temperature = compare_index.yesterday_min_temperature
+            today                     = compare_index.today
+            today_max_temperature     = compare_index.today_max_temperature
+            today_min_temperature     = compare_index.today_min_temperature
+
+        else:
+            # 업데이트 해야하면 가져온 compare_index의 today 지수들을 yesterday로 넣어주고
+            # 오늘의 min max를 찾아서 today로 넣어줌.
+            yesterday = compare_index.today
+            today = day_we_got
+            for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
+                if obj.get('category') == 'TMX':
+                    today_max_temperature = float(obj.get('fcstValue'))
+                    yesterday_max_temperature = compare_index.today_max_temperature
+                elif obj.get('category') == 'TMN':
+                    today_min_temperature = float(obj.get('fcstValue'))
+                    yesterday_min_temperature = compare_index.today_min_temperature
+
+    print(f"어제 오늘의 날씨 비교 : {yesterday}, {yesterday_max_temperature}, {yesterday_min_temperature}, {today}, {today_max_temperature}, {today_min_temperature}")
     return [yesterday, yesterday_max_temperature, yesterday_min_temperature, today, today_max_temperature, today_min_temperature]
 
 def get_hour_weather(weather_24h_jsonObject):

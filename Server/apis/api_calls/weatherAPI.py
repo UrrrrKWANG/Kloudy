@@ -46,7 +46,7 @@ def getCurrentWeather(headers, key, day, time, x_coordinate, y_coordinate):
         # 3번은 nowStatus랑 겹칠 수 있음
         else:
             return "5" if nowRain == 3 else int(nowRain)
-    
+
     return
 
 def getCurrentTemperature(headers, key, day, time, x_coordinate, y_coordinate):
