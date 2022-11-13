@@ -28,7 +28,7 @@ def getDatas(today, time, location):
     # getUmbrellaIndex & HourlyIndex => ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
     weather_24h_time = cal_weather_24h_time(time)
     print(today, weather_24h_time)
-    weather_24h_url = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=290&pageNo=1&dataType=JSON&base_date={today}&base_time={weather_24h_time}&nx={location.xCoordination}&ny={location.yCoordination}'
+    weather_24h_url = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=290&pageNo=1&dataType=JSON&base_date={int(today)-1}&base_time={weather_24h_time}&nx={location.xCoordination}&ny={location.yCoordination}'
     # getMaskIndex & getCarWashIndex => 매시간
     air_url = f'https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey={key}&returnType=JSON&numOfRows=1&pageNo=1&stationName={location.airCoditionMeasuring}&dataTerm={period}&ver=1.3'
     
@@ -37,7 +37,7 @@ def getDatas(today, time, location):
     main_max_min_url = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=290&pageNo=1&dataType=JSON&base_date={int(today)-1}&base_time=2300&nx={location.xCoordination}&ny={location.yCoordination}'
     
     # getMaskIndex & getCarWashIndex => 하루 2번 -> 날짜 + 06시 18시에만 받을 수 있는데 06시에만 오늘의 꽃가루지수를 받을 수 있음 -> 06시로 고정.
-    flower_url = f'https://apis.data.go.kr/1360000/HealthWthrIdxServiceV2/getPinePollenRiskIdxV2?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&areaNo={location.code}&time={today + "06"}'
+    flower_url = f'https://apis.data.go.kr/1360000/HealthWthrIdxServiceV2/getPinePollenRiskIdxV2?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&areaNo={location.code}&time={str(today) + "06"}'
     
     middle_time = cal_middle_time(today, time)
     # getCarWashIndex & WeeklyWeather => 시간에 날짜+0600 or 날짜+1800으로만 넣어야함.
@@ -95,7 +95,7 @@ def cal_weather_24h_time(time):
 
 def cal_middle_time(today, time):
     timer = int(time)
-    if 700 <= timer < 1900:
-        return today + "0600"
+    if 700 <= timer < 2400:
+        return str(today) + "0600"
     else:
-        return today + "1800"
+        return str(int(today)-1) + "0600"

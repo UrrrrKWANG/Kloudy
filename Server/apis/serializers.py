@@ -47,7 +47,7 @@ class CarwashIndexSerializer(serializers.ModelSerializer):
         fields = [
             "status",
             "daily_weather",
-            "day_max_temperature",
+            "day_min_temperature",
             "daily_precipitation",
             "tomorrow_weather",
             "tomorrow_precipitation",
