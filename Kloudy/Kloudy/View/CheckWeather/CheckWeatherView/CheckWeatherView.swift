@@ -57,6 +57,9 @@ class CheckWeatherView: UIViewController {
                 vc.view.addSubview(detailWeatherView)
                 detailWeatherView.rx.tap
                     .bind {
+                        
+                        
+                        
                         let detailWeatherView = WeatherIndexDetailView()
                         detailWeatherView.modalPresentationStyle = .overCurrentContext
                         detailWeatherView.modalTransitionStyle = .crossDissolve

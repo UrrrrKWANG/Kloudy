@@ -17,6 +17,8 @@
 		8B22A3BF291F59730079FA48 /* IndexChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BE291F59730079FA48 /* IndexChartView.swift */; };
 		8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */; };
 		8B22A3C4291F63C10079FA48 /* IndexButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C3291F63C10079FA48 /* IndexButtonView.swift */; };
+		8B22A3C82920DD540079FA48 /* WeatherIndexStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C72920DD540079FA48 /* WeatherIndexStepView.swift */; };
+		8B22A3CA2920FED30079FA48 /* IndexIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C92920FED30079FA48 /* IndexIconView.swift */; };
 		8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409822918DA5A00DC2962 /* SearchLocationView.swift */; };
 		8B6409852918DB9700DC2962 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409842918DB9700DC2962 /* CoreDataManager.swift */; };
 		8B64098D2918EFC900DC2962 /* WeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B64098C2918EFC900DC2962 /* WeatherIndexView.swift */; };
@@ -167,6 +169,8 @@
 		8B22A3BE291F59730079FA48 /* IndexChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartView.swift; sourceTree = "<group>"; };
 		8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartViewModel.swift; sourceTree = "<group>"; };
 		8B22A3C3291F63C10079FA48 /* IndexButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexButtonView.swift; sourceTree = "<group>"; };
+		8B22A3C72920DD540079FA48 /* WeatherIndexStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIndexStepView.swift; sourceTree = "<group>"; };
+		8B22A3C92920FED30079FA48 /* IndexIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexIconView.swift; sourceTree = "<group>"; };
 		8B6409822918DA5A00DC2962 /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		8B6409842918DB9700DC2962 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8B64098C2918EFC900DC2962 /* WeatherIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIndexView.swift; sourceTree = "<group>"; };
@@ -355,7 +359,9 @@
 			children = (
 				8B64099B2918F25D00DC2962 /* WeatherIndexDetailView.swift */,
 				8B64099D2918F26800DC2962 /* WeatherIndexDetailViewModel.swift */,
+				8B22A3C92920FED30079FA48 /* IndexIconView.swift */,
 				8B22A3C3291F63C10079FA48 /* IndexButtonView.swift */,
+				8B22A3C72920DD540079FA48 /* WeatherIndexStepView.swift */,
 				8B22A3C2291F612C0079FA48 /* IndexChartView */,
 			);
 			path = WeatherIndexDetailView;
@@ -940,6 +946,7 @@
 				8BC8F80029011DB200EF83AE /* AppDelegate.swift in Sources */,
 				8BC8F7D829011DB200EF83AE /* WeatherCell+CoreDataProperties.swift in Sources */,
 				8BC8F7F029011DB200EF83AE /* CheckWeatherView.swift in Sources */,
+				8B22A3C82920DD540079FA48 /* WeatherIndexStepView.swift in Sources */,
 				8BC8F7D129011DB200EF83AE /* Location+CoreDataProperties.swift in Sources */,
 				8BC8F7EF29011DB200EF83AE /* CheckWeatherViewModel.swift in Sources */,
 				8B6409972918F1DC00DC2962 /* SettingView.swift in Sources */,
@@ -969,6 +976,7 @@
 				8BC8F7D629011DB200EF83AE /* Notification.swift in Sources */,
 				113D3E312909817800A72594 /* LocationSelectionNavigationView.swift in Sources */,
 				8B6409852918DB9700DC2962 /* CoreDataManager.swift in Sources */,
+				8B22A3CA2920FED30079FA48 /* IndexIconView.swift in Sources */,
 				8BC8F7D529011DB200EF83AE /* Location+CoreDataClass.swift in Sources */,
 				8B6409942918F02C00DC2962 /* DetailWeatherViewModel.swift in Sources */,
 				8B64099C2918F25D00DC2962 /* WeatherIndexDetailView.swift in Sources */,

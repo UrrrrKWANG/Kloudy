@@ -117,7 +117,7 @@ class IndexChartView: LineChartView {
 
         self.xAxis.gridLineWidth = 1.0
         self.xAxis.gridLineDashPhase = 1.0
-        self.xAxis.gridLineDashLengths = [8]
+        self.xAxis.gridLineDashLengths = [5]
         self.xAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1)
         
         self.drawGridBackgroundEnabled = true

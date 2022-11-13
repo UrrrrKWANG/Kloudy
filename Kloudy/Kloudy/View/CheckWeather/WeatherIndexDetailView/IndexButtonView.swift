@@ -51,8 +51,8 @@ class IndexButtonView: UIView {
         return collectionView
     }()
     
-    // 임시 값: 현재 날씨 지수의 단계
-    var indexState: Int = 4
+    var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 4)
+    var status: Int = 4
     
     let presentButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     
@@ -67,7 +67,12 @@ class IndexButtonView: UIView {
     }
     
     private func bind() {
-        
+        // API 데이터 받을 시 저장
+        indexStatus
+            .subscribe(onNext: {
+                self.status = $0
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
@@ -104,8 +109,8 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SequenceLabelCell.identifier, for: indexPath) as? SequenceLabelCell else { return UICollectionViewCell() }
-        cell.backgroundColor = self.indexState - 1 == indexPath.row ? UIColor.init(red: 244/255, green: 247/255, blue: 255/255, alpha: 1) : UIColor.KColor.clear
-        cell.sequenceLabel.textColor = self.indexState - 1 == indexPath.row ? UIColor.init(red: 77/255, green: 115/255, blue: 244/255, alpha: 1) : UIColor.KColor.black
+        cell.backgroundColor = self.status - 1 == indexPath.row ? UIColor.init(red: 244/255, green: 247/255, blue: 255/255, alpha: 1) : UIColor.KColor.clear
+        cell.sequenceLabel.textColor = self.status - 1 == indexPath.row ? UIColor.init(red: 77/255, green: 115/255, blue: 244/255, alpha: 1) : UIColor.KColor.black
         cell.sequenceLabel.text = "\(indexPath.row + 1)"
         return cell
     }
