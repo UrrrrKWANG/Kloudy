@@ -13,6 +13,7 @@ extension UIFont {
         static var lexendExtraLarge: UIFont { UIFont(name: "Lexend-Regular", size: 100)! }
         static var lexendLarge: UIFont { UIFont(name: "Lexend-Regular", size: 34)! }
         static var lexendMedium: UIFont { UIFont(name: "Lexend-Regular", size: 20)! }
+        static var lexendMedius: UIFont { UIFont(name: "Lexend-Regular", size: 16)! }
         static var lexendSmall: UIFont { UIFont(name: "Lexend-Regular", size: 15)! }
         static var lexendMini: UIFont { UIFont(name: "Lexend-Regular", size: 14)! }
         static var appleSDNeoBoldExtraLarge: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 24)! }
