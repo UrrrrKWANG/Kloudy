@@ -75,7 +75,7 @@ def time_interval_weather():
             current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
             main = Main.objects.filter(code = location.code).first()
             # TODO: main 갱신
-            # main.save()
+            main.save()
 
             weather_index = WeatherIndex.objects.filter(code = location.code).first()
 
@@ -83,31 +83,31 @@ def time_interval_weather():
             umbrella_status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind = umbrella_info
             umbrella_index = UmbrellaIndex.objects.filter(code = location.code).first()
             # TODO: umbrella_index 갱신
-            # umbrella_index.save()
+            umbrella_index.save()
 
             mask_info = get_mask_index(air_jsonObject, flower_jsonObject)
             mask_status, pm25value, pm10value, pollen_index = mask_info
             mask_index = MaskIndex.objects.filter(code = location.code).first()
             # TODO: mask_index 갱신
-            # mask_index.save()
+            mask_index.save()
 
             outer_info = get_outer_index(weather_24h_jsonObject)
             outer_status, day_min_temperature, morning_temperature = outer_info
             outer_index = OuterIndex.objects.filter(code = location.code).first()
             # TODO: outer_index 갱신
-            # outer_index.save()
+            outer_index.save()
 
             laundry_info = get_laundry_index(weather_24h_jsonObject)
             laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
             laundry_index = LaundryIndex.objects.filter(code = location.code).first()
             # TODO: laundry_index 갱신
-            # laundry_index.save()
+            laundry_index.save()
             
             carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
             status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
             carwash_index = CarwashIndex.objects.filter(code = location.code).first()
             # TODO: carwash_index 갱신
-            # carwash_index.save()
+            carwash_index.save()
 
             compare_info = get_compare_index(weather_24h_jsonObject, today, False, location.code)
             yesterday, yesterday_max_temperature, yesterday_min_temperature, today, today_max_temperature, today_min_temperature = compare_info
@@ -118,10 +118,8 @@ def time_interval_weather():
             hour_weather_info = get_hour_weather(weather_24h_jsonObject, location.code, time)
             save_hour_weather(hour_weather_info, location)
 
-            # TODO: 필요한 것 => 저장할 local_weather
-            weekly_weather_info = get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject)
-            save_weekly_weather(weekly_weather_info, location.code)
-
+            weekly_weather_infos = get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject, today)
+            save_weekly_weather(weekly_weather_infos, location.code)
 
         # 처음이면 새로 만든다.
         else:
@@ -174,9 +172,8 @@ def time_interval_weather():
             hour_weather_infos = get_hour_weather(weather_24h_jsonObject, location.code, time)
             save_hour_weather(hour_weather_infos, location.code)
 
-            # # TODO: 필요한 것 => 저장할 local_weather
-            # weekly_weather_info = get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject)
-            # save_weekly_weather(weekly_weather_infos)
+            weekly_weather_infos = get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject, today)
+            save_weekly_weather(weekly_weather_infos, location.code)
 
 def calculate_time():
     now = datetime.datetime.now()
@@ -596,7 +593,7 @@ def get_compare_index(weather_24h_jsonObject, day_we_got, isFisrtTime, code):
 
 def get_hour_weather(weather_24h_jsonObject, code, time):
     # 시간대별 날씨를 담아둠
-    hour_weather_infos = [[0] * 4 for _ in range(24)] # 0 : time | 1 : status | 2 : temperature | 3 : precipitation
+    hour_weather_infos = [[0] * 4 for _ in range(24)] # 0 : hour | 1 : status | 2 : temperature | 3 : precipitation
     # 24시간 후의 날씨를 받아올 수 있음
     for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
 
@@ -649,13 +646,112 @@ def save_hour_weather(hour_weather_infos, code):
 
     return
 
-def get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject):
-    return
+def get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject, today):
+    weekly_weather_infos = [[0] * 4 for _ in range(10)] # day 0, status 1, max_temperature 2, min_temperature 3
+    # 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
+    # 내일
+    weekly_weather_infos[0][0] = 1
+    weekly_weather_infos[1][0] = 2
 
-def save_weekly_weather(weekly_weather_infos, location):
-    # 만약 location code를 가진 주간 날씨가 있으면 갱신, 없으면 만들어줌.
-    for weekly_weather_info in weekly_weather_infos:
-        pass
+    for obj in weather_48h_jsonObject.get('response').get('body').get('items').get('item'):
+        # 오늘 최저 기온
+        if obj.get('category') == 'TMN' and obj.get('fcstDate') == today:
+            weekly_weather_infos[0][3] = float(obj.get('fcstValue'))
+        # 내일 최저 기온
+        elif obj.get('category') == 'TMN' and obj.get('fcstDate') == f'{int(today) + 1}':
+            weekly_weather_infos[1][3] = float(obj.get('fcstValue'))
+        # 오늘 최고 기온
+        elif obj.get('category') == 'TMX' and obj.get('fcstDate') == today:
+            weekly_weather_infos[0][2] = float(obj.get('fcstValue'))
+        # 내일 최고 기온
+        elif obj.get('category') == 'TMX' and obj.get('fcstDate') == f'{int(today) + 1}':
+            weekly_weather_infos[1][2] = float(obj.get('fcstValue'))
+        # 오늘 날씨 상태
+        elif obj.get('category') == 'SKY' and obj.get('fcstDate') == today:
+            if obj.get('fcstValue') == "1":
+                weekly_weather_infos[0][1] = 0
+            else:
+                weekly_weather_infos[0][1] = int(obj.get('fcstValue'))
+        # 내일 날씨 상태
+        elif obj.get('category') == 'SKY' and obj.get('fcstDate') == f'{int(today) + 1}':
+            if obj.get('fcstValue') == "1":
+                weekly_weather_infos[1][1] = 0
+            else:
+                weekly_weather_infos[1][1] = int(obj.get('fcstValue'))
+        # 오늘 강수 상태
+        elif obj.get('category') == 'PTY' and obj.get('fcstDate') == today:
+            if obj.get('fcstValue') == "0":
+                continue
+            elif obj.get('fcstValue') == "3":
+                weekly_weather_infos[0][1] = 5
+            else:
+                weekly_weather_infos[0][1] = int(obj.get('fcstValue'))
+        # 내일 강수 상태
+        elif obj.get('category') == 'PTY' and obj.get('fcstDate') == f'{int(today) + 1}':
+            if obj.get('fcstValue') == "0":
+                continue
+            elif obj.get('fcstValue') == "3":
+                weekly_weather_infos[1][1] = 5
+            else:
+                weekly_weather_infos[0][1] = int(obj.get('fcstValue'))
+
+    # 3일부터 6이 생김
+    # 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈", 6: "소나기"
+    # 맑음, 구름많음, 구름많고 비, 구름많고 눈, 구름많고 비/눈, 구름많고 소나기, 흐림, 흐리고 비, 흐리고 눈, 흐리고 비/눈, 흐리고 소나기
+    middle_state = middle_state_jsonObject.get('response').get('body').get('items').get('item')[0]
+    # print(middle_state)
+
+    for i in range(2, 7):
+        print(middle_state[f'wf{i+1}Am'], middle_state[f'wf{i+1}Pm'])
+        weekly_weather_infos[i][1] = check_state(middle_state[f'wf{i+1}Am'], middle_state[f'wf{i+1}Pm'])
+
+    for i in range(7, 10):
+        weekly_weather_infos[i][1] = check_state(middle_state[f'wf{i+1}'], "")
+
+    middle_temperature = middle_temperature_jsonObject.get('response').get('body').get('items').get('item')[0]
+    for i in range(2, 10):
+        weekly_weather_infos[i][0] = i + 1
+        weekly_weather_infos[i][2] = middle_temperature[f'taMax{i+1}']
+        weekly_weather_infos[i][3] = middle_temperature[f'taMin{i+1}']
+
+    return weekly_weather_infos
+
+def check_state(am_state, pm_state):
+    result = 0
+    case_0 = ["맑음"]
+    case_1 = ["구름많고 비", "흐리고 비"]
+    case_2 = ["구름많고 비/눈", "흐리고 비/눈"]
+    case_3 = ["구름많음"]
+    case_4 = ["흐림"]
+    case_5 = ["구름많고 눈", "흐리고 눈"]
+    case_6 = ["구름많고 소나기", "흐리고 소나기"]
+    weather_cases = [case_0, case_1, case_2, case_3, case_4, case_5, case_6]
+
+    for i in range(len(weather_cases)):
+        now_case = weather_cases[i]
+        if am_state in now_case and i > result:
+            result = i
+        elif pm_state in now_case and i > result:
+            result = i
+
+    return result
+
+def save_weekly_weather(weekly_weather_infos, code):
+    local_weather = LocalWeather.objects.filter(local_code = code).first()
+    # day, status, max_temperature, min_temperature
+    # 만약 location code를 가진 시간대별 날씨가 있으면 갱신 없으면, 만들어줌.
+    if WeeklyWeather.objects.filter(code = code):
+        for weekly_weather_info in weekly_weather_infos:
+            weekly_weather                 = WeeklyWeather.objects.filter(code = code, day = weekly_weather_info[0]).first()
+            weekly_weather.status          = weekly_weather_info[1]
+            weekly_weather.max_temperature = weekly_weather_info[2]
+            weekly_weather.min_temperature = weekly_weather_info[3]
+            weekly_weather.save()
+
+    else:
+        for weekly_weather_info in weekly_weather_infos:
+            weekly_weather = WeeklyWeather.objects.create(local_weather = local_weather, code = code, day = hour_weather_info[0], status = hour_weather_info[1], max_temperature = hour_weather_info[2], min_temperature = hour_weather_info[3])
+            weekly_weather.save()
 
     return
 
