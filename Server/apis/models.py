@@ -74,7 +74,7 @@ class CarwashIndex(models.Model):
     code = models.CharField(max_length=10)
     status = models.IntegerField()
     daily_weather = models.IntegerField()
-    day_max_temperature = models.FloatField()
+    day_min_temperature = models.FloatField()
     daily_precipitation = models.FloatField()
     tomorrow_weather = models.IntegerField()
     tomorrow_precipitation = models.FloatField()
@@ -85,8 +85,10 @@ class CarwashIndex(models.Model):
 class CompareIndex(models.Model):
     weather_index = models.ForeignKey(WeatherIndex, related_name="compare_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
+    yesterday = models.CharField(max_length=20)
     yesterday_max_temperature = models.FloatField()
     yesterday_min_temperature = models.FloatField()
+    today = models.CharField(max_length=20)
     today_max_temperature = models.FloatField()
     today_min_temperature = models.FloatField()
 

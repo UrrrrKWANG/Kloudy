@@ -27,6 +27,7 @@ def getDatas(today, time, location):
     
     # getUmbrellaIndex & HourlyIndex => ["0200", "0500", "0800", "1100", "1400", "1700", "2000", "2300"]
     weather_24h_time = cal_weather_24h_time(time)
+    print(today, weather_24h_time)
     weather_24h_url = f'http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?serviceKey={key}&numOfRows=290&pageNo=1&dataType=JSON&base_date={today}&base_time={weather_24h_time}&nx={location.xCoordination}&ny={location.yCoordination}'
     # getMaskIndex & getCarWashIndex => 매시간
     air_url = f'https://apis.data.go.kr/B552584/ArpltnInforInqireSvc/getMsrstnAcctoRltmMesureDnsty?serviceKey={key}&returnType=JSON&numOfRows=1&pageNo=1&stationName={location.airCoditionMeasuring}&dataTerm={period}&ver=1.3'
@@ -37,10 +38,13 @@ def getDatas(today, time, location):
     
     # getMaskIndex & getCarWashIndex => 하루 2번 -> 날짜 + 06시 18시에만 받을 수 있는데 06시에만 오늘의 꽃가루지수를 받을 수 있음 -> 06시로 고정.
     flower_url = f'https://apis.data.go.kr/1360000/HealthWthrIdxServiceV2/getPinePollenRiskIdxV2?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&areaNo={location.code}&time={today + "06"}'
+    
+    middle_time = cal_middle_time(today, time)
     # getCarWashIndex & WeeklyWeather => 시간에 날짜+0600 or 날짜+1800으로만 넣어야함.
-    middle_state_url = f'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&regld={location.daily_status_code}&tmFc={date_0618+"00"}'
+    
+    middle_state_url = f'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst?serviceKey={key}&pageNo=1&numOfRows=10&dataType=JSON&regId={location.daily_status_code}&tmFc={middle_time}'
     # WeeklyWeather => 시간에 날짜+0600 or 날짜+1800으로만 넣어야함.
-    middle_temperature_url = f'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&regld={location.daily_temperature_code}&tmFc={date_0618+"00"}'
+    middle_temperature_url = f'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&regId={location.daily_temperature_code}&tmFc={middle_time}'
     
     main_state_response           = requests.get(main_state_url, headers=headers, verify=False)
     main_state_short_response     = requests.get(main_state_short_url, headers=headers, verify=False)
@@ -68,28 +72,30 @@ def getDatas(today, time, location):
 
 def cal_weather_24h_time(time):
     timer = int(time)
-    print(f'umbrella time: {timer}')
     result = ""
     # Base_time : 0200, 0500, 0800, 1100, 1400, 1700, 2000, 2300 (1일 8회)
     if 2030 <= timer < 2400:
-        result = "2300"
-    elif 1730 <= timer < 2030:
         result = "2000"
-    elif 1430 <= timer < 1730:
+    elif 1730 <= timer < 2030:
         result = "1700"
-    elif 1130 <= timer < 1430:
+    elif 1430 <= timer < 1730:
         result = "1400"
-    elif 830 <= timer < 1130:
+    elif 1130 <= timer < 1430:
         result = "1100"
-    elif 530 <= timer < 830:
+    elif 830 <= timer < 1130:
         result = "0800"
-    elif 230 <= timer < 530:
+    elif 530 <= timer < 830:
         result = "0500"
+    elif 230 <= timer < 530:
+        result = "0200"
     elif 0 <= timer < 230:
         result = "2300"
-    else:
-        result = "0200"
 
-    print(result)
     return result
 
+def cal_middle_time(today, time):
+    timer = int(time)
+    if 700 <= timer < 1900:
+        return today + "0600"
+    else:
+        return today + "1800"

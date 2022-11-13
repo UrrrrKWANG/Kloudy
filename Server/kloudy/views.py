@@ -103,7 +103,8 @@ def time_interval_weather():
             # TODO: laundry_index 갱신
             # laundry_index.save()
             
-            carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject)
+            carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
+            status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
             carwash_index = CarwashIndex.objects.filter(code = location.code).first()
             # TODO: carwash_index 갱신
             # carwash_index.save()
@@ -160,10 +161,10 @@ def time_interval_weather():
             laundry_index = LaundryIndex.objects.create(weather_index = weather_index, code = location.code, status = laundry_status, humidity = humidity, day_max_temperature = day_max_temperature, daily_weather = daily_weather)
             laundry_index.save()
 
-            # # TODO: 필요한 것
-            # carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject)
-            # carwash_index = CarwashIndex.objects.create(weather_index = weather_index, code = location.code, )
-            # carwash_index.save()
+            carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
+            status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
+            carwash_index = CarwashIndex.objects.create(weather_index = weather_index, code = location.code, status = status, daily_weather = daily_weather, day_min_temperature = day_min_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
+            carwash_index.save()
 
             # # TODO: 필요한 것
             # compare_info = get_compare_index(weather_24h_jsonObject)
@@ -230,19 +231,19 @@ def get_umbrella_index(weather_24h_jsonObject):
     for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
         if obj.get('category') == 'PCP':
             if obj.get('fcstValue') == '강수없음':
-                rain.append(0)
+                rains.append(0)
             else:
-                rain.append(float(obj.get('fcstValue').replace('mm', '')))
+                rains.append(float(obj.get('fcstValue').replace('mm', '')))
         if obj.get('category') == 'WSD':
-            wind.append(float(obj.get('fcstValue')))
+            winds.append(float(obj.get('fcstValue')))
 
-    P = sum(rain) / 24
-    PMAX1 = max(rain)
+    P = sum(rains) / 24
+    PMAX1 = max(rains)
     PMAX3 = 0
     for i in range(22):
         temp = 0
         for j in range(3):
-            temp += rain[i+j]
+            temp += rains[i+j]
 
         temp = temp / 3
         if temp > PMAX3:
@@ -279,12 +280,12 @@ def cal_umbrella_status(umbrella_index):
 
 def get_mask_index(air_jsonObject, flower_jsonObject):
 
-    pm25 = float(air_json_object.get('response').get('body').get('items')[0].get('pm25Value'))
-    pm10 = float(air_json_object.get('response').get('body').get('items')[0].get('pm10Value'))
+    pm25 = float(air_jsonObject.get('response').get('body').get('items')[0].get('pm25Value'))
+    pm10 = float(air_jsonObject.get('response').get('body').get('items')[0].get('pm10Value'))
 
     flower_quality = 0
-    if flower_json_object.get('response').get('header').get('resultCode') == '0':
-        flower_quality = int(flower_json_object.get('response').get('body').get('items').get('item').get('today')):
+    if flower_jsonObject.get('response').get('header').get('resultCode') == '0':
+        flower_quality = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('today'))
 
     status = cal_mask_status(pm25)
     pm25value = pm25
@@ -363,12 +364,12 @@ def get_laundry_index(weather_24h_jsonObject):
     for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
         if obj.get('category') == 'TMX':
             max_temperature = float(obj.get('fcstValue'))
-        elif obj.get('category') = 'REH':
+        elif obj.get('category') == 'REH':
             humidities.append(float(obj.get('fcstValue')))
-        elif obj.get('category') = 'PTY':
+        elif obj.get('category') == 'PTY':
             if obj.get('fcstValue') == "1":
                 rainy += 1
-        elif obj.get('category') = 'SKY':
+        elif obj.get('category') == 'SKY':
             if obj.get('fcstValue') == "3" or obj.get('fcstValue') == "4":
                 sky_status[0] += 1
             elif obj.get('fcstValue') == "1":
@@ -381,10 +382,10 @@ def get_laundry_index(weather_24h_jsonObject):
     status = cal_laundry_status(humidity, day_max_temperature, daily_weather)
     
     print(f'빨래 지수: {status}, {day_max_temperature}, {daily_weather}')
-    
+
     return [status, humidity, day_max_temperature, daily_weather]
 
-def cal_humidity(humidities)
+def cal_humidity(humidities):
     avg_humidity = 100 - (sum(humidities) / len(humidities))
     # 가중치 <= 60 : 0 | 61 <= x < 71 : 0.9 | 71 <= x < 81 : 0.8 | 81 <= x : 0.6
     result = 0.0
@@ -425,38 +426,145 @@ def cal_laundry_status(humidity, day_max_temperature, daily_weather):
         result = 0
     elif 41 <= laundry_index < 55:
         result = 1
-    elif 31 <= laundry_index < 41 
+    elif 31 <= laundry_index < 41:
         result = 2
     elif laundry_index < 31:
         result = 3
         
     return result
 
-def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject):
+def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today):
+    # 오늘 날씨 => 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
+    day_min_temperature = 0.0
+    daily_weathers = []
+    daily_precipitations = []
+    # 내일 날씨 => 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
+    tomorrow_weathers = []
+    tomorrow_precipitations = []
+    for obj in weather_48h_jsonObject.get('response').get('body').get('items').get('item'):
+        if obj.get('category') == 'TMN' and obj.get('fcstDate') == today:
+            day_min_temperature = float(obj.get('fcstValue'))
+        # 오늘 날씨 상태
+        elif obj.get('category') == 'SKY' and obj.get('fcstDate') == today:
+            if obj.get('fcstValue') == "1":
+                daily_weathers.append(0)
+            else:
+                daily_weathers.append(int(obj.get('fcstValue')))
+        # 내일 날씨 상태
+        elif obj.get('category') == 'SKY' and obj.get('fcstDate') == f'{int(today) + 1}':
+            if obj.get('fcstValue') == "1":
+                tomorrow_weathers.append(0)
+            else:
+                tomorrow_weathers.append(int(obj.get('fcstValue')))
+        # 오늘 강수량
+        elif obj.get('category') == 'PCP' and obj.get('fcstDate') == today:
+            if obj.get('fcstValue') == "강수없음":
+                daily_precipitations.append(0.0)
+            else:
+                daily_precipitations.append(float(obj.get('fcstValue').replace('mm', '')))
+        # 내일 강수량
+        elif obj.get('category') == 'PCP' and obj.get('fcstDate') == f'{int(today) + 1}':
+            if obj.get('fcstValue') == "강수없음":
+                daily_precipitations.append(0.0)
+            else:
+                tomorrow_precipitations.append(float(obj.get('fcstValue').replace('mm', '')))
+        # 오늘 강수 상태
+        elif obj.get('category') == 'PTY' and obj.get('fcstDate') == today:
+            if obj.get('fcstValue') == "3":
+                daily_weathers.append(5)
+            else:
+                daily_weathers.append(int(obj.get('fcstValue')))
+        # 내일 강수 상태
+        elif obj.get('category') == 'PTY' and obj.get('fcstDate') == f'{int(today) + 1}':
+            if obj.get('fcstValue') == "3":
+                tomorrow_weathers.append(5)
+            else:
+                tomorrow_weathers.append(int(obj.get('fcstValue')))
     
-    pm10 = float(air_json_object.get('response').get('body').get('items')[0].get('pm10Value'))
+    daily_weather = max(daily_weathers)
+    tomorrow_weather = max(tomorrow_weathers)
+
+    # 가장 가까운 비오는 날을 찾는다.
+    rainy_cases = ["구름많고 비", "구름많고 눈", "구름많고 비/눈", "구름많고 소나기", "흐리고 비", "흐리고 눈", "흐리고 비/눈", "흐리고 소나기"]
+    when_is_rainy = 9
+    if daily_weather == 1 or daily_weather == 2 or daily_weather == 3:
+        when_is_rainy = 1
+    elif tomorrow_weather == 1 or tomorrow_weather == 2 or tomorrow_weather == 3:
+        when_is_rainy = 2
+
+    middle_state = middle_state_jsonObject.get('response').get('body').get('items').get('item')[0]
+    if middle_state['wf3Am'] in rainy_cases or middle_state['wf3Pm'] in rainy_cases:
+        when_is_rainy = min(3, when_is_rainy)
+    elif middle_state['wf4Am'] in rainy_cases or middle_state['wf4Pm'] in rainy_cases:
+        when_is_rainy = min(4, when_is_rainy)
+    elif middle_state['wf5Am'] in rainy_cases or middle_state['wf5Pm'] in rainy_cases:
+        when_is_rainy = min(5, when_is_rainy)
+    elif middle_state['wf6Am'] in rainy_cases or middle_state['wf6Pm'] in rainy_cases:
+        when_is_rainy = min(6, when_is_rainy)
+    elif middle_state['wf7Am'] in rainy_cases or middle_state['wf7Pm'] in rainy_cases:
+        when_is_rainy = min(7, when_is_rainy)
+
+    pm10grade = float(air_jsonObject.get('response').get('body').get('items')[0].get('pm10Value'))
     # 낮음 : 0, 보통 : 1, 높음 : 2, 매우높음 : 3
     flower_qualities = [0, 0, 0, 0] # 0:오늘 | 1:내일 | 2:모레 | 3:글피
-    if flower_json_object.get('response').get('header').get('resultCode') == '0':
-        flower_qualities[0] = int(flower_json_object.get('response').get('body').get('items').get('item').get('today'))
-        flower_qualities[1] = int(flower_json_object.get('response').get('body').get('items').get('item').get('tomorrow'))
-        flower_qualities[2] = int(flower_json_object.get('response').get('body').get('items').get('item').get('dayaftertomorrow'))
-        flower_qualities[3] = int(flower_json_object.get('response').get('body').get('items').get('item').get('twodaysaftertomorrow'))
+    if flower_jsonObject.get('response').get('header').get('resultCode') == '0':
+        flower_qualities[0] = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('today'))
+        flower_qualities[1] = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('tomorrow'))
+        flower_qualities[2] = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('dayaftertomorrow'))
+        flower_qualities[3] = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('twodaysaftertomorrow'))
 
-    daily_weather = 0
-    day_max_temperature = 0.0
-    daily_precipitation = 0.0
-    tomorrow_weather = 0
-    tomorrow_precipitation = 0.0
-    weather_3Am7pm = ""
-    pm10grade = 0
+    # 오늘 날씨 상태
+    
+    daily_precipitation = 0 if sum(daily_precipitations) == 0 else sum(daily_precipitations) / len(daily_precipitations)
+    tomorrow_precipitation = 0 if sum(tomorrow_precipitations) == 0 else sum(tomorrow_precipitations) / len(tomorrow_precipitations)
+    weather_3Am7pm = "7일 내에 비 예보가 없어요." if when_is_rainy == 9 else f"가장 가까운 비 예보는 {when_is_rainy}일 후예요."
     pollen_index = max(flower_qualities)
-    status = 0
+    # 0 : 세차하기 좋음, 1: 세차 괜찮음, 2: 세차 미루기, 3: 세차 하지마
+    status = cal_carwash_status(when_is_rainy, day_min_temperature, pm10grade, pollen_index)
+    print(f"세차지수 : {status}, {day_min_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
+    return [status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index]
 
-    return
+def cal_carwash_status(when_is_rainy, min_temperature, pm10grade, pollen_index):
+    result = 0
 
-def get_compare_index(weather_24h_jsonObject):
-    return
+    if 150 < pm10grade or pollen_index == 3 or min_temperature <= -3 or when_is_rainy <= 2:
+        reulst = 3
+        return result
+    elif 80 < pm10grade < 151 or pollen_index == 2 or when_is_rainy <= 4:
+        result = 2
+        return result
+    elif when_is_rainy <= 6:
+        result = 1
+        return result
+    
+    return result
+    
+def get_compare_index(weather_24h_jsonObject, today, isUpdate, code):
+    # 전전날 날씨는 못받아 오기 때문에 처음 만들 때는 일단 똑같이 보내주고, 
+    # 그게 아니면 현재 DB에 저장된 것을 어제로 바꾸고, 현재 날씨를 넣어줘야함.
+    # 근데 30분마다 실행되기 때문에 업데이트할 때는 오늘 날짜를 체크해줘야함.
+    yesterday                 = ""
+    yesterday_max_temperature = 0.0
+    yesterday_min_temperature = 0.0
+    today                     = ""
+    today_max_temperature     = 0.0
+    today_min_temperature     = 0.0
+
+    if isUpdate:
+        # code로 compare_index 잡아줌.
+
+        # 업데이트 해야하는지 확인 (가져온 compare_index의 today와 현재 today가 같으면 업데이트 아니면 안함.)
+
+        # 업데이트 해야하면 가져온 compare_index의 today 지수들을 yesterday로 넣어주고
+
+        # 오늘의 min max를 찾아서 today로 넣어줌.
+        pass
+    else:
+        # min max 찾아서 어제 오늘 똑같이 내뱉어줌.
+        pass
+    
+    
+    return [yesterday, yesterday_max_temperature, yesterday_min_temperature, today, today_max_temperature, today_min_temperature]
 
 def get_hour_weather(weather_24h_jsonObject):
     return
