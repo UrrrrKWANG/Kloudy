@@ -41,11 +41,14 @@ class WeatherIndexDetailView: UIViewController {
     let chartUnit = UILabel()
     let chartView = IndexChartView()
     let presentButtonView = IndexButtonView()
+    let indexStepView = IndexStepView()
     
     var indexType: IndexType = .unbrella
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
+    
+    var presentButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -84,7 +87,7 @@ class WeatherIndexDetailView: UIViewController {
             $0.height.equalTo(490)
         }
         
-        [titleLabel, firstIconView, secondIconView, chartLabel, chartUnit, chartView, presentButtonView].forEach { baseIndexView.addSubview($0) }
+        [titleLabel, firstIconView, secondIconView, chartLabel, chartUnit, chartView, presentButtonView, indexStepView].forEach { baseIndexView.addSubview($0) }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
@@ -120,10 +123,16 @@ class WeatherIndexDetailView: UIViewController {
         
         presentButtonView.snp.makeConstraints {
             $0.top.equalTo(chartView.snp.bottom).offset(46)
-            $0.leading.trailing.equalToSuperview().inset(40)
+            $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(20)
-            $0.height.equalTo(57)
+//            $0.height.equalTo(57)
             $0.centerX.equalToSuperview()
+        }
+        
+        indexStepView.snp.makeConstraints {
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.top.equalTo(presentButtonView.snp.bottom).offset(7)
+            $0.bottom.equalToSuperview().inset(13)
         }
     }
     
@@ -164,9 +173,33 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     @objc private func tapPresentButton() {
-        let weatherIndexStepView = WeatherIndexStepView()
-        weatherIndexStepView.modalPresentationStyle = .overCurrentContext
-        weatherIndexStepView.modalTransitionStyle = .coverVertical
-        self.present(weatherIndexStepView, animated: true)
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.presentButtonView.snp.remakeConstraints {
+                $0.top.equalToSuperview().inset(50)
+                $0.leading.trailing.equalToSuperview().inset(16)
+                $0.height.equalTo(57)
+                $0.centerX.equalToSuperview()
+            }
+            
+            self.indexStepView.snp.remakeConstraints {
+                $0.top.equalTo(self.presentButtonView.snp.bottom)
+                $0.leading.trailing.equalToSuperview().inset(16)
+                $0.centerX.equalToSuperview()
+                $0.bottom.equalToSuperview().inset(16)
+            }
+            
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.indexStepView.presentButtonTapped.onNext(true)
+        }
+            
+        
+//        UIView.animate(withDuration: 0.7, delay: 0) {
+//
+//
+//        } completion: { _ in
+//            print("💙")
+//            self.presentButtonView.presentButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
+//        }
     }
 }

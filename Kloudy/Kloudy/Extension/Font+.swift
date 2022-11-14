@@ -20,8 +20,10 @@ extension UIFont {
         static var appleSDNeoBoldSmallLarge: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 22)! }
         static var appleSDNeoBoldMedium: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 20)! }
         static var appleSDNeoBoldSmall: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 18)! }
+        static var appleSDNeoBoldMini: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 15)! }
         static var appleSDNeoSemiBoldExtraLarge: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 20)! }
         static var appleSDNeoSemiBoldLarge: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 18)! }
+        static var appleSDNeoSemiBoldMediumLarge: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 15)! }
         static var appleSDNeoSemiBoldMedium: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)! }
         static var appleSDNeoSemiBoldSmall: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 14)! }
         static var appleSDNeoSemiBoldMini: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 12)! }

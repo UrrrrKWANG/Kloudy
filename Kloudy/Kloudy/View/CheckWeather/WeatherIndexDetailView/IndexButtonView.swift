@@ -40,12 +40,13 @@ class SequenceLabelCell: UICollectionViewCell {
 
 class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
-    let presentButtonImage = UIImageView()
+    let presentButton = UIButton()
     var collectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         collectionView.backgroundColor = UIColor.KColor.clear
         collectionView.isScrollEnabled = false
         return collectionView
@@ -53,8 +54,7 @@ class IndexButtonView: UIView {
     
     var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 4)
     var status: Int = 4
-    
-    let presentButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    var stepCellSpacing = 20
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -76,27 +76,30 @@ class IndexButtonView: UIView {
     }
     
     private func layout() {
-        [presentButtonImage, collectionView].forEach { self.addSubview($0) }
+        [presentButton, collectionView].forEach { self.addSubview($0) }
         
-        presentButtonImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
+        presentButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(130)
-//            $0.width.equalTo(5)
+            $0.width.equalTo(26)
+            $0.height.equalTo(21)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(presentButtonImage.snp.bottom).offset(12)
+            $0.top.equalTo(presentButton.snp.bottom).offset(4)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(30)
+            $0.height.equalTo(32)
         }
     }
     
     private func attribute() {
+        self.backgroundColor = UIColor.KColor.white
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SequenceLabelCell.self, forCellWithReuseIdentifier: "sequenceLabel")
-        presentButtonImage.image = UIImage(named: "chevron_up")
+        presentButton.setImage(UIImage(named: "chevron_up"), for: .normal)
+        presentButton.isEnabled = false
+//        presentButton.addTarget(self, action: #selector(hello), for: .touchUpInside)
     }
 }
 
@@ -109,19 +112,22 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SequenceLabelCell.identifier, for: indexPath) as? SequenceLabelCell else { return UICollectionViewCell() }
-        cell.backgroundColor = self.status - 1 == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
-        cell.sequenceLabel.textColor = self.status - 1 == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
+        cell.backgroundColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
+        cell.sequenceLabel.textColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
         cell.sequenceLabel.text = "\(indexPath.row + 1)"
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemSpacing = 20
-        return CGSize(width: (Int(collectionView.frame.width) - itemSpacing * 4) / 5, height: 32)
+        return CGSize(width: (Int(collectionView.frame.width) - stepCellSpacing * 4 - 48) / 5 , height: 32)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
         return 20
     }
     
+    // 추후 생성
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        <#code#>
+//    }
 }
