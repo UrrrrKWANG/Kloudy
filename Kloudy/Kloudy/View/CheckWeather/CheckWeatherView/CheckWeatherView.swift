@@ -53,10 +53,9 @@ class CheckWeatherView: UIViewController {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
         
-        //pageControl 부분
         self.pageControl.frame = CGRect()
-        self.pageControl.currentPageIndicatorTintColor = UIColor.black
-        self.pageControl.pageIndicatorTintColor = UIColor.lightGray
+        self.pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
+        self.pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
         self.pageControl.numberOfPages = self.dataViewControllers.count
         self.pageControl.currentPage = initialPage
         self.view.addSubview(self.pageControl)
@@ -217,8 +216,6 @@ class CheckWeatherView: UIViewController {
     //        self.present(self.addLivingIndexCellView, animated: true)
     //    }
     
-    
-    
 }
 
 extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
@@ -243,7 +240,6 @@ extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewController
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
         
-        // set the pageControl.currentPage to the index of the current viewController in pages
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = self.dataViewControllers.firstIndex(of: viewControllers[0]) {
                 self.pageControl.currentPage = viewControllerIndex
