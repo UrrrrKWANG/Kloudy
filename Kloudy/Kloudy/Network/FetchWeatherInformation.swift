@@ -123,8 +123,9 @@ class FetchWeatherInformation: ObservableObject {
             let data = try Data(contentsOf: url)
             // 해당 data를 encoding 합니다.
             let dataEncoded = String(data: data, encoding: .utf8)
-            if let dataArr = dataEncoded?.components(separatedBy: "\n").map({$0.components(separatedBy: ",")}) {
-                                for item in dataArr {
+            if let dataArr = dataEncoded?.components(separatedBy: "\r\n").map({$0.components(separatedBy: ",")}) {
+                                for index in 0..<dataArr.count-1 {
+                                    let item = dataArr[index]
                                     let city = CityInformation(code: item[0], province: item[1], city: item[2])
                                     cityList.append(city)
                                 }

@@ -58,7 +58,7 @@ class CoreDataManager {
             let locations = try coreDataStack.managedContext.fetch(request)
             var returnValue = true
             locations.forEach { location in
-                if location.city == locationCode {
+                if location.code == locationCode {
                     returnValue = false
                     return
                 }

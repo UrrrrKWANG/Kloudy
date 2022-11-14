@@ -21,4 +21,3 @@ def getWeathers(request):
 
     serializer = WeatherSerializer(weather)
     return Response(serializer.data)
-    # return

@@ -13,11 +13,14 @@ extension UIFont {
         static var lexendExtraLarge: UIFont { UIFont(name: "Lexend-Regular", size: 100)! }
         static var lexendLarge: UIFont { UIFont(name: "Lexend-Regular", size: 34)! }
         static var lexendMedium: UIFont { UIFont(name: "Lexend-Regular", size: 20)! }
+        static var lexendMedius: UIFont { UIFont(name: "Lexend-Regular", size: 16)! }
         static var lexendSmall: UIFont { UIFont(name: "Lexend-Regular", size: 15)! }
         static var lexendMini: UIFont { UIFont(name: "Lexend-Regular", size: 14)! }
         static var appleSDNeoBoldLarge: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 24)! }
+        static var appleSDNeoBoldSmallLarge: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 22)! }
         static var appleSDNeoBoldMedium: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 20)! }
         static var appleSDNeoBoldSmall: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 18)! }
+        static var appleSDNeoSemiBoldExtraLarge: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 20)! }
         static var appleSDNeoSemiBoldLarge: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 18)! }
         static var appleSDNeoSemiBoldMedium: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 17)! }
         static var appleSDNeoSemiBoldSmall: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 14)! }
