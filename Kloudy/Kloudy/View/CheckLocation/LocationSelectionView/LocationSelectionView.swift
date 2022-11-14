@@ -290,7 +290,6 @@ extension LocationSelectionView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                 return UITableViewCell() }
             cell.locationNameLabel.text = locationList[indexPath.row].city
-//            cell.temperature = locationList[indexPath.row].code
 
             return cell
         }
@@ -401,7 +400,6 @@ extension LocationSelectionView: UITableViewDropDelegate {
         if session.localDragSession != nil {
             if destinationIndexPath?.row == 0 {
                 return UITableViewDropProposal(operation: .move, intent: .unspecified)
-//                return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
             }
             return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
