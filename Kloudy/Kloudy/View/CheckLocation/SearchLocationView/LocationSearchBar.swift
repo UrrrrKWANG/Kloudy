@@ -58,7 +58,7 @@ class LocationSearchBar: UISearchBar {
 
         if let textField = self.value(forKey: "searchField") as? UITextField {
             textField.backgroundColor = UIColor.KColor.gray02
-            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.KColor.gray06, NSAttributedString.Key.font : UIFont.KFont.appleSDNeoRegularLarge])
+            textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.KColor.gray02, NSAttributedString.Key.font : UIFont.KFont.appleSDNeoRegularLarge])
             textField.textColor = UIColor.KColor.white
         }
     }
