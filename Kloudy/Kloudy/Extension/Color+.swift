@@ -20,6 +20,7 @@ extension UIColor {
         static var gray01: UIColor { UIColor(named: "Gray01")! }
         static var gray02: UIColor { UIColor(named: "Gray02")! }
         static var gray03: UIColor { UIColor(named: "Gray03")! }
+        static var chartBlue: UIColor { UIColor(named: "ChartBlue")! }
         static var white: UIColor { UIColor(named: "White")! }
         static var clear: UIColor { UIColor.clear }
     }

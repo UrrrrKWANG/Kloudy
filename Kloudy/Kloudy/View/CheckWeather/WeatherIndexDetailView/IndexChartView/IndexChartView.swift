@@ -61,9 +61,9 @@ class IndexChartView: LineChartView {
     
     private func configureChart() {
         let lineChartDataSet = LineChartDataSet(entries: lineChartEntry)
-        lineChartDataSet.colors = [UIColor.init(red: 102/255, green: 200/255, blue: 1, alpha: 1.0)]
+        lineChartDataSet.colors = [UIColor.KColor.chartBlue]
         lineChartDataSet.drawCirclesEnabled = false
-        lineChartDataSet.highlightColor = UIColor.init(red: 102/255, green: 200/255, blue: 1, alpha: 1.0)
+        lineChartDataSet.highlightColor = UIColor.KColor.chartBlue
         lineChartDataSet.highlightLineWidth = 2
         lineChartDataSet.highlightLineDashLengths = [5]
         lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false

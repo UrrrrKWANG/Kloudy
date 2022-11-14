@@ -147,20 +147,15 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     private func configureTitleLabel() {
-        titleLabel.text = "\(indexType.detailIndexString[0]) 지수"
-        titleLabel.textColor = UIColor.KColor.black
-        titleLabel.font = UIFont.KFont.appleSDNeoBoldMedium
+        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0]) 지수", font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.black)
         titleLabel.sizeToFit()
     }
     
     private func configureChartLabel() {
-        chartLabel.text = "\(indexType.detailIndexString[7])"
-        chartLabel.textColor = UIColor.KColor.black
-        chartLabel.font = UIFont.KFont.appleSDNeoMediumSmall
+        chartLabel.configureLabel(text: indexType.detailIndexString[7], font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.black)
         chartLabel.sizeToFit()
-        chartUnit.text = "\(chartValue)\(indexType.detailIndexString[8])"
-        chartUnit.textColor = UIColor.KColor.black
-        chartUnit.font = UIFont.KFont.appleSDNeoSemiBoldExtraLarge
+        
+        chartUnit.configureLabel(text: "\(chartValue)\(indexType.detailIndexString[8])", font: UIFont.KFont.appleSDNeoSemiBoldExtraLarge, textColor: UIColor.KColor.black)
         chartUnit.sizeToFit()
     }
     

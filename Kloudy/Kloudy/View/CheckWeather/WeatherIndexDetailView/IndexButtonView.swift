@@ -109,8 +109,8 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SequenceLabelCell.identifier, for: indexPath) as? SequenceLabelCell else { return UICollectionViewCell() }
-        cell.backgroundColor = self.status - 1 == indexPath.row ? UIColor.init(red: 244/255, green: 247/255, blue: 255/255, alpha: 1) : UIColor.KColor.clear
-        cell.sequenceLabel.textColor = self.status - 1 == indexPath.row ? UIColor.init(red: 77/255, green: 115/255, blue: 244/255, alpha: 1) : UIColor.KColor.black
+        cell.backgroundColor = self.status - 1 == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
+        cell.sequenceLabel.textColor = self.status - 1 == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
         cell.sequenceLabel.text = "\(indexPath.row + 1)"
         return cell
     }
