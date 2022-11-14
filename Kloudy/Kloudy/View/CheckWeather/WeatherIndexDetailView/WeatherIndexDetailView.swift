@@ -32,6 +32,7 @@ enum IndexType {
 
 class WeatherIndexDetailView: UIViewController {
     
+    let disposeBag = DisposeBag()
     let baseBackgroundView = UIView()
     let baseIndexView = UIView()
     let titleLabel = UILabel()
@@ -48,7 +49,7 @@ class WeatherIndexDetailView: UIViewController {
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
     
-    var presentButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    var dismissStepView: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +73,14 @@ class WeatherIndexDetailView: UIViewController {
         
         // API 데이터 받을 시 전달
 //        indexIconView.indexStatus.onNext(data.status)
+        
+        presentButtonView.isDissmissButtonTapped
+            .subscribe(onNext: {
+                if $0 {
+                    self.dismissIndexStepView()
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
@@ -125,7 +134,6 @@ class WeatherIndexDetailView: UIViewController {
             $0.top.equalTo(chartView.snp.bottom).offset(46)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(20)
-//            $0.height.equalTo(57)
             $0.centerX.equalToSuperview()
         }
         
@@ -190,16 +198,33 @@ class WeatherIndexDetailView: UIViewController {
             
             self.view.layoutIfNeeded()
         } completion: { _ in
-            self.indexStepView.presentButtonTapped.onNext(true)
+            self.indexStepView.isPresentStepView.onNext(true)
+            self.presentButtonView.presentButton.isEnabled = true
+            self.presentButtonView.presentButton.setImage(UIImage(named: "chevron_down"), for: .normal)
         }
-            
+    }
+    
+    private func dismissIndexStepView() {
+        self.indexStepView.isPresentStepView.onNext(false)
         
-//        UIView.animate(withDuration: 0.7, delay: 0) {
-//
-//
-//        } completion: { _ in
-//            print("💙")
-//            self.presentButtonView.presentButton.setImage(UIImage(systemName: "chevron.down"), for: .normal)
-//        }
+        UIView.animate(withDuration: 0.5, delay: 0) {
+            self.presentButtonView.snp.remakeConstraints {
+                $0.top.equalTo(self.chartView.snp.bottom).offset(46)
+                $0.leading.trailing.equalToSuperview().inset(16)
+                $0.bottom.equalToSuperview().inset(20)
+                $0.centerX.equalToSuperview()
+            }
+            
+            self.indexStepView.snp.remakeConstraints {
+                $0.leading.trailing.equalToSuperview().inset(16)
+                $0.top.equalTo(self.presentButtonView.snp.bottom).offset(7)
+                $0.bottom.equalToSuperview().inset(13)
+            }
+            
+            self.view.layoutIfNeeded()
+        } completion: { _ in
+            self.presentButtonView.presentButton.isEnabled = false
+            self.presentButtonView.presentButton.setImage(UIImage(named: "chevron_up"), for: .disabled)
+        }
     }
 }

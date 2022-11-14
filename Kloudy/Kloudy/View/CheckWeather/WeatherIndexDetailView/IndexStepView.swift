@@ -24,12 +24,13 @@ class IndexStepView: UIView {
     // Tap 했을 시 변경되는 지수 단계 값
     //
     
-    let presentButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    let isPresentStepView = PublishSubject<Bool>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         bind()
         attribute()
+        
     }
     
     required init?(coder: NSCoder) {
@@ -37,19 +38,22 @@ class IndexStepView: UIView {
     }
     
     private func bind() {
-        presentButtonTapped
+        isPresentStepView
             .subscribe(onNext: {
                 if $0 {
                     self.layout()
+                    print(self.subviews.count)
                 } else {
-                    print("👍")
+                    self.isViewDismiss()
                 }
             })
             .disposed(by: disposeBag)
     }
     
-    private func isPresentButtonTapped() {
-        
+    private func isViewDismiss() {
+        self.subviews.forEach { $0.removeFromSuperview()
+        }
+        layoutIfNeeded()
     }
     
     private func layout() {
@@ -96,6 +100,7 @@ class IndexStepView: UIView {
         stepValueLabel.textColor = UIColor.init(red: 172/255, green: 124/255, blue: 0, alpha: 1.0)
         stepValueLabel.textAlignment = .center
         stepValueLabel.sizeToFit()
+        stepValueLabel.backgroundColor = UIColor.init(red: 1, green: 249/255, blue: 219/255, alpha: 1)
     }
     
     private func configureStepExplainLabel() {
@@ -105,5 +110,6 @@ class IndexStepView: UIView {
         stepExplainLabel.textColor = UIColor.KColor.black
         stepExplainLabel.textAlignment = .center
         stepExplainLabel.sizeToFit()
+        stepExplainLabel.backgroundColor = UIColor.KColor.gray02
     }
 }

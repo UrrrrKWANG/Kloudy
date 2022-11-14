@@ -40,6 +40,7 @@ class SequenceLabelCell: UICollectionViewCell {
 
 class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
+    let indexStepView = IndexStepView()
     let presentButton = UIButton()
     var collectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
@@ -55,6 +56,8 @@ class IndexButtonView: UIView {
     var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 4)
     var status: Int = 4
     var stepCellSpacing = 20
+    
+    var isDissmissButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -97,9 +100,13 @@ class IndexButtonView: UIView {
         collectionView.delegate = self
         collectionView.dataSource = self
         collectionView.register(SequenceLabelCell.self, forCellWithReuseIdentifier: "sequenceLabel")
-        presentButton.setImage(UIImage(named: "chevron_up"), for: .normal)
+        presentButton.setImage(UIImage(named: "chevron_up"), for: .disabled)
         presentButton.isEnabled = false
-//        presentButton.addTarget(self, action: #selector(hello), for: .touchUpInside)
+        presentButton.addTarget(self, action: #selector(dismissStepView), for: .touchUpInside)
+    }
+    
+    @objc private func dismissStepView() {
+        isDissmissButtonTapped.onNext(true)
     }
 }
 
