@@ -307,7 +307,6 @@ extension LocationSelectionView: UITableViewDataSource {
         }
     }
         
-    // https://nemecek.be/blog/5/how-to-implement-swipe-to-delete-action-with-custom-icon
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         switch tableType {
         case .search:
@@ -321,8 +320,6 @@ extension LocationSelectionView: UITableViewDataSource {
                     completionHandler(true)
                 }
                 
-
-                // https://stackoverflow.com/questions/47502901/is-there-a-recommended-image-size-for-uicontextualaction-icons
                 deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
                     UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 64, height: 93))
                 }
