@@ -20,6 +20,7 @@ class CheckWeatherView: UIViewController {
     let pageControl = UIPageControl()
     let initialPage = 0
     
+    
     lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         
@@ -29,77 +30,14 @@ class CheckWeatherView: UIViewController {
     
     var dataViewControllers = [UIViewController]()
     
-    func loadWeatherView() {
-        test.forEach { city in
-            // 여기서 Controller를 그린다.
-            // view를 그릴 때 viewModel을 가져와 사용한다.
-            // viewmodel에 init을 줘서 코어데이터에 있는 도시를 가져와서 사용하면 될 듯
-            lazy var num: UIViewController = {
-                let vc = UIViewController()
-                vc.view.backgroundColor = .brown
-                let test = UITextView()
-                let locationView = UIView()
-                //    let weatherIndexView = WeatherIndexView()
-                //    let detailWeatherView = DetailWeatherView()
-                let weatherIndexView = UIView()
-//                let detailWeatherView = UIView()
-                vc.view.addSubview(test)
-                test.text = city
-                test.snp.makeConstraints {
-                    $0.top.trailing.equalToSuperview().inset(30)
-                    $0.size.equalTo(100)
-                }
-                vc.view.addSubview(locationView)
-                vc.view.addSubview(weatherIndexView)
-//                vc.view.addSubview(detailWeatherView)
-                
-                let detailWeatherView = UIButton()
-                vc.view.addSubview(detailWeatherView)
-                detailWeatherView.rx.tap
-                    .bind {
-                        
-                        
-                        
-                        let detailWeatherView = WeatherIndexDetailView()
-                        detailWeatherView.modalPresentationStyle = .overCurrentContext
-                        detailWeatherView.modalTransitionStyle = .crossDissolve
-                        self.present(detailWeatherView, animated: true)
-                    }
-                    .disposed(by: disposeBag)
+    var currentImageText = "detailWeather-4"
+    var locationLabelText = "포항시 남구 지곡동"
+    var temperatureText = "9°"
 
-                
-                
-                locationView.backgroundColor = .red
-                locationView.snp.makeConstraints {
-                    $0.top.equalToSuperview().inset(28)
-                    $0.leading.equalToSuperview().inset(20)
-                    $0.width.equalTo(203)
-                    $0.height.equalTo(150)
-                }
-                weatherIndexView.backgroundColor = .blue
-                weatherIndexView.snp.makeConstraints {
-                    $0.top.equalTo(locationView.snp.bottom).offset(24)
-                    $0.leading.equalToSuperview().inset(20)
-                    $0.width.equalTo(350)
-                    $0.height.equalTo(360)
-                }
-                detailWeatherView.backgroundColor = .green
-                detailWeatherView.snp.makeConstraints {
-                    $0.top.equalTo(weatherIndexView.snp.bottom).offset(20)
-                    $0.leading.equalToSuperview().inset(20)
-                    $0.width.equalTo(350)
-                    $0.height.equalTo(43)
-                }
-                return vc
-            }()
-            dataViewControllers.append(num)
-            
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.KColor.white
         loadWeatherView()
         navigationController?.navigationBar.isHidden = true
         self.view.addSubview(checkWeatherBasicNavigationView)
@@ -129,6 +67,121 @@ class CheckWeatherView: UIViewController {
         }
     }
     
+    func loadWeatherView() {
+        test.forEach { city in
+            // 여기서 Controller를 그린다.
+            // view를 그릴 때 viewModel을 가져와 사용한다.
+            // viewmodel에 init을 줘서 코어데이터에 있는 도시를 가져와서 사용하면 될 듯
+            lazy var num: UIViewController = {
+                let vc = UIViewController()
+                let locationView = UIView()
+//                let weatherIndexView = WeatherIndexView()
+                let weatherIndexView = UIView()
+                let detailWeatherView = UIButton()
+                let currentWeatherImage = UIImageView()
+                let detailWeatherViewLabel = UILabel()
+                let rightIcon = UIImageView()
+                
+                vc.view.backgroundColor = .clear
+                currentWeatherImage.image = UIImage(named: currentImageText)
+                [locationView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach {
+                    vc.view.addSubview($0)
+                }
+                
+                temp_locationView(view: locationView)
+                locationView.backgroundColor = UIColor.KColor.primaryBlue01
+                locationView.layer.cornerRadius = 15
+                locationView.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(24)
+                    $0.leading.trailing.equalToSuperview().inset(20)
+                    $0.height.equalTo(108)
+                }
+                currentWeatherImage.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(-6)
+                    $0.leading.equalToSuperview().inset(36)
+                    $0.width.equalTo(150)
+                    $0.height.equalTo(130)
+                }
+                weatherIndexView.backgroundColor = UIColor.KColor.white
+                weatherIndexView.layer.cornerRadius = 12
+                weatherIndexView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
+                weatherIndexView.snp.makeConstraints {
+                    $0.top.equalTo(locationView.snp.bottom).offset(32)
+                    $0.leading.trailing.equalToSuperview().inset(20)
+                    $0.height.equalTo(385)
+                }
+                
+                detailWeatherView.rx.tap
+                    .bind {
+                        let detailWeatherView = WeatherIndexDetailView()
+                        detailWeatherView.modalPresentationStyle = .overCurrentContext
+                        detailWeatherView.modalTransitionStyle = .crossDissolve
+                        self.present(detailWeatherView, animated: true)
+                    }
+                    .disposed(by: disposeBag)
+                
+                detailWeatherView.backgroundColor = UIColor.KColor.white
+                detailWeatherView.layer.cornerRadius = 10
+                detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
+                detailWeatherView.snp.makeConstraints {
+                    $0.top.equalTo(weatherIndexView.snp.bottom).offset(32)
+                    $0.leading.trailing.equalToSuperview().inset(20)
+                    $0.height.equalTo(58)
+                }
+                
+                rightIcon.image = UIImage(named: "right")
+                rightIcon.contentMode = .scaleToFill
+                
+                [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
+
+                detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
+                detailWeatherViewLabel.snp.makeConstraints {
+                    $0.centerY.equalToSuperview()
+                    $0.leading.equalToSuperview().inset(16)
+                }
+                rightIcon.snp.makeConstraints {
+                    $0.centerY.equalToSuperview()
+                    $0.trailing.equalToSuperview().inset(16)
+                    $0.width.equalTo(8)
+                    $0.height.equalTo(14)
+                }
+                return vc
+            }()
+            dataViewControllers.append(num)
+            
+        }
+    }
+    
+    func temp_locationView(view: UIView) {
+        let locationLabel = UILabel()
+        let locationIcon = UIImageView()
+        let temperature = UILabel()
+        
+        [locationLabel, locationIcon, temperature].forEach {
+            view.addSubview($0)
+        }
+        locationIcon.image = UIImage(named: "location_mark")
+        locationLabel.configureLabel(text: locationLabelText, font: UIFont.KFont.appleSDNeoBoldmini, textColor: UIColor.KColor.white)
+        temperature.configureLabel(text: temperatureText, font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
+
+        locationLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(13)
+            $0.trailing.equalToSuperview().inset(10)
+            $0.height.equalTo(20)
+        }
+        locationIcon.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(15)
+            $0.trailing.equalTo(locationLabel.snp.leading).offset(-5)
+            $0.width.equalTo(11)
+            $0.height.equalTo(14)
+        }
+        temperature.snp.makeConstraints {
+            $0.top.equalTo(locationLabel.snp.bottom).offset(2)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(63)
+        }
+    }
+    
     func configureCheckWeatherNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
@@ -136,7 +189,7 @@ class CheckWeatherView: UIViewController {
             $0.width.equalTo(111)
             $0.height.equalTo(40)
             
-            checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
+        checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
             //            checkWeatherCellLabelView.addButton.addTarget(self, action: #selector(tapAddIndexButton), for: .touchUpInside)
         }
     }
@@ -149,11 +202,15 @@ class CheckWeatherView: UIViewController {
         }
     }
     
-    // 네비게이션 버튼
-        @objc func tapLocationButton() {
-            let locationSelectionView = LocationSelectionView()
-            self.navigationController?.pushViewController(locationSelectionView, animated: true)
-        }
+    @objc func tapLocationButton() {
+        let locationSelectionView = LocationSelectionView()
+        self.navigationController?.pushViewController(locationSelectionView, animated: true)
+    }
+    
+    @objc func tapDetailWeatherViewButton() {
+        let detailWeatherView = LocationSelectionView()
+        self.present(detailWeatherView, animated: true)
+    }
     
     //    @objc func tapAddIndexButton() {
     //        self.delegate?.sendFirstSequenceLocation(self.firstSequenceLocation)
