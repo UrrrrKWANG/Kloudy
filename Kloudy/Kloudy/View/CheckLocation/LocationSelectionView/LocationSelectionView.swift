@@ -19,7 +19,7 @@ class LocationSelectionView: UIViewController {
     let disposeBag = DisposeBag()
     
     // 임시변수
-    private var cities = ["Seoul", "Daejeon", "Daegu", "Pohang", "Busan"]
+    private var cities = ["", "", "", "", ""]
 
     let locationSelectionNavigationView = LocationSelectionNavigationView()
     let searchBar = LocationSearchBar()
@@ -69,8 +69,6 @@ class LocationSelectionView: UIViewController {
         searchBar.searchFieldTapped
             .subscribe(onNext: {
                 self.changeTableType($0)
-                print($0)
-                print(self.tableType)
             })
             .disposed(by: disposeBag)
         
@@ -300,7 +298,6 @@ extension LocationSelectionView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                 print("+++++++_check_sfsdfsdfsdfsdfsdf____________")
                 return UITableViewCell() }
-//            cell.backgroundColor = .red
             cell.textLabel?.text = cities[indexPath.row]
 
             return cell
