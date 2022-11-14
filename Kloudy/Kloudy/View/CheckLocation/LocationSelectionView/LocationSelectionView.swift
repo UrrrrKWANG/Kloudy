@@ -17,9 +17,6 @@ enum TableType {
 
 class LocationSelectionView: UIViewController {
     let disposeBag = DisposeBag()
-    
-    // 임시변수
-    private var cities = ["", "", "", "", ""]
 
     let locationSelectionNavigationView = LocationSelectionNavigationView()
     let searchBar = LocationSearchBar()
@@ -276,29 +273,24 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return cities.count // 임시
+            return locationList.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-//        let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationTableViewCell
-//
-//        return cell
         switch tableType {
         case .search:
-            print("+++++++_______search___________")
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchLocationCell", for: indexPath) as? SearchLocationCell else { return UITableViewCell() }
             // snapkit remakeConstraint 처리 유무 체크 필요
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             cell.locationLabel.text = searchingLocation.locationString
             return cell
         case .check:
-            print("+++++++_check__________________")
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
-                print("+++++++_check_sfsdfsdfsdfsdfsdf____________")
                 return UITableViewCell() }
-            cell.textLabel?.text = cities[indexPath.row]
+            cell.locationNameLabel.text = locationList[indexPath.row].city
+//            cell.temperature = locationList[indexPath.row].code
 
             return cell
         }
@@ -323,10 +315,12 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    self.cities.remove(at: indexPath.row)
+                    CoreDataManager.shared.locationDelete(location: self.locationList[indexPath.row])
+                    self.locationList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }
+                
 
                 // https://stackoverflow.com/questions/47502901/is-there-a-recommended-image-size-for-uicontextualaction-icons
                 deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
@@ -366,7 +360,7 @@ extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         switch tableType {
         case .search:
-            return 100 //
+            return 50
         case .check:
             return 100
         }
