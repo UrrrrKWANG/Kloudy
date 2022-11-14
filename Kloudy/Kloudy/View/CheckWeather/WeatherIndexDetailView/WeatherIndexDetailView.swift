@@ -21,11 +21,33 @@ enum IndexType {
     var detailIndexString: [String] {
         switch self {
         case .unbrella: return ["우산", "precipitation_png", "하루 강수량", "mm", "wind_png", "최대 풍속", "m/s", "강수량", "mm"]
-        case .mask: return ["마스크", "precipitation_png", "미세먼지", "mm", "wind_png", "초미세먼지", "m/s", "미세먼지", "mm"]
-        case .laundry: return ["빨래"]
-        case .outer: return ["겉옷"]
-        case .car: return ["세차"]
-        case .temperatureGap: return ["일교차"]
+        case .mask: return ["마스크", "dust_png", "미세먼지", "㎍/㎥", "fineDust_png", "초미세먼지", "㎍/㎥", "", ""]
+        case .laundry: return ["빨래", "todayWeather_png", "오늘의 날씨", "", "humidity_png", "습도", "%", "", ""]
+        case .outer: return ["겉옷", "lowestTemperature_png", "일 최저 기온", "℃", "goWorkingTemperature_png", "출근시간대 온도", "℃", "", ""]
+        case .car: return ["세차", "todayWeather_png", "오늘의 날씨", "", "precipitation_png", "강수 예정", "일 후", "", ""]
+        case .temperatureGap: return ["일교차", "lowestTemperature_png", "최저 기온", "℃", "highestTemperature_png", "최고 온도", "℃", "", ""]
+        }
+    }
+    
+    var totalIndexStep: Int {
+        switch self {
+        case .unbrella: return 5
+        case .mask: return 4
+        case .laundry: return 4
+        case .outer: return 5
+        case .car: return 4
+        case .temperatureGap: return 5
+        }
+    }
+    
+    var indexStepLottieString: [String] {
+        switch self {
+        case .unbrella: return ["rain_step1", "rain_step2", "rain_step3", "rain_step4", ""]
+        case .mask: return ["마스크_1단계", "마스크_2단계", "마스크_3단계", "mask_4grade"]
+        case .laundry: return ["", "", "", ""]
+        case .outer: return ["", "", "", "", ""]
+        case .car: return ["", "", "", ""]
+        case .temperatureGap: return ["", "", "", "", ""]
         }
     }
 }
@@ -44,7 +66,7 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
-    var indexType: IndexType = .unbrella
+    var indexType: IndexType = .car
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
@@ -74,10 +96,12 @@ class WeatherIndexDetailView: UIViewController {
         // API 데이터 받을 시 전달
 //        indexIconView.indexStatus.onNext(data.status)
         
-        presentButtonView.isDissmissButtonTapped
+        presentButtonView.totalIndexStep.onNext(indexType.totalIndexStep)
+        
+        presentButtonView.isDismissButtonTapped
             .subscribe(onNext: {
                 if $0 {
-                    self.dismissIndexStepView()
+                    self.tapDismissButton()
                 }
             })
             .disposed(by: disposeBag)
@@ -131,7 +155,7 @@ class WeatherIndexDetailView: UIViewController {
         }
         
         presentButtonView.snp.makeConstraints {
-            $0.top.equalTo(chartView.snp.bottom).offset(46)
+            $0.top.equalToSuperview().inset(413)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(20)
             $0.centerX.equalToSuperview()
@@ -181,6 +205,7 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     @objc private func tapPresentButton() {
+
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.presentButtonView.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(50)
@@ -204,12 +229,12 @@ class WeatherIndexDetailView: UIViewController {
         }
     }
     
-    private func dismissIndexStepView() {
+    private func tapDismissButton() {
         self.indexStepView.isPresentStepView.onNext(false)
         
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.presentButtonView.snp.remakeConstraints {
-                $0.top.equalTo(self.chartView.snp.bottom).offset(46)
+                $0.top.equalToSuperview().inset(413)
                 $0.leading.trailing.equalToSuperview().inset(16)
                 $0.bottom.equalToSuperview().inset(20)
                 $0.centerX.equalToSuperview()

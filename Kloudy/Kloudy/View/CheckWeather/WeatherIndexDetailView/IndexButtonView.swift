@@ -55,12 +55,18 @@ class IndexButtonView: UIView {
     
     var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 4)
     var status: Int = 4
-    var stepCellSpacing = 20
     
-    var isDissmissButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    
+    // 지수 별 단계 갯수
+    var totalIndexStep = PublishSubject<Int>()
+    var totalIndexStepCount: Int = 0
+    var stepCellSpacing: Int = 0
+    
+    var isDismissButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        bind()
         attribute()
         layout()
     }
@@ -74,6 +80,17 @@ class IndexButtonView: UIView {
         indexStatus
             .subscribe(onNext: {
                 self.status = $0
+            })
+            .disposed(by: disposeBag)
+        
+        totalIndexStep
+            .subscribe(onNext: {
+                self.totalIndexStepCount = $0
+                if $0 == 5 {
+                    self.stepCellSpacing = 20
+                } else {
+                    self.stepCellSpacing = 38
+                }
             })
             .disposed(by: disposeBag)
     }
@@ -106,15 +123,14 @@ class IndexButtonView: UIView {
     }
     
     @objc private func dismissStepView() {
-        isDissmissButtonTapped.onNext(true)
+        isDismissButtonTapped.onNext(true)
     }
 }
 
 extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 분기 처리
-        return 5
+        return self.totalIndexStepCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -126,15 +142,15 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: (Int(collectionView.frame.width) - stepCellSpacing * 4 - 48) / 5 , height: 32)
+        return CGSize(width: 38, height: 32)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return CGFloat(stepCellSpacing)
     }
     
-    // 추후 생성
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        <#code#>
-//    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        
+    }
 }
+

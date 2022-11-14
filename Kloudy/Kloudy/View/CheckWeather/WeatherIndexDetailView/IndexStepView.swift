@@ -20,17 +20,12 @@ class IndexStepView: UIView {
     
     // 초기 저장 값
     let stepValue: BehaviorSubject<Int> = BehaviorSubject(value: 0)
-    
-    // Tap 했을 시 변경되는 지수 단계 값
-    //
-    
     let isPresentStepView = PublishSubject<Bool>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         bind()
         attribute()
-        
     }
     
     required init?(coder: NSCoder) {
@@ -42,7 +37,6 @@ class IndexStepView: UIView {
             .subscribe(onNext: {
                 if $0 {
                     self.layout()
-                    print(self.subviews.count)
                 } else {
                     self.isViewDismiss()
                 }
