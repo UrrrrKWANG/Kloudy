@@ -17,7 +17,7 @@ enum TableType {
 
 class LocationSelectionView: UIViewController {
     let disposeBag = DisposeBag()
-    
+
     let locationSelectionNavigationView = LocationSelectionNavigationView()
     let searchBar = LocationSearchBar()
     let searchBarBackgroundView = UIView()
@@ -43,7 +43,7 @@ class LocationSelectionView: UIViewController {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         cityData = cityInformationModel.loadCityListFromCSV()
         initSearchTableTypeData()
-        
+
         bind()
         layout()
         attribute()
@@ -84,6 +84,7 @@ class LocationSelectionView: UIViewController {
         self.configureNothingSearchedLocationLabel()
         self.configureMagnifyingGlassImage()
         self.configureSearchBarBackgroundView()
+        self.configureDragAndDrop()
     }
     
     private func layout() {
@@ -220,9 +221,10 @@ class LocationSelectionView: UIViewController {
     private func configureTableView() {
         tableView.delegate = self
         tableView.dataSource = self
-        tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.KColor.gray03
+        tableView.backgroundColor = UIColor.KColor.black
+        tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "locationCell")
     }
     
     private func configureNothingSearchedLocationLabel() {
@@ -243,8 +245,24 @@ class LocationSelectionView: UIViewController {
         searchBarBackgroundView.backgroundColor = UIColor.KColor.gray02
     }
     
+    // drag, drop delegate 설정
+    private func configureDragAndDrop() {
+        switch tableType {
+        case .search:
+            return
+        case .check:
+            tableView.dragInteractionEnabled = true
+            tableView.dragDelegate = self
+            tableView.dropDelegate = self
+        }
+    }
+    
     @objc func endSearching() {
         searchBar.endEditing(true)
+    }
+    
+    // 셀 위치 변경 함수
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
     }
 }
 
@@ -254,11 +272,12 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return 0
+            return locationList.count
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         switch tableType {
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchLocationCell", for: indexPath) as? SearchLocationCell else { return UITableViewCell() }
@@ -267,7 +286,48 @@ extension LocationSelectionView: UITableViewDataSource {
             cell.locationLabel.text = searchingLocation.locationString
             return cell
         case .check:
-            return UITableViewCell()
+            guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
+                return UITableViewCell() }
+            cell.locationNameLabel.text = locationList[indexPath.row].city
+
+            return cell
+        }
+    }
+    
+    // MARK: 스와이프해서 삭제하기
+    
+    func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
+        switch tableType {
+        case .search:
+            return false
+        case .check:
+            return true
+        }
+    }
+        
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        switch tableType {
+        case .search:
+            return nil
+        case .check:
+            if indexPath.row != 0 {
+                let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+                    CoreDataManager.shared.locationDelete(location: self.locationList[indexPath.row])
+                    self.locationList.remove(at: indexPath.row)
+                    tableView.deleteRows(at: [indexPath], with: .fade)
+                    completionHandler(true)
+                }
+                
+                deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
+                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 64, height: 93))
+                }
+
+                deleteAction.backgroundColor = .systemBackground
+                let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+                return configuration
+            } else {
+                return nil
+            }
         }
     }
 }
@@ -292,6 +352,15 @@ extension LocationSelectionView: UITableViewDelegate {
         }
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        switch tableType {
+        case .search:
+            return 50
+        case .check:
+            return 100
+        }
+    }
+    
     // Select already Saved Location
     private func isSameLocationAlert() {
         let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.", message: "다른 지역을 추가해주세요.", preferredStyle: .alert)
@@ -300,5 +369,44 @@ extension LocationSelectionView: UITableViewDelegate {
         }
         alert.addAction(confirm)
         self.present(alert, animated: true)
+    }
+}
+
+// MARK: 롱탭으로 셀 위치 변경하기
+
+extension LocationSelectionView: UITableViewDragDelegate {
+    func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
+            return [UIDragItem(itemProvider: NSItemProvider())]
+    }
+}
+
+extension LocationSelectionView: UITableViewDropDelegate {
+        
+    func tableView(_ tableView: UITableView, canMoveRowAt indexPath: IndexPath) -> Bool {
+        switch tableType {
+        case .search:
+            return false
+        case .check:
+            if indexPath.row == 0 {
+                return false
+            } else {
+                return true
+            }
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
+        if session.localDragSession != nil {
+            if destinationIndexPath?.row == 0 {
+                return UITableViewDropProposal(operation: .move, intent: .unspecified)
+            }
+            return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
+        }
+        
+        return UITableViewDropProposal(operation: .cancel, intent: .unspecified)
+    }
+    
+    func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
+        
     }
 }
