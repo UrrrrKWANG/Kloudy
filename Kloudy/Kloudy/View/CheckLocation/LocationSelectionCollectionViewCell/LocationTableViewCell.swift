@@ -34,7 +34,7 @@ class LocationTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = .red
+        contentView.backgroundColor = UIColor.KColor.red
         // top 인셋을 주면 글자가 height상 가운데로 안가고 조금 더 밑으로 내려감
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
         

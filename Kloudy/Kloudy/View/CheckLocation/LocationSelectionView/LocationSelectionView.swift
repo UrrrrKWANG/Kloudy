@@ -229,14 +229,7 @@ class LocationSelectionView: UIViewController {
         tableView.separatorStyle = .none
         tableView.backgroundColor = UIColor.KColor.black
         tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
-        tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "locationCell")
-
-//        switch tableType {
-//        case .search:
-//            tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
-//        case .check:
-//            tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "locationCell")
-//        }
+        tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "locationCell")
     }
     
     private func configureNothingSearchedLocationLabel() {
@@ -285,12 +278,15 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return cities.count
+            return cities.count // 임시
         }
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
+//        let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as! LocationTableViewCell
+//
+//        return cell
         switch tableType {
         case .search:
             print("+++++++_______search___________")
@@ -304,9 +300,9 @@ extension LocationSelectionView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                 print("+++++++_check_sfsdfsdfsdfsdfsdf____________")
                 return UITableViewCell() }
-            cell.backgroundColor = .red
+//            cell.backgroundColor = .red
             cell.textLabel?.text = cities[indexPath.row]
-            
+
             return cell
         }
     }
