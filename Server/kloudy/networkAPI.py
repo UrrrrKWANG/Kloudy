@@ -6,6 +6,8 @@ import pymysql
 from pathlib import Path
 import environ
 import ssl
+from socket import error as SocketError
+import errno
 
 ssl._create_default_https_context = ssl._create_unverified_context
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,28 +48,66 @@ def getDatas(today, time, location):
     # WeeklyWeather => 시간에 날짜+0600 or 날짜+1800으로만 넣어야함.
     middle_temperature_url = f'http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa?serviceKey={key}&numOfRows=10&pageNo=1&dataType=JSON&regId={location.daily_temperature_code}&tmFc={middle_time}'
     
-    main_state_response           = requests.get(main_state_url, headers=headers, verify=False)
-    main_state_short_response     = requests.get(main_state_short_url, headers=headers, verify=False)
-    main_current_response         = requests.get(main_current_url, headers=headers, verify=False)
-    weather_24h_response          = requests.get(weather_24h_url, headers=headers, verify=False)
-    air_response                  = requests.get(air_url, headers=headers, verify=False)
-    weather_48h_response          = requests.get(weather_48h_url, headers=headers, verify=False)
-    main_max_min_response         = requests.get(main_max_min_url, headers=headers, verify=False)
-    flower_response               = requests.get(flower_url, headers=headers, verify=False)
-    middle_state_response         = requests.get(middle_state_url, headers=headers, verify=False)
-    middle_temperature_response   = requests.get(middle_temperature_url, headers=headers, verify=False)
+    try:
+        main_state_response           = requests.get(main_state_url, headers=headers, verify=False)
+        main_state_jsonObject         = json.loads(main_state_response.text)
+    except:
+        main_state_jsonObject         = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        main_state_short_response     = requests.get(main_state_short_url, headers=headers, verify=False)
+        main_state_short_jsonObject   = json.loads(main_state_short_response.text)
+    except:
+        main_state_short_jsonObject   = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        main_current_response         = requests.get(main_current_url, headers=headers, verify=False)
+        main_current_jsonObject       = json.loads(main_current_response.text)
+    except:
+        main_current_jsonObject       = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        weather_24h_response          = requests.get(weather_24h_url, headers=headers, verify=False)
+        weather_24h_jsonObject        = json.loads(weather_24h_response.text)
+    except:
+        weather_24h_jsonObject        = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
 
-    main_state_jsonObject         = json.loads(main_state_response.text)
-    main_state_short_jsonObject   = json.loads(main_state_short_response.text)
-    main_current_jsonObject       = json.loads(main_current_response.text)
-    weather_24h_jsonObject        = json.loads(weather_24h_response.text)
-    air_jsonObject                = json.loads(air_response.text)
-    weather_48h_jsonObject        = json.loads(weather_48h_response.text)
-    main_max_min_jsonObject       = json.loads(main_max_min_response.text)
-    flower_jsonObject             = json.loads(flower_response.text)
-    middle_state_jsonObject       = json.loads(middle_state_response.text)
-    middle_temperature_jsonObject = json.loads(middle_temperature_response.text)
-
+    try:
+        air_response                  = requests.get(air_url, headers=headers, verify=False)
+        air_jsonObject                = json.loads(air_response.text)
+    except:
+        air_jsonObject                = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        weather_48h_response          = requests.get(weather_48h_url, headers=headers, verify=False)
+        weather_48h_jsonObject        = json.loads(weather_48h_response.text)
+    except:
+        weather_48h_jsonObject        = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        main_max_min_response         = requests.get(main_max_min_url, headers=headers, verify=False)
+        main_max_min_jsonObject       = json.loads(main_max_min_response.text)
+    except:
+        main_max_min_jsonObject       = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        flower_response               = requests.get(flower_url, headers=headers, verify=False)
+        flower_jsonObject             = json.loads(flower_response.text)
+    except:
+        flower_jsonObject             = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        middle_state_response         = requests.get(middle_state_url, headers=headers, verify=False)
+        middle_state_jsonObject       = json.loads(middle_state_response.text)
+    except:
+        middle_state_jsonObject       = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
+    try:
+        middle_temperature_response   = requests.get(middle_temperature_url, headers=headers, verify=False)
+        middle_temperature_jsonObject = json.loads(middle_temperature_response.text)
+    except:
+        middle_temperature_jsonObject = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
+    
     return [main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, weather_24h_jsonObject, air_jsonObject, weather_48h_jsonObject, main_max_min_jsonObject, flower_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject]
 
 def cal_weather_24h_time(time):

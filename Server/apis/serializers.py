@@ -85,8 +85,18 @@ class WeatherIndexSerializer(serializers.ModelSerializer):
             "compare_index"
         ]
 
-    def create(self):
-        return
+    def create(self, validated_data):
+        print("WeatherIndex 시리얼라이즈!!!")
+        print(validated_data)
+        new_weather_index = WeatherIndex.objects.create(poll=1)
+        new_weather_index.umbrella_index.set(validated_data['umbrella_index'])
+        new_weather_index.mask_index.set(validated_data['mask_index'])
+        new_weather_index.outer_index.set(validated_data['outer_index'])
+        new_weather_index.laundry_index.set(validated_data['laundry_index'])
+        new_weather_index.carwash_index.set(validated_data['carwash_index'])
+        new_weather_index.compare_index.set(validated_data['compare_index'])
+
+        return new_weather_index
 
     def update(self):
         return

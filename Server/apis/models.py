@@ -19,6 +19,7 @@ class Locations(models.Model):
     
 class Weather(models.Model):
     today = models.CharField(max_length=10)
+    code = models.CharField(max_length=10)
 
 class LocalWeather(models.Model):
     weather = models.ForeignKey(Weather, related_name="local_weather", on_delete=models.CASCADE)
