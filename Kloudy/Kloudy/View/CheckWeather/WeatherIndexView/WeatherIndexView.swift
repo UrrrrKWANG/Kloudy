@@ -71,7 +71,7 @@ class WeatherIndexView: UIView {
     }
     
     private func configureView() {
-        weatherIndexNameLabel.configureLabel(text: "우산 지수", font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.gray06)
+        weatherIndexNameLabel.configureLabel(text: "우산 지수", font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         weatehrIndexStatusLabel.configureLabel(text: "하루종일 내림", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor(red: 30, green: 45, blue: 96, alpha: 100)) // 색상, 폰트 추가 필요
         weatehrIndexStatusLabel.layer.cornerRadius = 10
         weatehrIndexStatusLabel.layer.backgroundColor = CGColor(red: 96, green: 97, blue: 100, alpha: 100)

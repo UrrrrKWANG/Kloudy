@@ -14,7 +14,7 @@ class SearchLocationCell: UITableViewCell {
     let locationLabel: UILabel = {
         let locationLabel = UILabel()
         locationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
-        locationLabel.textColor = UIColor.KColor.gray06
+        locationLabel.textColor = UIColor.KColor.gray02
         return locationLabel
     }()
     

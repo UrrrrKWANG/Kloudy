@@ -48,7 +48,7 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
     lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryBlue01])
         return label
     }()
     
@@ -67,20 +67,20 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
     
     lazy var editTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryBlue01])
         return label
     }()
     
     lazy var diurnalTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray03, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
         return label
     }()
     
     private lazy var minusButton: UIImageView = {
             let minusInCircle = UIImageView()
             minusInCircle.image = UIImage(systemName: "minus.circle.fill")
-            minusInCircle.tintColor = UIColor.KColor.red
+            minusInCircle.tintColor = UIColor.KColor.primaryBlue02
                     minusInCircle.snp.makeConstraints {
                         $0.size.equalTo(26)
                     }
@@ -91,7 +91,7 @@ class LocationSelectionCollectionViewCell: UICollectionViewCell {
         let lineView = UIImageView()
         lineView.image = UIImage(systemName: "line.3.horizontal")
         lineView.contentMode = .scaleAspectFit
-        lineView.tintColor = UIColor.KColor.gray05
+        lineView.tintColor = UIColor.KColor.primaryBlue02
         lineView.snp.makeConstraints {
             $0.size.equalTo(26)
         }
