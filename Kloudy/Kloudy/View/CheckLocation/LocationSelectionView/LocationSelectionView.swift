@@ -212,7 +212,7 @@ class LocationSelectionView: UIViewController {
     //MARK: attribute function
     private func configureCancelSearchButton() {
         cancelSearchButton.setTitle("취소", for: .normal)
-        cancelSearchButton.setTitleColor(UIColor.KColor.gray06, for: .normal)
+        cancelSearchButton.setTitleColor(UIColor.KColor.gray02, for: .normal)
         cancelSearchButton.titleLabel?.sizeToFit()
         cancelSearchButton.titleLabel?.font = UIFont.KFont.appleSDNeoRegularLarge
         cancelSearchButton.addTarget(self, action: #selector(endSearching), for: .touchUpInside)
@@ -230,7 +230,7 @@ class LocationSelectionView: UIViewController {
     private func configureNothingSearchedLocationLabel() {
         nothingSearchedLocationLabel.text = "검색된 지역이 없습니다."
         nothingSearchedLocationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
-        nothingSearchedLocationLabel.textColor = UIColor.KColor.gray06
+        nothingSearchedLocationLabel.textColor = UIColor.KColor.gray02
         nothingSearchedLocationLabel.sizeToFit()
         nothingSearchedLocationLabel.isHidden = true
     }
@@ -238,7 +238,6 @@ class LocationSelectionView: UIViewController {
     private func configureMagnifyingGlassImage() {
         magnifyingGlassImage.image = UIImage(named: "magnifyingGlass")
         magnifyingGlassImage.contentMode = .scaleAspectFit
-        magnifyingGlassImage.tintColor = UIColor.KColor.gray06
     }
     
     private func configureSearchBarBackgroundView() {
