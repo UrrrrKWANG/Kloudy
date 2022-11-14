@@ -26,25 +26,19 @@ class CheckWeatherView: UIViewController {
         
         return vc
     }()
-    lazy var test = ["pohang", "daegu", "jeju"]
+    let checkWeatherViewModel = CheckWeatherViewModel()
     
     var dataViewControllers = [UIViewController]()
     
-    var currentImageText = "detailWeather-4"
-    var locationLabelText = "포항시 남구 지곡동"
-    var temperatureText = "9°"
-
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColor.KColor.white
+        view.backgroundColor = UIColor.KColor.white
         loadWeatherView()
-        navigationController?.navigationBar.isHidden = true
-        self.view.addSubview(checkWeatherBasicNavigationView)
-        configureCheckWeatherNavigationView()
-        
+       
         addChild(pageViewController)
-        self.view.addSubview(pageViewController.view)
+        [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { view.addSubview($0) }
+        configureCheckWeatherNavigationView()
+
         pageViewController.dataSource = self
         pageViewController.delegate = self
         configurePageViewController()
@@ -53,21 +47,20 @@ class CheckWeatherView: UIViewController {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
         
-        self.pageControl.frame = CGRect()
-        self.pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
-        self.pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
-        self.pageControl.numberOfPages = self.dataViewControllers.count
-        self.pageControl.currentPage = initialPage
-        self.view.addSubview(self.pageControl)
-        
-        self.pageControl.snp.makeConstraints {
+        pageControl.frame = CGRect()
+        pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
+        pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
+        pageControl.numberOfPages = self.dataViewControllers.count
+        pageControl.currentPage = initialPage
+
+        pageControl.snp.makeConstraints {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(6)
             $0.centerX.equalToSuperview()
         }
     }
     
     func loadWeatherView() {
-        test.forEach { city in
+        checkWeatherViewModel.cityWeather.forEach { city in
             // 여기서 Controller를 그린다.
             // view를 그릴 때 viewModel을 가져와 사용한다.
             // viewmodel에 init을 줘서 코어데이터에 있는 도시를 가져와서 사용하면 될 듯
@@ -82,12 +75,9 @@ class CheckWeatherView: UIViewController {
                 let rightIcon = UIImageView()
                 
                 vc.view.backgroundColor = .clear
-                currentWeatherImage.image = UIImage(named: currentImageText)
-                [locationView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach {
-                    vc.view.addSubview($0)
-                }
+                [locationView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
                 
-                temp_locationView(view: locationView)
+                temp_locationView(view: locationView, city: city)
                 locationView.backgroundColor = UIColor.KColor.primaryBlue01
                 locationView.layer.cornerRadius = 15
                 locationView.snp.makeConstraints {
@@ -95,6 +85,8 @@ class CheckWeatherView: UIViewController {
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(108)
                 }
+                
+                currentWeatherImage.image = UIImage(named: "detailWeather-\(city.currentWeather)")
                 currentWeatherImage.snp.makeConstraints {
                     $0.top.equalToSuperview().inset(-6)
                     $0.leading.equalToSuperview().inset(36)
@@ -147,21 +139,18 @@ class CheckWeatherView: UIViewController {
                 return vc
             }()
             dataViewControllers.append(num)
-            
         }
     }
     
-    func temp_locationView(view: UIView) {
+    func temp_locationView(view: UIView, city: CityWeather) {
         let locationLabel = UILabel()
         let locationIcon = UIImageView()
         let temperature = UILabel()
         
-        [locationLabel, locationIcon, temperature].forEach {
-            view.addSubview($0)
-        }
+        [locationLabel, locationIcon, temperature].forEach { view.addSubview($0) }
         locationIcon.image = UIImage(named: "location_mark")
-        locationLabel.configureLabel(text: locationLabelText, font: UIFont.KFont.appleSDNeoBoldmini, textColor: UIColor.KColor.white)
-        temperature.configureLabel(text: temperatureText, font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
+        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldmini, textColor: UIColor.KColor.white)
+        temperature.configureLabel(text: "\(Int(city.currentTemperature))°", font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
 
         locationLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(13)
@@ -174,6 +163,7 @@ class CheckWeatherView: UIViewController {
             $0.width.equalTo(11)
             $0.height.equalTo(14)
         }
+        
         temperature.snp.makeConstraints {
             $0.top.equalTo(locationLabel.snp.bottom).offset(2)
             $0.trailing.equalToSuperview().inset(16)
@@ -219,7 +209,6 @@ class CheckWeatherView: UIViewController {
 }
 
 extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
-    
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let previousIndex = index - 1
@@ -239,13 +228,10 @@ extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewController
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
-        
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = self.dataViewControllers.firstIndex(of: viewControllers[0]) {
                 self.pageControl.currentPage = viewControllerIndex
             }
         }
     }
-    
-    
 }
