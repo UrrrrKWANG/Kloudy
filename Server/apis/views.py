@@ -14,12 +14,24 @@ def getWeathers(request):
     now = datetime.datetime.now()
     today = now.strftime("%Y%m%d")
     hour = int(now.strftime("%H"))
+    if hour <= 1:
+        today = str(int(today) - 1)
+
+    print(today, hour, code)
     # 홀수일 때는 짝수 시간 대를 업데이트함으로 짝수일 때 짝수 시간 대를 가져간다.
     if hour % 2 == 0:
-        weather = WeatherEven.objects.filter(today = today, code = code).first()
+        print("짝수시간대")
+        weather = WeatherEven.objects.filter(code = code).first()
+        print(weather)
         serializer = WeatherSerializerEven(weather)
+        print(serializer)
+        return Response(serializer.data)
+
     else:
-        weather = WeatherOdd.objects.filter(today = today, code = code).first()
+        print("홀수시간대")
+        weather = WeatherOdd.objects.filter(code = code).first()
         serializer = WeatherSerializerOdd(weather)
+        return Response(serializer.data)
+
+
     
-    return Response(serializer.data)

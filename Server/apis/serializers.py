@@ -11,6 +11,11 @@ class UmbrellaIndexSerializerOdd(serializers.ModelSerializer):
             "precipitation_3h_max",
             "wind"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class MaskIndexSerializerOdd(serializers.ModelSerializer):
     class Meta:
@@ -21,6 +26,11 @@ class MaskIndexSerializerOdd(serializers.ModelSerializer):
             "pm10value",
             "pollen_index"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class OuterIndexSerializerOdd(serializers.ModelSerializer):
     class Meta:
@@ -30,6 +40,11 @@ class OuterIndexSerializerOdd(serializers.ModelSerializer):
             "day_min_temperature",
             "morning_temperature"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class LaundryIndexSerializerOdd(serializers.ModelSerializer):
     class Meta:
@@ -40,6 +55,11 @@ class LaundryIndexSerializerOdd(serializers.ModelSerializer):
             "day_max_temperature",
             "daily_weather"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class CarwashIndexSerializerOdd(serializers.ModelSerializer):
     class Meta:
@@ -55,6 +75,11 @@ class CarwashIndexSerializerOdd(serializers.ModelSerializer):
             "pm10grade",
             "pollen_index"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class CompareIndexSerializerOdd(serializers.ModelSerializer):
     class Meta:
@@ -65,6 +90,11 @@ class CompareIndexSerializerOdd(serializers.ModelSerializer):
             "today_max_temperature",
             "today_min_temperature",
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class WeatherIndexSerializerOdd(serializers.ModelSerializer):
     umbrella_index = UmbrellaIndexSerializerOdd(many=True, read_only=True)
@@ -108,6 +138,11 @@ class MainSerializerOdd(serializers.ModelSerializer):
             "day_max_temperature",
             "day_min_temperature",
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class WeeklyWeatherSerializerOdd(serializers.ModelSerializer):
     class Meta:
@@ -156,6 +191,12 @@ class LocalWeatherSerializerOdd(serializers.ModelSerializer):
             "hourly_weather"
         ]
 
+    def create(self):
+        return
+
+    def update(self):
+        return
+
 class WeatherSerializerOdd(serializers.ModelSerializer):
     local_weather = LocalWeatherSerializerOdd(many=True, read_only=True)
 
@@ -185,6 +226,11 @@ class UmbrellaIndexSerializerEven(serializers.ModelSerializer):
             "precipitation_3h_max",
             "wind"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class MaskIndexSerializerEven(serializers.ModelSerializer):
     class Meta:
@@ -195,6 +241,11 @@ class MaskIndexSerializerEven(serializers.ModelSerializer):
             "pm10value",
             "pollen_index"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class OuterIndexSerializerEven(serializers.ModelSerializer):
     class Meta:
@@ -204,6 +255,11 @@ class OuterIndexSerializerEven(serializers.ModelSerializer):
             "day_min_temperature",
             "morning_temperature"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class LaundryIndexSerializerEven(serializers.ModelSerializer):
     class Meta:
@@ -214,6 +270,11 @@ class LaundryIndexSerializerEven(serializers.ModelSerializer):
             "day_max_temperature",
             "daily_weather"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class CarwashIndexSerializerEven(serializers.ModelSerializer):
     class Meta:
@@ -229,6 +290,11 @@ class CarwashIndexSerializerEven(serializers.ModelSerializer):
             "pm10grade",
             "pollen_index"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class CompareIndexSerializerEven(serializers.ModelSerializer):
     class Meta:
@@ -239,6 +305,11 @@ class CompareIndexSerializerEven(serializers.ModelSerializer):
             "today_max_temperature",
             "today_min_temperature",
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class WeatherIndexSerializerEven(serializers.ModelSerializer):
     umbrella_index = UmbrellaIndexSerializerEven(many=True, read_only=True)
@@ -282,6 +353,11 @@ class MainSerializerEven(serializers.ModelSerializer):
             "day_max_temperature",
             "day_min_temperature",
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class WeeklyWeatherSerializerEven(serializers.ModelSerializer):
     class Meta:
@@ -329,6 +405,11 @@ class LocalWeatherSerializerEven(serializers.ModelSerializer):
             "weekly_weather",
             "hourly_weather"
         ]
+    def create(self):
+        return
+
+    def update(self):
+        return
 
 class WeatherSerializerEven(serializers.ModelSerializer):
     local_weather = LocalWeatherSerializerEven(many=True, read_only=True)
