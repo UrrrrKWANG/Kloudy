@@ -84,7 +84,8 @@ def time_interval_weather():
         # print(middle_state_jsonObject)
         # print("=======================middle_temperature_jsonObject======================")
         # print(middle_temperature_jsonObject)
-        print("=============================================")
+        # print("=============================================")
+
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")
@@ -176,7 +177,7 @@ def time_interval_weather():
                     carwash_index = CarwashIndexEven.objects.filter(code = location.code).first()
                 else:
                     carwash_index = CarwashIndexOdd.objects.filter(code = location.code).first()
-                
+
                 # carwash_index 갱신
                 carwash_index.status                 = carwash_status
                 carwash_index.daily_weather          = daily_weather
@@ -207,9 +208,9 @@ def time_interval_weather():
 
             weather_odd = WeatherOdd.objects.filter(code = location.code).first()
             weather_even = WeatherEven.objects.filter(code = location.code).first()
-
-            local_weather_odd = LocalWeatherOdd.objects.create(weather = weather_odd, local_code = location.code, local_name = location.city)
-            local_weather_even = LocalWeatherEven.objects.create(weather = weather_even, local_code = location.code, local_name = location.city)
+            
+            local_weather_odd = LocalWeatherOdd.objects.filter(weather = weather_odd).first()
+            local_weather_even = LocalWeatherEven.objects.filter(weather = weather_even).first()
 
             hour_weather_infos = get_hour_weather(weather_24h_jsonObject, location.code, time)
             if hour_weather_infos != [[0] * 4 for _ in range(24)]:
