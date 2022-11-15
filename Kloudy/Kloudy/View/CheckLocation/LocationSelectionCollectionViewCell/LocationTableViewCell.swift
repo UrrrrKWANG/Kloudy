@@ -91,5 +91,6 @@ class LocationTableViewCell: UITableViewCell {
         contentView.layer.shadowRadius = 40
         contentView.layer.shadowOpacity = 1
         contentView.layer.masksToBounds = false
+        contentView.clipsToBounds = false
     }
 }

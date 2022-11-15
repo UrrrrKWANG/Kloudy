@@ -224,7 +224,8 @@ class LocationSelectionView: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.KColor.white
+        tableView.backgroundColor = .clear
+        tableView.clipsToBounds = false
         tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "locationCell")
     }
@@ -299,7 +300,7 @@ extension LocationSelectionView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                 return UITableViewCell() }
             cell.locationNameLabel.text = locationList[indexPath.row].city
-
+            cell.backgroundColor = .clear
             return cell
         }
     }
