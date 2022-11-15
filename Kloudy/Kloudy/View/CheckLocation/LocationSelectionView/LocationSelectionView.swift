@@ -85,6 +85,7 @@ class LocationSelectionView: UIViewController {
         self.configureMagnifyingGlassImage()
         self.configureSearchBarBackgroundView()
         self.configureDragAndDrop()
+        self.configureBackButton()
     }
     
     private func layout() {
@@ -257,9 +258,17 @@ class LocationSelectionView: UIViewController {
         }
     }
     
+    private func configureBackButton() {
+        locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
+    }
+    
     @objc func endSearching() {
         searchBar.endEditing(true)
     }
+    
+    @objc func tapBackButton() {
+           self.navigationController?.popToRootViewController(animated: true)
+       }
     
     // 셀 위치 변경 함수
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
