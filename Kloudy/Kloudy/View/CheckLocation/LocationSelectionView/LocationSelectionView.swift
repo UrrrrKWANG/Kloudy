@@ -55,6 +55,7 @@ class LocationSelectionView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        view.backgroundColor = UIColor.KColor.white
     }
     
     override func viewWillAppear(_ animated: Bool) {
