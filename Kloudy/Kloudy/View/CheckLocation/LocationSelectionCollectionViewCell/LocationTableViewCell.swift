@@ -39,19 +39,19 @@ class LocationTableViewCell: UITableViewCell {
     
     lazy var locationNameLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.white)
+        label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.gray01)
         return label
     }()
     
     lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.primaryBlue01)
         return label
     }()
     
     lazy var diurnalTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray02)
         return label
     }()
     
@@ -80,7 +80,7 @@ class LocationTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = UIColor.KColor.gray02
+        contentView.backgroundColor = UIColor.KColor.white
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
         
         contentView.layer.cornerRadius = contentView.frame.height / 5
