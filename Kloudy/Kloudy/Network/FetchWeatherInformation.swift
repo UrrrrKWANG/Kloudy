@@ -97,7 +97,6 @@ class FetchWeatherInformation: ObservableObject {
         
         guard let minute = Int(minute) else { return "" }
         
-        
         if Int(minute) > 30 {
             result += "00"
         } else {

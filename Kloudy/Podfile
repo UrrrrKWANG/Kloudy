@@ -9,7 +9,7 @@ target 'Kloudy' do
   pod 'SnapKit', '~> 5.6.0'
   pod 'RxSwift', '6.5.0'
   pod 'RxCocoa', '6.5.0'
-  pod 'lottie-ios'  
+  pod 'lottie-ios'
   pod 'FSPagerView'
   pod 'Charts'
 
