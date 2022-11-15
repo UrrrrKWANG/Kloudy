@@ -50,6 +50,17 @@ enum IndexType {
         case .temperatureGap: return ["", "", "", "", ""]
         }
     }
+    
+    var isChartViewIncluded: Bool {
+        switch self {
+        case .unbrella: return true
+        case .mask: return false
+        case .laundry: return false
+        case .outer: return false
+        case .car: return false
+        case .temperatureGap: return true
+        }
+    }
 }
 
 class WeatherIndexDetailView: UIViewController {
@@ -60,13 +71,11 @@ class WeatherIndexDetailView: UIViewController {
     let titleLabel = UILabel()
     let firstIconView = IndexIconView(frame: CGRect(origin: .zero, size: CGSize(width: 159, height: 50)))
     let secondIconView = IndexIconView(frame: CGRect(origin: .zero, size: CGSize(width: 159, height: 50)))
-    let chartLabel = UILabel()
-    let chartUnit = UILabel()
-    let chartView = IndexChartView()
+    lazy var chartView = IndexChartView()
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
-    var indexType: IndexType = .car
+    var indexType: IndexType = .temperatureGap
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
@@ -76,8 +85,12 @@ class WeatherIndexDetailView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         bind()
-        layout()
         attribute()
+        layout()
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
     }
     
     private func bind() {
@@ -85,16 +98,20 @@ class WeatherIndexDetailView: UIViewController {
         firstIconView.iconTitle.onNext(indexType.detailIndexString[2])
         firstIconView.iconUnit.onNext(indexType.detailIndexString[3])
         // API 데이터 받을 시 전달
-//        firstIconView.iconValue.onNext(data.precipitaion_24h)
+        //        firstIconView.iconValue.onNext(data.precipitaion_24h)
         
         secondIconView.iconImage.onNext(indexType.detailIndexString[4])
         secondIconView.iconTitle.onNext(indexType.detailIndexString[5])
         secondIconView.iconUnit.onNext(indexType.detailIndexString[6])
         // API 데이터 받을 시 전달
-//        secondIconView.iconValue.onNext(data.wind)
+        //        secondIconView.iconValue.onNext(data.wind)
         
         // API 데이터 받을 시 전달
-//        indexIconView.indexStatus.onNext(data.status)
+        //        indexIconView.indexStatus.onNext(data.status)
+        
+        
+        chartView.chartLabelText.onNext(indexType.detailIndexString[7])
+        chartView.chartUnitText.onNext(indexType.detailIndexString[8])
         
         presentButtonView.totalIndexStep.onNext(indexType.totalIndexStep)
         
@@ -122,7 +139,7 @@ class WeatherIndexDetailView: UIViewController {
             $0.height.equalTo(490)
         }
         
-        [titleLabel, firstIconView, secondIconView, chartLabel, chartUnit, chartView, presentButtonView, indexStepView].forEach { baseIndexView.addSubview($0) }
+        [titleLabel, firstIconView, secondIconView, presentButtonView].forEach { baseIndexView.addSubview($0) }
         
         titleLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(18)
@@ -139,29 +156,16 @@ class WeatherIndexDetailView: UIViewController {
             $0.leading.equalTo(firstIconView.snp.trailing).offset(159)
         }
         
-        chartLabel.snp.makeConstraints {
-            $0.top.equalTo(firstIconView.snp.bottom).offset(42)
-            $0.leading.equalTo(titleLabel)
-        }
-        
-        chartUnit.snp.makeConstraints {
-            $0.leading.equalTo(chartLabel.snp.trailing).offset(4)
-            $0.top.equalTo(firstIconView.snp.bottom).offset(38)
-        }
-        
-        chartView.snp.makeConstraints {
-            $0.top.equalTo(chartLabel.snp.top).offset(11)
-            $0.height.equalTo(190)
-            $0.leading.equalTo(6)
-            $0.trailing.equalToSuperview().inset(16)
-        }
-        
         presentButtonView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(413)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(20)
             $0.centerX.equalToSuperview()
         }
+        
+        if indexType.isChartViewIncluded { layoutChartView() }
+        
+        baseIndexView.addSubview(indexStepView)
         
         indexStepView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(16)
@@ -170,12 +174,22 @@ class WeatherIndexDetailView: UIViewController {
         }
     }
     
+    private func layoutChartView() {
+        baseIndexView.addSubview(chartView)
+        
+        chartView.snp.makeConstraints {
+            $0.top.equalTo(firstIconView.snp.bottom).offset(42)
+            $0.leading.equalTo(6)
+            $0.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(207)
+        }
+    }
+    
     private func attribute() {
         self.view.backgroundColor = UIColor.KColor.clear
         configureBaseBackgroundView()
         configurebBaseIndexView()
         configureTitleLabel()
-        configureChartLabel()
     }
     
     private func configureBaseBackgroundView() {
@@ -193,19 +207,12 @@ class WeatherIndexDetailView: UIViewController {
         titleLabel.sizeToFit()
     }
     
-    private func configureChartLabel() {
-        chartLabel.configureLabel(text: indexType.detailIndexString[7], font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.black)
-        chartLabel.sizeToFit()
-        chartUnit.configureLabel(text: "\(chartValue)\(indexType.detailIndexString[8])", font: UIFont.KFont.appleSDNeoSemiBoldExtraLarge, textColor: UIColor.KColor.black)
-        chartUnit.sizeToFit()
-    }
-    
     @objc private func tapBackgroundView() {
         self.dismiss(animated: true)
     }
     
     private func tapPresentButton() {
-        UIView.animate(withDuration: 0.5, delay: 0) {
+        UIView.animate(withDuration: 0.5) {
             self.presentButtonView.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(50)
                 $0.leading.trailing.equalToSuperview().inset(16)
@@ -229,7 +236,7 @@ class WeatherIndexDetailView: UIViewController {
     
     private func tapDismissButton() {
         self.indexStepView.isPresentStepView.onNext(false)
-        UIView.animate(withDuration: 0.5, delay: 0) {
+        UIView.animate(withDuration: 0.5) {
             self.presentButtonView.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(413)
                 $0.leading.trailing.equalToSuperview().inset(16)
