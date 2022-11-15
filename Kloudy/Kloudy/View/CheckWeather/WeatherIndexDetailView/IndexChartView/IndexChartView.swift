@@ -42,6 +42,8 @@ class IndexChartView: LineChartView {
                                  13 : 3.0, 14 : 0.1, 15 : 1.0, 16 : 0.1, 17 : 1.0, 18 : 1.0,
                                  19 : 4.0, 20 : 5.0, 21 : 1.0, 22 : 5.0, 23 : 1.0, 24 : 3.0]
     var lineChartEntry = [ChartDataEntry]()
+    let chartLabel = UILabel()
+    let chartUnit = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)

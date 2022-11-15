@@ -41,6 +41,7 @@ class SequenceLabelCell: UICollectionViewCell {
 class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
     let indexStepView = IndexStepView()
+    let dismissButton = UIButton()
     let presentButton = UIButton()
     var collectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
@@ -62,7 +63,8 @@ class IndexButtonView: UIView {
     var totalIndexStepCount: Int = 0
     var stepCellSpacing: Int = 0
     
-    var isDismissButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+//    var isDismissButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    var isDismissButtonTapped = PublishSubject<Bool>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -96,7 +98,7 @@ class IndexButtonView: UIView {
     }
     
     private func layout() {
-        [presentButton, collectionView].forEach { self.addSubview($0) }
+        [presentButton, dismissButton, collectionView].forEach { self.addSubview($0) }
         
         presentButton.snp.makeConstraints {
             $0.top.equalToSuperview()
@@ -105,8 +107,16 @@ class IndexButtonView: UIView {
             $0.height.equalTo(21)
         }
         
+        dismissButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(26)
+            $0.height.equalTo(21)
+        }
+        
         collectionView.snp.makeConstraints {
             $0.top.equalTo(presentButton.snp.bottom).offset(4)
+//            $0.top.equalToSuperview().inset(25)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(32)
         }
@@ -116,14 +126,22 @@ class IndexButtonView: UIView {
         self.backgroundColor = UIColor.KColor.white
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.allowsSelection = false
         collectionView.register(SequenceLabelCell.self, forCellWithReuseIdentifier: "sequenceLabel")
-        presentButton.setImage(UIImage(named: "chevron_up"), for: .disabled)
-        presentButton.isEnabled = false
-        presentButton.addTarget(self, action: #selector(dismissStepView), for: .touchUpInside)
+        presentButton.setImage(UIImage(named: "chevron_up"), for: .normal)
+        presentButton.isHidden = false
+        presentButton.addTarget(self, action: #selector(presentStepView), for: .touchUpInside)
+        dismissButton.setImage(UIImage(named: "chevron_down"), for: .normal)
+        dismissButton.isHidden = true
+        dismissButton.addTarget(self, action: #selector(dismissStepView), for: .touchUpInside)
     }
     
     @objc private func dismissStepView() {
         isDismissButtonTapped.onNext(true)
+    }
+    
+    @objc private func presentStepView() {
+        isDismissButtonTapped.onNext(false)
     }
 }
 
@@ -150,7 +168,7 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        
+        print("🚙")
     }
 }
 

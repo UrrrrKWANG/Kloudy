@@ -102,6 +102,8 @@ class WeatherIndexDetailView: UIViewController {
             .subscribe(onNext: {
                 if $0 {
                     self.tapDismissButton()
+                } else {
+                    self.tapPresentButton()
                 }
             })
             .disposed(by: disposeBag)
@@ -174,7 +176,6 @@ class WeatherIndexDetailView: UIViewController {
         configurebBaseIndexView()
         configureTitleLabel()
         configureChartLabel()
-        presentButtonView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(tapPresentButton)))
     }
     
     private func configureBaseBackgroundView() {
@@ -195,7 +196,6 @@ class WeatherIndexDetailView: UIViewController {
     private func configureChartLabel() {
         chartLabel.configureLabel(text: indexType.detailIndexString[7], font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.black)
         chartLabel.sizeToFit()
-        
         chartUnit.configureLabel(text: "\(chartValue)\(indexType.detailIndexString[8])", font: UIFont.KFont.appleSDNeoSemiBoldExtraLarge, textColor: UIColor.KColor.black)
         chartUnit.sizeToFit()
     }
@@ -204,8 +204,7 @@ class WeatherIndexDetailView: UIViewController {
         self.dismiss(animated: true)
     }
     
-    @objc private func tapPresentButton() {
-
+    private func tapPresentButton() {
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.presentButtonView.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(50)
@@ -213,25 +212,23 @@ class WeatherIndexDetailView: UIViewController {
                 $0.height.equalTo(57)
                 $0.centerX.equalToSuperview()
             }
-            
             self.indexStepView.snp.remakeConstraints {
                 $0.top.equalTo(self.presentButtonView.snp.bottom)
                 $0.leading.trailing.equalToSuperview().inset(16)
                 $0.centerX.equalToSuperview()
                 $0.bottom.equalToSuperview().inset(16)
             }
-            
             self.view.layoutIfNeeded()
         } completion: { _ in
             self.indexStepView.isPresentStepView.onNext(true)
-            self.presentButtonView.presentButton.isEnabled = true
-            self.presentButtonView.presentButton.setImage(UIImage(named: "chevron_down"), for: .normal)
+            self.presentButtonView.presentButton.isHidden = true
+            self.presentButtonView.dismissButton.isHidden = false
+            self.presentButtonView.collectionView.allowsSelection = true
         }
     }
     
     private func tapDismissButton() {
         self.indexStepView.isPresentStepView.onNext(false)
-        
         UIView.animate(withDuration: 0.5, delay: 0) {
             self.presentButtonView.snp.remakeConstraints {
                 $0.top.equalToSuperview().inset(413)
@@ -239,17 +236,16 @@ class WeatherIndexDetailView: UIViewController {
                 $0.bottom.equalToSuperview().inset(20)
                 $0.centerX.equalToSuperview()
             }
-            
             self.indexStepView.snp.remakeConstraints {
                 $0.leading.trailing.equalToSuperview().inset(16)
                 $0.top.equalTo(self.presentButtonView.snp.bottom).offset(7)
                 $0.bottom.equalToSuperview().inset(13)
             }
-            
             self.view.layoutIfNeeded()
         } completion: { _ in
-            self.presentButtonView.presentButton.isEnabled = false
-            self.presentButtonView.presentButton.setImage(UIImage(named: "chevron_up"), for: .disabled)
+            self.presentButtonView.presentButton.isHidden = false
+            self.presentButtonView.dismissButton.isHidden = true
+            self.presentButtonView.collectionView.allowsSelection = false
         }
     }
 }

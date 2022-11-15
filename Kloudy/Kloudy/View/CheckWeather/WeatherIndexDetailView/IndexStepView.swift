@@ -80,7 +80,6 @@ class IndexStepView: UIView {
     }
     
     private func configureStepLottieView() {
-        stepLottieView.backgroundColor = .green
         stepLottieView = LottieAnimationView(name: "rain_step4")
         stepLottieView.contentMode = .scaleAspectFit
         stepLottieView.play()
