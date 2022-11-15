@@ -84,5 +84,12 @@ class LocationTableViewCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
         
         contentView.layer.cornerRadius = contentView.frame.height / 5
+        
+        contentView.layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: 0).cgPath
+        contentView.layer.shadowColor = UIColor(red: 0.553, green: 0.58, blue: 0.627, alpha: 0.1).cgColor
+        contentView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        contentView.layer.shadowRadius = 40
+        contentView.layer.shadowOpacity = 1
+        contentView.layer.masksToBounds = false
     }
 }
