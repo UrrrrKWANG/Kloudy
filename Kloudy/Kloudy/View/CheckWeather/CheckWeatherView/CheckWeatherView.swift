@@ -177,10 +177,10 @@ class CheckWeatherView: UIViewController {
             $0.trailing.equalToSuperview().inset(20)
             $0.width.equalTo(111)
             $0.height.equalTo(40)
+        }
             
         checkWeatherBasicNavigationView.locationButton.addTarget(self, action: #selector(tapLocationButton), for: .touchUpInside)
-            //            checkWeatherCellLabelView.addButton.addTarget(self, action: #selector(tapAddIndexButton), for: .touchUpInside)
-        }
+        checkWeatherBasicNavigationView.settingButton.addTarget(self, action: #selector(tapSettingButton), for: .touchUpInside)
     }
     
     private func configurePageViewController() {
@@ -195,11 +195,16 @@ class CheckWeatherView: UIViewController {
         let locationSelectionView = LocationSelectionView()
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
     }
+    @objc func tapSettingButton() {
+        let settingView = SettingView()
+        self.navigationController?.pushViewController(settingView, animated: true)
+    }
     
     @objc func tapDetailWeatherViewButton() {
         let detailWeatherView = LocationSelectionView()
         self.present(detailWeatherView, animated: true)
     }
+    
     
     //    @objc func tapAddIndexButton() {
     //        self.delegate?.sendFirstSequenceLocation(self.firstSequenceLocation)
