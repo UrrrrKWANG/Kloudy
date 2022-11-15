@@ -213,7 +213,7 @@ class LocationSelectionView: UIViewController {
     //MARK: attribute function
     private func configureCancelSearchButton() {
         cancelSearchButton.setTitle("취소", for: .normal)
-        cancelSearchButton.setTitleColor(UIColor.KColor.gray02, for: .normal)
+        cancelSearchButton.setTitleColor(UIColor.KColor.gray01, for: .normal)
         cancelSearchButton.titleLabel?.sizeToFit()
         cancelSearchButton.titleLabel?.font = UIFont.KFont.appleSDNeoRegularLarge
         cancelSearchButton.addTarget(self, action: #selector(endSearching), for: .touchUpInside)
@@ -223,7 +223,7 @@ class LocationSelectionView: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = UIColor.KColor.black
+        tableView.backgroundColor = UIColor.KColor.white
         tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "locationCell")
     }
@@ -231,7 +231,7 @@ class LocationSelectionView: UIViewController {
     private func configureNothingSearchedLocationLabel() {
         nothingSearchedLocationLabel.text = "검색된 지역이 없습니다."
         nothingSearchedLocationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
-        nothingSearchedLocationLabel.textColor = UIColor.KColor.gray02
+        nothingSearchedLocationLabel.textColor = UIColor.KColor.gray01
         nothingSearchedLocationLabel.sizeToFit()
         nothingSearchedLocationLabel.isHidden = true
     }
@@ -243,7 +243,7 @@ class LocationSelectionView: UIViewController {
     
     private func configureSearchBarBackgroundView() {
         searchBarBackgroundView.layer.cornerRadius = 15
-        searchBarBackgroundView.backgroundColor = UIColor.KColor.gray02
+        searchBarBackgroundView.backgroundColor = UIColor.KColor.gray03 //gray04로 변경예정
     }
     
     // drag, drop delegate 설정
