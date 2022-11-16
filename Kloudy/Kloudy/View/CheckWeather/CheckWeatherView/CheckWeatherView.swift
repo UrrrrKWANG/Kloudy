@@ -149,7 +149,7 @@ class CheckWeatherView: UIViewController {
         
         [locationLabel, locationIcon, temperature].forEach { view.addSubview($0) }
         locationIcon.image = UIImage(named: "location_mark")
-        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldmini, textColor: UIColor.KColor.white)
+        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldSmallest, textColor: UIColor.KColor.white)
         temperature.configureLabel(text: "\(Int(city.currentTemperature))°", font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
 
         locationLabel.snp.makeConstraints {
