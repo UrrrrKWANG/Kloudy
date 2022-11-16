@@ -67,8 +67,8 @@ class CheckWeatherView: UIViewController {
             lazy var num: UIViewController = {
                 let vc = UIViewController()
                 let locationView = UIView()
-//                let weatherIndexView = WeatherIndexView()
-                let weatherIndexView = UIView()
+                let weatherIndexView = WeatherIndexView(city: city.localName)
+//                let weatherIndexView = UIView()
                 let detailWeatherView = UIButton()
                 let currentWeatherImage = UIImageView()
                 let detailWeatherViewLabel = UILabel()
@@ -104,9 +104,9 @@ class CheckWeatherView: UIViewController {
                 
                 detailWeatherView.rx.tap
                     .bind {
-                        let detailWeatherView = WeatherIndexDetailView()
+                        let detailWeatherView = DetailWeatherView()
                         detailWeatherView.modalPresentationStyle = .overCurrentContext
-                        detailWeatherView.modalTransitionStyle = .crossDissolve
+                        detailWeatherView.modalTransitionStyle = .coverVertical
                         self.present(detailWeatherView, animated: true)
                     }
                     .disposed(by: disposeBag)
