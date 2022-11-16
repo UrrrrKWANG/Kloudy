@@ -87,7 +87,5 @@ class LocationTableViewCell: UITableViewCell {
         
         contentView.layer.applySketchShadow(color: UIColor(red: 0.553, green: 0.58, blue: 0.627, alpha: 0.1), alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
         contentView.layer.shadowOpacity = 1
-        contentView.layer.masksToBounds = false
-        contentView.clipsToBounds = false
     }
 }

@@ -224,7 +224,7 @@ class LocationSelectionView: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.separatorStyle = .none
-        tableView.backgroundColor = .clear
+        tableView.backgroundColor = UIColor.KColor.clear
         tableView.clipsToBounds = false
         tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "locationCell")
