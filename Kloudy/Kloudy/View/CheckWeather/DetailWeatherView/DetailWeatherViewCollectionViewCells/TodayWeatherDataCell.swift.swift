@@ -11,7 +11,7 @@ class TodayWeatherDataCell: UICollectionViewCell{
     static let identifier = "todayWeatherCell"
     let time: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: UIColor.KColor.black)
         uiLabel.textAlignment = .center
         return uiLabel
     }()
@@ -24,7 +24,7 @@ class TodayWeatherDataCell: UICollectionViewCell{
     
     let temperature: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: UIColor.KColor.black)
         return uiLabel
     }()
     

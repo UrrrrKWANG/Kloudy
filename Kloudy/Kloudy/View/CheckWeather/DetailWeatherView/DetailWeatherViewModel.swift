@@ -52,7 +52,7 @@ struct weatehrViewModel {
     ])
     
     let weekWeatherDatas = Observable.of([
-        testWeekWeatherData(day: 0, status: 1, minTemperature: 14.4, maxTemperature: 16.7),
+        testWeekWeatherData(day: 0, status: 1, minTemperature: 4.4, maxTemperature: 16.7),
         testWeekWeatherData(day: 1, status: 2, minTemperature: 14.4, maxTemperature: 16.7),
         testWeekWeatherData(day: 2, status: 3, minTemperature: 14.4, maxTemperature: 16.7),
         testWeekWeatherData(day: 3, status: 4, minTemperature: 14.4, maxTemperature: 16.7),

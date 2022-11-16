@@ -11,23 +11,23 @@ class WeekWeatherDataCell: UICollectionViewCell{
     static let identifier = "weekWeatherCell"
     let dayLabel: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor:  .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor:  UIColor.KColor.black)
         return uiLabel
     }()
     let weatherCondition: UIImageView = {
         let uiImageView = UIImageView()
         uiImageView.contentMode = .scaleAspectFit
-        uiImageView.tintColor = .black
         return uiImageView
     }()
     let minTemperature: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: UIColor.KColor.primaryBlue03)
+        uiLabel.textAlignment = .right
         return uiLabel
     }()
     let maxTemperature: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: UIColor.KColor.primaryBlue01)
         uiLabel.textAlignment = .right
         return uiLabel
     }()
@@ -40,7 +40,7 @@ class WeekWeatherDataCell: UICollectionViewCell{
     let dividingLineView: UIView = {
         let uiView = UIView()
         uiView.frame = CGRect(x: 0, y: 0, width: 330, height: 13)
-        uiView.backgroundColor = .gray
+        uiView.backgroundColor = UIColor.KColor.primaryBlue03
         return uiView
     }()
     

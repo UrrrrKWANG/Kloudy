@@ -16,19 +16,19 @@ class DetailWeatherView: UIViewController {
     
     lazy var labelInTodayCollectionView: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "시간대별 날씨", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: .black)
+        uiLabel.configureLabel(text: "시간대별 날씨", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.black)
         return uiLabel
     }()
     
     lazy var labelInWeekCollectionView: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "주간 날씨", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: .black)
+        label.configureLabel(text: "주간 날씨", font: UIFont.KFont.appleSDNeoMediumSmall, textColor: UIColor.KColor.black)
         return label
     }()
     
     let scrollView: UIScrollView = {
         let scrollView = UIScrollView()
-        scrollView.backgroundColor = .white
+        scrollView.backgroundColor = UIColor.KColor.white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
         
@@ -51,16 +51,17 @@ class DetailWeatherView: UIViewController {
     
     let minMaxTemperatureLabel: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.lexendSmall, textColor:  .blue)
-        uiLabel.layer.cornerRadius = 10
-        uiLabel.backgroundColor = .white
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.lexendSmall, textColor:  UIColor.KColor.primaryBlue01)
+        uiLabel.clipsToBounds = true
+        uiLabel.backgroundColor = UIColor.KColor.white
         uiLabel.textAlignment = .center
+        uiLabel.layer.cornerRadius = 10
         return uiLabel
     }()
     
     lazy var titleWeatherView: UIView = {
         let uiView = UIView()
-        uiView.backgroundColor = UIColor.blue
+        uiView.backgroundColor = UIColor.KColor.primaryBlue01
         uiView.layer.cornerRadius = 15
         [weatherCondition, currentTemperature, minMaxTemperatureLabel].forEach() {
             uiView.addSubview($0)
@@ -86,12 +87,12 @@ class DetailWeatherView: UIViewController {
     let dividingLineView: UIView = {
         let uiView = UIView()
         uiView.frame = CGRect(x: 0, y: 0, width: 330, height: 13)
-        uiView.backgroundColor = .gray
+        uiView.backgroundColor = UIColor.KColor.primaryBlue06
         return uiView
     }()
     
     override func viewDidLoad() {
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor.KColor.white
         addLayout()
         setUplayout()
         bind()
@@ -106,7 +107,7 @@ class DetailWeatherView: UIViewController {
        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.cyan  // collectionView 배경색
+        collectionView.backgroundColor = UIColor.KColor.primaryBlue06  // collectionView 배경색
         collectionView.layer.cornerRadius = 15 //collectionView radius
         collectionView.contentInset = UIEdgeInsets(top: 0, left: CGFloat(contentInsetLeft), bottom: 0, right: CGFloat(contentInsetRight)) // cell 여백
         collectionView.register(cell, forCellWithReuseIdentifier:identifier) // cell 등록

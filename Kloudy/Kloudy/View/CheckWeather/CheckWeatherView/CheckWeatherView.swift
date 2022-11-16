@@ -104,9 +104,9 @@ class CheckWeatherView: UIViewController {
                 
                 detailWeatherView.rx.tap
                     .bind {
-                        let detailWeatherView = WeatherIndexDetailView()
-                        detailWeatherView.modalPresentationStyle = .overCurrentContext
-                        detailWeatherView.modalTransitionStyle = .crossDissolve
+                        let detailWeatherView = DetailWeatherView()
+                        detailWeatherView.modalPresentationStyle = .fullScreen
+                        detailWeatherView.modalTransitionStyle = .coverVertical
                         self.present(detailWeatherView, animated: true)
                     }
                     .disposed(by: disposeBag)
