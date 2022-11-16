@@ -16,7 +16,9 @@ class IndexStepView: UIView {
     let disposeBag = DisposeBag()
     var stepImageView = UIView()
     let stepValueLabel = UILabel()
+    let stepValueBackgroundView = UIView()
     let stepExplainLabel = UILabel()
+    let stepExplainBackgroundView = UIView()
     
     
     // 초기 저장 값
@@ -24,8 +26,10 @@ class IndexStepView: UIView {
     
     // presentButton / dismissButton 의 Tapped Event Subscribe
     let isPresentStepView = PublishSubject<Bool>()
+    
     let imageString = PublishSubject<String>()
     let valueString = PublishSubject<Int>()
+    let explainString = PublishSubject<String>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -59,6 +63,12 @@ class IndexStepView: UIView {
                 self.stepValueLabel.text = "지수 단계: \($0)"
             })
             .disposed(by: disposeBag)
+        
+        explainString
+            .subscribe(onNext: {
+                self.stepExplainLabel.text = $0
+            })
+            .disposed(by: disposeBag)
     }
     
     private func isViewDismiss() {
@@ -67,7 +77,7 @@ class IndexStepView: UIView {
     }
     
     private func layout() {
-        [stepImageView, stepValueLabel, stepExplainLabel].forEach { self.addSubview($0) }
+        [stepImageView, stepValueBackgroundView, stepExplainBackgroundView].forEach { self.addSubview($0) }
         
         stepImageView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(7)
@@ -75,17 +85,30 @@ class IndexStepView: UIView {
             $0.centerX.equalToSuperview()
         }
         
-        stepValueLabel.snp.makeConstraints {
+        stepValueBackgroundView.snp.makeConstraints {
             $0.top.equalTo(stepImageView.snp.bottom).offset(7)
             $0.leading.trailing.equalToSuperview().inset(109)
-            $0.width.equalTo(100)
             $0.height.equalTo(35)
         }
         
-        stepExplainLabel.snp.makeConstraints {
-            $0.top.equalTo(stepValueLabel.snp.bottom).offset(8)
+        stepExplainBackgroundView.snp.makeConstraints {
+            $0.top.equalTo(stepValueBackgroundView.snp.bottom).offset(8)
             $0.leading.trailing.equalToSuperview().inset(8)
             $0.height.equalTo(68)
+        }
+        
+        stepValueBackgroundView.addSubview(stepValueLabel)
+        
+        stepValueLabel.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(6)
+            $0.leading.trailing.equalToSuperview().inset(10)
+        }
+        
+        stepExplainBackgroundView.addSubview(stepExplainLabel)
+        
+        stepExplainLabel.snp.makeConstraints {
+            $0.top.bottom.equalToSuperview().inset(10)
+            $0.leading.trailing.equalToSuperview().inset(50)
         }
     }
     
@@ -93,7 +116,9 @@ class IndexStepView: UIView {
         self.backgroundColor = UIColor.KColor.white
         configureStepImageView()
         configureStepValueLabel()
+        configureStepValueBackgroundView()
         configureStepExplainLabel()
+        configureStepExplainBackgroundView()
     }
     
     private func configureStepImageView() {
@@ -123,24 +148,30 @@ class IndexStepView: UIView {
         }
     }
     
+    private func configureStepValueBackgroundView() {
+        stepValueBackgroundView.backgroundColor = UIColor.init(red: 1, green: 249/255, blue: 219/255, alpha: 1)
+        stepValueBackgroundView.layer.cornerRadius = 8
+    }
+    
     private func configureStepValueLabel() {
         stepValueLabel.text = "지수 단계: 4"
         stepValueLabel.font = UIFont.KFont.appleSDNeoBoldMini
         stepValueLabel.textColor = UIColor.init(red: 172/255, green: 124/255, blue: 0, alpha: 1.0)
         stepValueLabel.textAlignment = .center
         stepValueLabel.sizeToFit()
-        stepValueLabel.backgroundColor = UIColor.init(red: 1, green: 249/255, blue: 219/255, alpha: 1)
-        stepValueLabel.layer.cornerRadius = 8
+    }
+    
+    private func configureStepExplainBackgroundView() {
+        stepExplainBackgroundView.backgroundColor = UIColor.init(red: 247/255, green: 248/255, blue: 252/255, alpha: 1)
+        stepExplainBackgroundView.layer.cornerRadius = 8
     }
     
     private func configureStepExplainLabel() {
         stepExplainLabel.numberOfLines = 2
-        stepExplainLabel.text = "우비를 뚫고 옷이 젖기도 하며 장화를 신어야 할 만큼 비가 옵니다."
+        stepExplainLabel.text = "우비를 뚫고 옷이 젖기도 하며, 장화를 신어야 할 만큼 비가 옵니다."
         stepExplainLabel.font = UIFont.KFont.appleSDNeoSemiBoldMediumLarge
         stepExplainLabel.textColor = UIColor.KColor.black
         stepExplainLabel.textAlignment = .center
         stepExplainLabel.sizeToFit()
-        stepExplainLabel.backgroundColor = UIColor.init(red: 247/255, green: 248/255, blue: 252/255, alpha: 1)
-        stepExplainLabel.layer.cornerRadius = 8
     }
 }
