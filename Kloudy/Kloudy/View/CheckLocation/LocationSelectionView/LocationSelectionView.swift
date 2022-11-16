@@ -271,10 +271,6 @@ class LocationSelectionView: UIViewController {
     @objc func tapBackButton() {
            self.navigationController?.popToRootViewController(animated: true)
        }
-    
-    // 셀 위치 변경 함수
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-    }
 }
 
 extension LocationSelectionView: UITableViewDataSource {
@@ -406,11 +402,27 @@ extension LocationSelectionView: UITableViewDropDelegate {
         }
     }
     
+    // 셀 위치 변경 함수
+    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+        
+        let itemMove = locationList[sourceIndexPath.row] //Get the item that we just moved
+        locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
+        locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
+        
+        tableView.reloadData()
+        print(locationList)
+        
+//        for i in 0..<locationList.count {
+//            CoreDataManager.shared.saveLocation(code: locationList[i].code!, city: locationList[i].city!, province: locationList[i].province!, sequence: i)
+//        }
+    }
+    
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         if session.localDragSession != nil {
             if destinationIndexPath?.row == 0 {
                 return UITableViewDropProposal(operation: .move, intent: .unspecified)
             }
+            
             return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
         
