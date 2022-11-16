@@ -10,8 +10,8 @@ import SnapKit
 import UIKit
 
 class WeatherIndexView: UIView {
-    var viewModel = WeatherIndexViewModel()
     
+    var viewModel = WeatherIndexViewModel()
     var city = String()
     lazy var locationWeatherIndexView = LocationWeatherIndexView(city: city)
     let weatherIndexListView: UIView = {
@@ -121,6 +121,7 @@ class WeatherIndexView: UIView {
         self.backgroundColor = UIColor.KColor.white
         self.layer.cornerRadius = 12
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))
+        
         indexCollectionView.addGestureRecognizer(gesture)
         
         weatherIndexListView.snp.makeConstraints {
@@ -128,19 +129,17 @@ class WeatherIndexView: UIView {
             $0.leading.equalToSuperview().inset(283)
             $0.trailing.equalToSuperview().inset(12)
         }
-        
+
         locationWeatherIndexView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalTo(weatherIndexListView.snp.leading)
         }
-        
        
         indexCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview() // 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
             $0.width.height.equalToSuperview()
         }
-        
     }
 }
 
