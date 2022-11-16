@@ -39,9 +39,9 @@ class CheckWeatherView: UIViewController {
                 vc.view.backgroundColor = .brown
                 let test = UITextView()
                 let locationView = UIView()
-                //    let weatherIndexView = WeatherIndexView()
+                let weatherIndexView = WeatherIndexView(city: city)
                 //    let detailWeatherView = DetailWeatherView()
-                let weatherIndexView = UIView()
+//                let weatherIndexView = UIView()
 //                let detailWeatherView = UIView()
                 vc.view.addSubview(test)
                 test.text = city
@@ -57,9 +57,6 @@ class CheckWeatherView: UIViewController {
                 vc.view.addSubview(detailWeatherView)
                 detailWeatherView.rx.tap
                     .bind {
-                        
-                        
-                        
                         let detailWeatherView = WeatherIndexDetailView()
                         detailWeatherView.modalPresentationStyle = .overCurrentContext
                         detailWeatherView.modalTransitionStyle = .crossDissolve
@@ -76,7 +73,6 @@ class CheckWeatherView: UIViewController {
                     $0.width.equalTo(203)
                     $0.height.equalTo(150)
                 }
-                weatherIndexView.backgroundColor = .blue
                 weatherIndexView.snp.makeConstraints {
                     $0.top.equalTo(locationView.snp.bottom).offset(24)
                     $0.leading.equalToSuperview().inset(20)
@@ -178,6 +174,7 @@ extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewController
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let nextIndex = index + 1
+
         if nextIndex == dataViewControllers.count {
             return nil
         }

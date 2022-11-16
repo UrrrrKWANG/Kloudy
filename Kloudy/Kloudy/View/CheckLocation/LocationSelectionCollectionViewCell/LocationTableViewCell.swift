@@ -45,13 +45,13 @@ class LocationTableViewCell: UITableViewCell {
     
     lazy var temperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.primaryGreen])
+        label.configureLabel(text: "\(temperature)°", font: UIFont.KFont.lexendLarge, textColor: UIColor.KColor.white, attributeString: ["°"], attributeColor: [UIColor.KColor.black])
         return label
     }()
     
     lazy var diurnalTemperatureLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.gray05, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
+        label.configureLabel(text: "\(diurnalTemperature[0])° | \(diurnalTemperature[1])°", font: UIFont.KFont.lexendMini, textColor: UIColor.KColor.black, attributeString: ["|"], attributeColor: [UIColor.KColor.gray03])
         return label
     }()
     
