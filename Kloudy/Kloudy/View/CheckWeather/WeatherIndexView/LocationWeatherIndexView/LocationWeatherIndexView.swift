@@ -5,50 +5,45 @@
 //  Created by Byeon jinha on 2022/11/14.
 //
 
-import Lottie
-import SnapKit
 import UIKit
+import SnapKit
+import Lottie
 
 class LocationWeatherIndexView: UIView {
-    
     var cityIndex = Int()
     var internalIndex = 0
     lazy var locationWeatherIndexView = LocationWeatherIndexView(city: city)
     var viewModel = WeatherIndexViewModel()
     let weatherIndexNameLabel = UILabel()
+    let weatherIndexPointImageList = [UIImageView(), UIImageView()]
+    
     let intenalIndexListView = UIView()
+    var internalIndexCollectionView: UICollectionView?
+    
+    var containerView: UIView = {
+        let view = UIView()
+//        view.backgroundColor = .black
+        return view
+    }()
+    var city = String()
+    let weatherIndexStatusLabel = UILabel()
     private var layout : UICollectionViewFlowLayout {
         let layout = CollectionViewRightAlignFlowLayout(cellItemSize: 30)
         return layout
     }
-    lazy var internalIndexCollectionView: UICollectionView = {
-        var uiCollectionView =  UICollectionView(frame: .zero, collectionViewLayout: self.layout)
-        uiCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        uiCollectionView.delegate = self
-        uiCollectionView.dataSource = self
-        return uiCollectionView
-    }()
-    
-    var containerView: UIView = {
-        let view = UIView()
-        return view
-    }()
-    
-    var city = String()
-    let weatherIndexStatusLabel = UILabel()
     
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init(city: String) {
         super.init(frame: .zero)
         self.city = city
-        addLayout()
         setLayout()
+        
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[0]
         let transedIndexName = transIndexName(indexName: indexName)
+
         let indexStatus = findStatus(city: city, indexName: indexName)
         let imageOrLottieName = findImageOrLottieName(indexName: indexName, status: indexStatus)
-        
         configureView(indexNameLabel:  transedIndexName, indexStatusLabel: "하루종일 내림")
         changeImageView(name: imageOrLottieName)
         changeCollectionView(index: 0)
@@ -78,34 +73,40 @@ class LocationWeatherIndexView: UIView {
         if containerView.subviews.count != 0 {
             containerView.subviews[0].removeFromSuperview()
         }
-        var view:AnyObject = makeLottieView(name: name)
+        let view = makeLottieView(name: name)
         if view.frame.width == 0 {
-            view = makeImageView(name: name)
+            let view = makeImageView(name: name)
+            containerView.addSubview(view)
+            view.snp.makeConstraints { $0.edges.equalToSuperview() }
+        } else {
+            containerView.addSubview(view)
+            view.snp.makeConstraints { $0.edges.equalToSuperview() }
         }
-        containerView.addSubview(view as! UIView)
-        (view as! UIView).snp.makeConstraints { $0.edges.equalToSuperview() }
     }
-    
+
     func changeCollectionView(index: Int) {
+        print(index, "indexxxxxxxx")
+        print(viewModel.indexArray)
         self.internalIndex = index
-        
-        // 이미 추가된 subview가 있으면 지우고 새로 올림
+        intenalIndexListView.backgroundColor = .black
+        internalIndexCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        internalIndexCollectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        internalIndexCollectionView?.delegate = self
+        internalIndexCollectionView?.dataSource = self
         if intenalIndexListView.subviews.count != 0 {
             intenalIndexListView.subviews[0].removeFromSuperview()
         }
-        
-        intenalIndexListView.addSubview(internalIndexCollectionView)
-        internalIndexCollectionView.snp.makeConstraints{
-            $0.edges.equalToSuperview()
+        intenalIndexListView.addSubview(internalIndexCollectionView!)
+        internalIndexCollectionView!.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.width.height.equalToSuperview()
         }
     }
-    private func addLayout() {
-        [weatherIndexNameLabel, containerView, weatherIndexStatusLabel, intenalIndexListView].forEach() {
+    private func setLayout() {
+        [weatherIndexNameLabel, weatherIndexPointImageList[0], weatherIndexPointImageList[1], containerView, weatherIndexStatusLabel, intenalIndexListView].forEach() {
             self.addSubview($0)
         }
-    }
-    
-    private func setLayout() {
+        
         weatherIndexNameLabel.snp.makeConstraints {
             $0.top.leading.equalToSuperview().inset(20)
             $0.width.equalTo(106)
@@ -119,20 +120,36 @@ class LocationWeatherIndexView: UIView {
             $0.trailing.equalToSuperview().inset(20)
         }
         
+        weatherIndexPointImageList[0].snp.makeConstraints {
+            $0.top.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview().inset(337)
+            $0.leading.equalToSuperview().inset(199)
+            $0.trailing.equalToSuperview().inset(121)
+        }
+        
+        weatherIndexPointImageList[1].snp.makeConstraints {
+            $0.top.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview().inset(337)
+            $0.leading.equalTo(weatherIndexPointImageList[0].snp.trailing).inset(199)
+            $0.trailing.equalToSuperview().inset(121)
+        }
+        
         weatherIndexStatusLabel.snp.makeConstraints {
             $0.top.equalTo(containerView.snp.bottom).offset(16)
-            $0.bottom.leading.equalToSuperview().inset(18)
+            $0.bottom.equalToSuperview().inset(18)
+            $0.leading.equalToSuperview().inset(18)
             $0.trailing.equalToSuperview().inset(140)
         }
         
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(300)
+
             $0.trailing.equalToSuperview()
-            $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
+                        $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
         }
     }
-    
+   
     func configureView(indexNameLabel: String, indexStatusLabel: String) {
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         weatherIndexStatusLabel.configureLabel(text: indexStatusLabel, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01) // 색상, 폰트 추가 필요
@@ -176,7 +193,7 @@ class LocationWeatherIndexView: UIView {
         default:
             return ""
         }
-        
+       
     }
     func transIndexName(indexName: String) -> String {
         switch indexName {
@@ -197,7 +214,6 @@ class LocationWeatherIndexView: UIView {
         }
         return ""
     }
-    
     func findStatus(city: String, indexName: String) -> Int {
         for cityIndex in 0..<viewModel.indexDummyData.count {
             if city == viewModel.indexDummyData[cityIndex].localName && indexName == "umbrellaIndex" {
@@ -212,7 +228,7 @@ class LocationWeatherIndexView: UIView {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.status
             } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "campareIndex" {
                 return Int(viewModel.indexDummyData[cityIndex].cityIndexData[0].campare_index.today_max_temperature)
-            }
+            } 
         }
         return 0
     }
@@ -238,7 +254,7 @@ class LocationWeatherIndexView: UIView {
             uiColor = UIColor.yellow
         case let(indexName, pathIndex) where indexName == "carwashIndex" && pathIndex == 2 :
             uiColor = UIColor.red
-            
+
             
         default:
             uiColor = UIColor.KColor.black
@@ -253,8 +269,8 @@ class LocationWeatherIndexView: UIView {
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
     
-    //TODO: 받아오는 내용 마다 셀 개수를 새로 갱신할 로직 필요.
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("바뀜?", viewModel.indexArray[cityIndex].IndexArray)
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
         var cellCount = 0
@@ -279,8 +295,10 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
+
+        print(indexName, indexPath.row, "indexPath")
         let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, pathIndex: indexPath.row)
-        
+     
         cell.addSubview(internalIndexView)
         internalIndexView.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -292,8 +310,9 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return  CGSize(width: 30 , height: 30)
     }
+    
 }
-// 참조 collectionView 정렬 - https://fomaios.tistory.com/entry/iOSUI-%EC%BB%AC%EB%A0%89%EC%85%98%EB%B7%B0%EC%85%80-%EC%9E%90%EB%8F%99%EC%9C%BC%EB%A1%9C-%ED%81%AC%EA%B8%B0-%EC%A1%B0%EC%A0%95%ED%95%98%EA%B3%A0-%EC%99%BC%EC%AA%BD-%EC%A0%95%EB%A0%AC%ED%95%98%EA%B8%B0-CollectionViewCell-Automaticsize-LeftAlign
+
 
 class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
     let cellSpacing: CGFloat = 4
@@ -309,7 +328,7 @@ class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
         self.minimumLineSpacing = 4.0
         self.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom:0, right: 16)
         let attributes = super.layoutAttributesForElements(in: rect)
-        
+ 
         var rightMargin = sectionInset.right
         var maxY: CGFloat = 300
         attributes?.forEach { layoutAttribute in
