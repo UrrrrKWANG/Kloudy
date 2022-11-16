@@ -85,7 +85,6 @@ class LocationTableViewCell: UITableViewCell {
         
         contentView.layer.cornerRadius = contentView.frame.height / 5
         
-        contentView.layer.applySketchShadow(color: UIColor(red: 0.553, green: 0.58, blue: 0.627, alpha: 0.1), alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
-        contentView.layer.shadowOpacity = 1
+        contentView.layer.applySketchShadow(color: UIColor.KColor.gray02, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
     }
 }
