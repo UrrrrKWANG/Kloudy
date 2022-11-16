@@ -9,7 +9,6 @@ import Foundation
 import RxSwift
 import RxCocoa
 
-
 struct WeatherIndexViewModel {
     //TODO: 더미데이터 데이터 받아 온 이후 수정해야 합니다..
     var indexArray: [LocationIndexArray] = [
