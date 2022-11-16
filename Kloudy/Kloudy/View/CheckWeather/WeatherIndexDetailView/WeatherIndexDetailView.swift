@@ -86,7 +86,7 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
-    var indexType: IndexType = .unbrella
+    var indexType: IndexType = .mask
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
@@ -130,6 +130,9 @@ class WeatherIndexDetailView: UIViewController {
         
         presentButtonView.totalIndexStep.onNext(indexType.totalIndexStep)
         
+        // API 데이터 받을 시 전달
+        //        indexIconView.indexStatus.onNext(data.step)
+        
         presentButtonView.isDismissButtonTapped
             .subscribe(onNext: {
                 if $0 {
@@ -145,9 +148,9 @@ class WeatherIndexDetailView: UIViewController {
             .subscribe(onNext: {
                 self.indexStepView.imageString
                     .onNext(self.indexType.stepImageString[$0])
+                self.indexStepView.valueString.onNext($0+1)
                 self.indexStepView.explainString
                     .onNext(self.indexType.stepExplainString[$0])
-                self.indexStepView.valueString.onNext($0+1)
             }).disposed(by: disposeBag)
     }
     

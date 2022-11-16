@@ -13,6 +13,13 @@ import RxCocoa
 class SequenceLabelCell: UICollectionViewCell {
     static let identifier = "sequenceLabel"
     
+    override var isSelected: Bool {
+        didSet {
+            self.backgroundColor = isSelected ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
+            self.sequenceLabel.textColor = isSelected ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
+        }
+    }
+    
     let sequenceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.KFont.lexendMedius
@@ -39,7 +46,6 @@ class SequenceLabelCell: UICollectionViewCell {
 
 class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
-//    let indexStepView = IndexStepView()
     let dismissButton = UIButton()
     let presentButton = UIButton()
     var collectionView: UICollectionView = {
@@ -64,6 +70,13 @@ class IndexButtonView: UIView {
     
     var isDismissButtonTapped = PublishSubject<Bool>()
     let presentButtonIndex = PublishSubject<Int>()
+    
+    var isPresented = false {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    var firstTap = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -137,10 +150,12 @@ class IndexButtonView: UIView {
     
     @objc private func dismissStepView() {
         isDismissButtonTapped.onNext(true)
+        isPresented = false
     }
     
     @objc private func presentStepView() {
         isDismissButtonTapped.onNext(false)
+        isPresented = true
     }
 }
 
@@ -152,9 +167,13 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SequenceLabelCell.identifier, for: indexPath) as? SequenceLabelCell else { return UICollectionViewCell() }
+
         cell.backgroundColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
         cell.sequenceLabel.textColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
         cell.sequenceLabel.text = "\(indexPath.row + 1)"
+        if indexPath.row == self.status - 1 {
+            presentButtonIndex.onNext(indexPath.row)
+        }
         return cell
     }
     
@@ -167,9 +186,18 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        WeatherIndexDetailView().indexStepView.버튼뷰에서전달하는인덱스.onNext(indexPath.row)
         presentButtonIndex.onNext(indexPath.row)
-//        indexStepView.버튼뷰에서전달하는인덱스.onNext(indexPath.row)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if !firstTap {
+            firstTap = true
+            var fetchIndex = collectionView.indexPathsForSelectedItems?.last ?? IndexPath(item: 0, section: 0)
+            fetchIndex.row = self.status - 1
+            let cell = collectionView.cellForItem(at: fetchIndex) as! SequenceLabelCell
+            cell.isSelected = false
+        }
+        return true
     }
 }
 

@@ -14,7 +14,7 @@ import Lottie
 class IndexStepView: UIView {
     
     let disposeBag = DisposeBag()
-    var stepImageView = UIView()
+    var stepUIView = UIView()
     let stepValueLabel = UILabel()
     let stepValueBackgroundView = UIView()
     let stepExplainLabel = UILabel()
@@ -77,16 +77,16 @@ class IndexStepView: UIView {
     }
     
     private func layout() {
-        [stepImageView, stepValueBackgroundView, stepExplainBackgroundView].forEach { self.addSubview($0) }
+        [stepUIView, stepValueBackgroundView, stepExplainBackgroundView].forEach { self.addSubview($0) }
         
-        stepImageView.snp.makeConstraints {
+        stepUIView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(7)
             $0.size.equalTo(242)
             $0.centerX.equalToSuperview()
         }
         
         stepValueBackgroundView.snp.makeConstraints {
-            $0.top.equalTo(stepImageView.snp.bottom).offset(7)
+            $0.top.equalTo(stepUIView.snp.bottom).offset(7)
             $0.leading.trailing.equalToSuperview().inset(109)
             $0.height.equalTo(35)
         }
@@ -127,24 +127,34 @@ class IndexStepView: UIView {
         stepLottieView.play()
         stepLottieView.loopMode = .loop
         stepLottieView.backgroundBehavior = .pause
-        stepImageView.addSubview(stepLottieView)
+        stepUIView.addSubview(stepLottieView)
         stepLottieView.snp.makeConstraints {
             $0.edges.equalToSuperview()
         }
     }
     
     private func changeStepImageView(name: String) {
-        stepImageView.subviews.forEach { $0.removeFromSuperview() }
-        stepImageView.layoutIfNeeded()
+        stepUIView.subviews.forEach { $0.removeFromSuperview() }
+        stepUIView.layoutIfNeeded()
 
         let stepLottieView = LottieAnimationView(name: name)
-        stepLottieView.contentMode = .scaleAspectFit
-        stepLottieView.play()
-        stepLottieView.loopMode = .loop
-        stepLottieView.backgroundBehavior = .pause
-        stepImageView.addSubview(stepLottieView)
-        stepLottieView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+        if stepLottieView.frame.width == 0 {
+            let stepImageView = UIImageView()
+            stepImageView.image = UIImage(named: name)
+            stepImageView.contentMode = .scaleAspectFit
+            stepUIView.addSubview(stepImageView)
+            stepImageView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+        } else {
+            stepLottieView.contentMode = .scaleAspectFit
+            stepLottieView.play()
+            stepLottieView.loopMode = .loop
+            stepLottieView.backgroundBehavior = .pause
+            stepUIView.addSubview(stepLottieView)
+            stepLottieView.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
         }
     }
     
