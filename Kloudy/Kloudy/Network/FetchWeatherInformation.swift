@@ -20,7 +20,7 @@ class FetchWeatherInformation: ObservableObject {
         
         // x, y값을 쿼리로 넣은 url을 만듦 (urlComponents)
         var urlComponents = URLComponents(string: "http://3.35.230.34:8080/apis/weather")
-        let codeQuery = URLQueryItem(name: "cityCode", value: cityCode)
+        let codeQuery = URLQueryItem(name: "code", value: cityCode)
 
         urlComponents?.queryItems = [codeQuery]
         // URLSessionConfiguration을 만듦

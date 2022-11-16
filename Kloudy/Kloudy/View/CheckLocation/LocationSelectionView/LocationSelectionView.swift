@@ -258,7 +258,7 @@ class LocationSelectionView: UIViewController {
             tableView.dropDelegate = self
         }
     }
-    
+     
     private func configureBackButton() {
         locationSelectionNavigationView.backButton.addTarget(self, action: #selector(tapBackButton), for: .touchUpInside)
     }
