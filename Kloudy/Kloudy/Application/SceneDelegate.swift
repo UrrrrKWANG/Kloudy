@@ -18,7 +18,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         let checkWeatherView = CheckWeatherView()
         let rootNavigationController = UINavigationController(rootViewController: checkWeatherView)
-        
+        rootNavigationController.navigationBar.isHidden = true
         self.window?.rootViewController = rootNavigationController
         self.window?.makeKeyAndVisible()
     }
