@@ -1,20 +1,21 @@
 //
-//  SettingNavigationView.swift
+//  SettingLicenseNavigationView.swift
 //  Kloudy
 //
 //  Created by Geunil Park on 2022/11/16.
 //
 
+import Foundation
+
 import UIKit
 import SnapKit
 
-class SettingNavigationView: UIView {
+class SettingLicenseNavigationView: UIView {
     let backButton = UIButton()
     let navigationTitle = UILabel()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
     }
     
     required init?(coder: NSCoder) {
@@ -40,7 +41,7 @@ class SettingNavigationView: UIView {
     
     func configureNavigationTitle() {
         navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        navigationTitle.text = "설정"
+        navigationTitle.text = "라이센스"
         navigationTitle.font = UIFont.KFont.appleSDNeoBoldMedium
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {

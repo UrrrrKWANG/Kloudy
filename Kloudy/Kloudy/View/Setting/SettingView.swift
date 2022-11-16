@@ -96,7 +96,12 @@ extension SettingView: UITableViewDataSource {
 }
 
 extension SettingView: UITableViewDelegate {
-
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        if indexPath.row == 0 {
+            let settingLicenseView = SettingLicenseView()
+            self.navigationController?.pushViewController(settingLicenseView, animated: true)
+        }
+    }
 }
 
 extension CALayer {
