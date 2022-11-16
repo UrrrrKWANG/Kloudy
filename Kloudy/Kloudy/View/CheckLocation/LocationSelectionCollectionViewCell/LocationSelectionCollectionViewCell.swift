@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 
+// 파일 통으로 삭제해도됨
+
 class LocationSelectionCollectionViewCell: UICollectionViewCell {
     var locationName: String = "-"
     var weatherImageInt: Int = 0
