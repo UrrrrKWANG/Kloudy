@@ -37,10 +37,9 @@ class SequenceLabelCell: UICollectionViewCell {
     }
 }
 
-
 class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
-    let indexStepView = IndexStepView()
+//    let indexStepView = IndexStepView()
     let dismissButton = UIButton()
     let presentButton = UIButton()
     var collectionView: UICollectionView = {
@@ -63,8 +62,8 @@ class IndexButtonView: UIView {
     var totalIndexStepCount: Int = 0
     var stepCellSpacing: Int = 0
     
-//    var isDismissButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var isDismissButtonTapped = PublishSubject<Bool>()
+    let presentButtonIndex = PublishSubject<Int>()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -78,13 +77,14 @@ class IndexButtonView: UIView {
     }
     
     private func bind() {
-        // API 데이터 받을 시 저장
+        // 추후 API 데이터 받을 시 저장
         indexStatus
             .subscribe(onNext: {
                 self.status = $0
             })
             .disposed(by: disposeBag)
         
+        // 지수별 Step 수에 따른 Cell 간 Spacing
         totalIndexStep
             .subscribe(onNext: {
                 self.totalIndexStepCount = $0
@@ -116,7 +116,6 @@ class IndexButtonView: UIView {
         
         collectionView.snp.makeConstraints {
             $0.top.equalTo(presentButton.snp.bottom).offset(4)
-//            $0.top.equalToSuperview().inset(25)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(32)
         }
@@ -168,7 +167,9 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("🚙")
+//        WeatherIndexDetailView().indexStepView.버튼뷰에서전달하는인덱스.onNext(indexPath.row)
+        presentButtonIndex.onNext(indexPath.row)
+//        indexStepView.버튼뷰에서전달하는인덱스.onNext(indexPath.row)
     }
 }
 

@@ -75,12 +75,14 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
-    var indexType: IndexType = .temperatureGap
+    var indexType: IndexType = .mask
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
     
     var dismissStepView: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    
+    var sendButtonIndex: BehaviorSubject<Int> = BehaviorSubject(value: 0)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -91,6 +93,7 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
+    
     }
     
     private func bind() {
@@ -103,6 +106,7 @@ class WeatherIndexDetailView: UIViewController {
         secondIconView.iconImage.onNext(indexType.detailIndexString[4])
         secondIconView.iconTitle.onNext(indexType.detailIndexString[5])
         secondIconView.iconUnit.onNext(indexType.detailIndexString[6])
+        
         // API 데이터 받을 시 전달
         //        secondIconView.iconValue.onNext(data.wind)
         
@@ -124,6 +128,14 @@ class WeatherIndexDetailView: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        presentButtonView.presentButtonIndex
+            .distinctUntilChanged()
+            .subscribe(onNext: {
+                self.indexStepView.imageString
+                    .onNext(self.indexType.indexStepLottieString[$0])
+                self.indexStepView.valueString.onNext($0)
+            }).disposed(by: disposeBag)
     }
     
     private func layout() {
