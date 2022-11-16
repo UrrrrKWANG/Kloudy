@@ -17,12 +17,7 @@ class LocationWeatherIndexView: UIView {
     let weatherIndexNameLabel = UILabel()
     let intenalIndexListView = UIView()
     var internalIndexCollectionView: UICollectionView?
-    
-    var containerView: UIView = {
-        let view = UIView()
-//        view.backgroundColor = .black
-        return view
-    }()
+    var containerView = UIView()
     var city = String()
     let weatherIndexStatusLabel = UILabel()
     private var layout : UICollectionViewFlowLayout {
@@ -39,7 +34,7 @@ class LocationWeatherIndexView: UIView {
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[0]
         let transedIndexName = transIndexName(indexName: indexName)
-
+        
         let indexStatus = findStatus(city: city, indexName: indexName)
         let imageOrLottieName = findImageOrLottieName(indexName: indexName, status: indexStatus)
         configureView(indexNameLabel:  transedIndexName, indexStatusLabel: "하루종일 내림")
@@ -81,7 +76,7 @@ class LocationWeatherIndexView: UIView {
             view.snp.makeConstraints { $0.edges.equalToSuperview() }
         }
     }
-
+    
     func changeCollectionView(index: Int) {
         self.internalIndex = index
         intenalIndexListView.backgroundColor = .black
@@ -118,20 +113,19 @@ class LocationWeatherIndexView: UIView {
         
         weatherIndexStatusLabel.snp.makeConstraints {
             $0.top.equalTo(containerView.snp.bottom).offset(16)
-            $0.bottom.equalToSuperview().inset(18)
-            $0.leading.equalToSuperview().inset(18)
+            $0.bottom.leading.equalToSuperview().inset(18)
             $0.trailing.equalToSuperview().inset(140)
         }
         
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(300)
-
+            
             $0.trailing.equalToSuperview()
-                        $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
+            $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
         }
     }
-   
+    
     func configureView(indexNameLabel: String, indexStatusLabel: String) {
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         weatherIndexStatusLabel.configureLabel(text: indexStatusLabel, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01) // 색상, 폰트 추가 필요
@@ -175,7 +169,7 @@ class LocationWeatherIndexView: UIView {
         default:
             return ""
         }
-       
+        
     }
     func transIndexName(indexName: String) -> String {
         switch indexName {
@@ -210,7 +204,7 @@ class LocationWeatherIndexView: UIView {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.status
             } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "campareIndex" {
                 return Int(viewModel.indexDummyData[cityIndex].cityIndexData[0].campare_index.today_max_temperature)
-            } 
+            }
         }
         return 0
     }
@@ -236,7 +230,7 @@ class LocationWeatherIndexView: UIView {
             uiColor = UIColor.yellow
         case let(indexName, pathIndex) where indexName == "carwashIndex" && pathIndex == 2 :
             uiColor = UIColor.red
-
+            
             
         default:
             uiColor = UIColor.KColor.black
@@ -277,7 +271,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
         let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, pathIndex: indexPath.row)
-     
+        
         cell.addSubview(internalIndexView)
         internalIndexView.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -307,7 +301,7 @@ class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
         self.minimumLineSpacing = 4.0
         self.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom:0, right: 16)
         let attributes = super.layoutAttributesForElements(in: rect)
- 
+        
         var rightMargin = sectionInset.right
         var maxY: CGFloat = 300
         attributes?.forEach { layoutAttribute in

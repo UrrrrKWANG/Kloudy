@@ -118,7 +118,7 @@ class WeatherIndexView: UIView {
         weatherIndexListView.addSubview(indexCollectionView)
     }
     private func setLayout() {
-        self.backgroundColor = .white
+        self.backgroundColor = UIColor.KColor.white
         self.layer.cornerRadius = 12
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))
         indexCollectionView.addGestureRecognizer(gesture)
