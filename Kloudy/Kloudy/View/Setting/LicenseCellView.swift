@@ -13,14 +13,14 @@ class LicenseCellView: UITableViewCell {
     
     let licenseNameLabel: UILabel = {
         let licenseNameLabel = UILabel()
-        licenseNameLabel.font = UIFont.KFont.appleSDNeoBoldSmall
+        licenseNameLabel.font = UIFont.KFont.appleSDNeoBold15
         licenseNameLabel.textColor = UIColor.KColor.black
         return licenseNameLabel
     }()
     
     let licenseContentLabel: UILabel = {
         let licenseContentLabel = UILabel()
-        licenseContentLabel.font = UIFont.KFont.appleSDNeoMediumMedium
+        licenseContentLabel.font = UIFont.KFont.appleSDNeoMedium15
         licenseContentLabel.textColor = UIColor.KColor.gray02
         licenseContentLabel.lineBreakMode = .byCharWrapping
         licenseContentLabel.numberOfLines = 0
@@ -39,8 +39,7 @@ class LicenseCellView: UITableViewCell {
     }
  
     private func configureLocationLabel() {
-        self.addSubview(licenseNameLabel)
-        self.addSubview(licenseContentLabel)
+        [licenseNameLabel, licenseContentLabel].forEach { self.addSubview($0) }
         
         licenseNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
@@ -48,7 +47,7 @@ class LicenseCellView: UITableViewCell {
         }
         
         licenseContentLabel.snp.makeConstraints {
-            $0.top.equalTo(self.licenseNameLabel.snp.bottom).inset(-12)
+            $0.top.equalTo(self.licenseNameLabel.snp.bottom).offset(12)
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.bottom.equalToSuperview().inset(32)
         }
@@ -56,7 +55,7 @@ class LicenseCellView: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = UIColor.KColor.gray03
+        contentView.backgroundColor = UIColor.KColor.gray05
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
         contentView.layer.cornerRadius = 12
     }

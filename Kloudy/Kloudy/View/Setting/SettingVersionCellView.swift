@@ -13,14 +13,14 @@ class SettingVersionCellView: UITableViewCell {
     
     let versionTextLabel: UILabel = {
         let versionTextLabel = UILabel()
-        versionTextLabel.font = UIFont.KFont.appleSDNeoMediumMedium
+        versionTextLabel.font = UIFont.KFont.appleSDNeoMedium18
         versionTextLabel.textColor = UIColor.KColor.black
         return versionTextLabel
     }()
     
     let versionNumberLabel: UILabel = {
         let versionNumberLabel = UILabel()
-        versionNumberLabel.font = UIFont.KFont.appleSDNeoMediumMedium
+        versionNumberLabel.font = UIFont.KFont.appleSDNeoMedium18
         versionNumberLabel.textColor = UIColor.KColor.primaryBlue01
         
         return versionNumberLabel
@@ -28,8 +28,8 @@ class SettingVersionCellView: UITableViewCell {
     
     let versionCheckLabel: UILabel = {
         let versionCheckLabel = UILabel()
-        versionCheckLabel.font = UIFont.KFont.appleSDNeoMediumSmall
-        versionCheckLabel.textColor = UIColor.KColor.black
+        versionCheckLabel.font = UIFont.KFont.appleSDNeoMedium14
+        versionCheckLabel.textColor = UIColor.KColor.gray01
         return versionCheckLabel
     }()
     
@@ -49,26 +49,24 @@ class SettingVersionCellView: UITableViewCell {
     }
  
     private func configureLocationLabel() {
-        self.addSubview(versionTextLabel)
-        self.addSubview(versionNumberLabel)
-        self.addSubview(versionCheckLabel)
+        [versionTextLabel, versionNumberLabel, versionCheckLabel].forEach { addSubview($0) }
         
         versionTextLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(28)
-            $0.leading.equalToSuperview().inset(0)
+            $0.leading.equalToSuperview()
         }
         
         versionNumberLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(28)
-            $0.leading.equalTo(self.versionTextLabel.snp.trailing).inset(-5)
+            $0.leading.equalTo(self.versionTextLabel.snp.trailing).offset(5)
         }
         
         versionCheckLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(14)
             $0.bottom.equalToSuperview().inset(28)
-            $0.trailing.equalToSuperview().inset(0)
+            $0.trailing.equalToSuperview()
         }
     }
 }

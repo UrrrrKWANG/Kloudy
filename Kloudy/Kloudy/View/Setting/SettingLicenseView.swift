@@ -89,6 +89,7 @@ extension SettingLicenseView: UITableViewDelegate {
 }
 
 // https://ios-development.tistory.com/739
+// 행간 수정
 extension UILabel {
     func setLineSpacing(spacing: CGFloat) {
         guard let text = text else { return }

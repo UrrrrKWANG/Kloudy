@@ -15,7 +15,7 @@ class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
     
     let locationAllowTextLabel: UILabel = {
         let locationAllowTextLabel = UILabel()
-        locationAllowTextLabel.font = UIFont.KFont.appleSDNeoMediumMedium
+        locationAllowTextLabel.font = UIFont.KFont.appleSDNeoMedium18
         locationAllowTextLabel.textColor = UIColor.KColor.black
         return locationAllowTextLabel
     }()
@@ -53,12 +53,11 @@ class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
             locationAllowSwitch.isOn = true
         }
         
-        self.addSubview(locationAllowTextLabel)
-        self.addSubview(locationAllowSwitch)
+        [locationAllowTextLabel, locationAllowSwitch].forEach { self.addSubview($0) }
         
         locationAllowTextLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(28)
-            $0.leading.equalToSuperview().inset(0)
+            $0.leading.equalToSuperview()
         }
         
         locationAllowSwitch.snp.makeConstraints {
@@ -79,7 +78,6 @@ class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
             self.locationAllowSwitch.setOn(false, animated: true)
         }
         else {
-            print(currentStatus.rawValue)
             if currentStatus == .notDetermined {
                 self.locationManager.requestAlwaysAuthorization()
                 locationManagerDidChangeAuthorization(self.locationManager)

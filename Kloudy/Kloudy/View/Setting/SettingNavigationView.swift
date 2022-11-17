@@ -23,8 +23,7 @@ class SettingNavigationView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.addSubview(backButton)
-        self.addSubview(navigationTitle)
+        [backButton, navigationTitle].forEach { self.addSubview($0) }
         configureBackButton()
         configureNavigationTitle()
     }
@@ -41,7 +40,7 @@ class SettingNavigationView: UIView {
     func configureNavigationTitle() {
         navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
         navigationTitle.text = "설정"
-        navigationTitle.font = UIFont.KFont.appleSDNeoBoldMedium
+        navigationTitle.font = UIFont.KFont.appleSDNeoBold20
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {
             $0.center.equalToSuperview()

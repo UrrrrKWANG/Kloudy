@@ -14,7 +14,7 @@ class SettingLicenseCellView: UITableViewCell {
     
     let licenseLabel: UILabel = {
         let licenseLabel = UILabel()
-        licenseLabel.font = UIFont.KFont.appleSDNeoMediumMedium
+        licenseLabel.font = UIFont.KFont.appleSDNeoMedium18
         licenseLabel.textColor = UIColor.KColor.black
         return licenseLabel
     }()
@@ -41,17 +41,16 @@ class SettingLicenseCellView: UITableViewCell {
     }
  
     private func configureLocationLabel() {
-        self.addSubview(licenseLabel)
-        self.addSubview(rightIcon)
+        [licenseLabel, rightIcon].forEach { self.addSubview($0) }
         
         licenseLabel.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(14)
-            $0.leading.equalToSuperview().inset(0)
+            $0.leading.equalToSuperview()
         }
         
         rightIcon.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(14)
-            $0.trailing.equalToSuperview().inset(0)
+            $0.trailing.equalToSuperview()
         }
     }
 }
