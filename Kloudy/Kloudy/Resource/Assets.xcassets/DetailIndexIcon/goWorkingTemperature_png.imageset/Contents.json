@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Icon1.png",
+      "filename" : "Group 1008.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Icon2.png",
+      "filename" : "Group 1008@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Icon3.png",
+      "filename" : "Group 1008@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
@@ -19,8 +19,5 @@
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

@@ -13,6 +13,13 @@ import RxCocoa
 class SequenceLabelCell: UICollectionViewCell {
     static let identifier = "sequenceLabel"
     
+    override var isSelected: Bool {
+        didSet {
+            self.backgroundColor = isSelected ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
+            self.sequenceLabel.textColor = isSelected ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
+        }
+    }
+    
     let sequenceLabel: UILabel = {
         let label = UILabel()
         label.font = UIFont.KFont.lexendMedius
@@ -37,15 +44,16 @@ class SequenceLabelCell: UICollectionViewCell {
     }
 }
 
-
 class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
-    let presentButtonImage = UIImageView()
+    let dismissButton = UIButton()
+    let presentButton = UIButton()
     var collectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
         
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
+        collectionView.contentInset = UIEdgeInsets(top: 0, left: 24, bottom: 0, right: 24)
         collectionView.backgroundColor = UIColor.KColor.clear
         collectionView.isScrollEnabled = false
         return collectionView
@@ -54,10 +62,25 @@ class IndexButtonView: UIView {
     var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 4)
     var status: Int = 4
     
-    let presentButtonTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    
+    // 지수 별 단계 갯수
+    var totalIndexStep = PublishSubject<Int>()
+    var totalIndexStepCount: Int = 0
+    var stepCellSpacing: Int = 0
+    
+    var isDismissButtonTapped = PublishSubject<Bool>()
+    let presentButtonIndex = PublishSubject<Int>()
+    
+    var isPresented = false {
+        didSet {
+            collectionView.reloadData()
+        }
+    }
+    var firstTap = false
     
     override init(frame: CGRect) {
         super.init(frame: frame)
+        bind()
         attribute()
         layout()
     }
@@ -67,61 +90,114 @@ class IndexButtonView: UIView {
     }
     
     private func bind() {
-        // API 데이터 받을 시 저장
+        // 추후 API 데이터 받을 시 저장
         indexStatus
             .subscribe(onNext: {
                 self.status = $0
             })
             .disposed(by: disposeBag)
+        
+        // 지수별 Step 수에 따른 Cell 간 Spacing
+        totalIndexStep
+            .subscribe(onNext: {
+                self.totalIndexStepCount = $0
+                if $0 == 5 {
+                    self.stepCellSpacing = 20
+                } else {
+                    self.stepCellSpacing = 38
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func layout() {
-        [presentButtonImage, collectionView].forEach { self.addSubview($0) }
+        [presentButton, dismissButton, collectionView].forEach { self.addSubview($0) }
         
-        presentButtonImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(8)
+        presentButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(130)
-//            $0.width.equalTo(5)
+            $0.width.equalTo(26)
+            $0.height.equalTo(21)
+        }
+        
+        dismissButton.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(26)
+            $0.height.equalTo(21)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(presentButtonImage.snp.bottom).offset(12)
+            $0.top.equalTo(presentButton.snp.bottom).offset(4)
             $0.leading.trailing.equalToSuperview()
-            $0.height.equalTo(30)
+            $0.height.equalTo(32)
         }
     }
     
     private func attribute() {
+        self.backgroundColor = UIColor.KColor.white
         collectionView.delegate = self
         collectionView.dataSource = self
+        collectionView.allowsSelection = false
         collectionView.register(SequenceLabelCell.self, forCellWithReuseIdentifier: "sequenceLabel")
-        presentButtonImage.image = UIImage(named: "chevron_up")
+        presentButton.setImage(UIImage(named: "chevron_up"), for: .normal)
+        presentButton.isHidden = false
+        presentButton.addTarget(self, action: #selector(presentStepView), for: .touchUpInside)
+        dismissButton.setImage(UIImage(named: "chevron_down"), for: .normal)
+        dismissButton.isHidden = true
+        dismissButton.addTarget(self, action: #selector(dismissStepView), for: .touchUpInside)
+    }
+    
+    @objc private func dismissStepView() {
+        isDismissButtonTapped.onNext(true)
+        isPresented = false
+    }
+    
+    @objc private func presentStepView() {
+        isDismissButtonTapped.onNext(false)
+        isPresented = true
     }
 }
 
 extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // 분기 처리
-        return 5
+        return self.totalIndexStepCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SequenceLabelCell.identifier, for: indexPath) as? SequenceLabelCell else { return UICollectionViewCell() }
-        cell.backgroundColor = self.status - 1 == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
-        cell.sequenceLabel.textColor = self.status - 1 == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
+
+        cell.backgroundColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
+        cell.sequenceLabel.textColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
         cell.sequenceLabel.text = "\(indexPath.row + 1)"
+        if indexPath.row == self.status - 1 {
+            presentButtonIndex.onNext(indexPath.row)
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let itemSpacing = 20
-        return CGSize(width: (Int(collectionView.frame.width) - itemSpacing * 4) / 5, height: 32)
+        return CGSize(width: 38, height: 32)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
-        return 20
+        return CGFloat(stepCellSpacing)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        presentButtonIndex.onNext(indexPath.row)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, shouldSelectItemAt indexPath: IndexPath) -> Bool {
+        if !firstTap {
+            firstTap = true
+            var fetchIndex = collectionView.indexPathsForSelectedItems?.last ?? IndexPath(item: 0, section: 0)
+            fetchIndex.row = self.status - 1
+            let cell = collectionView.cellForItem(at: fetchIndex) as! SequenceLabelCell
+            cell.isSelected = false
+        }
+        return true
+    }
 }
+
