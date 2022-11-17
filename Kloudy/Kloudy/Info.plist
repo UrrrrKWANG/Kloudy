@@ -9,6 +9,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Lexend-Regular.ttf</string>
+		<string>Lexend-Light.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>

@@ -64,6 +64,10 @@
 		8BC8F82029011E3400EF83AE /* kloudyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BC8F80F29011E3300EF83AE /* kloudyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; };
 		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		BA0686A22926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
+		BA0686A32926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
+		BA0686A42926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
+		BA0686A52926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
 		BAFCEAF52920E65B0084F28E /* TodayWeatherDataCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEAF32920E65B0084F28E /* TodayWeatherDataCell.swift.swift */; };
 		BAFCEAF62920E65B0084F28E /* WeekWeatherDataCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEAF42920E65B0084F28E /* WeekWeatherDataCell.swift.swift */; };
 		BAFCEB082923C0930084F28E /* LocationWeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEB072923C0930084F28E /* LocationWeatherIndexView.swift */; };
@@ -227,6 +231,7 @@
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
 		AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
+		BA0686A12926502700AB3849 /* Lexend-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Light.ttf"; sourceTree = "<group>"; };
 		BAFCEAF32920E65B0084F28E /* TodayWeatherDataCell.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWeatherDataCell.swift.swift; sourceTree = "<group>"; };
 		BAFCEAF42920E65B0084F28E /* WeekWeatherDataCell.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekWeatherDataCell.swift.swift; sourceTree = "<group>"; };
 		BAFCEB072923C0930084F28E /* LocationWeatherIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherIndexView.swift; sourceTree = "<group>"; };
@@ -553,6 +558,7 @@
 		8BC8F7C329011DB100EF83AE /* Font */ = {
 			isa = PBXGroup;
 			children = (
+				BA0686A12926502700AB3849 /* Lexend-Light.ttf */,
 				D592C991290AED5B00C53F06 /* Lexend-Regular.ttf */,
 			);
 			path = Font;
@@ -808,6 +814,7 @@
 				22072511291A9F9800E01508 /* CityInformation.csv in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
 				D558FEEF2909CC96002EEA22 /* 마스크_1단계.png in Resources */,
+				BA0686A22926502700AB3849 /* Lexend-Light.ttf in Resources */,
 				D592C992290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				D558FEE92909CC96002EEA22 /* 마스크_2단계.png in Resources */,
 				2207250B291A31DB00E01508 /* Localizable.strings in Resources */,
@@ -821,6 +828,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA0686A32926502700AB3849 /* Lexend-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -828,6 +836,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA0686A42926502700AB3849 /* Lexend-Light.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -843,6 +852,7 @@
 				D558FEF02909CC96002EEA22 /* 마스크_1단계.png in Resources */,
 				D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				D558FEEC2909CC96002EEA22 /* mask_4grade.json in Resources */,
+				BA0686A52926502700AB3849 /* Lexend-Light.ttf in Resources */,
 				D558FEE22909CC7C002EEA22 /* rain_step2.json in Resources */,
 				D558FEDE2909CC7C002EEA22 /* rain_step1.json in Resources */,
 			);
