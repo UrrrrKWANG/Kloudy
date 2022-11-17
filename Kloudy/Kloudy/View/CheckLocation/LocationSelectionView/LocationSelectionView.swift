@@ -47,6 +47,7 @@ class LocationSelectionView: UIViewController {
         bind()
         layout()
         attribute()
+        view.backgroundColor = UIColor.KColor.white
     }
     
     required init?(coder: NSCoder) {
@@ -90,7 +91,7 @@ class LocationSelectionView: UIViewController {
     }
     
     private func layout() {
-        [locationSelectionNavigationView, cancelSearchButton, searchBarBackgroundView, searchBar, tableView, nothingSearchedLocationLabel, magnifyingGlassImage].forEach { view.addSubview($0) }
+        [tableView, locationSelectionNavigationView, cancelSearchButton, searchBarBackgroundView, searchBar, nothingSearchedLocationLabel, magnifyingGlassImage].forEach { view.addSubview($0) }
         
         locationSelectionNavigationView.snp.makeConstraints {
             $0.top.equalToSuperview().inset(62)
