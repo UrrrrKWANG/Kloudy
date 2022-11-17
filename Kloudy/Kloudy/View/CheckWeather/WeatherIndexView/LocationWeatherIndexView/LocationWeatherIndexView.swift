@@ -79,7 +79,7 @@ class LocationWeatherIndexView: UIView {
     
     func changeCollectionView(index: Int) {
         self.internalIndex = index
-        intenalIndexListView.backgroundColor = .black
+        intenalIndexListView.backgroundColor = UIColor.KColor.black
         internalIndexCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
         internalIndexCollectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
         internalIndexCollectionView?.delegate = self
@@ -144,8 +144,8 @@ class LocationWeatherIndexView: UIView {
     }
     
     func findImageOrLottieName(indexName: String, status: Int) -> String {
-        let findedElement =  (indexName, status)
-        switch findedElement {
+        let foundElement =  (indexName, status)
+        switch foundElement {
         case let(indexName, status) where indexName == "maskIndex" && status == 0 :
             return "마스크_1단계"
         case let(indexName, status) where indexName == "maskIndex" && status == 1 :
@@ -209,9 +209,9 @@ class LocationWeatherIndexView: UIView {
         return 0
     }
     func findInternalIndexColorAndImage(indexName: String, pathIndex: Int) -> UIView {
-        let findedElement = (indexName, pathIndex)
+        let foundElement = (indexName, pathIndex)
         var uiColor = UIColor()
-        switch findedElement {
+        switch foundElement {
         case let(indexName, pathIndex) where indexName == "maskIndex" && pathIndex == 0 :
             uiColor = UIColor.yellow
         case let(indexName, pathIndex) where indexName == "maskIndex" && pathIndex == 1 :
