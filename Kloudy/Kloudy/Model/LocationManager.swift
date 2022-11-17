@@ -6,10 +6,11 @@
 //
 //  Reference: https://github.com/PLREQ/PLREQ/blob/develop/PLREQ/PLREQ/Views/MatchView/MatchViewController.swift
 
-
+import UIKit
 import CoreLocation
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
+    
     var locationManager: CLLocationManager = CLLocationManager()
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
@@ -45,6 +46,28 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         }
     }
     
+//    func requestLocationAuthorization() {
+//        self.locationManager.delegate = self
+//        let currentStatus = CLLocationManager().authorizationStatus
+//
+//        // Only ask authorization if it was never asked before
+//        guard currentStatus == .notDetermined else { return }
+//
+//        // Starting on iOS 13.4.0, to get .authorizedAlways permission, you need to
+//        // first ask for WhenInUse permission, then ask for Always permission to
+//        // get to a second system alert
+//        if #available(iOS 13.4, *) {
+//            self.requestLocationAuthorizationCallback = { status in
+//                if status == .authorizedWhenInUse {
+//                    self.locationManager.requestAlwaysAuthorization()
+//                }
+//            }
+//            self.locationManager.requestWhenInUseAuthorization()
+//        } else {
+//            self.locationManager.requestAlwaysAuthorization()
+//        }
+//    }
+//    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error \(error.localizedDescription)")
     }

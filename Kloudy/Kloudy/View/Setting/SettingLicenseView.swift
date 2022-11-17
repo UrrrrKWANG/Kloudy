@@ -17,7 +17,8 @@ class SettingLicenseView: UIViewController {
     let settingLicenseNavigationView = SettingLicenseNavigationView()
     let tableView = UITableView()
     let licenses: [License] = [
-        License(name: "출처 : 기상청 / 에어코리아", content: "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음")
+        License(name: "출처 : 기상청 / 에어코리아", content: "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음"),
+        License(name: "출처 : 기상청 / 에어코리아", content: "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음 데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음")
     ]
     
     override func viewDidLoad() {
@@ -78,8 +79,6 @@ extension SettingLicenseView: UITableViewDataSource {
         cell.licenseContentLabel.text = licenses[indexPath.row].content
         cell.licenseContentLabel.setLineSpacing(spacing: 5.0)
         cell.selectionStyle = .none
-        cell.backgroundColor = UIColor.KColor.gray03
-        cell.layer.cornerRadius = 12
         
         return cell
     }

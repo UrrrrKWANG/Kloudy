@@ -65,12 +65,12 @@ extension SettingView: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        
+        var resultCell = UITableViewCell()
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingLicenseCellView", for: indexPath) as? SettingLicenseCellView else { return UITableViewCell() }
             cell.licenseLabel.text = "라이센스"
             
-            return cell
+            resultCell = cell
         }
         
         else if indexPath.row == 1 {
@@ -79,7 +79,8 @@ extension SettingView: UITableViewDataSource {
             cell.versionNumberLabel.text = "1.0.0"
             cell.versionCheckLabel.text = "최신 버전입니다"
             cell.selectionStyle = .none
-            return cell
+            
+            resultCell = cell
         }
         
         else if indexPath.row == 2 {
@@ -88,10 +89,10 @@ extension SettingView: UITableViewDataSource {
             cell.selectionStyle = .none
             cell.layer.addBorder([.top], color: UIColor.KColor.gray03, width: 1.0)
             
-            return cell
+            resultCell = cell
         }
         
-        return UITableViewCell()
+        return resultCell
     }
 }
 

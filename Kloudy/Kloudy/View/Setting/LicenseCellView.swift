@@ -50,7 +50,15 @@ class LicenseCellView: UITableViewCell {
         licenseContentLabel.snp.makeConstraints {
             $0.top.equalTo(self.licenseNameLabel.snp.bottom).inset(-12)
             $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(20)
+            $0.bottom.equalToSuperview().inset(32)
         }
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        contentView.backgroundColor = UIColor.KColor.gray03
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 0, left: 0, bottom: 16, right: 0))
+        contentView.layer.cornerRadius = 12
+    }
 }
+
