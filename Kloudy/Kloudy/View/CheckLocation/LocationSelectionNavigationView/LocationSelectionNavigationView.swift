@@ -46,5 +46,4 @@ class LocationSelectionNavigationView: UIView {
             $0.center.equalToSuperview()
         }
     }
-    
 }
