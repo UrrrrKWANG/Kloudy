@@ -86,7 +86,7 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
-    var indexType: IndexType = .mask
+    var indexType: IndexType = .unbrella
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
@@ -281,6 +281,7 @@ class WeatherIndexDetailView: UIViewController {
             self.presentButtonView.presentButton.isHidden = false
             self.presentButtonView.dismissButton.isHidden = true
             self.presentButtonView.collectionView.allowsSelection = false
+            self.presentButtonView.firstTap = false
         }
     }
 }

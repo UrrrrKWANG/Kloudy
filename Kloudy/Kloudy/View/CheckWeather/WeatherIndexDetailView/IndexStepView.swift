@@ -122,7 +122,7 @@ class IndexStepView: UIView {
     }
     
     private func configureStepImageView() {
-        let stepLottieView = LottieAnimationView(name: "rain_step4")
+        let stepLottieView = LottieAnimationView()
         stepLottieView.contentMode = .scaleAspectFit
         stepLottieView.play()
         stepLottieView.loopMode = .loop
@@ -164,7 +164,6 @@ class IndexStepView: UIView {
     }
     
     private func configureStepValueLabel() {
-        stepValueLabel.text = "지수 단계: 4"
         stepValueLabel.font = UIFont.KFont.appleSDNeoBoldMini
         stepValueLabel.textColor = UIColor.init(red: 172/255, green: 124/255, blue: 0, alpha: 1.0)
         stepValueLabel.textAlignment = .center
@@ -178,7 +177,6 @@ class IndexStepView: UIView {
     
     private func configureStepExplainLabel() {
         stepExplainLabel.numberOfLines = 2
-        stepExplainLabel.text = "우비를 뚫고 옷이 젖기도 하며, 장화를 신어야 할 만큼 비가 옵니다."
         stepExplainLabel.font = UIFont.KFont.appleSDNeoSemiBoldMediumLarge
         stepExplainLabel.textColor = UIColor.KColor.black
         stepExplainLabel.textAlignment = .center
