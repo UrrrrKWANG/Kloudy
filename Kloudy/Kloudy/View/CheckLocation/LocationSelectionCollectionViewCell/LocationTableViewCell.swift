@@ -84,5 +84,7 @@ class LocationTableViewCell: UITableViewCell {
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 5, left: 10, bottom: 5, right: 10))
         
         contentView.layer.cornerRadius = contentView.frame.height / 5
+        
+        contentView.layer.applySketchShadow(color: UIColor.KColor.gray02, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
     }
 }

@@ -98,15 +98,14 @@ class DetailWeatherView: UIViewController {
 
     }
     
-    private func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int) -> UICollectionView {
+    func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int) -> UICollectionView {
 
         let layout = UICollectionViewFlowLayout() // collectionView layout설정
         layout.scrollDirection = direction // collectionView 스크롤 방향 , 수평
         layout.itemSize = CGSize(width: itemSizeWith, height: itemSizeheight) // cellSize
        
         let collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView.showsHorizontalScrollIndicator = false
-        collectionView.backgroundColor = UIColor.cyan  // collectionView 배경색
+        collectionView.showsHorizontalScrollIndicator = false// collectionView 배경색
         collectionView.layer.cornerRadius = 15 //collectionView radius
         collectionView.contentInset = UIEdgeInsets(top: 0, left: CGFloat(contentInsetLeft), bottom: 0, right: CGFloat(contentInsetRight)) // cell 여백
         collectionView.register(cell, forCellWithReuseIdentifier:identifier) // cell 등록
