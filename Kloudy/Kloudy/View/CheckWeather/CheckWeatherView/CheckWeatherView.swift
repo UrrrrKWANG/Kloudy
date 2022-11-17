@@ -67,8 +67,7 @@ class CheckWeatherView: UIViewController {
             lazy var num: UIViewController = {
                 let vc = UIViewController()
                 let locationView = UIView()
-//                let weatherIndexView = WeatherIndexView()
-                let weatherIndexView = UIView()
+                let weatherIndexView = WeatherIndexView(city: city.localName)
                 let detailWeatherView = UIButton()
                 let currentWeatherImage = UIImageView()
                 let detailWeatherViewLabel = UILabel()
@@ -149,7 +148,7 @@ class CheckWeatherView: UIViewController {
         
         [locationLabel, locationIcon, temperature].forEach { view.addSubview($0) }
         locationIcon.image = UIImage(named: "location_mark")
-        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldmini, textColor: UIColor.KColor.white)
+        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldSmallest, textColor: UIColor.KColor.white)
         temperature.configureLabel(text: "\(Int(city.currentTemperature))°", font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
 
         locationLabel.snp.makeConstraints {
@@ -226,6 +225,7 @@ extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewController
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let nextIndex = index + 1
+
         if nextIndex == dataViewControllers.count {
             return nil
         }
