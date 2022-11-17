@@ -99,7 +99,7 @@ class DetailWeatherView: UIViewController {
 
     }
     
-    private func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int) -> UICollectionView {
+    func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int) -> UICollectionView {
 
         let layout = UICollectionViewFlowLayout() // collectionView layout설정
         layout.scrollDirection = direction // collectionView 스크롤 방향 , 수평

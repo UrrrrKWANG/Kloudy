@@ -8,6 +8,7 @@
 import UIKit
 import Charts
 import SnapKit
+import RxSwift
 
 enum ChartsAxisValue: Int {
     case zero = 0
@@ -35,7 +36,7 @@ final class CustomAxisValueFormatter: IndexAxisValueFormatter {
     }
 }
 
-class IndexChartView: LineChartView {
+class IndexChartView: UIView {
     // chart data
     let temporalData: [Int : Double] = [ 0 : 0.1, 1 : 1.0, 2 : 1.0, 3 : 1.0, 4 : 1.0, 5 : 1.0, 6 : 1.0,
                                  7 : 1.0, 8 : 0.1, 9 : 1.0, 10 : 1.0, 11 : 1.0, 12 : 1.0,
@@ -43,6 +44,14 @@ class IndexChartView: LineChartView {
                                  19 : 4.0, 20 : 5.0, 21 : 1.0, 22 : 5.0, 23 : 1.0, 24 : 3.0]
     var lineChartEntry = [ChartDataEntry]()
     
+    let disposeBag = DisposeBag()
+    let chartView = LineChartView()
+    let chartLabel = UILabel()
+    let chartUnit = UILabel()
+    
+    let chartLabelText: BehaviorSubject<String> = BehaviorSubject(value: "")
+    let chartUnitText: BehaviorSubject<String> = BehaviorSubject(value: "")
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -52,11 +61,65 @@ class IndexChartView: LineChartView {
         }
         lineChartEntry = lineChartEntry.sorted(by: {$0.x < $1.x})
         
-        configureChart()
+        bind()
+        layout()
+        attribute()
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    private func bind() {
+        chartLabelText
+            .subscribe(onNext: {
+                self.chartLabel.text = $0
+            })
+            .disposed(by: disposeBag)
+        
+        chartUnitText
+            .subscribe(onNext: {
+                self.chartUnit.text = $0
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func layout() {
+        [chartLabel, chartUnit, chartView].forEach{ self.addSubview($0) }
+        
+        chartLabel.snp.makeConstraints {
+            $0.top.equalToSuperview().inset(5)
+            $0.leading.equalToSuperview().inset(10)
+            $0.height.equalTo(17)
+//            $0.bottom.equalTo(chartUnit.snp.bottom).offset(-2)
+        }
+        
+        chartUnit.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(chartLabel.snp.trailing).offset(4)
+            $0.height.equalTo(25)
+        }
+        
+        chartView.snp.makeConstraints {
+            $0.top.equalTo(chartUnit.snp.top).offset(17)
+            $0.leading.trailing.equalToSuperview()
+            $0.height.equalTo(190)
+        }
+    }
+    
+    private func attribute() {
+        configureChartLabel()
+        configureChart()
+    }
+    
+    private func configureChartLabel() {
+        chartLabel.font = UIFont.KFont.appleSDNeoMediumSmall
+        chartLabel.textColor = UIColor.KColor.gray01
+        chartLabel.sizeToFit()
+        
+        chartUnit.font = UIFont.KFont.appleSDNeoSemiBoldExtraLarge
+        chartUnit.textColor = UIColor.KColor.black
+        chartUnit.sizeToFit()
     }
     
     private func configureChart() {
@@ -77,17 +140,17 @@ class IndexChartView: LineChartView {
         
         let chartData = LineChartData(dataSet: lineChartDataSet)
         chartData.setDrawValues(false)
-        self.data = chartData
+        chartView.data = chartData
         
-        self.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
-        self.leftAxis.enabled = false
-        self.legend.enabled = false
-        self.doubleTapToZoomEnabled = false
-        self.drawBordersEnabled = true
-        self.backgroundColor = UIColor.KColor.clear
-        self.borderColor = UIColor.KColor.clear
+        chartView.animate(xAxisDuration: 1.0, yAxisDuration: 1.0)
+        chartView.leftAxis.enabled = false
+        chartView.legend.enabled = false
+        chartView.doubleTapToZoomEnabled = false
+        chartView.drawBordersEnabled = true
+        chartView.backgroundColor = UIColor.KColor.clear
+        chartView.borderColor = UIColor.KColor.clear
         
-        let yAxis = self.rightAxis
+        let yAxis = chartView.rightAxis
         yAxis.labelFont = UIFont.KFont.lexendMini
         yAxis.labelTextColor = UIColor.KColor.black
         yAxis.setLabelCount(6, force: false)
@@ -99,31 +162,31 @@ class IndexChartView: LineChartView {
         // background 격자
         yAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1)
         
-        self.xAxis.labelPosition = .bottom
-        self.xAxis.labelFont = UIFont.KFont.appleSDNeoSemiBoldMini
-        self.xAxis.labelTextColor = UIColor.KColor.black
+        chartView.xAxis.labelPosition = .bottom
+        chartView.xAxis.labelFont = UIFont.KFont.appleSDNeoSemiBoldMini
+        chartView.xAxis.labelTextColor = UIColor.KColor.black
         
         // 0, 6, 12, 18, 24
-        self.xAxis.labelCount = 5
-        self.xAxis.forceLabelsEnabled = true
+        chartView.xAxis.labelCount = 5
+        chartView.xAxis.forceLabelsEnabled = true
         
         // 0, 24 안쪽으로
-        self.xAxis.avoidFirstLastClippingEnabled = true
+        chartView.xAxis.avoidFirstLastClippingEnabled = true
         
-        self.xAxis.axisMinimum = chartData.xMin
+        chartView.xAxis.axisMinimum = chartData.xMin
         
         // x 축 line 제외
-        self.xAxis.drawAxisLineEnabled = false
+        chartView.xAxis.drawAxisLineEnabled = false
 
-        self.xAxis.gridLineWidth = 1.0
-        self.xAxis.gridLineDashPhase = 1.0
-        self.xAxis.gridLineDashLengths = [5]
-        self.xAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1)
+        chartView.xAxis.gridLineWidth = 1.0
+        chartView.xAxis.gridLineDashPhase = 1.0
+        chartView.xAxis.gridLineDashLengths = [5]
+        chartView.xAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1)
         
-        self.drawGridBackgroundEnabled = true
-        self.gridBackgroundColor = UIColor(red: 247/255, green: 248/255, blue: 252/255, alpha: 1)
+        chartView.drawGridBackgroundEnabled = true
+        chartView.gridBackgroundColor = UIColor(red: 247/255, green: 248/255, blue: 252/255, alpha: 1)
         
-        self.xAxis.valueFormatter = CustomAxisValueFormatter()
-        self.xAxis.granularity = 1
+        chartView.xAxis.valueFormatter = CustomAxisValueFormatter()
+        chartView.xAxis.granularity = 1
     }
 }
