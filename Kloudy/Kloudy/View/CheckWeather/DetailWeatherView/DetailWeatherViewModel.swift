@@ -25,11 +25,11 @@ struct testWeekWeatherData {
 //TODO: 테스트데이터 입니다. 차후 수정 필요
 struct weatehrViewModel {
     let todayWeatherDatas = Observable.of([
-        testTodayWeatherModel(hour: 0, status: 1, temperature: 16.5, precipitation: 0.5),
-        testTodayWeatherModel(hour: 1, status: 2, temperature: 15.3, precipitation: 0.5),
+        testTodayWeatherModel(hour: 0, status: 0, temperature: 16.5, precipitation: 0.5),
+        testTodayWeatherModel(hour: 1, status: 4, temperature: 15.3, precipitation: 0.5),
         testTodayWeatherModel(hour: 2, status: 3, temperature: 12.2, precipitation: 0.5),
-        testTodayWeatherModel(hour: 3, status: 4, temperature: 11.5, precipitation: 0.5),
-        testTodayWeatherModel(hour: 4, status: 2, temperature: 16.5, precipitation: 0.5),
+        testTodayWeatherModel(hour: 3, status: 2, temperature: 11.5, precipitation: 0.5),
+        testTodayWeatherModel(hour: 4, status: 0, temperature: 16.5, precipitation: 0.5),
         testTodayWeatherModel(hour: 5, status: 2, temperature: 16.5, precipitation: 0.5),
         testTodayWeatherModel(hour: 6, status: 2, temperature: 16.5, precipitation: 0.5),
         testTodayWeatherModel(hour: 7, status: 2, temperature: 16.5, precipitation: 0.5),
@@ -52,9 +52,9 @@ struct weatehrViewModel {
     ])
     
     let weekWeatherDatas = Observable.of([
-        testWeekWeatherData(day: 0, status: 1, minTemperature: 4.4, maxTemperature: 16.7),
+        testWeekWeatherData(day: 0, status: 0, minTemperature: 3.4, maxTemperature: 6.7),
         testWeekWeatherData(day: 1, status: 2, minTemperature: 14.4, maxTemperature: 16.7),
-        testWeekWeatherData(day: 2, status: 3, minTemperature: 14.4, maxTemperature: 16.7),
+        testWeekWeatherData(day: 2, status: 3, minTemperature: 7.4, maxTemperature: 16.7),
         testWeekWeatherData(day: 3, status: 4, minTemperature: 14.4, maxTemperature: 16.7),
         testWeekWeatherData(day: 4, status: 5, minTemperature: 14.4, maxTemperature: 16.7),
         testWeekWeatherData(day: 5, status: 0, minTemperature: 14.4, maxTemperature: 16.7),
