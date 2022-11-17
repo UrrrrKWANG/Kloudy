@@ -1,15 +1,16 @@
 //
-//  LocationSelectionNavigationView.swift
+//  SettingLicenseNavigationView.swift
 //  Kloudy
 //
-//  Created by Seulki Lee on 2022/10/26.
+//  Created by Geunil Park on 2022/11/16.
 //
+
+import Foundation
 
 import UIKit
 import SnapKit
 
-class LocationSelectionNavigationView: UIView {
-
+class SettingLicenseNavigationView: UIView {
     let backButton = UIButton()
     let navigationTitle = UILabel()
     
@@ -23,8 +24,8 @@ class LocationSelectionNavigationView: UIView {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        self.addSubview(backButton)
-        self.addSubview(navigationTitle)
+        
+        [backButton, navigationTitle].forEach{ self.addSubview($0) }
         configureBackButton()
         configureNavigationTitle()
     }
@@ -39,8 +40,8 @@ class LocationSelectionNavigationView: UIView {
     }
     
     func configureNavigationTitle() {
-        navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        navigationTitle.text = "지역"
+        navigationTitle.text = "라이센스"
+        navigationTitle.font = UIFont.KFont.appleSDNeoBold20
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {
             $0.center.equalToSuperview()

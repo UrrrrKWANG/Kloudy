@@ -12,6 +12,13 @@
 		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		22072511291A9F9800E01508 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22072510291A9F9800E01508 /* CityInformation.csv */; };
+		2286B44F2924B8E2003965F2 /* SettingLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */; };
+		2286B4512924BAB2003965F2 /* SettingNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B4502924BAB2003965F2 /* SettingNavigationView.swift */; };
+		2286B45329250AED003965F2 /* SettingLicenseCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B45229250AED003965F2 /* SettingLicenseCellView.swift */; };
+		2286B45529250E9E003965F2 /* SettingVersionCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B45429250E9E003965F2 /* SettingVersionCellView.swift */; };
+		2286B457292512AE003965F2 /* SettingLocationAllowCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B456292512AE003965F2 /* SettingLocationAllowCellView.swift */; };
+		2286B459292522B5003965F2 /* SettingLicenseNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B458292522B5003965F2 /* SettingLicenseNavigationView.swift */; };
+		2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B45A2925325C003965F2 /* LicenseCellView.swift */; };
 		26832CF4213CDDECD581CA7C /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */; };
 		8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE412909601C00F80ECB /* LocationTableCell.swift */; };
 		8B22A3BD291A3B820079FA48 /* LocationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */; };
@@ -174,6 +181,13 @@
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2207250F291A322B00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		22072510291A9F9800E01508 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
+		2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseView.swift; sourceTree = "<group>"; };
+		2286B4502924BAB2003965F2 /* SettingNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNavigationView.swift; sourceTree = "<group>"; };
+		2286B45229250AED003965F2 /* SettingLicenseCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseCellView.swift; sourceTree = "<group>"; };
+		2286B45429250E9E003965F2 /* SettingVersionCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingVersionCellView.swift; sourceTree = "<group>"; };
+		2286B456292512AE003965F2 /* SettingLocationAllowCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLocationAllowCellView.swift; sourceTree = "<group>"; };
+		2286B458292522B5003965F2 /* SettingLicenseNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseNavigationView.swift; sourceTree = "<group>"; };
+		2286B45A2925325C003965F2 /* LicenseCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseCellView.swift; sourceTree = "<group>"; };
 		5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy_KloudyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
 		8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchBar.swift; sourceTree = "<group>"; };
@@ -370,6 +384,13 @@
 			children = (
 				8B6409962918F1DC00DC2962 /* SettingView.swift */,
 				8B6409982918F1E200DC2962 /* SettingViewModel.swift */,
+				2286B4502924BAB2003965F2 /* SettingNavigationView.swift */,
+				2286B45229250AED003965F2 /* SettingLicenseCellView.swift */,
+				2286B45429250E9E003965F2 /* SettingVersionCellView.swift */,
+				2286B456292512AE003965F2 /* SettingLocationAllowCellView.swift */,
+				2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */,
+				2286B458292522B5003965F2 /* SettingLicenseNavigationView.swift */,
+				2286B45A2925325C003965F2 /* LicenseCellView.swift */,
 			);
 			path = Setting;
 			sourceTree = "<group>";
@@ -990,6 +1011,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */,
 				8BC8F7D229011DB200EF83AE /* CoreDataStack.swift in Sources */,
 				8BC8F7CC29011DB200EF83AE /* Font+.swift in Sources */,
 				8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */,
@@ -1015,11 +1037,13 @@
 				BAFCEB082923C0930084F28E /* LocationWeatherIndexView.swift in Sources */,
 				BAFCEAF62920E65B0084F28E /* WeekWeatherDataCell.swift.swift in Sources */,
 				8BC8F7FC29011DB200EF83AE /* LocationSelectionViewModel.swift in Sources */,
+				2286B45329250AED003965F2 /* SettingLicenseCellView.swift in Sources */,
 				8B6409922918F02100DC2962 /* DetailWeatherView.swift in Sources */,
 				8B22A3BF291F59730079FA48 /* IndexChartView.swift in Sources */,
 				8B64099E2918F26800DC2962 /* WeatherIndexDetailViewModel.swift in Sources */,
 				8B64098F2918EFD000DC2962 /* WeatherIndexViewModel.swift in Sources */,
 				8B64098D2918EFC900DC2962 /* WeatherIndexView.swift in Sources */,
+				2286B44F2924B8E2003965F2 /* SettingLicenseView.swift in Sources */,
 				D592C999290B26FB00C53F06 /* Protocol+.swift in Sources */,
 				8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */,
 				8BC8F7FB29011DB200EF83AE /* LocationSelectionView.swift in Sources */,
@@ -1038,7 +1062,11 @@
 				8BC8F7D529011DB200EF83AE /* Location+CoreDataClass.swift in Sources */,
 				8B6409942918F02C00DC2962 /* DetailWeatherViewModel.swift in Sources */,
 				8B64099C2918F25D00DC2962 /* WeatherIndexDetailView.swift in Sources */,
+				2286B457292512AE003965F2 /* SettingLocationAllowCellView.swift in Sources */,
+				2286B4512924BAB2003965F2 /* SettingNavigationView.swift in Sources */,
 				D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */,
+				2286B459292522B5003965F2 /* SettingLicenseNavigationView.swift in Sources */,
+				2286B45529250E9E003965F2 /* SettingVersionCellView.swift in Sources */,
 				8BC8F7CF29011DB200EF83AE /* Kloudy.xcdatamodeld in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

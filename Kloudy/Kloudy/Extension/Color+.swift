@@ -10,7 +10,7 @@ import UIKit
 extension UIColor {
     // 사용 방법 : UIColor.KColor.primaryDarkGreen
     enum KColor {
-        static var black: UIColor { UIColor(named: "Black")! }
+        static var black: UIColor { UIColor(named: "black")! }
         static var primaryBlue01: UIColor { UIColor(named: "PrimaryBlue01")! }
         static var primaryBlue02: UIColor { UIColor(named: "PrimaryBlue02")! }
         static var primaryBlue03: UIColor { UIColor(named: "PrimaryBlue03")! }
