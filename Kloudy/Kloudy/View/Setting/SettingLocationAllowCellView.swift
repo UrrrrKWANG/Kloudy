@@ -48,10 +48,8 @@ class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
         let currentStatus = CLLocationManager().authorizationStatus
         
         if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
-            print("Its false")
             locationAllowSwitch.isOn = false
         } else {
-            print("Its true")
             locationAllowSwitch.isOn = true
         }
         
@@ -72,7 +70,7 @@ class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
     @objc func onClickSwitch(_ sender: UISwitch) {
         self.locationManager.delegate = self
         
-        var currentStatus = CLLocationManager().authorizationStatus
+        let currentStatus = CLLocationManager().authorizationStatus
         
         if self.locationAllowSwitch.isOn == false {
             if let appSettings = URL(string: UIApplication.openSettingsURLString) {
