@@ -94,7 +94,6 @@ class DetailWeatherView: UIViewController {
     
     let dividingLineView: UIView = {
         let uiView = UIView()
-        uiView.frame = CGRect(x: 0, y: 0, width: 330, height: 13)
         uiView.backgroundColor = UIColor.KColor.primaryBlue06
         return uiView
     }()
@@ -140,7 +139,7 @@ class DetailWeatherView: UIViewController {
             $0.top.equalToSuperview().inset(12)
             $0.height.equalTo(62)
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(350)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
         
         labelInTodayCollectionView.snp.makeConstraints{
@@ -150,7 +149,7 @@ class DetailWeatherView: UIViewController {
         
         todayCollectionView.snp.makeConstraints{
             $0.top.equalTo(labelInTodayCollectionView.snp.bottom).offset(12)
-            $0.width.equalTo(350)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(146)
             $0.centerX.equalToSuperview()
         }
@@ -158,7 +157,7 @@ class DetailWeatherView: UIViewController {
         dividingLineView.snp.makeConstraints{
             $0.top.equalTo(todayCollectionView.snp.bottom).offset(40)
             $0.height.equalTo(2)
-            $0.width.equalTo(330)
+            $0.leading.trailing.equalToSuperview().inset(30)
             $0.centerX.equalToSuperview()
         }
         

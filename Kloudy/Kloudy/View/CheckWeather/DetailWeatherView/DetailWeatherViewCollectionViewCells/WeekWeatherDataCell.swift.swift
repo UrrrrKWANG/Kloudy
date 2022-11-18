@@ -39,7 +39,6 @@ class WeekWeatherDataCell: UICollectionViewCell{
     }()
     let dividingLineView: UIView = {
         let uiView = UIView()
-        uiView.frame = CGRect(x: 0, y: 0, width: 330, height: 2)
         uiView.backgroundColor = UIColor.KColor.primaryBlue06
         return uiView
     }()
