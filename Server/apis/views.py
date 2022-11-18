@@ -24,7 +24,6 @@ def getWeathers(request):
         weather = WeatherEven.objects.filter(code = code).first()
         print(weather)
         serializer = WeatherSerializerEven(weather)
-        print(serializer)
         return Response(serializer.data)
 
     else:

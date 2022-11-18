@@ -64,28 +64,6 @@ def time_interval_weather():
         flower_jsonObject             = weather_infos[7]
         middle_state_jsonObject       = weather_infos[8]
         middle_temperature_jsonObject = weather_infos[9]
-        # print("====================main_state_jsonObject=========================")
-        # print(main_state_jsonObject)
-        # print("=====================main_state_short_jsonObject========================")
-        # print(main_state_short_jsonObject)
-        # print("=====================main_current_jsonObject========================")
-        # print(main_current_jsonObject)
-        # print("=====================weather_24h_jsonObject========================")
-        # print(weather_24h_jsonObject)
-        # print("=====================air_jsonObject========================")
-        # print(air_jsonObject)
-        # print("=====================weather_48h_jsonObject========================")
-        # print(weather_48h_jsonObject)
-        # print("=====================main_max_min_jsonObject========================")
-        # print(main_max_min_jsonObject)
-        # print("======================flower_jsonObject=======================")
-        # print(flower_jsonObject)
-        # print("=======================middle_state_jsonObject======================")
-        # print(middle_state_jsonObject)
-        # print("=======================middle_temperature_jsonObject======================")
-        # print(middle_temperature_jsonObject)
-        # print("=============================================")
-
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")
@@ -131,7 +109,7 @@ def time_interval_weather():
 
             # 마스크 지수
             if time % 2 != 0:
-                    mask_index = MaskIndexEven.objects.filter(code = location.code).first()
+                mask_index = MaskIndexEven.objects.filter(code = location.code).first()
             else:
                 mask_index = MaskIndexOdd.objects.filter(code = location.code).first()
 
@@ -312,13 +290,12 @@ def calculate_time():
     now = datetime.datetime.now()
     print(now)
     today = now.strftime("%Y%m%d")
-    print(f"날짜 계산 왜 이래 : {today}")
+    print(f"날짜 : {today}")
     time = cal_time([now.strftime("%H"), now.strftime("%M")])
     
     return [today, time]
 
 def get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject):
-    print("MAIN WEATHER 계산")
     if main_state_jsonObject.get('response').get('header').get('resultCode') != "00":
         return [0, 0, 0, 0]
     elif main_state_short_jsonObject.get('response').get('header').get('resultCode') != "00":
