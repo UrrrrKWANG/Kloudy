@@ -299,6 +299,7 @@ extension LocationSelectionView: UITableViewDataSource {
             }
             cell.backgroundColor = UIColor.KColor.clear
             cell.selectionStyle = .none
+            // 추후에 코드 사용할 예정
 //            if indexPath.row == 0 {
 //                cell.locationNameLabel.text = "현재 위치"
 //            } else {

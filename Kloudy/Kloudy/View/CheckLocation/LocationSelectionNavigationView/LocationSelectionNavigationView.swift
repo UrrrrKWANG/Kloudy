@@ -30,7 +30,7 @@ class LocationSelectionNavigationView: UIView {
     }
     
     private func configureBackButton() {
-        backButton.setImage(UIImage(systemName: "arrow.backward")?.withRenderingMode(.alwaysTemplate), for: .normal)
+        backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         backButton.tintColor = UIColor.KColor.gray01
         backButton.setPreferredSymbolConfiguration(.init(pointSize: 24, weight: .regular, scale: .default), forImageIn: .normal)
         self.backButton.snp.makeConstraints {
