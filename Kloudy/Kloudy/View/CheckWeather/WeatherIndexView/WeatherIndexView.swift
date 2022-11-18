@@ -12,7 +12,7 @@ import RxCocoa
 import RxSwift
 
 class WeatherIndexView: UIView {
-    
+    var indexName = String()
     var disposeBag = DisposeBag()
     var viewModel = WeatherIndexViewModel()
     var city = String()
@@ -139,10 +139,10 @@ class WeatherIndexView: UIView {
             $0.trailing.equalTo(weatherIndexListView.snp.leading)
         }
        
-//        indexCollectionView.snp.makeConstraints {
-//            $0.top.equalToSuperview() // 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
-//            $0.width.height.equalToSuperview()
-//        }
+        indexCollectionView.snp.makeConstraints {
+            $0.top.equalToSuperview() // 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
+            $0.width.height.equalToSuperview()
+        }
     }
 }
 
@@ -152,6 +152,7 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let indexName = viewModel.indexArray[cityIndex].IndexArray[indexPath.row]
         let indexStatus = locationWeatherIndexView.findStatus(city: city, indexName: indexName)
         let imageOrLottieName = locationWeatherIndexView.findImageOrLottieName(indexName: indexName, status: indexStatus)
+        print(indexName)
         locationWeatherIndexView.changeImageView(name: imageOrLottieName)
         locationWeatherIndexView.changeCollectionView(index: indexPath.row)
         let transedIndexName = locationWeatherIndexView.transIndexName(indexName: indexName)

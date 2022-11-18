@@ -143,92 +143,92 @@ class LocationWeatherIndexView: UIView {
         return 0
     }
     
-    func findImageOrLottieName(indexName: String, status: Int) -> String {
+    func findImageOrLottieName(indexName: IndexType, status: Int) -> String {
         let foundElement =  (indexName, status)
         switch foundElement {
-        case let(indexName, status) where indexName == "maskIndex" && status == 0 :
+        case let(indexName, status) where indexName == .mask && status == 0 :
             return "마스크_1단계"
-        case let(indexName, status) where indexName == "maskIndex" && status == 1 :
+        case let(indexName, status) where indexName == .mask && status == 1 :
             return "마스크_2단계"
-        case let(indexName, status) where indexName == "maskIndex" && status == 2 :
+        case let(indexName, status) where indexName == .mask && status == 2 :
             return "마스크_3단계"
-        case let(indexName, status) where indexName == "maskIndex" && status == 3 :
+        case let(indexName, status) where indexName == .mask && status == 3 :
             return "mask_4grade"
-        case let(indexName, status) where indexName == "maskIndex" && status == 4 :
+        case let(indexName, status) where indexName == .mask && status == 4 :
             return "mask_4grade"
-        case let(indexName, status) where indexName == "umbrellaIndex" && status == 0 :
+        case let(indexName, status) where indexName == .unbrella && status == 0 :
             return "rain_step1"
-        case let(indexName, status) where indexName == "umbrellaIndex" && status == 1 :
+        case let(indexName, status) where indexName == .unbrella && status == 1 :
             return "rain_step2"
-        case let(indexName, status) where indexName == "umbrellaIndex" &&  status == 2 :
+        case let(indexName, status) where indexName == .unbrella &&  status == 2 :
             return "rain_step3"
-        case let(indexName, status) where indexName == "umbrellaIndex" && status == 3 :
+        case let(indexName, status) where indexName == .unbrella && status == 3 :
             return "rain_step4"
-        case let(indexName, status) where indexName == "umbrellaIndex" && status == 4 :
+        case let(indexName, status) where indexName == .unbrella && status == 4 :
             return "rain_step4"
         default:
             return ""
         }
         
     }
-    func transIndexName(indexName: String) -> String {
+    func transIndexName(indexName: IndexType) -> String {
         switch indexName {
-        case "maskIndex" :
+        case .mask :
             return "마스크 지수"
-        case "umbrellaIndex" :
+        case .unbrella :
             return "우산 지수"
-        case "outerIndex" :
+        case .outer :
             return "겉옷 지수"
-        case "laundryIndex" :
+        case .laundry :
             return "빨래 지수"
-        case "carwashIndex" :
+        case .car :
             return "세차 지수"
-        case "campareIndex" :
+        case .temperatureGap :
             return "일교차 지수"
         default :
             break
         }
         return ""
     }
-    func findStatus(city: String, indexName: String) -> Int {
+    func findStatus(city: String, indexName: IndexType) -> Int {
         for cityIndex in 0..<viewModel.indexDummyData.count {
-            if city == viewModel.indexDummyData[cityIndex].localName && indexName == "umbrellaIndex" {
+            if city == viewModel.indexDummyData[cityIndex].localName && indexName == .unbrella {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.status
-            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "maskIndex" {
+            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == .mask {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.status
-            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "outerIndex" {
+            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == .outer {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.status
-            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "laundryIndex" {
+            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == .laundry {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].laundry_index.status
-            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "carwashIndex" {
+            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == .car {
                 return viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.status
-            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == "campareIndex" {
+            } else if city == viewModel.indexDummyData[cityIndex].localName && indexName == .temperatureGap {
                 return Int(viewModel.indexDummyData[cityIndex].cityIndexData[0].campare_index.today_max_temperature)
             }
         }
         return 0
     }
-    func findInternalIndexColorAndImage(indexName: String, pathIndex: Int) -> UIView {
+    func findInternalIndexColorAndImage(indexName: IndexType, pathIndex: Int) -> UIView {
         let foundElement = (indexName, pathIndex)
         var uiColor = UIColor()
         switch foundElement {
-        case let(indexName, pathIndex) where indexName == "maskIndex" && pathIndex == 0 :
+        case let(indexName, pathIndex) where indexName == .mask && pathIndex == 0 :
             uiColor = UIColor.yellow
-        case let(indexName, pathIndex) where indexName == "maskIndex" && pathIndex == 1 :
+        case let(indexName, pathIndex) where indexName == .mask && pathIndex == 1 :
             uiColor = UIColor.red
-        case let(indexName, pathIndex) where indexName == "umbrellaIndex" && pathIndex == 0 :
+        case let(indexName, pathIndex) where indexName == .unbrella && pathIndex == 0 :
             uiColor = UIColor.gray
-        case let(indexName, pathIndex) where indexName == "umbrellaIndex" && pathIndex == 1 :
+        case let(indexName, pathIndex) where indexName == .unbrella && pathIndex == 1 :
             uiColor = UIColor.green
-        case let(indexName, pathIndex) where indexName == "outerIndex" && pathIndex == 0 :
+        case let(indexName, pathIndex) where indexName == .outer && pathIndex == 0 :
             uiColor = UIColor.blue
-        case let(indexName, pathIndex) where indexName == "laundryIndex" && pathIndex == 0 :
+        case let(indexName, pathIndex) where indexName == .laundry && pathIndex == 0 :
             uiColor = UIColor.cyan
-        case let(indexName, pathIndex) where indexName == "carwashIndex" && pathIndex == 0 :
+        case let(indexName, pathIndex) where indexName == .car && pathIndex == 0 :
             uiColor = UIColor.cyan
-        case let(indexName, pathIndex) where indexName == "carwashIndex" && pathIndex == 1 :
+        case let(indexName, pathIndex) where indexName == .car && pathIndex == 1 :
             uiColor = UIColor.yellow
-        case let(indexName, pathIndex) where indexName == "carwashIndex" && pathIndex == 2 :
+        case let(indexName, pathIndex) where indexName == .car && pathIndex == 2 :
             uiColor = UIColor.red
             
             
@@ -240,7 +240,7 @@ class LocationWeatherIndexView: UIView {
         cellFrame.layer.backgroundColor = uiColor.cgColor
         return cellFrame
     }
-    func calculateInternalIndexCount(indexName: String) -> Int {
+    func calculateInternalIndexCount(indexName: IndexType) -> Int {
         var indexCount = 0
         let cityIndex = findCityIndex(city: city)
         if viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.wind >= 4 {
@@ -279,15 +279,15 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         let indexCount = calculateInternalIndexCount(indexName: indexName)
         var cellCount = 0
         switch indexName {
-        case "umbrellaIndex":
+        case .unbrella:
             cellCount = 2
-        case "maskIndex":
+        case .mask:
             cellCount = 2
-        case "outerIndex":
+        case .outer:
             cellCount = 1
-        case "laundryIndex":
+        case .laundry:
             cellCount = 1
-        case "carwashIndex":
+        case .car:
             cellCount = 3
         default:
             break
@@ -310,7 +310,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return  CGSize(width: 30 , height: 30)
+        return  CGSize(width: 10 , height: 10)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
