@@ -240,6 +240,34 @@ class LocationWeatherIndexView: UIView {
         cellFrame.layer.backgroundColor = uiColor.cgColor
         return cellFrame
     }
+    func calculateInternalIndexCount(indexName: String) -> Int {
+        var indexCount = 0
+        let cityIndex = findCityIndex(city: city)
+        if viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.wind >= 4 {
+            indexCount += 1
+        }
+        for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
+            if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
+                indexCount += 1
+                break
+            }
+        }
+        if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
+            indexCount += 1
+        }
+        
+        if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= -12 {
+            indexCount += 1
+        }
+        
+        if viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.day_max_temperature <= 2 {
+            indexCount += 1
+        }
+        if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= 2{
+            indexCount += 1
+        }
+        return indexCount
+    }
 }
 
 
@@ -248,6 +276,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
+        let indexCount = calculateInternalIndexCount(indexName: indexName)
         var cellCount = 0
         switch indexName {
         case "umbrellaIndex":
@@ -284,8 +313,10 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         return  CGSize(width: 30 , height: 30)
     }
     
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        print(indexPath)
+    }
 }
-
 
 class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
     let cellSpacing: CGFloat = 4
@@ -300,11 +331,11 @@ class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         self.minimumLineSpacing = 4.0
         self.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom:0, right: 16)
-        let attributes = super.layoutAttributesForElements(in: rect)
-        
+        guard let superArray = super.layoutAttributesForElements(in: rect) else { return nil }
+        guard let attributes = NSArray(array: superArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return nil }
         var rightMargin = sectionInset.right
         var maxY: CGFloat = 300
-        attributes?.forEach { layoutAttribute in
+        attributes.forEach { layoutAttribute in
             if layoutAttribute.frame.origin.y >= maxY {
                 rightMargin = sectionInset.right
             }
