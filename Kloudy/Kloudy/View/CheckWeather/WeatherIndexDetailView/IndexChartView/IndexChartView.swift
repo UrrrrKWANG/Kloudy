@@ -91,7 +91,6 @@ class IndexChartView: UIView {
             $0.top.equalToSuperview().inset(5)
             $0.leading.equalToSuperview().inset(10)
             $0.height.equalTo(17)
-//            $0.bottom.equalTo(chartUnit.snp.bottom).offset(-2)
         }
         
         chartUnit.snp.makeConstraints {
@@ -113,11 +112,11 @@ class IndexChartView: UIView {
     }
     
     private func configureChartLabel() {
-        chartLabel.font = UIFont.KFont.appleSDNeoMediumSmall
+        chartLabel.font = UIFont.KFont.appleSDNeoMedium14
         chartLabel.textColor = UIColor.KColor.gray01
         chartLabel.sizeToFit()
         
-        chartUnit.font = UIFont.KFont.appleSDNeoSemiBoldExtraLarge
+        chartUnit.font = UIFont.KFont.appleSDNeoSemiBold20
         chartUnit.textColor = UIColor.KColor.black
         chartUnit.sizeToFit()
     }
@@ -134,7 +133,7 @@ class IndexChartView: UIView {
         lineChartDataSet.lineWidth = 2
         
         // Chart Fill
-        lineChartDataSet.fill = ColorFill(color: NSUIColor(red: 102/255, green: 200/255, blue: 1, alpha: 1.0))
+        lineChartDataSet.fill = ColorFill(color: NSUIColor.KColor.chartBlue)
         lineChartDataSet.fillAlpha = 0.2
         lineChartDataSet.drawFilledEnabled = true
         
@@ -151,19 +150,19 @@ class IndexChartView: UIView {
         chartView.borderColor = UIColor.KColor.clear
         
         let yAxis = chartView.rightAxis
-        yAxis.labelFont = UIFont.KFont.lexendMini
+        yAxis.labelFont = UIFont.KFont.lexendLight14
         yAxis.labelTextColor = UIColor.KColor.black
         yAxis.setLabelCount(6, force: false)
         yAxis.axisMinLabels = 0
         yAxis.axisMaximum = chartData.yMax + 1
-        yAxis.axisLineColor = .clear
+        yAxis.axisLineColor = UIColor.KColor.clear
 //        yAxis.setLabelCount(Int(chartData.yMax + 1 / 3), force: true)
         
         // background 격자
-        yAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1)
+        yAxis.gridColor = UIColor.KColor.primaryBlue05
         
         chartView.xAxis.labelPosition = .bottom
-        chartView.xAxis.labelFont = UIFont.KFont.appleSDNeoSemiBoldMini
+        chartView.xAxis.labelFont = UIFont.KFont.lexendLight12
         chartView.xAxis.labelTextColor = UIColor.KColor.black
         
         // 0, 6, 12, 18, 24
@@ -181,10 +180,10 @@ class IndexChartView: UIView {
         chartView.xAxis.gridLineWidth = 1.0
         chartView.xAxis.gridLineDashPhase = 1.0
         chartView.xAxis.gridLineDashLengths = [5]
-        chartView.xAxis.gridColor = UIColor(red: 233/255, green: 237/255, blue: 248/255, alpha: 1)
+        chartView.xAxis.gridColor = UIColor.KColor.primaryBlue05
         
         chartView.drawGridBackgroundEnabled = true
-        chartView.gridBackgroundColor = UIColor(red: 247/255, green: 248/255, blue: 252/255, alpha: 1)
+        chartView.gridBackgroundColor = UIColor.KColor.gray05
         
         chartView.xAxis.valueFormatter = CustomAxisValueFormatter()
         chartView.xAxis.granularity = 1

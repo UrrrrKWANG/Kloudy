@@ -227,7 +227,7 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     private func configureTitleLabel() {
-        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0]) 지수", font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.black)
+        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0]) 지수", font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
         titleLabel.sizeToFit()
     }
     

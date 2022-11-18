@@ -22,7 +22,7 @@ class SequenceLabelCell: UICollectionViewCell {
     
     let sequenceLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.KFont.lexendMedius
+        label.font = UIFont.KFont.lexendRegular16
         return label
     }()
     
