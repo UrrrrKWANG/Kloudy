@@ -31,19 +31,23 @@ class DetailWeatherView: UIViewController {
         scrollView.backgroundColor = UIColor.KColor.white
         scrollView.translatesAutoresizingMaskIntoConstraints = false
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
-//        scrollView.delegate = DetailWeatherView()
         return scrollView
     }()
-
     
     let viewModel = weatehrViewModel()
     
     lazy var todayCollectionView = makeCollectionView(direction: .horizontal, itemSizeWith: 65, itemSizeheight: 100, cell: TodayWeatherDataCell.self, identifier: TodayWeatherDataCell.identifier, contentInsetLeft: -2, contentInsetRight: 0, isScroll: true, minimumLineSpacing: 15)
     lazy var weekCollectionView = makeCollectionView(direction: .vertical, itemSizeWith: 348, itemSizeheight: 59, cell: WeekWeatherDataCell.self, identifier: WeekWeatherDataCell.identifier, contentInsetLeft: 16, contentInsetRight: 16, isScroll: false, minimumLineSpacing: 0)
     
-    let titleWeatherCondition: UIImageView = {
+    lazy var titleWeatherCondition: UIImageView = {
         let uiImageView = UIImageView()
         uiImageView.contentMode = .scaleAspectFit
+        let numbersObservable = viewModel.todayWeatherDatas
+        numbersObservable.subscribe(
+            onNext: {[unowned self] testData in
+                uiImageView.image = UIImage(named:findWeatehrCondition(weatherCondition: testData[0].status)[0])
+            }
+        ).disposed(by: disposeBag)
         return uiImageView
     }()
     
@@ -100,12 +104,10 @@ class DetailWeatherView: UIViewController {
         addLayout()
         setUplayout()
         bind()
-        scrollView.delegate = self
-
     }
     
     func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int, isScroll: Bool, minimumLineSpacing: CGFloat) -> UICollectionView {
-
+        
         let layout = UICollectionViewFlowLayout() // collectionView layout설정
         layout.scrollDirection = direction // collectionView 스크롤 방향 , 수평
         layout.itemSize = CGSize(width: itemSizeWith, height: itemSizeheight) // cellSize
@@ -190,7 +192,6 @@ class DetailWeatherView: UIViewController {
             }
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
             cell.weatherCondition.image = UIImage(named: weatherCondition[0])
-            self.titleWeatherCondition.image = UIImage(named: weatherCondition[0])
             if index == 0 {
                 self.currentTemperature.text = String(Int(datas.temperature)) + "°"
             }
@@ -231,17 +232,6 @@ class DetailWeatherView: UIViewController {
             return [""]
         }
     }
-
-}
-
-extension DetailWeatherView : UIScrollViewDelegate {
-//    func scrollViewDidScrollToTop(_ scrollView: UIScrollView) {
-//        print("♥️♥️♥️")
-//        self.dismiss(animated: true)
-//    }
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        self.dismiss(animated: true)
-//    }
     
 }
 
