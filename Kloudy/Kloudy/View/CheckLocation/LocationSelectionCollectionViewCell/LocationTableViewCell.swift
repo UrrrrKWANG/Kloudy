@@ -81,7 +81,7 @@ class LocationTableViewCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         contentView.backgroundColor = UIColor.KColor.white
-        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 21, bottom: 8, right: 21))
+        contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 0, bottom: 8, right: 0))
         
         contentView.layer.cornerRadius = contentView.frame.height / 5
         
