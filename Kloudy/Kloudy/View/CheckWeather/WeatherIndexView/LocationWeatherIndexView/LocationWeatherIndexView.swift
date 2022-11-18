@@ -119,9 +119,8 @@ class LocationWeatherIndexView: UIView {
         
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(300)
-            
             $0.trailing.equalToSuperview()
+            $0.height.equalTo(30)
             $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
         }
     }
@@ -279,7 +278,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return  CGSize(width: 10 , height: 10)
+        return  CGSize(width: 30 , height: 30)
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
