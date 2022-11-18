@@ -116,15 +116,7 @@ class WeatherIndexSerializerOdd(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        new_weather_index = WeatherIndexOdd.objects.create(poll=1)
-        new_weather_index.umbrella_index.set(validated_data['umbrella_index'])
-        new_weather_index.mask_index.set(validated_data['mask_index'])
-        new_weather_index.outer_index.set(validated_data['outer_index'])
-        new_weather_index.laundry_index.set(validated_data['laundry_index'])
-        new_weather_index.carwash_index.set(validated_data['carwash_index'])
-        new_weather_index.compare_index.set(validated_data['compare_index'])
-
-        return new_weather_index
+        return
 
     def update(self):
         return
@@ -331,15 +323,7 @@ class WeatherIndexSerializerEven(serializers.ModelSerializer):
         ]
 
     def create(self, validated_data):
-        new_weather_index = WeatherIndexEven.objects.create(poll=1)
-        new_weather_index.umbrella_index.set(validated_data['umbrella_index'])
-        new_weather_index.mask_index.set(validated_data['mask_index'])
-        new_weather_index.outer_index.set(validated_data['outer_index'])
-        new_weather_index.laundry_index.set(validated_data['laundry_index'])
-        new_weather_index.carwash_index.set(validated_data['carwash_index'])
-        new_weather_index.compare_index.set(validated_data['compare_index'])
-
-        return new_weather_index
+        return
 
     def update(self):
         return

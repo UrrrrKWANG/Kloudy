@@ -64,40 +64,19 @@ def time_interval_weather():
         flower_jsonObject             = weather_infos[7]
         middle_state_jsonObject       = weather_infos[8]
         middle_temperature_jsonObject = weather_infos[9]
-        # print("====================main_state_jsonObject=========================")
-        # print(main_state_jsonObject)
-        # print("=====================main_state_short_jsonObject========================")
-        # print(main_state_short_jsonObject)
-        # print("=====================main_current_jsonObject========================")
-        # print(main_current_jsonObject)
-        # print("=====================weather_24h_jsonObject========================")
-        # print(weather_24h_jsonObject)
-        # print("=====================air_jsonObject========================")
-        # print(air_jsonObject)
-        # print("=====================weather_48h_jsonObject========================")
-        # print(weather_48h_jsonObject)
-        # print("=====================main_max_min_jsonObject========================")
-        # print(main_max_min_jsonObject)
-        # print("======================flower_jsonObject=======================")
-        # print(flower_jsonObject)
-        # print("=======================middle_state_jsonObject======================")
-        # print(middle_state_jsonObject)
-        # print("=======================middle_temperature_jsonObject======================")
-        # print(middle_temperature_jsonObject)
-        # print("=============================================")
-
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")
             time = int(datetime.datetime.now().strftime("%H"))
 
+            # 메인 지수
             main_info = get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
             if main_info != [0, 0, 0, 0]:
-                current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
                 if time % 2 != 0:
                     main = MainEven.objects.filter(code = location.code).first()
                 else:
                     main = MainOdd.objects.filter(code = location.code).first()
+                current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
                 # 갱신
                 main.current_weather     = current_weather
                 main.current_temperature = current_temperature
@@ -110,14 +89,14 @@ def time_interval_weather():
             else:
                 weather_index = WeatherIndexOdd.objects.filter(code = location.code).first()
             
-
+            # 우산지수
             umbrella_info = get_umbrella_index(weather_24h_jsonObject)
             if umbrella_info != [0, 0, 0, 0, 0]:
-                umbrella_status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind = umbrella_info
                 if time % 2 != 0:
                     umbrella_index = UmbrellaIndexEven.objects.filter(code = location.code).first()
                 else:
                     umbrella_index = UmbrellaIndexOdd.objects.filter(code = location.code).first()
+                umbrella_status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind = umbrella_info
                 # 갱신
                 umbrella_index.status               = umbrella_status
                 umbrella_index.precipitaion_24h     = precipitaion_24h
@@ -126,58 +105,58 @@ def time_interval_weather():
                 umbrella_index.wind                 = wind
                 umbrella_index.save()
 
+            # 마스크 지수
             mask_info = get_mask_index(air_jsonObject, flower_jsonObject)
             if mask_info != [0, 0, 0, 0]:
-                mask_status, pm25value, pm10value, pollen_index = mask_info
                 if time % 2 != 0:
                     mask_index = MaskIndexEven.objects.filter(code = location.code).first()
                 else:
                     mask_index = MaskIndexOdd.objects.filter(code = location.code).first()
-                
+                mask_status, pm25value, pm10value, pollen_index = mask_info
                 # mask_index 갱신
                 mask_index.status  = mask_status
                 mask_index.pm25value    = pm25value
                 mask_index.pm10value    = pm10value
                 mask_index.pollen_index = pollen_index
                 mask_index.save()
-
+            
+            #  아우터 지수
             outer_info = get_outer_index(weather_24h_jsonObject)
             if outer_info != [0, 0, 0]:
-                outer_status, day_min_temperature, morning_temperature = outer_info
                 if time % 2 != 0:
                     outer_index = OuterIndexEven.objects.filter(code = location.code).first()
                 else:
                     outer_index = OuterIndexOdd.objects.filter(code = location.code).first()
-                
+                outer_status, day_min_temperature, morning_temperature = outer_info
                 # outer_index 갱신
                 outer_index.status              = outer_status
                 outer_index.day_min_temperature = day_min_temperature
                 outer_index.morning_temperature = morning_temperature
                 outer_index.save()
 
+            # 빨래 지수
             laundry_info = get_laundry_index(weather_24h_jsonObject)
             if laundry_info != [0, 0, 0, 0]:
-                laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
                 if time % 2 != 0:
                     laundry_index = LaundryIndexEven.objects.filter(code = location.code).first()
                 else:
                     laundry_index = LaundryIndexOdd.objects.filter(code = location.code).first()
-                
+                laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
                 # laundry_index 갱신
                 laundry_index.status              = laundry_status
                 laundry_index.humidity            = humidity
                 laundry_index.day_max_temperature = day_max_temperature
                 laundry_index.daily_weather       = daily_weather
                 laundry_index.save()
-                
+
+            # 세차 지수
             carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
             if carwash_info != [0, 0, 0, 0, 0, 0, "", 0, 0]:
-                carwash_status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
                 if time % 2 != 0:
                     carwash_index = CarwashIndexEven.objects.filter(code = location.code).first()
                 else:
                     carwash_index = CarwashIndexOdd.objects.filter(code = location.code).first()
-
+                carwash_status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
                 # carwash_index 갱신
                 carwash_index.status                 = carwash_status
                 carwash_index.daily_weather          = daily_weather
@@ -190,13 +169,14 @@ def time_interval_weather():
                 carwash_index.pollen_index           = pollen_index
                 carwash_index.save()
 
+            # 날씨 비교
             compare_info = get_compare_index(weather_24h_jsonObject, today, False, location.code)
             if compare_info != ["", 0, 0, "", 0, 0]:
-                weather_yesterday, yesterday_max_temperature, yesterday_min_temperature, weather_today, today_max_temperature, today_min_temperature = compare_info
                 if time % 2 != 0:
                     compare_index = CompareIndexEven.objects.filter(code = location.code).first()
                 else:
                     compare_index = CompareIndexOdd.objects.filter(code = location.code).first()
+                weather_yesterday, yesterday_max_temperature, yesterday_min_temperature, weather_today, today_max_temperature, today_min_temperature = compare_info
                 # compare_index 갱신
                 compare_index.yesterday                 = weather_yesterday
                 compare_index.yesterday_max_temperature = yesterday_max_temperature
@@ -304,13 +284,12 @@ def calculate_time():
     now = datetime.datetime.now()
     print(now)
     today = now.strftime("%Y%m%d")
-    print(f"날짜 계산 왜 이래 : {today}")
+    print(f"날짜 : {today}")
     time = cal_time([now.strftime("%H"), now.strftime("%M")])
     
     return [today, time]
 
 def get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject):
-    print("MAIN WEATHER 계산")
     if main_state_jsonObject.get('response').get('header').get('resultCode') != "00":
         return [0, 0, 0, 0]
     elif main_state_short_jsonObject.get('response').get('header').get('resultCode') != "00":

@@ -39,7 +39,7 @@ class WeatherIndexOdd(models.Model):
     code = models.CharField(max_length=10)
     
 class UmbrellaIndexOdd(models.Model):
-    weather_index = models.ForeignKey(WeatherIndexOdd, related_name="umbrealla_index", on_delete=models.CASCADE)
+    weather_index = models.ForeignKey(WeatherIndexOdd, related_name="umbrella_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
     precipitaion_24h = models.FloatField()
@@ -135,7 +135,7 @@ class WeatherIndexEven(models.Model):
     code = models.CharField(max_length=10)
     
 class UmbrellaIndexEven(models.Model):
-    weather_index = models.ForeignKey(WeatherIndexEven, related_name="umbrealla_index", on_delete=models.CASCADE)
+    weather_index = models.ForeignKey(WeatherIndexEven, related_name="umbrella_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
     precipitaion_24h = models.FloatField()
