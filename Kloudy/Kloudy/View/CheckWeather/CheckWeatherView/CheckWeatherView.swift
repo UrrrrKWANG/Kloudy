@@ -57,6 +57,12 @@ class CheckWeatherView: UIViewController {
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(6)
             $0.centerX.equalToSuperview()
         }
+        
+        
+    }
+    
+    private func bind() {
+        
     }
     
     func loadWeatherView() {
@@ -101,9 +107,32 @@ class CheckWeatherView: UIViewController {
                     $0.height.equalTo(385)
                 }
                 
+                
+                
+                
+                
+                weatherIndexView.locationWeatherIndexView.indexViewTapped
+                    .subscribe(onNext: {
+                        if $0 {
+                            let weatherIndexDetailView = WeatherIndexDetailView()
+                            weatherIndexView.locationWeatherIndexView.indexString
+                                .subscribe(onNext: {
+                                    weatherIndexDetailView.indexType = $0
+                                })
+                                .disposed(by: self.disposeBag)
+                            
+                            weatherIndexDetailView.city = city.localName
+//                            weatherIndexDetailView.indexType = .mask
+                            weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
+                            weatherIndexDetailView.modalTransitionStyle = .crossDissolve
+                            self.present(weatherIndexDetailView, animated: true)
+                        }
+                    })
+                    .disposed(by: disposeBag)
+                
                 detailWeatherView.rx.tap
                     .bind {
-                        let detailWeatherView = DetailWeatherView()
+                        let detailWeatherView = WeatherIndexDetailView()
                         detailWeatherView.modalPresentationStyle = .overCurrentContext
                         detailWeatherView.modalTransitionStyle = .coverVertical
                         self.present(detailWeatherView, animated: true)

@@ -86,6 +86,7 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
+    var city = String()
     var indexType: IndexType = .unbrella
     
     // API 데이터 받을 시 전달 (_24h)
@@ -104,7 +105,7 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     override func viewWillAppear(_ animated: Bool) {
-    
+        print(city)
     }
     
     private func bind() {
