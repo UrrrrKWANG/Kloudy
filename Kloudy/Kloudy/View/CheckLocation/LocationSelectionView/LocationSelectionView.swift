@@ -297,7 +297,8 @@ extension LocationSelectionView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                 return UITableViewCell() }
             cell.locationNameLabel.text = locationList[indexPath.row].city
-            cell.backgroundColor = .clear
+            cell.backgroundColor = UIColor.KColor.clear
+            cell.selectionStyle = .none
             return cell
         }
     }
