@@ -280,7 +280,7 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return locationList.count
+            return locationList.count + 1
         }
     }
 
@@ -295,10 +295,15 @@ extension LocationSelectionView: UITableViewDataSource {
             return cell
         case .check:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
-                return UITableViewCell() }
-            cell.locationNameLabel.text = locationList[indexPath.row].city
+                return UITableViewCell()
+            }
             cell.backgroundColor = UIColor.KColor.clear
             cell.selectionStyle = .none
+            if indexPath.row == 0 {
+                cell.locationNameLabel.text = "현재 위치"
+            } else {
+                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
+            }
             return cell
         }
     }
