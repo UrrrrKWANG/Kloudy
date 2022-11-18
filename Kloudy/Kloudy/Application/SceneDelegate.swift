@@ -15,12 +15,17 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         self.window = UIWindow(windowScene: windowScene)
-        
-        let checkWeatherView = CheckWeatherView()
-        let rootNavigationController = UINavigationController(rootViewController: checkWeatherView)
-        rootNavigationController.navigationBar.isHidden = true
-        self.window?.rootViewController = rootNavigationController
+        window?.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         self.window?.makeKeyAndVisible()
+        
+        // 2초 정도 런치 스크린에서 기다림
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
+            let checkWeatherView = CheckWeatherView()
+            let rootNavigationController = UINavigationController(rootViewController: checkWeatherView)
+            rootNavigationController.navigationBar.isHidden = true
+            self.window?.rootViewController = rootNavigationController
+        }
+        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

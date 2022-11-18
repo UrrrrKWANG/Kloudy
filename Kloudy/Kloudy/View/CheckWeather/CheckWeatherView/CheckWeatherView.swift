@@ -31,9 +31,15 @@ class CheckWeatherView: UIViewController {
     
     var dataViewControllers = [UIViewController]()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print("뷰 생겨남")
+        print(self.weathers)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        print("View 로드됨")
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         if let weathers = appDelegate?.weathers {
             self.weathers = weathers

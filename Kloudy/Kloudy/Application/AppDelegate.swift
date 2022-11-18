@@ -10,12 +10,11 @@ import CoreData
 import CoreLocation
 
 @main
-class AppDelegate: UIResponder, UIApplicationDelegate {
+class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
     var weathers = [Weather]()
     
     lazy var coreDataStack: CoreDataStack = .init(modelName: "Kloudy")
-    var locationManager = CLLocationManager()
     
     static let sharedAppDelegate: AppDelegate = {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
@@ -26,11 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // 어플리케이션의 런치 프로세스가 끝났을 때 -> Fetch 요청을 보냄, 요청이 끝나고 난 후 메인화면으로 넘어감.
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-
+        
         let myLocations = CoreDataManager.shared.fetchLocations()
-        let locationManger = CLLocationManager()
-        let currentStatus = locationManger.authorizationStatus
-
         for location in myLocations {
             // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
             guard let province = location.province else { return true }
@@ -40,20 +36,68 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
         
+        let locationManger = CLLocationManager()
+        let currentStatus = locationManger.authorizationStatus
+
         if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
-            let nowProvince = LocationManager.shared.currentCity
-            let nowCity = LocationManager.shared.currentProvince
-            print(nowProvince, nowCity)
-            let nowLocationInfo = FetchWeatherInformation.shared.getLocationInfo(province: nowProvince, city: nowCity)
-            // 잘못된 도시 정보를 요청할 수 있음.
-            if let nowLocation = nowLocationInfo {
-                let province = nowLocation.province
-                let city = nowLocation.city
-                FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
-                    self.weathers.append(response)
+            print("제대로 들어옴")
+            var currentCity = ""
+            var currentProvince = ""
+            locationManger.startUpdatingLocation()
+            if let location = locationManger.location {
+                let longitude: CLLocationDegrees = location.coordinate.longitude
+                let latitude: CLLocationDegrees = location.coordinate.latitude
+                
+//                let converter: LocationConverter = LocationConverter()
+//                let (x, y): (Int, Int)
+//                    = converter.convertGrid(lon: longitude, lat: latitude)
+                
+                let findLocation: CLLocation = CLLocation(latitude: latitude, longitude: longitude)
+                let geoCoder: CLGeocoder = CLGeocoder()
+                let local: Locale = Locale(identifier: "en_US")
+                geoCoder.reverseGeocodeLocation(findLocation, preferredLocale: local) { (place, error) in
+                    if let address: [CLPlacemark] = place {
+                        print("주소 받음")
+                        let locality = address.last?.locality
+                        switch locality {
+                        case "Seoul":
+                            currentCity = "Jongno-gu"
+                            currentProvince = "Seoul"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        case "Daegu":
+                            currentCity = "Suseong-gu"
+                            currentProvince = "Daegu"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        case "Busan":
+                            currentCity = "Saha-gu"
+                            currentProvince = "Busan"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        case "Ulsan":
+                            currentCity = "Ulju-gun"
+                            currentProvince = "Ulsan"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        case "Gwangju":
+                            currentCity = "Gwangsan-gu"
+                            currentProvince = "Gwangju"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        case "Daejeon":
+                            currentCity = "Yuseong-gu"
+                            currentProvince = "Daejeon"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        case "Incheon":
+                            currentCity = "Bupyeong-gu"
+                            currentProvince = "Incheon"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        default:
+                            currentCity = locality ?? ""
+                            currentProvince = "\(address.last?.subThoroughfare ?? "")"
+                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
+                        }
+                    }
                 }
             }
         }
+        
         return true
     }
     
@@ -120,6 +164,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
+    
+    func loadNowLocationWeather(currentProvince: String, currentCity: String) {
+        print([currentProvince, currentCity])
+        let nowLocationInfo = FetchWeatherInformation.shared.getLocationInfo(province: currentProvince, city: currentCity)
+        
+        // 잘못된 도시 정보를 요청할 수 있음.
+        if let nowLocation = nowLocationInfo {
+            let province = nowLocation.province
+            let city = nowLocation.city
+            FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
+                self.weathers.append(response)
+            }
+        }
+    }
 }
 
