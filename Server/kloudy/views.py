@@ -627,9 +627,9 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
     tomorrow_weather = max(tomorrow_weathers)
 
     when_is_rainy = 9
-    if daily_weather == 1 or daily_weather == 2 or daily_weather == 3:
+    if daily_weather == 1 or daily_weather == 2 or daily_weather == 5:
         when_is_rainy = 1
-    elif tomorrow_weather == 1 or tomorrow_weather == 2 or tomorrow_weather == 3:
+    elif tomorrow_weather == 1 or tomorrow_weather == 2 or tomorrow_weather == 5:
         when_is_rainy = 2
 
     # 가장 가까운 비오는 날을 찾는다.

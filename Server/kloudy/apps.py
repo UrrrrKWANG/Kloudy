@@ -10,6 +10,6 @@ class MyAppConfig(AppConfig):
         from .scheduler import scheduler
         
         # 먼저 요청정보를 보냄
-        # csv_reader()
+        csv_reader()
         print("start Scheduler....")
         scheduler.start()

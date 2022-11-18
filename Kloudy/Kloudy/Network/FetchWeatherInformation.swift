@@ -11,6 +11,8 @@ class FetchWeatherInformation: ObservableObject {
     
     @Published var result: Weather = Weather(today: "", main: [Main(currentWeather: 0, currentTemperature: 0, dayMaxTemperature: 0, dayMinTemperature: 0)], weatherIndex: [WeatherIndex(umbrellaIndex: 0, maskIndex: [MaskIndex(airQuality: 0, flowerQuality: 0, dustQuality: 0)])])
     
+    static let shared: FetchWeatherInformation = FetchWeatherInformation()
+    
     func startLoad(province:String, city: String) {
         // 도시 이름을 받아서 x, y값 받음
         let cityCode = getCityInformaiton(province: province, city: city)
@@ -31,10 +33,10 @@ class FetchWeatherInformation: ObservableObject {
         guard let requestURL = urlComponents?.url else { return }
         
         let dataTask = session.dataTask(with: requestURL) { (data, response, error) in
-            
             let successRange = 200..<300
             guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange.contains(statusCode)
             else {
+                print("잘못된 응답이 들어옴")
                 print(error?.localizedDescription)
                 return
             }
@@ -45,13 +47,13 @@ class FetchWeatherInformation: ObservableObject {
             }
             
             do {
+                print("데이터 받아오는데 성공함")
                 let decoder = JSONDecoder()
-                
                 let response = try decoder.decode(Weather.self, from: resultData)
                 self.result = response
-                print(response)
                 
             } catch let error {
+                print("제이슨 요청 실패")
                 print("JSON Decoding Error: \(error.localizedDescription)")
             }
         }

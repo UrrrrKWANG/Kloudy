@@ -19,7 +19,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         return delegate
     }()
-
+    
+    // 어플리케이션의 런치 프로세스가 끝났을 때 -> Fetch 요청을 보냄, 요청이 끝나고 난 후 메인화면으로 넘어감.
+    func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
+        print("Launching이 끝난다")
+        let locations = CoreDataManager.shared.fetchLocations()
+        for location in locations {
+            // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
+            guard let province = location.province else { return true }
+            guard let city = location.city else { return true }
+            let result = FetchWeatherInformation.shared.startLoad(province:province, city: city)
+        }
+        return true
+    }
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         return true
