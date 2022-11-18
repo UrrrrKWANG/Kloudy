@@ -280,7 +280,7 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return locationList.count + 1
+            return locationList.count //+ 1
         }
     }
 
@@ -299,11 +299,12 @@ extension LocationSelectionView: UITableViewDataSource {
             }
             cell.backgroundColor = UIColor.KColor.clear
             cell.selectionStyle = .none
-            if indexPath.row == 0 {
-                cell.locationNameLabel.text = "현재 위치"
-            } else {
-                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
-            }
+//            if indexPath.row == 0 {
+//                cell.locationNameLabel.text = "현재 위치"
+//            } else {
+//                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
+//            }
+            cell.locationNameLabel.text = locationList[indexPath.row].city
             return cell
         }
     }
@@ -401,17 +402,22 @@ extension LocationSelectionView: UITableViewDropDelegate {
         case .search:
             return false
         case .check:
-            if indexPath.row == 0 {
-                return false
-            } else {
-                return true
-            }
+            return true
         }
+    }
+    
+    // 첫 번째 셀 옮기지 못하게 하는 메서드
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if sourceIndexPath.row == 0 {
+            return sourceIndexPath
+        }
+        return proposedDestinationIndexPath
     }
     
     // 셀 위치 변경 함수
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
+                
+        // +1로 해줘야할듯
         let itemMove = locationList[sourceIndexPath.row] //Get the item that we just moved
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
@@ -429,7 +435,6 @@ extension LocationSelectionView: UITableViewDropDelegate {
             if destinationIndexPath?.row == 0 {
                 return UITableViewDropProposal(operation: .move, intent: .unspecified)
             }
-            
             return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
         
