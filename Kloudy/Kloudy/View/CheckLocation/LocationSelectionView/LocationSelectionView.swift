@@ -118,7 +118,7 @@ class LocationSelectionView: UIViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.leading.trailing.equalToSuperview()
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
