@@ -239,34 +239,6 @@ class LocationWeatherIndexView: UIView {
         cellFrame.layer.backgroundColor = uiColor.cgColor
         return cellFrame
     }
-    func calculateInternalIndexCount(indexName: IndexType) -> Int {
-        var indexCount = 0
-        let cityIndex = findCityIndex(city: city)
-        if viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.wind >= 4 {
-            indexCount += 1
-        }
-        for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
-            if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
-                indexCount += 1
-                break
-            }
-        }
-        if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
-            indexCount += 1
-        }
-        
-        if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= -12 {
-            indexCount += 1
-        }
-        
-        if viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.day_max_temperature <= 2 {
-            indexCount += 1
-        }
-        if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= 2{
-            indexCount += 1
-        }
-        return indexCount
-    }
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
@@ -274,7 +246,6 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
-        let indexCount = calculateInternalIndexCount(indexName: indexName)
         var cellCount = 0
         switch indexName {
         case .unbrella:
