@@ -94,10 +94,10 @@ class LocationSelectionView: UIViewController {
         [tableView, locationSelectionNavigationView, cancelSearchButton, searchBarBackgroundView, searchBar, nothingSearchedLocationLabel, magnifyingGlassImage].forEach { view.addSubview($0) }
         
         locationSelectionNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(62)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.width.equalTo(106)
-            $0.height.equalTo(24)
+            $0.width.equalTo(111)
+            $0.height.equalTo(40)
         }
         
         searchBarBackgroundView.snp.makeConstraints {
