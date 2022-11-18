@@ -204,27 +204,27 @@ class LocationWeatherIndexView: UIView {
         }
         return 0
     }
-    func findInternalIndexColorAndImage(indexName: IndexType, isIndexOn: [Int], pathIndex: Int) -> UIView {
+    func findInternalIndexColorAndImage(indexName: IndexType, isIndexOn: [InternalIndexType], pathIndex: Int) -> UIView {
         let foundElement = (indexName, pathIndex)
         let uiImageView = UIImageView()
         switch foundElement {
-        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == 0:
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .pollen:
             uiImageView.image = UIImage(named: "pollen")
-        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == 1:
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .yellowDust:
             uiImageView.image = UIImage(named: "yellowDust")
-        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == 0:
+        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == .typhoon:
             uiImageView.image = UIImage(named: "typhoon")
-        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == 1:
+        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == .strongWind:
             uiImageView.image = UIImage(named: "strongWind")
-        case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == 0:
+        case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == .coldWave:
             uiImageView.image = UIImage(named: "coldWave")
-        case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == 0:
+        case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == .freezeAndBurst:
             uiImageView.image = UIImage(named: "freezeAndBurst")
-        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == 0:
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .pollen:
             uiImageView.image = UIImage(named: "pollen")
-        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == 1:
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .yellowDust:
             uiImageView.image = UIImage(named: "yellowDust")
-        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == 2:
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .freezeAndBurst:
             uiImageView.image = UIImage(named: "freezeAndBurst")
             
         default:
@@ -238,44 +238,44 @@ class LocationWeatherIndexView: UIView {
         }
         return cellFrame
     }
-    func calculateInternalIndexCount(indexName: IndexType) -> [Int] {
-        var isIndexOn = [Int]()
+    func calculateInternalIndexCount(indexName: IndexType) -> [InternalIndexType] {
+        var isIndexOn = [InternalIndexType]()
         let cityIndex = findCityIndex(city: city)
         switch indexName {
         case .unbrella :
             if viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.wind >= 4 {
-                isIndexOn.append(1)
+                isIndexOn.append(.strongWind)
             }
         case .mask :
             for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
                 if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
-                    isIndexOn.append(0)
+                    isIndexOn.append(.yellowDust)
                     break
                 }
             }
             if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
-                isIndexOn.append(1)
+                isIndexOn.append(.pollen)
             }
         case .car :
             if viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.day_max_temperature <= 2 {
-                isIndexOn.append(0)
+                isIndexOn.append(.freezeAndBurst)
             }
             if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
-                isIndexOn.append(1)
+                isIndexOn.append(.pollen)
             }
             for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
                 if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
-                    isIndexOn.append(2)
+                    isIndexOn.append(.yellowDust)
                     break
                 }
             }
         case .outer :
             if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= -12 {
-                isIndexOn.append(0)
+                isIndexOn.append(.coldWave)
             }
         case .laundry :
             if viewModel.indexDummyData[cityIndex].cityIndexData[0].laundry_index.day_max_temperature <= 2{
-                isIndexOn.append(0)
+                isIndexOn.append(.freezeAndBurst)
             }
         default :
             break
