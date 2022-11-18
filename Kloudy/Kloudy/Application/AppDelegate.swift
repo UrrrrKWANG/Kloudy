@@ -7,12 +7,16 @@
 
 import UIKit
 import CoreData
+import CoreLocation
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    
+    var weathers = [Weather]()
+    
     lazy var coreDataStack: CoreDataStack = .init(modelName: "Kloudy")
-
+    var locationManager = CLLocationManager()
+    
     static let sharedAppDelegate: AppDelegate = {
         guard let delegate = UIApplication.shared.delegate as? AppDelegate else {
             fatalError("Unexpected app delegate type, did it change? \(String(describing: UIApplication.shared.delegate))")
@@ -22,13 +26,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // 어플리케이션의 런치 프로세스가 끝났을 때 -> Fetch 요청을 보냄, 요청이 끝나고 난 후 메인화면으로 넘어감.
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        print("Launching이 끝난다")
-        let locations = CoreDataManager.shared.fetchLocations()
-        for location in locations {
+        var myLocations = CoreDataManager.shared.fetchLocations()
+        var locationManger = CLLocationManager()
+        let currentStatus = locationManger.authorizationStatus
+        
+        for location in myLocations {
             // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
             guard let province = location.province else { return true }
             guard let city = location.city else { return true }
-            let result = FetchWeatherInformation.shared.startLoad(province:province, city: city)
+            FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
+                self.weathers.append(response)
+            }
+        }
+        
+        if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
+            let nowProvince = ""
+            let nowCity = ""
+            let nowLocationInfo = FetchWeatherInformation.shared.getLocationInfo(province: nowProvince, city: nowCity)
+            // 잘못된 도시 정보를 요청할 수 있음.
+            if let nowLocation = nowLocationInfo {
+                let province = nowLocation.province
+                let city = nowLocation.city
+                FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
+                    self.weathers.append(response)
+                }
+            }
         }
         return true
     }

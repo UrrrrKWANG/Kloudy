@@ -8,8 +8,9 @@
 import Foundation
 
 class FetchWeatherInformation: ObservableObject {
+    static let shared: FetchWeatherInformation = FetchWeatherInformation()
     
-    func startLoad(province:String, city: String) {
+    func startLoad(province:String, city: String, _ completion: @escaping (Weather) -> Void) {
         // 도시 이름을 받아서 x, y값 받음
         let cityCode = getCityInformaiton(province: province, city: city)
         
@@ -30,8 +31,7 @@ class FetchWeatherInformation: ObservableObject {
         
         let dataTask = session.dataTask(with: requestURL) { (data, response, error) in
             let successRange = 200..<300
-            guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange.contains(statusCode)
-            else {
+            guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange.contains(statusCode) else {
                 print("잘못된 응답이 들어옴")
                 print(error?.localizedDescription)
                 return
@@ -46,7 +46,7 @@ class FetchWeatherInformation: ObservableObject {
                 print("데이터 받아오는데 성공함")
                 let decoder = JSONDecoder()
                 let response = try decoder.decode(Weather.self, from: resultData)
-                print(response)
+                completion(response)
                 
             } catch let error {
                 print("제이슨 요청 실패")
@@ -57,11 +57,23 @@ class FetchWeatherInformation: ObservableObject {
     }
     
     func getCityInformaiton(province:String, city: String) -> String {
+        var result = ""
         let koreanCities: [CityInformation] = loadCityListFromCSV()
-        
-        let nowCity = koreanCities.filter{ $0.province == province && $0.city == city }[0]
-        
-        return String(nowCity.code)
+        let nowCities = koreanCities.filter{ $0.province == province && $0.city == city }
+        if nowCities.count > 0 {
+            result = koreanCities.filter{ $0.province == province && $0.city == city }[0].code
+        }
+        return result
+    }
+    
+    func getLocationInfo(province:String, city: String) -> CityInformation? {
+        var result: CityInformation?
+        let koreanCities: [CityInformation] = loadCityListFromCSV()
+        let nowCities = koreanCities.filter{ $0.province == province && $0.city == city }
+        if nowCities.count > 0 {
+            result = nowCities[0]
+        }
+        return result
     }
     
     func getNowTimeForQuery() -> [String] {
@@ -136,7 +148,6 @@ class FetchWeatherInformation: ObservableObject {
     }
     
     func loadCityListFromCSV() -> [CityInformation] {
-        // bundle에 있는 경로 > Calorie라는 이름을 가진 csv 파일 경로
         let path = Bundle.main.path(forResource: "CityInformation", ofType: "csv")!
         return parseCSVAt(url: URL(fileURLWithPath: path))
     }

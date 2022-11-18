@@ -20,6 +20,7 @@ class CheckWeatherView: UIViewController {
     let pageControl = UIPageControl()
     let initialPage = 0
     
+    var weathers = [Weather]()
     
     lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -32,6 +33,13 @@ class CheckWeatherView: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        if let weathers = appDelegate?.weathers {
+            self.weathers = weathers
+        }
+        print("여기는 메인 화면이다 -!")
+        print(self.weathers)
         view.backgroundColor = UIColor.KColor.white
         loadWeatherView()
        
