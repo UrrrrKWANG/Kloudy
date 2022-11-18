@@ -6,16 +6,19 @@
 //
 //  Reference: https://github.com/PLREQ/PLREQ/blob/develop/PLREQ/PLREQ/Views/MatchView/MatchViewController.swift
 
-import UIKit
 import CoreLocation
+import UIKit
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
-    var locationManager: CLLocationManager = CLLocationManager()
+    static let shared = CurrentLocationModel()
+    
+    var locationManager = CLLocationManager()
     var currentLatitude : Double = 0.0
     var currentLongitude : Double = 0.0
-    var currentLocation: String = ""
-    let cities: [String] = ["서울특별시", "대구광역시", "부산광역시", "울산광역시", "광주광역시", "대전광역시", "인천광역시"]
+    var currentCity: String = ""
+    var currentProvince: String = ""
+    let cities: [String] = ["Seoul", "Daegu", "Busan", "Ulsan", "Gwangju", "Daejeon", "Incheon"]
     
     override init() {
         super.init()
@@ -31,15 +34,35 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
             let geocoder = CLGeocoder()
             currentLatitude = location.coordinate.latitude
             currentLongitude = location.coordinate.longitude
-            let locale = Locale(identifier: "Ko-kr")
+            let locale = Locale(identifier: "en-US")
             geocoder.reverseGeocodeLocation(findLocation, preferredLocale: locale) { [weak self] (place, error) in
                 if let address: [CLPlacemark] = place {
                     let locality = "\(address.last?.locality ?? "")"
-                    if !self!.cities.contains(locality) { // 지역명이 특별시, 광역시일 경우 더 자세한 지역명을 저장한다.
-                        self!.currentLocation = locality
-                    } else {
-                        let subLocality = "\(address.last?.subLocality ?? "")"
-                        self!.currentLocation = "\(locality) \(subLocality)"
+                    switch locality {
+                    case "Seoul":
+                        self!.currentCity = "Jongno-gu"
+                        self!.currentProvince = "Seoul"
+                    case "Daegu":
+                        self!.currentCity = "Suseong-gu"
+                        self!.currentProvince = "Daegu"
+                    case "Busan":
+                        self!.currentCity = "Saha-gu"
+                        self!.currentProvince = "Busan"
+                    case "Ulsan":
+                        self!.currentCity = "Ulju-gun"
+                        self!.currentProvince = "Ulsan"
+                    case "Gwangju":
+                        self!.currentCity = "Gwangsan-gu"
+                        self!.currentProvince = "Gwangju"
+                    case "Daejeon":
+                        self!.currentCity = "Yuseong-gu"
+                        self!.currentProvince = "Daejeon"
+                    case "Incheon":
+                        self!.currentCity = "Bupyeong-gu"
+                        self!.currentProvince = "Incheon"
+                    default:
+                        self!.currentCity = locality
+                        self!.currentProvince = "\(address.last?.subThoroughfare ?? "")"
                     }
                 }
             }
@@ -67,7 +90,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 //            self.locationManager.requestAlwaysAuthorization()
 //        }
 //    }
-//    
+    
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         print("error \(error.localizedDescription)")
     }
