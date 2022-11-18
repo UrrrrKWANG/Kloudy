@@ -38,8 +38,7 @@ class CheckWeatherView: UIViewController {
         if let weathers = appDelegate?.weathers {
             self.weathers = weathers
         }
-        print("여기는 메인 화면이다 -!")
-        print(self.weathers)
+        
         view.backgroundColor = UIColor.KColor.white
         loadWeatherView()
        

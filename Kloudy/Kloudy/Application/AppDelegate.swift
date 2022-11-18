@@ -26,10 +26,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     // 어플리케이션의 런치 프로세스가 끝났을 때 -> Fetch 요청을 보냄, 요청이 끝나고 난 후 메인화면으로 넘어감.
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-        var myLocations = CoreDataManager.shared.fetchLocations()
-        var locationManger = CLLocationManager()
+
+        let myLocations = CoreDataManager.shared.fetchLocations()
+        let locationManger = CLLocationManager()
         let currentStatus = locationManger.authorizationStatus
-        
+
         for location in myLocations {
             // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
             guard let province = location.province else { return true }
@@ -40,8 +41,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         }
         
         if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
-            let nowProvince = ""
-            let nowCity = ""
+            let nowProvince = LocationManager.shared.currentCity
+            let nowCity = LocationManager.shared.currentProvince
+            print(nowProvince, nowCity)
             let nowLocationInfo = FetchWeatherInformation.shared.getLocationInfo(province: nowProvince, city: nowCity)
             // 잘못된 도시 정보를 요청할 수 있음.
             if let nowLocation = nowLocationInfo {
