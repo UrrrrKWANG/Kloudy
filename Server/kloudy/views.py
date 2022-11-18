@@ -160,7 +160,7 @@ def time_interval_weather():
                 # carwash_index 갱신
                 carwash_index.status                 = carwash_status
                 carwash_index.daily_weather          = daily_weather
-                carwash_index.day_min_temperature    = day_min_temperature
+                carwash_index.day_max_temperature    = day_max_temperature
                 carwash_index.daily_precipitation    = daily_precipitation
                 carwash_index.tomorrow_weather       = tomorrow_weather
                 carwash_index.tomorrow_precipitation = tomorrow_precipitation
@@ -259,10 +259,10 @@ def time_interval_weather():
             laundry_index_even.save()
 
             carwash_info = get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
-            carwash_status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
-            print(f"세차 지수: {carwash_status}, {daily_weather}, {day_min_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
-            carwash_index_odd = CarwashIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = carwash_status, daily_weather = daily_weather, day_min_temperature = day_min_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
-            carwash_index_even = CarwashIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = carwash_status, daily_weather = daily_weather, day_min_temperature = day_min_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
+            carwash_status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
+            print(f"세차 지수: {carwash_status}, {daily_weather}, {day_max_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
+            carwash_index_odd = CarwashIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
+            carwash_index_even = CarwashIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
             carwash_index_odd.save()
             carwash_index_even.save()
 
@@ -580,8 +580,8 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
     tomorrow_weathers = []
     tomorrow_precipitations = []
     for obj in weather_48h_jsonObject.get('response').get('body').get('items').get('item'):
-        if obj.get('category') == 'TMN' and obj.get('fcstDate') == today:
-            day_min_temperature = float(obj.get('fcstValue'))
+        if obj.get('category') == 'TMX' and obj.get('fcstDate') == today:
+            day_max_temperature = float(obj.get('fcstValue'))
         # 오늘 날씨 상태
         elif obj.get('category') == 'SKY' and obj.get('fcstDate') == today:
             if obj.get('fcstValue') == "1":
@@ -665,14 +665,14 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
     weather_3Am7pm = "7일 내에 비 예보가 없어요." if when_is_rainy == 9 else f"가장 가까운 비 예보는 {when_is_rainy}일 후예요."
     pollen_index = max(flower_qualities)
     # 0 : 세차하기 좋음, 1: 세차 괜찮음, 2: 세차 미루기, 3: 세차 하지마
-    status = cal_carwash_status(when_is_rainy, day_min_temperature, pm10grade, pollen_index)
+    status = cal_carwash_status(when_is_rainy, day_max_temperature, pm10grade, pollen_index)
 
-    return [status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index]
+    return [status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index]
 
-def cal_carwash_status(when_is_rainy, min_temperature, pm10grade, pollen_index):
+def cal_carwash_status(when_is_rainy, max_temperature, pm10grade, pollen_index):
     result = 0
 
-    if 150 < pm10grade or pollen_index == 3 or min_temperature <= -3 or when_is_rainy <= 2:
+    if 150 < pm10grade or pollen_index == 3 or max_temperature <= -2 or when_is_rainy <= 2:
         reulst = 3
         return result
     elif 80 < pm10grade < 151 or pollen_index == 2 or when_is_rainy <= 4:

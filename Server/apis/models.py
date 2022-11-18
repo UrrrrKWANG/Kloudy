@@ -42,8 +42,8 @@ class UmbrellaIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="umbrella_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
-    precipitaion_24h = models.FloatField()
-    precipitaion_1h_max = models.FloatField()
+    precipitation_24h = models.FloatField()
+    precipitation_1h_max = models.FloatField()
     precipitation_3h_max = models.FloatField()
     wind = models.FloatField()
 
