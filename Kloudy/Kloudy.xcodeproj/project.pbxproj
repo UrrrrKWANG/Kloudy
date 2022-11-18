@@ -27,6 +27,8 @@
 		8B22A3C4291F63C10079FA48 /* IndexButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C3291F63C10079FA48 /* IndexButtonView.swift */; };
 		8B22A3CA2920FED30079FA48 /* IndexIconView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C92920FED30079FA48 /* IndexIconView.swift */; };
 		8B22A3CC29221CBD0079FA48 /* IndexStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3CB29221CBD0079FA48 /* IndexStepView.swift */; };
+		8B22A3D4292646270079FA48 /* CityWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D3292646270079FA48 /* CityWeatherAPI.swift */; };
+		8B22A3D6292646480079FA48 /* CityWeatherNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D5292646480079FA48 /* CityWeatherNetwork.swift */; };
 		8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409822918DA5A00DC2962 /* SearchLocationView.swift */; };
 		8B6409852918DB9700DC2962 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409842918DB9700DC2962 /* CoreDataManager.swift */; };
 		8B64098D2918EFC900DC2962 /* WeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B64098C2918EFC900DC2962 /* WeatherIndexView.swift */; };
@@ -196,6 +198,8 @@
 		8B22A3C3291F63C10079FA48 /* IndexButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexButtonView.swift; sourceTree = "<group>"; };
 		8B22A3C92920FED30079FA48 /* IndexIconView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexIconView.swift; sourceTree = "<group>"; };
 		8B22A3CB29221CBD0079FA48 /* IndexStepView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexStepView.swift; sourceTree = "<group>"; };
+		8B22A3D3292646270079FA48 /* CityWeatherAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherAPI.swift; sourceTree = "<group>"; };
+		8B22A3D5292646480079FA48 /* CityWeatherNetwork.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CityWeatherNetwork.swift; sourceTree = "<group>"; };
 		8B6409822918DA5A00DC2962 /* SearchLocationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchLocationView.swift; sourceTree = "<group>"; };
 		8B6409842918DB9700DC2962 /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
 		8B64098C2918EFC900DC2962 /* WeatherIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherIndexView.swift; sourceTree = "<group>"; };
@@ -354,6 +358,8 @@
 			isa = PBXGroup;
 			children = (
 				8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */,
+				8B22A3D3292646270079FA48 /* CityWeatherAPI.swift */,
+				8B22A3D5292646480079FA48 /* CityWeatherNetwork.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -1034,6 +1040,7 @@
 				8BC8F7F829011DB200EF83AE /* CheckWeatherBasicNavigationViewModel.swift in Sources */,
 				8B6409992918F1E200DC2962 /* SettingViewModel.swift in Sources */,
 				8BC8F80129011DB200EF83AE /* SceneDelegate.swift in Sources */,
+				8B22A3D6292646480079FA48 /* CityWeatherNetwork.swift in Sources */,
 				BAFCEB082923C0930084F28E /* LocationWeatherIndexView.swift in Sources */,
 				BAFCEAF62920E65B0084F28E /* WeekWeatherDataCell.swift.swift in Sources */,
 				8BC8F7FC29011DB200EF83AE /* LocationSelectionViewModel.swift in Sources */,
@@ -1049,6 +1056,7 @@
 				8BC8F7FB29011DB200EF83AE /* LocationSelectionView.swift in Sources */,
 				11E34889291CF179006EA966 /* LocationTableViewCell.swift in Sources */,
 				8B22A3BD291A3B820079FA48 /* LocationSearchBar.swift in Sources */,
+				8B22A3D4292646270079FA48 /* CityWeatherAPI.swift in Sources */,
 				8BC8F7D429011DB200EF83AE /* CityInformation.swift in Sources */,
 				8BC8F7CD29011DB200EF83AE /* FetchWeatherInformation.swift in Sources */,
 				8B22A3C4291F63C10079FA48 /* IndexButtonView.swift in Sources */,
