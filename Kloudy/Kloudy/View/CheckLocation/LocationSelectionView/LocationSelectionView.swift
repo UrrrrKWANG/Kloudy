@@ -102,7 +102,7 @@ class LocationSelectionView: UIViewController {
         
         searchBarBackgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(24)
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(16)
             $0.height.equalTo(47)
         }
         
@@ -118,7 +118,7 @@ class LocationSelectionView: UIViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(11)
+            $0.leading.trailing.equalToSuperview().inset(13)
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
@@ -131,7 +131,7 @@ class LocationSelectionView: UIViewController {
         
         magnifyingGlassImage.snp.makeConstraints {
             $0.size.equalTo(20)
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(36)
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(28)
             $0.trailing.equalTo(searchBar.snp.trailing).offset(-14)
         }
     }
@@ -425,9 +425,10 @@ extension LocationSelectionView: UITableViewDropDelegate {
         tableView.reloadData()
         print(locationList)
         
-//        for i in 0..<locationList.count {
+        for i in 0..<locationList.count {
+            
 //            CoreDataManager.shared.saveLocation(code: locationList[i].code!, city: locationList[i].city!, province: locationList[i].province!, sequence: i)
-//        }
+        }
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
