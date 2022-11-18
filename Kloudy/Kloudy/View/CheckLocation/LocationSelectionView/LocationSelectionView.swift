@@ -94,15 +94,15 @@ class LocationSelectionView: UIViewController {
         [tableView, locationSelectionNavigationView, cancelSearchButton, searchBarBackgroundView, searchBar, nothingSearchedLocationLabel, magnifyingGlassImage].forEach { view.addSubview($0) }
         
         locationSelectionNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(62)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.width.equalTo(106)
-            $0.height.equalTo(24)
+            $0.width.equalTo(111)
+            $0.height.equalTo(40)
         }
         
         searchBarBackgroundView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(24)
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(16)
             $0.height.equalTo(47)
         }
         
@@ -118,7 +118,7 @@ class LocationSelectionView: UIViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.leading.trailing.equalToSuperview().inset(13)
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
@@ -131,7 +131,7 @@ class LocationSelectionView: UIViewController {
         
         magnifyingGlassImage.snp.makeConstraints {
             $0.size.equalTo(20)
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(36)
+            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(28)
             $0.trailing.equalTo(searchBar.snp.trailing).offset(-14)
         }
     }
@@ -246,7 +246,7 @@ class LocationSelectionView: UIViewController {
     
     private func configureSearchBarBackgroundView() {
         searchBarBackgroundView.layer.cornerRadius = 15
-        searchBarBackgroundView.backgroundColor = UIColor.KColor.gray03 //gray04로 변경예정
+        searchBarBackgroundView.backgroundColor = UIColor.KColor.gray04
     }
     
     // drag, drop delegate 설정
@@ -280,7 +280,7 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return locationList.count
+            return locationList.count //+ 1
         }
     }
 
@@ -295,9 +295,17 @@ extension LocationSelectionView: UITableViewDataSource {
             return cell
         case .check:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
-                return UITableViewCell() }
+                return UITableViewCell()
+            }
+            cell.backgroundColor = UIColor.KColor.clear
+            cell.selectionStyle = .none
+            // 추후에 코드 사용할 예정
+//            if indexPath.row == 0 {
+//                cell.locationNameLabel.text = "현재 위치"
+//            } else {
+//                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
+//            }
             cell.locationNameLabel.text = locationList[indexPath.row].city
-            cell.backgroundColor = .clear
             return cell
         }
     }
@@ -327,7 +335,7 @@ extension LocationSelectionView: UITableViewDataSource {
                 }
                 
                 deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
-                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 64, height: 93))
+                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 58, height: 86))
                 }
 
                 deleteAction.backgroundColor = .systemBackground
@@ -395,17 +403,22 @@ extension LocationSelectionView: UITableViewDropDelegate {
         case .search:
             return false
         case .check:
-            if indexPath.row == 0 {
-                return false
-            } else {
-                return true
-            }
+            return true
         }
+    }
+    
+    // 첫 번째 셀 옮기지 못하게 하는 메서드
+    func tableView(_ tableView: UITableView, targetIndexPathForMoveFromRowAt sourceIndexPath: IndexPath, toProposedIndexPath proposedDestinationIndexPath: IndexPath) -> IndexPath {
+        if sourceIndexPath.row == 0 {
+            return sourceIndexPath
+        }
+        return proposedDestinationIndexPath
     }
     
     // 셀 위치 변경 함수
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-        
+                
+        // +1로 해줘야할듯
         let itemMove = locationList[sourceIndexPath.row] //Get the item that we just moved
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
@@ -413,9 +426,10 @@ extension LocationSelectionView: UITableViewDropDelegate {
         tableView.reloadData()
         print(locationList)
         
-//        for i in 0..<locationList.count {
+        for i in 0..<locationList.count {
+            
 //            CoreDataManager.shared.saveLocation(code: locationList[i].code!, city: locationList[i].city!, province: locationList[i].province!, sequence: i)
-//        }
+        }
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
@@ -423,7 +437,6 @@ extension LocationSelectionView: UITableViewDropDelegate {
             if destinationIndexPath?.row == 0 {
                 return UITableViewDropProposal(operation: .move, intent: .unspecified)
             }
-            
             return UITableViewDropProposal(operation: .move, intent: .insertAtDestinationIndexPath)
         }
         

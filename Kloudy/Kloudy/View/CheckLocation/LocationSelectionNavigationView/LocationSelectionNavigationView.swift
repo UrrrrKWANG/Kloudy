@@ -10,7 +10,7 @@ import SnapKit
 
 class LocationSelectionNavigationView: UIView {
 
-    let backButton = UIButton()
+    let backButton = UIButton(type: .custom)
     let navigationTitle = UILabel()
     
     override init(frame: CGRect) {
@@ -32,8 +32,11 @@ class LocationSelectionNavigationView: UIView {
     private func configureBackButton() {
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         backButton.tintColor = UIColor.KColor.gray01
+        backButton.setPreferredSymbolConfiguration(.init(pointSize: 24, weight: .regular, scale: .default), forImageIn: .normal)
         self.backButton.snp.makeConstraints {
-            $0.width.height.equalTo(20)
+            $0.top.equalToSuperview().inset(5)
+            $0.width.equalTo(36)
+            $0.height.equalTo(31)
             $0.leading.equalToSuperview()
         }
     }
