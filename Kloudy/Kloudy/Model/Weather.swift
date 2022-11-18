@@ -53,6 +53,7 @@ struct Main: Codable {
 }
 
 struct WeatherIndex: Codable {
+    let umbrellaIndex: [UmbrellaIndex]
     let maskIndex: [MaskIndex]
     let outerIndex: [OuterIndex]
     let laundryIndex: [LaundryIndex]
@@ -65,6 +66,22 @@ struct WeatherIndex: Codable {
         case laundryIndex = "laundry_index"
         case carwashIndex = "carwash_index"
         case compareIndex = "compare_index"
+        case umbrellaIndex = "umbrella_index"
+    }
+}
+
+struct UmbrellaIndex: Codable {
+    let status: Int
+    let precipitation24H: Double
+    let precipitation1hMax: Double
+    let precipitation3hMax: Double
+    let wind: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case status, wind
+        case precipitation24H = "precipitation_24h"
+        case precipitation1hMax = "precipitation_1h_max"
+        case precipitation3hMax = "precipitation_3h_max"
     }
 }
 
@@ -121,7 +138,7 @@ struct WeeklyWeather: Codable {
 struct CarwashIndex: Codable {
     let status: Int
     let dailyWeather: Int
-    let dayMinTemperature: Double
+    let dayMaxTemperature: Double
     let dailyPrecipitation: Double
     let tomorrowWeather: Int
     let tomorrowPrecipication: Double
@@ -132,7 +149,7 @@ struct CarwashIndex: Codable {
     enum CodingKeys: String, CodingKey {
         case status, pm10grade
         case dailyWeather = "daily_weather"
-        case dayMinTemperature = "day_min_temperature"
+        case dayMaxTemperature = "day_max_temperature"
         case dailyPrecipitation = "daily_precipitation"
         case tomorrowWeather = "tomorrow_weather"
         case tomorrowPrecipication = "tomorrow_precipitation"
