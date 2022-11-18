@@ -40,6 +40,8 @@ class WeatherIndexView: UIView {
         return uiCollectionView
     }()
     
+    let indexNameString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
+    
     //롱텝 핸들링
     @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
@@ -155,6 +157,9 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         locationWeatherIndexView.changeCollectionView(index: indexPath.row)
         let transedIndexName = locationWeatherIndexView.transIndexName(indexName: indexName)
         locationWeatherIndexView.configureView(indexNameLabel: transedIndexName, indexStatusLabel: "지수별 text 받아올 부분")
+        
+        // WeatherDetailIndexView 에 어떤 Index 가 Tap 되었는지 전달
+        indexNameString.onNext(indexName)
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {

@@ -11,7 +11,7 @@ import UIKit
 
 class LocationManager: NSObject, CLLocationManagerDelegate {
     
-    static let shared = CurrentLocationModel()
+    static let shared = LocationManager()
     
     var locationManager = CLLocationManager()
     var currentLatitude : Double = 0.0

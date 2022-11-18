@@ -56,7 +56,6 @@ class LocationWeatherIndexView: UIView {
     private func bind() {
         tapGesture.rx.event
             .bind(onNext: { _ in
-                self.indexString.onNext(.car)
                 self.indexViewTapped.onNext(true)
                 print(self.city)
             })

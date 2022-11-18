@@ -101,11 +101,6 @@ class WeatherIndexDetailView: UIViewController {
         bind()
         attribute()
         layout()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        print(city)
     }
     
     private func bind() {
