@@ -184,10 +184,7 @@ class LocationWeatherIndexView: UIView {
             return "세차 지수"
         case .temperatureGap :
             return "일교차 지수"
-        default :
-            break
         }
-        return ""
     }
     func findStatus(city: String, indexName: IndexType) -> Int {
         for cityIndex in 0..<viewModel.indexDummyData.count {
@@ -207,37 +204,85 @@ class LocationWeatherIndexView: UIView {
         }
         return 0
     }
-    func findInternalIndexColorAndImage(indexName: IndexType, pathIndex: Int) -> UIView {
+    func findInternalIndexColorAndImage(indexName: IndexType, isIndexOn: [Int], pathIndex: Int) -> UIView {
         let foundElement = (indexName, pathIndex)
-        var uiColor = UIColor()
+        let uiImageView = UIImageView()
         switch foundElement {
-        case let(indexName, pathIndex) where indexName == .mask && pathIndex == 0 :
-            uiColor = UIColor.yellow
-        case let(indexName, pathIndex) where indexName == .mask && pathIndex == 1 :
-            uiColor = UIColor.red
-        case let(indexName, pathIndex) where indexName == .unbrella && pathIndex == 0 :
-            uiColor = UIColor.gray
-        case let(indexName, pathIndex) where indexName == .unbrella && pathIndex == 1 :
-            uiColor = UIColor.green
-        case let(indexName, pathIndex) where indexName == .outer && pathIndex == 0 :
-            uiColor = UIColor.blue
-        case let(indexName, pathIndex) where indexName == .laundry && pathIndex == 0 :
-            uiColor = UIColor.cyan
-        case let(indexName, pathIndex) where indexName == .car && pathIndex == 0 :
-            uiColor = UIColor.cyan
-        case let(indexName, pathIndex) where indexName == .car && pathIndex == 1 :
-            uiColor = UIColor.yellow
-        case let(indexName, pathIndex) where indexName == .car && pathIndex == 2 :
-            uiColor = UIColor.red
-
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == 0:
+            uiImageView.image = UIImage(named: "pollen")
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == 1:
+            uiImageView.image = UIImage(named: "yellowDust")
+        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == 0:
+            uiImageView.image = UIImage(named: "typhoon")
+        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == 1:
+            uiImageView.image = UIImage(named: "strongWind")
+        case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == 0:
+            uiImageView.image = UIImage(named: "coldWave")
+        case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == 0:
+            uiImageView.image = UIImage(named: "freezeAndBurst")
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == 0:
+            uiImageView.image = UIImage(named: "pollen")
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == 1:
+            uiImageView.image = UIImage(named: "yellowDust")
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == 2:
+            uiImageView.image = UIImage(named: "freezeAndBurst")
+            
         default:
-            uiColor = UIColor.KColor.black
+            uiImageView.image = UIImage(named: "")
         }
         let cellFrame: UIView = UIView()
         cellFrame.layer.cornerRadius = 8
-        cellFrame.layer.backgroundColor = uiColor.cgColor
+        cellFrame.addSubview(uiImageView)
+        uiImageView.snp.makeConstraints{
+            $0.edges.equalToSuperview()
+        }
         return cellFrame
     }
+    func calculateInternalIndexCount(indexName: IndexType) -> [Int] {
+        var isIndexOn = [Int]()
+        let cityIndex = findCityIndex(city: city)
+        switch indexName {
+        case .unbrella :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.wind >= 4 {
+                isIndexOn.append(1)
+            }
+        case .mask :
+            for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
+                if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
+                    isIndexOn.append(0)
+                    break
+                }
+            }
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
+                isIndexOn.append(1)
+            }
+        case .car :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.day_max_temperature <= 2 {
+                isIndexOn.append(0)
+            }
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
+                isIndexOn.append(1)
+            }
+            for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
+                if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
+                    isIndexOn.append(2)
+                    break
+                }
+            }
+        case .outer :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= -12 {
+                isIndexOn.append(0)
+            }
+        case .laundry :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].laundry_index.day_max_temperature <= 2{
+                isIndexOn.append(0)
+            }
+        default :
+            break
+        }
+        return isIndexOn
+    }
+
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
@@ -245,21 +290,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
-        var cellCount = 0
-        switch indexName {
-        case .unbrella:
-            cellCount = 2
-        case .mask:
-            cellCount = 2
-        case .outer:
-            cellCount = 1
-        case .laundry:
-            cellCount = 1
-        case .car:
-            cellCount = 3
-        default:
-            break
-        }
+        let cellCount = calculateInternalIndexCount(indexName: indexName).count
         return cellCount
     }
     
@@ -267,8 +298,9 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
-        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, pathIndex: indexPath.row)
-        
+        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
+        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
+      
         cell.addSubview(internalIndexView)
         internalIndexView.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -282,7 +314,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+      //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
     }
 }
 
