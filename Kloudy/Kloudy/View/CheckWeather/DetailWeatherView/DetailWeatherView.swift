@@ -168,10 +168,10 @@ class DetailWeatherView: UIViewController {
         
         weekCollectionView.snp.makeConstraints{
             $0.top.equalTo(labelInWeekCollectionView.snp.bottom).offset(12)
-            $0.bottom.equalToSuperview()
-            $0.width.equalTo(350)
+            $0.bottom.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(440)
-            $0.centerX.equalToSuperview()
+         
         }
     }
     

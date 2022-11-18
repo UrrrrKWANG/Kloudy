@@ -57,7 +57,7 @@ class LocationSearchBar: UISearchBar {
         self.backgroundImage = UIImage()
 
         if let textField = self.value(forKey: "searchField") as? UITextField {
-            textField.backgroundColor = UIColor.KColor.gray03 //gray04로 변경예정
+            textField.backgroundColor = UIColor.KColor.gray04
             textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.KColor.gray02, NSAttributedString.Key.font : UIFont.KFont.appleSDNeoRegularLarge])
             textField.textColor = UIColor.KColor.gray02
         }

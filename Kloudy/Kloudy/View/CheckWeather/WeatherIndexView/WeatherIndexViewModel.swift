@@ -12,9 +12,9 @@ import RxCocoa
 struct WeatherIndexViewModel {
     //TODO: 더미데이터 데이터 받아 온 이후 수정해야 합니다..
     var indexArray: [LocationIndexArray] = [
-        LocationIndexArray(location: "포항시 남구 지곡동", IndexArray:  ["umbrellaIndex", "maskIndex","outerIndex","laundryIndex","carwashIndex","campareIndex"]),
-        LocationIndexArray(location: "포항시 북구 장성동", IndexArray: ["maskIndex","umbrellaIndex"]),
-        LocationIndexArray(location: "서울시 강남구", IndexArray:  ["umbrellaIndex", "maskIndex"]),
+        LocationIndexArray(location: "포항시 남구 지곡동", IndexArray:  [.unbrella, .mask,.outer,.laundry,.car,.temperatureGap]),
+        LocationIndexArray(location: "포항시 북구 장성동", IndexArray: [.unbrella, .mask,.outer,.laundry,.car,.temperatureGap]),
+        LocationIndexArray(location: "서울시 강남구", IndexArray: [.unbrella, .mask,.outer,.laundry,.car,.temperatureGap]),
 ]
     //TODO: 더미데이터 데이터 받아 온 이후 수정해야 합니다.
     var indexDummyData: [IndexDatas] = [
@@ -26,7 +26,7 @@ struct WeatherIndexViewModel {
 
 struct LocationIndexArray {
     var location: String
-    var IndexArray: [String]
+    var IndexArray: [IndexType]
 }
 
 struct IndexDatas {

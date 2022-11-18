@@ -8,9 +8,11 @@
 import Lottie
 import SnapKit
 import UIKit
+import RxCocoa
+import RxSwift
 
 class WeatherIndexView: UIView {
-    
+    var disposeBag = DisposeBag()
     var viewModel = WeatherIndexViewModel()
     var city = String()
     lazy var locationWeatherIndexView = LocationWeatherIndexView(city: city)
@@ -129,7 +131,7 @@ class WeatherIndexView: UIView {
             $0.leading.equalToSuperview().inset(283)
             $0.trailing.equalToSuperview().inset(12)
         }
-
+    
         locationWeatherIndexView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview()

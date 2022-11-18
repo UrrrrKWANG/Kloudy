@@ -132,8 +132,8 @@ class CheckWeatherView: UIViewController {
                 
                 detailWeatherView.rx.tap
                     .bind {
-                        let detailWeatherView = WeatherIndexDetailView()
-                        detailWeatherView.modalPresentationStyle = .overCurrentContext
+                        let detailWeatherView = DetailWeatherView()
+                        detailWeatherView.modalPresentationStyle = .pageSheet
                         detailWeatherView.modalTransitionStyle = .coverVertical
                         self.present(detailWeatherView, animated: true)
                     }
