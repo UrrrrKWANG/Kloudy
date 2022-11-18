@@ -9,55 +9,6 @@ import Foundation
 
 class FetchWeatherInformation: ObservableObject {
     
-    @Published var result: Weather = Weather(today: "", main: [Main(currentWeather: 0, currentTemperature: 0, dayMaxTemperature: 0, dayMinTemperature: 0)], weatherIndex: [WeatherIndex(umbrellaIndex: 0, maskIndex: [MaskIndex(airQuality: 0, flowerQuality: 0, dustQuality: 0)])])
-    
-    func startLoad(province:String, city: String) {
-        // 도시 이름을 받아서 x, y값 받음
-        let cityCode = getCityInformaiton(province: province, city: city)
-        
-        let dayTime = getNowTimeForQuery()
-        let day = dayTime[0], time = dayTime[1]
-        
-        // x, y값을 쿼리로 넣은 url을 만듦 (urlComponents)
-        var urlComponents = URLComponents(string: "http://3.35.230.34:8080/apis/weather")
-        let codeQuery = URLQueryItem(name: "code", value: cityCode)
-
-        urlComponents?.queryItems = [codeQuery]
-        // URLSessionConfiguration을 만듦
-        let config = URLSessionConfiguration.default
-        let session = URLSession(configuration: config)
-        
-        // 데이터 테스크를 만듦
-        guard let requestURL = urlComponents?.url else { return }
-        
-        let dataTask = session.dataTask(with: requestURL) { (data, response, error) in
-            
-            let successRange = 200..<300
-            guard error == nil, let statusCode = (response as? HTTPURLResponse)?.statusCode, successRange.contains(statusCode)
-            else {
-                print(error?.localizedDescription)
-                return
-            }
-            
-            guard let resultData = data else {
-                print("data가 없음")
-                return
-            }
-            
-            do {
-                let decoder = JSONDecoder()
-                
-                let response = try decoder.decode(Weather.self, from: resultData)
-                self.result = response
-                print(response)
-                
-            } catch let error {
-                print("JSON Decoding Error: \(error.localizedDescription)")
-            }
-        }
-        dataTask.resume()
-    }
-    
     func getCityInformaiton(province:String, city: String) -> String {
         let koreanCities: [CityInformation] = loadCityListFromCSV()
         
