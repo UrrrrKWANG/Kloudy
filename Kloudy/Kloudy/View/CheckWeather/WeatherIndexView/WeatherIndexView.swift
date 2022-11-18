@@ -143,7 +143,7 @@ class WeatherIndexView: UIView {
     }
 }
 
-extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout, UIScrollViewDelegate {
+extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let cityIndex = locationWeatherIndexView.findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[indexPath.row]

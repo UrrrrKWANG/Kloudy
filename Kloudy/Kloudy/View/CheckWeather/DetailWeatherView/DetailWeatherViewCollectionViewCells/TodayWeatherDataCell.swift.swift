@@ -11,7 +11,7 @@ class TodayWeatherDataCell: UICollectionViewCell{
     static let identifier = "todayWeatherCell"
     let time: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoSemiBold15, textColor: UIColor.KColor.black)
         uiLabel.textAlignment = .center
         return uiLabel
     }()
@@ -24,7 +24,7 @@ class TodayWeatherDataCell: UICollectionViewCell{
     
     let temperature: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoMediumMedium, textColor: .black)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.lexendLight20, textColor: UIColor.KColor.black)
         return uiLabel
     }()
     
@@ -52,13 +52,13 @@ class TodayWeatherDataCell: UICollectionViewCell{
         }
         
         weatherCondition.snp.makeConstraints {
-            $0.top.equalTo(time.snp.bottom).offset(10)
+            $0.top.equalTo(time.snp.bottom).offset(3)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(38)
         }
     
         temperature.snp.makeConstraints {
-            $0.top.equalTo(weatherCondition.snp.bottom).offset(20)
+            $0.top.equalTo(weatherCondition.snp.bottom).offset(9)
             $0.centerX.equalToSuperview()
             $0.bottom.equalToSuperview()
         }
