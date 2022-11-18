@@ -20,7 +20,6 @@ class IndexStepView: UIView {
     let stepExplainLabel = UILabel()
     let stepExplainBackgroundView = UIView()
     
-    
     // 초기 저장 값
     let stepValue: BehaviorSubject<Int> = BehaviorSubject(value: 0)
     
@@ -60,13 +59,13 @@ class IndexStepView: UIView {
         
         valueString
             .subscribe(onNext: {
-                self.stepValueLabel.text = "지수 단계: \($0)"
+                self.configureStepValueLabel(valueText: "지수 단계: \($0)")
             })
             .disposed(by: disposeBag)
         
         explainString
             .subscribe(onNext: {
-                self.stepExplainLabel.text = $0
+                self.configureStepExplainLabel(explainText: $0)
             })
             .disposed(by: disposeBag)
     }
@@ -115,9 +114,7 @@ class IndexStepView: UIView {
     private func attribute() {
         self.backgroundColor = UIColor.KColor.white
         configureStepImageView()
-        configureStepValueLabel()
         configureStepValueBackgroundView()
-        configureStepExplainLabel()
         configureStepExplainBackgroundView()
     }
     
@@ -159,26 +156,25 @@ class IndexStepView: UIView {
     }
     
     private func configureStepValueBackgroundView() {
-        stepValueBackgroundView.backgroundColor = UIColor.init(red: 1, green: 249/255, blue: 219/255, alpha: 1)
+        stepValueBackgroundView.backgroundColor = UIColor.KColor.indexYellow1
         stepValueBackgroundView.layer.cornerRadius = 8
     }
     
-    private func configureStepValueLabel() {
-        stepValueLabel.font = UIFont.KFont.appleSDNeoBoldMini
-        stepValueLabel.textColor = UIColor.init(red: 172/255, green: 124/255, blue: 0, alpha: 1.0)
+    private func configureStepValueLabel(valueText: String) {
+        stepValueLabel.configureLabel(text: valueText, font: UIFont.KFont.appleSDNeoBold15, textColor: UIColor.KColor.indexYellow2)
         stepValueLabel.textAlignment = .center
         stepValueLabel.sizeToFit()
     }
     
     private func configureStepExplainBackgroundView() {
-        stepExplainBackgroundView.backgroundColor = UIColor.init(red: 247/255, green: 248/255, blue: 252/255, alpha: 1)
+        stepExplainBackgroundView.backgroundColor = UIColor.KColor.gray05
         stepExplainBackgroundView.layer.cornerRadius = 8
     }
     
-    private func configureStepExplainLabel() {
+    private func configureStepExplainLabel(explainText: String) {
+        stepExplainLabel.configureLabel(text: explainText, font: UIFont.KFont.appleSDNeoSemiBold15, textColor: UIColor.KColor.black)
+        stepExplainLabel.setLineSpacing(spacing: 5)
         stepExplainLabel.numberOfLines = 2
-        stepExplainLabel.font = UIFont.KFont.appleSDNeoSemiBoldMediumLarge
-        stepExplainLabel.textColor = UIColor.KColor.black
         stepExplainLabel.textAlignment = .center
         stepExplainLabel.sizeToFit()
     }
