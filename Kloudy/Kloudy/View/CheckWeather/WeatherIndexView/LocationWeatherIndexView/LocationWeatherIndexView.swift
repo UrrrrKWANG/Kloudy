@@ -230,8 +230,7 @@ class LocationWeatherIndexView: UIView {
             uiColor = UIColor.yellow
         case let(indexName, pathIndex) where indexName == .car && pathIndex == 2 :
             uiColor = UIColor.red
-            
-            
+
         default:
             uiColor = UIColor.KColor.black
         }
@@ -269,7 +268,6 @@ class LocationWeatherIndexView: UIView {
         return indexCount
     }
 }
-
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
     
