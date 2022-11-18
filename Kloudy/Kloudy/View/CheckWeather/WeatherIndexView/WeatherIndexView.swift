@@ -12,7 +12,6 @@ import RxCocoa
 import RxSwift
 
 class WeatherIndexView: UIView {
-    var indexName = String()
     var disposeBag = DisposeBag()
     var viewModel = WeatherIndexViewModel()
     var city = String()
@@ -152,7 +151,6 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let indexName = viewModel.indexArray[cityIndex].IndexArray[indexPath.row]
         let indexStatus = locationWeatherIndexView.findStatus(city: city, indexName: indexName)
         let imageOrLottieName = locationWeatherIndexView.findImageOrLottieName(indexName: indexName, status: indexStatus)
-        print(indexName)
         locationWeatherIndexView.changeImageView(name: imageOrLottieName)
         locationWeatherIndexView.changeCollectionView(index: indexPath.row)
         let transedIndexName = locationWeatherIndexView.transIndexName(indexName: indexName)
