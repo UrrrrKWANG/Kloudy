@@ -246,7 +246,7 @@ class LocationSelectionView: UIViewController {
     
     private func configureSearchBarBackgroundView() {
         searchBarBackgroundView.layer.cornerRadius = 15
-        searchBarBackgroundView.backgroundColor = UIColor.KColor.gray03 //gray04로 변경예정
+        searchBarBackgroundView.backgroundColor = UIColor.KColor.gray04
     }
     
     // drag, drop delegate 설정
