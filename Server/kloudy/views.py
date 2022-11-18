@@ -96,11 +96,11 @@ def time_interval_weather():
                     umbrella_index = UmbrellaIndexEven.objects.filter(code = location.code).first()
                 else:
                     umbrella_index = UmbrellaIndexOdd.objects.filter(code = location.code).first()
-                umbrella_status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind = umbrella_info
+                umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind = umbrella_info
                 # 갱신
                 umbrella_index.status               = umbrella_status
-                umbrella_index.precipitaion_24h     = precipitaion_24h
-                umbrella_index.precipitaion_1h_max  = precipitaion_1h_max
+                umbrella_index.precipitation_24h     = precipitation_24h
+                umbrella_index.precipitation_1h_max  = precipitation_1h_max
                 umbrella_index.precipitation_3h_max = precipitation_3h_max
                 umbrella_index.wind                 = wind
                 umbrella_index.save()
@@ -227,10 +227,10 @@ def time_interval_weather():
             weather_index_even.save()
 
             umbrella_info = get_umbrella_index(weather_24h_jsonObject)
-            umbrella_status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind = umbrella_info
-            print(f'우산 지수: {umbrella_status}, {precipitaion_24h}, {precipitaion_1h_max}, {precipitation_3h_max}, {wind}')
-            umbrella_index_odd = UmbrellaIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = umbrella_status, precipitaion_24h = precipitaion_24h, precipitaion_1h_max = precipitaion_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
-            umbrella_index_even = UmbrellaIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = umbrella_status, precipitaion_24h = precipitaion_24h, precipitaion_1h_max = precipitaion_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
+            umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind = umbrella_info
+            print(f'우산 지수: {umbrella_status}, {precipitation_24h}, {precipitation_1h_max}, {precipitation_3h_max}, {wind}')
+            umbrella_index_odd = UmbrellaIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
+            umbrella_index_even = UmbrellaIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
             umbrella_index_odd.save()
             umbrella_index_even.save()
 
