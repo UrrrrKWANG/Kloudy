@@ -118,7 +118,7 @@ class LocationSelectionView: UIViewController {
         }
         
         tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.leading.trailing.equalToSuperview().inset(11)
             $0.top.equalTo(searchBar.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
@@ -334,7 +334,7 @@ extension LocationSelectionView: UITableViewDataSource {
                 }
                 
                 deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
-                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 64, height: 93))
+                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 58, height: 86))
                 }
 
                 deleteAction.backgroundColor = .systemBackground
