@@ -12,6 +12,20 @@ import RxSwift
 
 class DetailWeatherView: UIViewController {
     
+    var todayWeatherDatas = Observable.of([HourlyWeather]())
+    var weekWeatherDatas = Observable.of([WeeklyWeather]())
+    init(weatherDatas: Weather) {
+        super.init(nibName: nil, bundle: nil)
+        let todayWeatherDatas = Observable.of(weatherDatas.localWeather[0].hourlyWeather
+            .filter({$0.hour >= 2}))
+        let weekWeatherDatas = Observable.of(weatherDatas.localWeather[0].weeklyWeather)
+        self.todayWeatherDatas = todayWeatherDatas
+        self.weekWeatherDatas = weekWeatherDatas
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     private let disposeBag = DisposeBag()
     lazy var labelInTodayCollectionView: UILabel = {
         let uiLabel = UILabel()
@@ -33,16 +47,14 @@ class DetailWeatherView: UIViewController {
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
         return scrollView
     }()
-    
-    let viewModel = weatehrViewModel()
-    
+
     lazy var todayCollectionView = makeCollectionView(direction: .horizontal, itemSizeWith: 65, itemSizeheight: 100, cell: TodayWeatherDataCell.self, identifier: TodayWeatherDataCell.identifier, contentInsetLeft: -2, contentInsetRight: 0, isScroll: true, minimumLineSpacing: 15)
     lazy var weekCollectionView = makeCollectionView(direction: .vertical, itemSizeWith: 348, itemSizeheight: 59, cell: WeekWeatherDataCell.self, identifier: WeekWeatherDataCell.identifier, contentInsetLeft: 0, contentInsetRight: 0, isScroll: false, minimumLineSpacing: 0)
     
     lazy var titleWeatherCondition: UIImageView = {
         let uiImageView = UIImageView()
         uiImageView.contentMode = .scaleAspectFit
-        let numbersObservable = viewModel.todayWeatherDatas
+        let numbersObservable = todayWeatherDatas
         numbersObservable.subscribe(
             onNext: {[unowned self] testData in
                 uiImageView.image = UIImage(named:findWeatehrCondition(weatherCondition: testData[0].status)[0])
@@ -178,7 +190,7 @@ class DetailWeatherView: UIViewController {
     }
     
     private func todayBind() {
-        viewModel.todayWeatherDatas.bind(to:self.todayCollectionView.rx.items(cellIdentifier: TodayWeatherDataCell.identifier, cellType:  TodayWeatherDataCell.self))
+        todayWeatherDatas.bind(to:self.todayCollectionView.rx.items(cellIdentifier: TodayWeatherDataCell.identifier, cellType:  TodayWeatherDataCell.self))
         { index, datas, cell in
             
             if index == 0 {
@@ -196,7 +208,7 @@ class DetailWeatherView: UIViewController {
         .disposed(by: disposeBag)
     }
     private func weekBind() {
-        viewModel.weekWeatherDatas.bind(to:
+        weekWeatherDatas.bind(to:
                                             self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
         { index, datas, cell in
             if index == 0 {
