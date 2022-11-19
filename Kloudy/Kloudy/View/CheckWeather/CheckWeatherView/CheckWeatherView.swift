@@ -133,6 +133,7 @@ class CheckWeatherView: UIViewController {
                                 })
                                 .disposed(by: self.disposeBag)
                             
+                            weatherIndexDetailView.weatherData = location
                             weatherIndexDetailView.city = localWeather[0].localName
                             weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
                             weatherIndexDetailView.modalTransitionStyle = .crossDissolve
