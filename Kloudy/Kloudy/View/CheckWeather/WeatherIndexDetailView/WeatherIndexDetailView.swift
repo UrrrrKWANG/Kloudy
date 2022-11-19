@@ -43,10 +43,10 @@ enum IndexType {
     var stepImageString: [String] {
         switch self {
         case .unbrella: return ["rain_step1", "rain_step2", "rain_step3", "rain_step4", ""]
-        case .mask: return ["마스크_1단계", "마스크_2단계", "마스크_3단계", "mask_4grade"]
-        case .laundry: return ["", "", "", ""]
-        case .outer: return ["", "", "", "", ""]
-        case .car: return ["", "", "", ""]
+        case .mask: return ["mask_step1", "mask_step2", "mask_step3", "mask_step4"]
+        case .laundry: return ["laundry_4", "laundry_3", "laundry_2", "laundry_1"]
+        case .outer: return ["outer_step1", "outer_step2", "outer_step3", "outer_step4", "outer_step5"]
+        case .car: return ["carwash_step4", "carwash_step3", "carwash_step2", "carwash_step1"]
         case .temperatureGap: return ["", "", "", "", ""]
         }
     }
@@ -54,10 +54,10 @@ enum IndexType {
     var stepExplainString: [String] {
         switch self {
         case .unbrella: return ["비가 오지 않습니다.", "우산 없이 후드티를 입고도 가까운 거리를 이동할 수 있습니다.", "우산을 쓰고 이동해야하며, 신발이나 옷이 젖습니다.", "우비를 뚫고 옷이 젖기도 하며, 장화를 신어야할만큼 비가 옵니다.", "위험합니다."]
-        case .mask: return ["바깥 활동하기 좋은 공기입니다.", "장시간 노출 시, 건강상 경미한 영향을 줍니다.", "환자군 및 민감군에게 유해한 영향, 일반인에게도 건강상 불쾌감을 줍니다.", "환자군 및 민감군에게 급성 노출시 심각한 영향을 주며 일반인에게도 영향을 끼칩니다."]
+        case .mask: return ["바깥 활동하기 좋은 공기입니다.", "장시간 노출 시, 건강상 경미한 영향을 줍니다.", "환자와 민감군에게 유해, 일반인에게 건강상 불쾌감을 줍니다.", "환자와 민감군에게 심각한 영향, 일반인에게 영향을 끼칩니다."]
         case .laundry: return ["빨래하기 좋은 날입니다.", "빨래하셔도 괜찮습니다.", "실내 건조하세요.", "빨래를 다음으로 미루는 것을 추천드려요."]
         case .outer: return ["캐주얼 재킷, 가디건", "라이더 재킷, 트렌치 코트", "코트, 무스탕, 항공점퍼", "패딩, 두꺼운 코트", "목도리나 장갑 등 방한용품 착용"]
-        case .car: return ["세차하기 좋은 날입니다.", "빨래하셔도 괜찮습니다.", "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요.", "빨래를 다음으로 미루는 것을 추천드려요."]
+        case .car: return ["세차하기 좋은 날입니다.", "세차하셔도 괜찮습니다.", "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요.", "세차를 다음으로 미루는 것을 추천드려요."]
         case .temperatureGap: return ["", "", "", "", ""]
         }
     }
@@ -86,6 +86,7 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
+    var city = String()
     var indexType: IndexType = .unbrella
     
     // API 데이터 받을 시 전달 (_24h)
@@ -100,11 +101,6 @@ class WeatherIndexDetailView: UIViewController {
         bind()
         attribute()
         layout()
-        
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-    
     }
     
     private func bind() {
@@ -231,7 +227,7 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     private func configureTitleLabel() {
-        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0]) 지수", font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.black)
+        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0]) 지수", font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
         titleLabel.sizeToFit()
     }
     

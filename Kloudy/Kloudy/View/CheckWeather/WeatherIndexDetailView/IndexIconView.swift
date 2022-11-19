@@ -26,7 +26,6 @@ class IndexIconView: UIView {
         super.init(frame: frame)
         bind()
         layout()
-        attribute()
     }
     
     required init?(coder: NSCoder) {
@@ -42,7 +41,7 @@ class IndexIconView: UIView {
         
         iconTitle
             .subscribe(onNext: {
-                self.iconTitleLabel.text = $0
+                self.configureIconTitleLabel(iconTitleText: $0)
             })
             .disposed(by: disposeBag)
         
@@ -54,7 +53,7 @@ class IndexIconView: UIView {
         
         iconUnit
             .subscribe(onNext: {
-                self.iconNumberLabel.text = "\(self.value)\($0)"
+                self.configureIconNumberLabel(iconValueText: "\(self.value)\($0)")
             })
             .disposed(by: disposeBag)
     }
@@ -79,20 +78,17 @@ class IndexIconView: UIView {
         }
     }
     
-    private func attribute() {
-        configureIconTitleLabel()
-        configureIconNumberLabel()
-    }
-    
-    private func configureIconTitleLabel() {
+    private func configureIconTitleLabel(iconTitleText: String) {
+        iconTitleLabel.text = iconTitleText
         iconTitleLabel.textColor = UIColor.KColor.black
-        iconTitleLabel.font = UIFont.KFont.appleSDNeoMediumSmall
+        iconTitleLabel.font = UIFont.KFont.appleSDNeoMedium14
         iconTitleLabel.sizeToFit()
     }
     
-    private func configureIconNumberLabel() {
+    private func configureIconNumberLabel(iconValueText: String) {
+        iconNumberLabel.text = iconValueText
         iconNumberLabel.textColor = UIColor.KColor.black
-        iconNumberLabel.font = UIFont.KFont.appleSDNeoSemiBoldExtraLarge
+        iconNumberLabel.font = UIFont.KFont.appleSDNeoBold20
         iconNumberLabel.sizeToFit()
     }
 }

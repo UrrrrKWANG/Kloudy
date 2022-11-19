@@ -8,6 +8,8 @@
 import UIKit
 import SnapKit
 import Lottie
+import RxSwift
+import RxCocoa
 
 class LocationWeatherIndexView: UIView {
     var cityIndex = Int()
@@ -25,11 +27,19 @@ class LocationWeatherIndexView: UIView {
         return layout
     }
     
+    let indexViewTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    var cityString: BehaviorSubject<String> = BehaviorSubject(value: "")
+    var indexString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
+
+    let tapGesture = UITapGestureRecognizer()
+    let disposeBag = DisposeBag()
+
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init(city: String) {
         super.init(frame: .zero)
         self.city = city
         setLayout()
+        bind()
         
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[0]
@@ -40,6 +50,16 @@ class LocationWeatherIndexView: UIView {
         configureView(indexNameLabel:  transedIndexName, indexStatusLabel: "하루종일 내림")
         changeImageView(name: imageOrLottieName)
         changeCollectionView(index: 0)
+        containerView.addGestureRecognizer(tapGesture)
+    }
+    
+    private func bind() {
+        tapGesture.rx.event
+            .bind(onNext: { _ in
+                self.indexViewTapped.onNext(true)
+                print(self.city)
+            })
+            .disposed(by: disposeBag)
     }
     
     required init?(coder: NSCoder) {

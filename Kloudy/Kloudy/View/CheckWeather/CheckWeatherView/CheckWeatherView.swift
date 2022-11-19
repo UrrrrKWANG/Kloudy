@@ -70,6 +70,10 @@ class CheckWeatherView: UIViewController {
         }
     }
     
+    private func bind() {
+        
+    }
+    
     func loadWeatherView() {
         checkWeatherViewModel.cityWeather.forEach { city in
             // 여기서 Controller를 그린다.
@@ -111,6 +115,25 @@ class CheckWeatherView: UIViewController {
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(385)
                 }
+                
+                // CheckWeatherView 의 Lottie 선택 시 WeatherDetailIndexView 로 city 와 indexType 전달
+                weatherIndexView.locationWeatherIndexView.indexViewTapped
+                    .subscribe(onNext: {
+                        if $0 {
+                            let weatherIndexDetailView = WeatherIndexDetailView()
+                            weatherIndexView.indexNameString
+                                .subscribe(onNext: {
+                                    weatherIndexDetailView.indexType = $0
+                                })
+                                .disposed(by: self.disposeBag)
+                            
+                            weatherIndexDetailView.city = city.localName
+                            weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
+                            weatherIndexDetailView.modalTransitionStyle = .crossDissolve
+                            self.present(weatherIndexDetailView, animated: true)
+                        }
+                    })
+                    .disposed(by: disposeBag)
                 
                 detailWeatherView.rx.tap
                     .bind {
