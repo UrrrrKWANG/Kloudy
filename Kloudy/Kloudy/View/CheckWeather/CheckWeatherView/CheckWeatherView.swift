@@ -35,6 +35,32 @@ class CheckWeatherView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+//        지역이 변경될 시 사용할 코드
+//        dataViewControllers = [UIViewController]()
+//        loadWeatherView()
+//
+//        addChild(pageViewController)
+//        [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { view.addSubview($0) }
+//        configureCheckWeatherNavigationView()
+//
+//        pageViewController.dataSource = self
+//        pageViewController.delegate = self
+//        configurePageViewController()
+//
+//        if let firstVC = dataViewControllers.first {
+//            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+//        }
+//
+//        pageControl.frame = CGRect()
+//        pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
+//        pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
+//        pageControl.numberOfPages = self.dataViewControllers.count
+//        pageControl.currentPage = initialPage
+//
+//        pageControl.snp.makeConstraints {
+//            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(6)
+//            $0.centerX.equalToSuperview()
+//        }
     }
 
     override func viewDidLoad() {
@@ -84,14 +110,24 @@ class CheckWeatherView: UIViewController {
                 let vc = UIViewController()
                 let currentWeatherView = CurrentWeatherView(localName: localWeather[0].localName, currentTemperature: Int(main[0].currentTemperature))
                 let weatherIndexView = WeatherIndexView(city: localWeather[0].localName)
-                let detailWeatherView = UIButton()
+                let detailWeatherView: UIButton = {
+                    let detailWeatherView = UIButton()
+                    detailWeatherView.backgroundColor = UIColor.KColor.white
+                    detailWeatherView.layer.cornerRadius = 10
+                    detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
+                    return detailWeatherView
+                }()
                 let currentWeatherImage: UIImageView = {
                     let currentWeatherImage = UIImageView()
                     currentWeatherImage.contentMode = .scaleAspectFit
                     currentWeatherImage.image = UIImage(named: "detailWeather-\(main[0].currentWeather)")
                     return currentWeatherImage
                 }()
-                let detailWeatherViewLabel = UILabel()
+                let detailWeatherViewLabel: UILabel = {
+                    let detailWeatherViewLabel = UILabel()
+                    detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
+                    return detailWeatherViewLabel
+                }()
                 let rightIcon: UIImageView = {
                     let rightIcon = UIImageView()
                     rightIcon.image = UIImage(named: "right")
@@ -113,9 +149,6 @@ class CheckWeatherView: UIViewController {
                     $0.width.equalTo(150)
                     $0.height.equalTo(130)
                 }
-                weatherIndexView.backgroundColor = UIColor.KColor.white
-                weatherIndexView.layer.cornerRadius = 12
-                weatherIndexView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
                 weatherIndexView.snp.makeConstraints {
                     $0.top.equalTo(currentWeatherView.snp.bottom).offset(32)
                     $0.leading.trailing.equalToSuperview().inset(20)
@@ -150,9 +183,6 @@ class CheckWeatherView: UIViewController {
                     }
                     .disposed(by: disposeBag)
                 
-                detailWeatherView.backgroundColor = UIColor.KColor.white
-                detailWeatherView.layer.cornerRadius = 10
-                detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
                 detailWeatherView.snp.makeConstraints {
                     $0.top.equalTo(weatherIndexView.snp.bottom).offset(32)
                     $0.leading.trailing.equalToSuperview().inset(20)
@@ -161,7 +191,6 @@ class CheckWeatherView: UIViewController {
                 
                 [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
 
-                detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
                 detailWeatherViewLabel.snp.makeConstraints {
                     $0.centerY.equalToSuperview()
                     $0.leading.equalToSuperview().inset(16)
@@ -191,7 +220,7 @@ class CheckWeatherView: UIViewController {
     }
     
     private func configurePageViewController() {
-        pageViewController.view.snp.remakeConstraints {
+        pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(checkWeatherBasicNavigationView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
