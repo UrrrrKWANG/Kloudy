@@ -11,6 +11,8 @@ struct CityInformation: Codable {
     let code: String
     let province: String
     let city: String
+    let xCoordination: String
+    let yCoordination: String
 }
 
 // 도시 정보를 찾을 때 사용하는 모델

@@ -36,63 +36,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             }
         }
         
-        let locationManger = CLLocationManager()
-        let currentStatus = locationManger.authorizationStatus
+        let currentStatus = CLLocationManager().authorizationStatus
 
         if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
-            var currentCity = ""
-            var currentProvince = ""
-            locationManger.startUpdatingLocation()
-            if let location = locationManger.location {
-                let longitude: CLLocationDegrees = location.coordinate.longitude
-                let latitude: CLLocationDegrees = location.coordinate.latitude
-                
-//                let converter: LocationConverter = LocationConverter()
-//                let (x, y): (Int, Int)
-//                    = converter.convertGrid(lon: longitude, lat: latitude)
-                
-                let findLocation: CLLocation = CLLocation(latitude: latitude, longitude: longitude)
-                let geoCoder: CLGeocoder = CLGeocoder()
-                let local: Locale = Locale(identifier: "en_US")
-                geoCoder.reverseGeocodeLocation(findLocation, preferredLocale: local) { (place, error) in
-                    if let address: [CLPlacemark] = place {
-                        let locality = address.last?.locality
-                        switch locality {
-                        case "Seoul":
-                            currentCity = "Jongno-gu"
-                            currentProvince = "Seoul"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        case "Daegu":
-                            currentCity = "Suseong-gu"
-                            currentProvince = "Daegu"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        case "Busan":
-                            currentCity = "Saha-gu"
-                            currentProvince = "Busan"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        case "Ulsan":
-                            currentCity = "Ulju-gun"
-                            currentProvince = "Ulsan"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        case "Gwangju":
-                            currentCity = "Gwangsan-gu"
-                            currentProvince = "Gwangju"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        case "Daejeon":
-                            currentCity = "Yuseong-gu"
-                            currentProvince = "Daejeon"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        case "Incheon":
-                            currentCity = "Bupyeong-gu"
-                            currentProvince = "Incheon"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        default:
-                            currentCity = locality ?? ""
-                            currentProvince = "\(address.last?.subThoroughfare ?? "")"
-                            self.loadNowLocationWeather(currentProvince: currentProvince, currentCity: currentCity)
-                        }
-                    }
-                }
+            // 현재 지역의 위도 경도로 기상청에서 제공하는 XY값을 계산 -> XY값으로 현재 지역정보 반환 후 요청을 보냄.
+            let XY = LocationManager.shared.requestNowLocationInfo()
+            let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+            guard let nowLocation = nowLocation else { return true }
+            FetchWeatherInformation.shared.startLoad(province: nowLocation.province, city: nowLocation.city) { response in
+                self.weathers.append(response)
             }
         }
         
