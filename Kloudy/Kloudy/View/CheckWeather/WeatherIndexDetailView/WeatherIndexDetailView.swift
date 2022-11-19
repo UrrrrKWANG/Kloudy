@@ -24,7 +24,7 @@ enum IndexType {
         case .mask: return ["마스크", "dust_png", "미세먼지", "㎍/㎥", "fineDust_png", "초미세먼지", "㎍/㎥", "", ""]
         case .laundry: return ["빨래", "todayWeather_png", "오늘의 날씨", "", "humidity_png", "습도", "%", "", ""]
         case .outer: return ["겉옷", "lowestTemperature_png", "일 최저 기온", "℃", "goWorkingTemperature_png", "출근시간대 온도", "℃", "", ""]
-        case .car: return ["세차", "todayWeather_png", "오늘의 날씨", "", "precipitation_png", "강수 예정", "일 후", "", ""]
+        case .car: return ["세차", "todayWeather_png", "오늘의 날씨", "", "precipitation_png", "강수 예정", "", "", ""]
         case .temperatureGap: return ["일교차", "lowestTemperature_png", "최저 기온", "℃", "highestTemperature_png", "최고 온도", "℃", "", ""]
         }
     }
@@ -69,7 +69,7 @@ enum IndexType {
         case .laundry: return false
         case .outer: return false
         case .car: return false
-        case .temperatureGap: return true
+        case .temperatureGap: return false
         }
     }
 }
@@ -116,6 +116,10 @@ class WeatherIndexDetailView: UIViewController {
             ))
             
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 1)
+            
+            chartView.chartLabelText.onNext(indexType.detailIndexString[7])
+            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartUnitText.onNext(String(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) + "mm")
             
         } else if indexType == .mask {
             firstIconView.iconValue.onNext(String(
@@ -168,10 +172,6 @@ class WeatherIndexDetailView: UIViewController {
         
         // API 데이터 받을 시 전달
         //        indexIconView.indexStatus.onNext(data.status)
-        
-        
-        chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-        chartView.chartUnitText.onNext(indexType.detailIndexString[8])
         
         presentButtonView.totalIndexStep.onNext(indexType.totalIndexStep)
         

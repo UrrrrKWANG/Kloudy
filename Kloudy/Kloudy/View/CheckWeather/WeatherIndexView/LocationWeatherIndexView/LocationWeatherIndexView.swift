@@ -55,7 +55,6 @@ class LocationWeatherIndexView: UIView {
         tapGesture.rx.event
             .bind(onNext: { _ in
                 self.indexViewTapped.onNext(true)
-                print(self.city)
             })
             .disposed(by: disposeBag)
     }
