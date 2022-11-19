@@ -81,7 +81,8 @@ class WeekWeatherDataCell: UICollectionViewCell{
             $0.trailing.equalToSuperview().inset(20)
             $0.height.width.equalTo(40)
         }
-        dividingLabel.snp.makeConstraints{            $0.trailing.equalTo(maxTemperature.snp.leading)
+        dividingLabel.snp.makeConstraints{
+            $0.trailing.equalTo(maxTemperature.snp.leading)
             $0.centerY.equalToSuperview()
             $0.height.equalTo(40)
             $0.width.equalTo(20)
