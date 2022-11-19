@@ -31,6 +31,8 @@ class CheckWeatherView: UIViewController {
     
     var dataViewControllers = [UIViewController]()
     
+    var locations = [Location]()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
     }
@@ -74,32 +76,37 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        checkWeatherViewModel.cityWeather.forEach { city in
-            // 여기서 Controller를 그린다.
-            // view를 그릴 때 viewModel을 가져와 사용한다.
-            // viewmodel에 init을 줘서 코어데이터에 있는 도시를 가져와서 사용하면 될 듯
+        weathers.forEach { location in
+            let localWeather = [LocalWeather](location.localWeather)
+            let main = [Main](localWeather[0].main)
+            
             lazy var num: UIViewController = {
                 let vc = UIViewController()
-                let locationView = UIView()
-                let weatherIndexView = WeatherIndexView(city: city.localName)
+                let currentWeatherView = CurrentWeatherView(localName: localWeather[0].localName, currentTemperature: Int(main[0].currentTemperature))
+                let weatherIndexView = WeatherIndexView(city: localWeather[0].localName)
                 let detailWeatherView = UIButton()
-                let currentWeatherImage = UIImageView()
+                let currentWeatherImage: UIImageView = {
+                    let currentWeatherImage = UIImageView()
+                    currentWeatherImage.contentMode = .scaleAspectFit
+                    currentWeatherImage.image = UIImage(named: "detailWeather-\(main[0].currentWeather)")
+                    return currentWeatherImage
+                }()
                 let detailWeatherViewLabel = UILabel()
-                let rightIcon = UIImageView()
+                let rightIcon: UIImageView = {
+                    let rightIcon = UIImageView()
+                    rightIcon.image = UIImage(named: "right")
+                    rightIcon.contentMode = .scaleAspectFit
+                    return rightIcon
+                }()
                 
-                vc.view.backgroundColor = .clear
-                [locationView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
+                vc.view.backgroundColor = UIColor.KColor.clear
+                [currentWeatherView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
                 
-                temp_locationView(view: locationView, city: city)
-                locationView.backgroundColor = UIColor.KColor.primaryBlue01
-                locationView.layer.cornerRadius = 15
-                locationView.snp.makeConstraints {
+                currentWeatherView.snp.makeConstraints {
                     $0.top.equalToSuperview().inset(24)
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(108)
                 }
-                
-                currentWeatherImage.image = UIImage(named: "detailWeather-\(city.currentWeather)")
                 currentWeatherImage.snp.makeConstraints {
                     $0.top.equalToSuperview().inset(-6)
                     $0.leading.equalToSuperview().inset(36)
@@ -110,7 +117,7 @@ class CheckWeatherView: UIViewController {
                 weatherIndexView.layer.cornerRadius = 12
                 weatherIndexView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
                 weatherIndexView.snp.makeConstraints {
-                    $0.top.equalTo(locationView.snp.bottom).offset(32)
+                    $0.top.equalTo(currentWeatherView.snp.bottom).offset(32)
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(385)
                 }
@@ -126,7 +133,7 @@ class CheckWeatherView: UIViewController {
                                 })
                                 .disposed(by: self.disposeBag)
                             
-                            weatherIndexDetailView.city = city.localName
+                            weatherIndexDetailView.city = localWeather[0].localName
                             weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
                             weatherIndexDetailView.modalTransitionStyle = .crossDissolve
                             self.present(weatherIndexDetailView, animated: true)
@@ -152,12 +159,9 @@ class CheckWeatherView: UIViewController {
                     $0.height.equalTo(58)
                 }
                 
-                rightIcon.image = UIImage(named: "right")
-                rightIcon.contentMode = .scaleToFill
-                
                 [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
 
-                detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
+                detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
                 detailWeatherViewLabel.snp.makeConstraints {
                     $0.centerY.equalToSuperview()
                     $0.leading.equalToSuperview().inset(16)
@@ -174,35 +178,6 @@ class CheckWeatherView: UIViewController {
         }
     }
     
-    func temp_locationView(view: UIView, city: CityWeather) {
-        let locationLabel = UILabel()
-        let locationIcon = UIImageView()
-        let temperature = UILabel()
-        
-        [locationLabel, locationIcon, temperature].forEach { view.addSubview($0) }
-        locationIcon.image = UIImage(named: "location_mark")
-        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldSmallest, textColor: UIColor.KColor.white)
-        temperature.configureLabel(text: "\(Int(city.currentTemperature))°", font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
-
-        locationLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(13)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(20)
-        }
-        locationIcon.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(15)
-            $0.trailing.equalTo(locationLabel.snp.leading).offset(-5)
-            $0.width.equalTo(11)
-            $0.height.equalTo(14)
-        }
-        
-        temperature.snp.makeConstraints {
-            $0.top.equalTo(locationLabel.snp.bottom).offset(2)
-            $0.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(63)
-        }
-    }
-    
     func configureCheckWeatherNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
@@ -216,7 +191,7 @@ class CheckWeatherView: UIViewController {
     }
     
     private func configurePageViewController() {
-        pageViewController.view.snp.makeConstraints {
+        pageViewController.view.snp.remakeConstraints {
             $0.top.equalTo(checkWeatherBasicNavigationView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
             $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
@@ -236,12 +211,6 @@ class CheckWeatherView: UIViewController {
         let detailWeatherView = LocationSelectionView()
         self.present(detailWeatherView, animated: true)
     }
-    
-    
-    //    @objc func tapAddIndexButton() {
-    //        self.delegate?.sendFirstSequenceLocation(self.firstSequenceLocation)
-    //        self.present(self.addLivingIndexCellView, animated: true)
-    //    }
     
 }
 
