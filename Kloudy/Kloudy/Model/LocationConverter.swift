@@ -7,6 +7,7 @@
 
 import Foundation
 
+// https://hanulyun.medium.com/swift-%EA%B2%BD%EB%8F%84-%EC%9C%84%EB%8F%84-%EC%8B%9C-%EA%B5%B0-%EA%B5%AC-%EA%B5%AC%ED%95%98%EA%B8%B0-b77a42c7c924
 struct MapGridData {
   let re = 6371.00877    // 사용할 지구반경  [ km ]
   let grid = 5.0         // 사용할 지구반경  [ km ]

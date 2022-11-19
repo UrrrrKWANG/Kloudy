@@ -9,6 +9,7 @@ import Foundation
 
 class FetchWeatherInformation: ObservableObject {
     static let shared: FetchWeatherInformation = FetchWeatherInformation()
+//    let koreanCities: [CityInformation] = loadCityListFromCSV()
     
     func startLoad(province:String, city: String, _ completion: @escaping (Weather) -> Void) {
         // 도시 이름을 받아서 x, y값 받음
@@ -76,6 +77,16 @@ class FetchWeatherInformation: ObservableObject {
         return result
     }
     
+    func getLocationInfoByXY(x: Int, y: Int) -> CityInformation? {
+        var result: CityInformation?
+        let koreanCities: [CityInformation] = loadCityListFromCSV()
+        let nowCities = koreanCities.filter{ $0.xCoordination == String(x) && $0.yCoordination == String(y) }
+        if nowCities.count > 0 {
+            result = nowCities[0]
+        }
+        return result
+    }
+    
     func getNowTimeForQuery() -> [String] {
         let nowDate = Date()
         let dateFormatter = DateFormatter()
@@ -136,7 +147,7 @@ class FetchWeatherInformation: ObservableObject {
             if let dataArr = dataEncoded?.components(separatedBy: "\r\n").map({$0.components(separatedBy: ",")}) {
                                 for index in 0..<dataArr.count-1 {
                                     let item = dataArr[index]
-                                    let city = CityInformation(code: item[0], province: item[1], city: item[2])
+                                    let city = CityInformation(code: item[0], province: item[1], city: item[2], xCoordination: item[3], yCoordination: item[4])
                                     cityList.append(city)
                                 }
                             }

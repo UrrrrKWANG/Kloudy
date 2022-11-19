@@ -18,10 +18,9 @@ class LocationWeatherIndexView: UIView {
     var viewModel = WeatherIndexViewModel()
     let weatherIndexNameLabel = UILabel()
     let intenalIndexListView = UIView()
-    var internalIndexCollectionView: UICollectionView?
     var containerView = UIView()
     var city = String()
-    let weatherIndexStatusLabel = UILabel()
+    let weatherIndexStatusLabel = WeatherIndexStatusLabel()
     private var layout : UICollectionViewFlowLayout {
         let layout = CollectionViewRightAlignFlowLayout(cellItemSize: 30)
         return layout
@@ -30,10 +29,9 @@ class LocationWeatherIndexView: UIView {
     let indexViewTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var cityString: BehaviorSubject<String> = BehaviorSubject(value: "")
     var indexString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
-
     let tapGesture = UITapGestureRecognizer()
     let disposeBag = DisposeBag()
-
+    
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init(city: String) {
         super.init(frame: .zero)
@@ -100,15 +98,18 @@ class LocationWeatherIndexView: UIView {
     func changeCollectionView(index: Int) {
         self.internalIndex = index
         intenalIndexListView.backgroundColor = UIColor.KColor.black
-        internalIndexCollectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        internalIndexCollectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
-        internalIndexCollectionView?.delegate = self
-        internalIndexCollectionView?.dataSource = self
+        lazy var internalIndexCollectionView: UICollectionView = {
+            let uiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
+            uiCollectionView.register(InternalIndexCollectionViewCell.self, forCellWithReuseIdentifier: InternalIndexCollectionViewCell.identifier)
+            return uiCollectionView
+        }()
+        internalIndexCollectionView.delegate = self
+        internalIndexCollectionView.dataSource = self
         if intenalIndexListView.subviews.count != 0 {
             intenalIndexListView.subviews[0].removeFromSuperview()
         }
-        intenalIndexListView.addSubview(internalIndexCollectionView!)
-        internalIndexCollectionView!.snp.makeConstraints{
+        intenalIndexListView.addSubview(internalIndexCollectionView)
+        internalIndexCollectionView.snp.makeConstraints{
             $0.top.equalToSuperview()
             $0.width.height.equalToSuperview()
         }
@@ -117,29 +118,25 @@ class LocationWeatherIndexView: UIView {
         [weatherIndexNameLabel, containerView, weatherIndexStatusLabel, intenalIndexListView].forEach() {
             self.addSubview($0)
         }
-        
         weatherIndexNameLabel.snp.makeConstraints {
-            $0.top.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(106)
+            $0.top.equalToSuperview().inset(19)
+            $0.leading.equalToSuperview().inset(16)
             $0.height.equalTo(24)
         }
-        
         containerView.snp.makeConstraints {
-            $0.top.equalTo(weatherIndexNameLabel.snp.bottom)
-            $0.bottom.equalToSuperview().inset(74)
+            $0.top.equalTo(weatherIndexNameLabel.snp.bottom).offset(26)
             $0.leading.equalToSuperview().inset(15)
-            $0.trailing.equalToSuperview().inset(20)
+            $0.trailing.equalToSuperview().inset(26)
+            $0.bottom.equalToSuperview().inset(74)
         }
-        
         weatherIndexStatusLabel.snp.makeConstraints {
-            $0.top.equalTo(containerView.snp.bottom).offset(16)
-            $0.bottom.leading.equalToSuperview().inset(18)
-            $0.trailing.equalToSuperview().inset(140)
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(36)
         }
-        
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
-            $0.trailing.equalToSuperview()
+            $0.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(30)
             $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
         }
@@ -166,15 +163,15 @@ class LocationWeatherIndexView: UIView {
         let foundElement =  (indexName, status)
         switch foundElement {
         case let(indexName, status) where indexName == .mask && status == 0 :
-            return "마스크_1단계"
+            return "mask_step1"
         case let(indexName, status) where indexName == .mask && status == 1 :
-            return "마스크_2단계"
+            return "mask_step2"
         case let(indexName, status) where indexName == .mask && status == 2 :
-            return "마스크_3단계"
+            return "mask_step3"
         case let(indexName, status) where indexName == .mask && status == 3 :
-            return "mask_4grade"
+            return "mask_step4"
         case let(indexName, status) where indexName == .mask && status == 4 :
-            return "mask_4grade"
+            return "mask_step4"
         case let(indexName, status) where indexName == .unbrella && status == 0 :
             return "rain_step1"
         case let(indexName, status) where indexName == .unbrella && status == 1 :
@@ -185,6 +182,36 @@ class LocationWeatherIndexView: UIView {
             return "rain_step4"
         case let(indexName, status) where indexName == .unbrella && status == 4 :
             return "rain_step4"
+        case let(indexName, status) where indexName == .laundry && status == 0 :
+            return "laundry_1"
+        case let(indexName, status) where indexName == .laundry && status == 1 :
+            return "laundry_2"
+        case let(indexName, status) where indexName == .laundry &&  status == 2 :
+            return "laundry_3"
+        case let(indexName, status) where indexName == .laundry && status == 3 :
+            return "laundry_4"
+        case let(indexName, status) where indexName == .laundry && status == 4 :
+            return "laundry_4"
+        case let(indexName, status) where indexName == .car && status == 0 :
+            return "carwash_step1"
+        case let(indexName, status) where indexName == .car && status == 1 :
+            return "carwash_step2"
+        case let(indexName, status) where indexName == .car &&  status == 2 :
+            return "carwash_step3"
+        case let(indexName, status) where indexName == .car && status == 3 :
+            return "carwash_step4"
+        case let(indexName, status) where indexName == .car && status == 4 :
+            return "carwash_step4"
+        case let(indexName, status) where indexName == .outer && status == 0 :
+            return "outer_step1"
+        case let(indexName, status) where indexName == .outer && status == 1 :
+            return "outer_step2"
+        case let(indexName, status) where indexName == .outer &&  status == 2 :
+            return "outer_step3"
+        case let(indexName, status) where indexName == .outer && status == 3 :
+            return "outer_step4"
+        case let(indexName, status) where indexName == .outer && status == 4 :
+            return "outer_step5"
         default:
             return ""
         }
@@ -204,10 +231,7 @@ class LocationWeatherIndexView: UIView {
             return "세차 지수"
         case .temperatureGap :
             return "일교차 지수"
-        default :
-            break
         }
-        return ""
     }
     func findStatus(city: String, indexName: IndexType) -> Int {
         for cityIndex in 0..<viewModel.indexDummyData.count {
@@ -227,37 +251,79 @@ class LocationWeatherIndexView: UIView {
         }
         return 0
     }
-    func findInternalIndexColorAndImage(indexName: IndexType, pathIndex: Int) -> UIView {
+    func findInternalIndexColorAndImage(indexName: IndexType, isIndexOn: [InternalIndexType], pathIndex: Int) -> UIImageView {
+        let uiImageView = UIImageView()
         let foundElement = (indexName, pathIndex)
-        var uiColor = UIColor()
         switch foundElement {
-        case let(indexName, pathIndex) where indexName == .mask && pathIndex == 0 :
-            uiColor = UIColor.yellow
-        case let(indexName, pathIndex) where indexName == .mask && pathIndex == 1 :
-            uiColor = UIColor.red
-        case let(indexName, pathIndex) where indexName == .unbrella && pathIndex == 0 :
-            uiColor = UIColor.gray
-        case let(indexName, pathIndex) where indexName == .unbrella && pathIndex == 1 :
-            uiColor = UIColor.green
-        case let(indexName, pathIndex) where indexName == .outer && pathIndex == 0 :
-            uiColor = UIColor.blue
-        case let(indexName, pathIndex) where indexName == .laundry && pathIndex == 0 :
-            uiColor = UIColor.cyan
-        case let(indexName, pathIndex) where indexName == .car && pathIndex == 0 :
-            uiColor = UIColor.cyan
-        case let(indexName, pathIndex) where indexName == .car && pathIndex == 1 :
-            uiColor = UIColor.yellow
-        case let(indexName, pathIndex) where indexName == .car && pathIndex == 2 :
-            uiColor = UIColor.red
-
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .pollen:
+            uiImageView.image = UIImage(named: "pollen")
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .yellowDust:
+            uiImageView.image = UIImage(named: "yellowDust")
+        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == .typhoon:
+            uiImageView.image = UIImage(named: "typhoon")
+        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == .strongWind:
+            uiImageView.image = UIImage(named: "strongWind")
+        case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == .coldWave:
+            uiImageView.image = UIImage(named: "coldWave")
+        case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == .freezeAndBurst:
+            uiImageView.image = UIImage(named: "freezeAndBurst")
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .pollen:
+            uiImageView.image = UIImage(named: "pollen")
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .yellowDust:
+            uiImageView.image = UIImage(named: "yellowDust")
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .freezeAndBurst:
+            uiImageView.image = UIImage(named: "freezeAndBurst")
+            
         default:
-            uiColor = UIColor.KColor.black
+            uiImageView.image = UIImage(named: "")
         }
-        let cellFrame: UIView = UIView()
-        cellFrame.layer.cornerRadius = 8
-        cellFrame.layer.backgroundColor = uiColor.cgColor
-        return cellFrame
+        return uiImageView
     }
+    func calculateInternalIndexCount(indexName: IndexType) -> [InternalIndexType] {
+        var isIndexOn = [InternalIndexType]()
+        let cityIndex = findCityIndex(city: city)
+        switch indexName {
+        case .unbrella :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].umbrella_index.wind >= 4 {
+                isIndexOn.append(.strongWind)
+            }
+        case .mask :
+            for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
+                if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
+                    isIndexOn.append(.yellowDust)
+                    break
+                }
+            }
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
+                isIndexOn.append(.pollen)
+            }
+        case .car :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].carwash_index.day_max_temperature <= 2 {
+                isIndexOn.append(.freezeAndBurst)
+            }
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].mask_index.pollen_index >= 2 {
+                isIndexOn.append(.pollen)
+            }
+            for hour in 0..<viewModel.indexDummyData[cityIndex].cityIndexData.count {
+                if viewModel.indexDummyData[cityIndex].cityIndexData[hour].mask_index.pm10value >= 400 {
+                    isIndexOn.append(.yellowDust)
+                    break
+                }
+            }
+        case .outer :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].outer_index.day_min_temperature <= -12 {
+                isIndexOn.append(.coldWave)
+            }
+        case .laundry :
+            if viewModel.indexDummyData[cityIndex].cityIndexData[0].laundry_index.day_max_temperature <= 2{
+                isIndexOn.append(.freezeAndBurst)
+            }
+        default :
+            break
+        }
+        return isIndexOn
+    }
+
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
@@ -265,30 +331,16 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
-        var cellCount = 0
-        switch indexName {
-        case .unbrella:
-            cellCount = 2
-        case .mask:
-            cellCount = 2
-        case .outer:
-            cellCount = 1
-        case .laundry:
-            cellCount = 1
-        case .car:
-            cellCount = 3
-        default:
-            break
-        }
+        let cellCount = calculateInternalIndexCount(indexName: indexName).count
         return cellCount
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
         let cityIndex = findCityIndex(city: city)
         let indexName = viewModel.indexArray[cityIndex].IndexArray[self.internalIndex]
-        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, pathIndex: indexPath.row)
-        
+        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
+        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
         cell.addSubview(internalIndexView)
         internalIndexView.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -302,12 +354,12 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print(indexPath)
+      //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
     }
 }
 
 class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
-    let cellSpacing: CGFloat = 4
+    let cellSpacing: CGFloat = 8
     let cellItemSize: Double
     init(cellItemSize: Double){
         self.cellItemSize = cellItemSize
@@ -318,7 +370,6 @@ class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
     }
     override func layoutAttributesForElements(in rect: CGRect) -> [UICollectionViewLayoutAttributes]? {
         self.minimumLineSpacing = 4.0
-        self.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom:0, right: 16)
         guard let superArray = super.layoutAttributesForElements(in: rect) else { return nil }
         guard let attributes = NSArray(array: superArray, copyItems: true) as? [UICollectionViewLayoutAttributes] else { return nil }
         var rightMargin = sectionInset.right
@@ -332,5 +383,24 @@ class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
             maxY = max(layoutAttribute.frame.maxY, maxY)
         }
         return attributes
+    }
+}
+
+class WeatherIndexStatusLabel: UILabel {
+    private var padding = UIEdgeInsets(top: 6, left: 12, bottom: 6, right: 12)
+    convenience init(padding: UIEdgeInsets) {
+        self.init()
+        self.padding = padding
+    }
+
+    override func drawText(in rect: CGRect) {
+        super.drawText(in: rect.inset(by: padding))
+    }
+    override var intrinsicContentSize: CGSize {
+        var contentSize = super.intrinsicContentSize
+        contentSize.height += padding.top + padding.bottom
+        contentSize.width += padding.left + padding.right
+
+        return contentSize
     }
 }

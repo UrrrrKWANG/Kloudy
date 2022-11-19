@@ -68,6 +68,23 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
             }
         }
     }
+    // https://hanulyun.medium.com/swift-%EA%B2%BD%EB%8F%84-%EC%9C%84%EB%8F%84-%EC%8B%9C-%EA%B5%B0-%EA%B5%AC-%EA%B5%AC%ED%95%98%EA%B8%B0-b77a42c7c924
+    func requestNowLocationInfo() -> [Int] {
+        var resultX = 0
+        var resultY = 0
+        locationManager.startUpdatingLocation()
+        if let location = locationManager.location {
+            let longitude: CLLocationDegrees = location.coordinate.longitude
+            let latitude: CLLocationDegrees = location.coordinate.latitude
+            let converter: LocationConverter = LocationConverter()
+            let (x, y): (Int, Int)
+                = converter.convertGrid(lon: longitude, lat: latitude)
+            resultX = x
+            resultY = y
+        }
+        
+        return [resultX, resultY]
+    }
     
 //    func requestLocationAuthorization() {
 //        self.locationManager.delegate = self
@@ -95,3 +112,4 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
         print("error \(error.localizedDescription)")
     }
 }
+

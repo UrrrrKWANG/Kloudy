@@ -7,12 +7,12 @@
 
 import UIKit
 import SnapKit
+import RxCocoa
 import RxSwift
 
 class DetailWeatherView: UIViewController {
     
     private let disposeBag = DisposeBag()
-    
     lazy var labelInTodayCollectionView: UILabel = {
         let uiLabel = UILabel()
         uiLabel.configureLabel(text: "시간대별 날씨", font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
@@ -37,7 +37,7 @@ class DetailWeatherView: UIViewController {
     let viewModel = weatehrViewModel()
     
     lazy var todayCollectionView = makeCollectionView(direction: .horizontal, itemSizeWith: 65, itemSizeheight: 100, cell: TodayWeatherDataCell.self, identifier: TodayWeatherDataCell.identifier, contentInsetLeft: -2, contentInsetRight: 0, isScroll: true, minimumLineSpacing: 15)
-    lazy var weekCollectionView = makeCollectionView(direction: .vertical, itemSizeWith: 348, itemSizeheight: 59, cell: WeekWeatherDataCell.self, identifier: WeekWeatherDataCell.identifier, contentInsetLeft: 16, contentInsetRight: 16, isScroll: false, minimumLineSpacing: 0)
+    lazy var weekCollectionView = makeCollectionView(direction: .vertical, itemSizeWith: 348, itemSizeheight: 59, cell: WeekWeatherDataCell.self, identifier: WeekWeatherDataCell.identifier, contentInsetLeft: 0, contentInsetRight: 0, isScroll: false, minimumLineSpacing: 0)
     
     lazy var titleWeatherCondition: UIImageView = {
         let uiImageView = UIImageView()
@@ -75,19 +75,18 @@ class DetailWeatherView: UIViewController {
             uiView.addSubview($0)
         }
         self.titleWeatherCondition.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(10)
-            $0.size.equalTo(42)
-            $0.centerY.equalToSuperview()
+            $0.leading.equalToSuperview().inset(16)
+            $0.top.bottom.equalToSuperview().inset(10)
+            $0.width.equalTo(42)
         }
         self.currentTemperature.snp.makeConstraints{
-            $0.centerY.equalToSuperview()
             $0.leading.equalTo(titleWeatherCondition.snp.trailing).offset(10)
+            $0.top.bottom.equalToSuperview().inset(12)
+            $0.width.equalTo(47)
         }
         self.minMaxTemperatureLabel.snp.makeConstraints{
-            $0.height.equalTo(38)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.leading.trailing.equalTo(242)
-            $0.centerY.equalToSuperview()
+            $0.trailing.top.bottom.equalToSuperview().inset(12)
+            $0.width.equalTo(96)
         }
         return uiView
     }()
@@ -165,13 +164,11 @@ class DetailWeatherView: UIViewController {
             $0.top.equalTo(dividingLineView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().inset(20)
         }
-        
         weekCollectionView.snp.makeConstraints{
             $0.top.equalTo(labelInWeekCollectionView.snp.bottom).offset(12)
-            $0.bottom.centerX.equalToSuperview()
+            $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(440)
-         
         }
     }
     
