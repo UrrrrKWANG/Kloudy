@@ -1,5 +1,5 @@
 //
-//  DeatailWeatherViewWeekCollectionView.swift
+//  WeekWeatherDataCell.swift
 //  Kloudy
 //
 //  Created by Byeon jinha on 2022/11/08.
@@ -69,7 +69,7 @@ class WeekWeatherDataCell: UICollectionViewCell{
             $0.leading.equalToSuperview().inset(20)
             $0.width.equalTo(35)
         }
-        
+
         weatherCondition.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalTo(dayLabel.snp.trailing).offset(86)
@@ -79,26 +79,23 @@ class WeekWeatherDataCell: UICollectionViewCell{
         maxTemperature.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(40)
-            $0.width.equalTo(40)
+            $0.height.width.equalTo(40)
         }
         dividingLabel.snp.makeConstraints{
-            $0.centerY.equalToSuperview()
             $0.trailing.equalTo(maxTemperature.snp.leading)
-            $0.height.width.equalTo(40)
+            $0.centerY.equalToSuperview()
+            $0.height.equalTo(40)
             $0.width.equalTo(20)
         }
         minTemperature.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.trailing.equalTo(dividingLabel.snp.leading)
-            $0.height.equalTo(40)
-            $0.width.equalTo(40)
+            $0.height.width.equalTo(40)
         }
         dividingLineView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(57)
             $0.bottom.equalToSuperview()
-            $0.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(310)
+            $0.leading.trailing.equalToSuperview().inset(20)
         }
     }
 }

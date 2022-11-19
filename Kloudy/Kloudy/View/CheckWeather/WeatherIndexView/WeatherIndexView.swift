@@ -35,7 +35,7 @@ class WeatherIndexView: UIView {
     private var layout : UICollectionViewFlowLayout {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.sectionInset = UIEdgeInsets(top: 10, left: 20, bottom: 10, right: 20)
+        layout.sectionInset = UIEdgeInsets(top: 10, left: 0, bottom: 10, right: 0)
         return layout
     }
     //지수 컬렉션뷰
