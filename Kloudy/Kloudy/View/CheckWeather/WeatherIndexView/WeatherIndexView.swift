@@ -164,6 +164,7 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let imageOrLottieName = locationWeatherIndexView.findImageOrLottieName(indexName: indexName, status: indexStatus)
         locationWeatherIndexView.changeImageView(name: imageOrLottieName)
         locationWeatherIndexView.changeCollectionView(index: indexPath.row)
+        locationWeatherIndexView.changeTextView(indexType: indexName)
         let transedIndexName = locationWeatherIndexView.transIndexName(indexName: indexName)
         locationWeatherIndexView.configureView(indexNameLabel: transedIndexName, indexStatusLabel: "지수별 text 받아올 부분")
         

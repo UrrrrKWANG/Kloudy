@@ -19,6 +19,7 @@ class LocationWeatherIndexView: UIView {
     let weatherIndexNameLabel = UILabel()
     let intenalIndexListView = UIView()
     var containerView = UIView()
+    var textContainerView = UIView()
     var city = String()
     let weatherIndexStatusLabel = WeatherIndexStatusLabel()
     private var layout : UICollectionViewFlowLayout {
@@ -48,6 +49,7 @@ class LocationWeatherIndexView: UIView {
         configureView(indexNameLabel:  transedIndexName, indexStatusLabel: "하루종일 내림")
         changeImageView(name: imageOrLottieName)
         changeCollectionView(index: 0)
+        changeTextView(indexType: .unbrella)
         containerView.addGestureRecognizer(tapGesture)
     }
     
@@ -95,6 +97,18 @@ class LocationWeatherIndexView: UIView {
         }
     }
     
+    func changeTextView(indexType: IndexType) {
+        if textContainerView.subviews.count != 0 {
+            textContainerView.subviews[0].removeFromSuperview()
+        }
+        if indexType == .unbrella {
+        textContainerView.addSubview(weatherIndexStatusLabel)
+            weatherIndexStatusLabel.snp.makeConstraints {
+                $0.edges.equalToSuperview()
+            }
+        }
+    }
+    
     func changeCollectionView(index: Int) {
         self.internalIndex = index
         intenalIndexListView.backgroundColor = UIColor.KColor.black
@@ -115,9 +129,10 @@ class LocationWeatherIndexView: UIView {
         }
     }
     private func setLayout() {
-        [weatherIndexNameLabel, containerView, weatherIndexStatusLabel, intenalIndexListView].forEach() {
+        [weatherIndexNameLabel, containerView, textContainerView, intenalIndexListView].forEach() {
             self.addSubview($0)
         }
+        
         weatherIndexNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(19)
             $0.leading.equalToSuperview().inset(16)
@@ -129,16 +144,18 @@ class LocationWeatherIndexView: UIView {
             $0.trailing.equalToSuperview().inset(26)
             $0.bottom.equalToSuperview().inset(74)
         }
-        weatherIndexStatusLabel.snp.makeConstraints {
-            $0.leading.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(14)
-            $0.height.equalTo(36)
-        }
+      
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(30)
-            $0.leading.equalTo(weatherIndexStatusLabel.snp.trailing)
+            $0.leading.equalTo(weatherIndexNameLabel.snp.trailing)
+        }
+        
+        textContainerView.snp.makeConstraints{
+            $0.leading.equalToSuperview().inset(16)
+            $0.bottom.equalToSuperview().inset(14)
+            $0.height.equalTo(36)
         }
     }
     
