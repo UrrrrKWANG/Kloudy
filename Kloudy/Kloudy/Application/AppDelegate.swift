@@ -40,7 +40,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         let currentStatus = locationManger.authorizationStatus
 
         if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
-            print("제대로 들어옴")
             var currentCity = ""
             var currentProvince = ""
             locationManger.startUpdatingLocation()
@@ -57,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 let local: Locale = Locale(identifier: "en_US")
                 geoCoder.reverseGeocodeLocation(findLocation, preferredLocale: local) { (place, error) in
                     if let address: [CLPlacemark] = place {
-                        print("주소 받음")
                         let locality = address.last?.locality
                         switch locality {
                         case "Seoul":
