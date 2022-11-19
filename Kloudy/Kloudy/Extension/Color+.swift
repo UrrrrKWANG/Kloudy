@@ -18,7 +18,7 @@ extension UIColor {
         static var primaryBlue05: UIColor { UIColor(named: "PrimaryBlue05")! }
         static var primaryBlue06: UIColor { UIColor(named: "PrimaryBlue06")! }
         static var primaryBlue07: UIColor { UIColor(named: "PrimaryBlue07")! }
-        static var  : UIColor { UIColor(named: "PrimaryBlue08")! }
+        static var primaryBlue08: UIColor { UIColor(named: "PrimaryBlue08")! }
         static var gray01: UIColor { UIColor(named: "Gray01")! }
         static var gray02: UIColor { UIColor(named: "Gray02")! }
         static var gray03: UIColor { UIColor(named: "Gray03")! }
