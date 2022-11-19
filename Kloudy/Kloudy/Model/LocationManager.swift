@@ -9,9 +9,9 @@
 import CoreLocation
 import UIKit
 
-class LocationManager: NSObject, CLLocationManagerDelegate {
+class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
     
-    static let shared = CurrentLocationModel()
+    static let shared = LocationManager()
     
     var locationManager = CLLocationManager()
     var currentLatitude : Double = 0.0

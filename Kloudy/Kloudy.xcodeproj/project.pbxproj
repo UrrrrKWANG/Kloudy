@@ -12,6 +12,7 @@
 		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		22072511291A9F9800E01508 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22072510291A9F9800E01508 /* CityInformation.csv */; };
+		222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C69392927DA4D005FC7ED /* LocationConverter.swift */; };
 		2286B44F2924B8E2003965F2 /* SettingLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */; };
 		2286B4512924BAB2003965F2 /* SettingNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B4502924BAB2003965F2 /* SettingNavigationView.swift */; };
 		2286B45329250AED003965F2 /* SettingLicenseCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B45229250AED003965F2 /* SettingLicenseCellView.swift */; };
@@ -209,6 +210,7 @@
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2207250F291A322B00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
 		22072510291A9F9800E01508 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
+		222C69392927DA4D005FC7ED /* LocationConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationConverter.swift; sourceTree = "<group>"; };
 		2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseView.swift; sourceTree = "<group>"; };
 		2286B4502924BAB2003965F2 /* SettingNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNavigationView.swift; sourceTree = "<group>"; };
 		2286B45229250AED003965F2 /* SettingLicenseCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseCellView.swift; sourceTree = "<group>"; };
@@ -536,6 +538,7 @@
 				8BC8F77C29011DB100EF83AE /* Weather.swift */,
 				8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */,
 				D558FECC29096B00002EEA22 /* LocationManager.swift */,
+				222C69392927DA4D005FC7ED /* LocationConverter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1138,6 +1141,7 @@
 				2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */,
 				8BC8F7D229011DB200EF83AE /* CoreDataStack.swift in Sources */,
 				8BC8F7CC29011DB200EF83AE /* Font+.swift in Sources */,
+				222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */,
 				8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */,
 				E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */,
 				8BC8F81D29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
@@ -1411,7 +1415,7 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -1446,7 +1450,7 @@
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
-				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UIUserInterfaceStyle = Light;
 				LD_RUNPATH_SEARCH_PATHS = (

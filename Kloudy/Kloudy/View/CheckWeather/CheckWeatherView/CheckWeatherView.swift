@@ -20,6 +20,7 @@ class CheckWeatherView: UIViewController {
     let pageControl = UIPageControl()
     let initialPage = 0
     
+    var weathers = [Weather]()
     
     lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -30,8 +31,18 @@ class CheckWeatherView: UIViewController {
     
     var dataViewControllers = [UIViewController]()
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        print(self.weathers)
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        if let weathers = appDelegate?.weathers {
+            self.weathers = weathers
+        }
+        
         view.backgroundColor = UIColor.KColor.white
         loadWeatherView()
        
