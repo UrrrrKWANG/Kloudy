@@ -105,10 +105,11 @@ class CheckWeatherView: UIViewController {
         weathers.forEach { location in
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
+            let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
             
             lazy var num: UIViewController = {
                 let vc = UIViewController()
-                let currentWeatherView = CurrentWeatherView(localName: localWeather[0].localName, currentTemperature: Int(main[0].currentTemperature))
+                let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
                 let weatherIndexView = WeatherIndexView(city: localWeather[0].localName)
                 let detailWeatherView: UIButton = {
                     let detailWeatherView = UIButton()
