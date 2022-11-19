@@ -11,6 +11,15 @@ import UIKit
 import RxCocoa
 import RxSwift
 
+enum InternalIndexType {
+    case coldWave
+    case freezeAndBurst
+    case pollen
+    case strongWind
+    case typhoon
+    case yellowDust
+}
+
 class WeatherIndexView: UIView {
     var disposeBag = DisposeBag()
     var viewModel = WeatherIndexViewModel()
