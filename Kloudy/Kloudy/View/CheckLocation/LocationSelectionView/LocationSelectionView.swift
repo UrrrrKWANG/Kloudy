@@ -423,13 +423,10 @@ extension LocationSelectionView: UITableViewDropDelegate {
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
         
-        tableView.reloadData()
+//        tableView.reloadData()
         print(locationList)
         
-        for i in 0..<locationList.count {
-            
-//            CoreDataManager.shared.saveLocation(code: locationList[i].code!, city: locationList[i].city!, province: locationList[i].province!, sequence: i)
-        }
+        CoreDataManager.shared.getLocationSequence(locationList: locationList)
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
