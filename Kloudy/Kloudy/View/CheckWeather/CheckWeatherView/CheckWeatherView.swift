@@ -20,6 +20,10 @@ class CheckWeatherView: UIViewController {
     let pageControl = UIPageControl()
     let initialPage = 0
     
+    let cityInformationModel = FetchWeatherInformation()
+    lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
+    var locationList = CoreDataManager.shared.fetchLocations()
+    
     var weathers = [Weather]()
     
     lazy var pageViewController: UIPageViewController = {
@@ -66,7 +70,7 @@ class CheckWeatherView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers {
+        if let weathers = appDelegate?.weathers as? [Weather] {
             self.weathers = weathers
         }
         
@@ -102,7 +106,7 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        weathers.forEach { location in
+        self.weathers.forEach { location in
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
             let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
