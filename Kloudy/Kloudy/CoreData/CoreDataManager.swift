@@ -36,7 +36,6 @@ class CoreDataManager {
             location.setValue(province, forKey: "province")
             location.setValue(countLocations, forKey: "sequence")
             location.setValue(indexArray, forKey: "indexArray")
-            print(indexArray , "indexArray")
             coreDataStack.saveContext()
         } catch {
             print("-----fetchLocationsError-----")
