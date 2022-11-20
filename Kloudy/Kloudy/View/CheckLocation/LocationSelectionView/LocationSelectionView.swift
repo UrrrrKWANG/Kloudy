@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import CoreData
 
 enum TableType {
     case search
@@ -37,7 +38,8 @@ class LocationSelectionView: UIViewController {
     var isLoadedFirst = false
     
     // Fetch CoreData Location Entity
-    var locationList = [Location]()
+    var locationList: [LocationData] = []
+    var locationFromCoreData = [Location]()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -61,7 +63,28 @@ class LocationSelectionView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        locationList = CoreDataManager.shared.fetchLocations()
+        locationFromCoreData = CoreDataManager.shared.fetchLocations()
+        inputLocationCellData()
+    }
+    
+    func inputLocationCellData() {
+        for i in 0 ..< locationFromCoreData.count {
+            let locationCellData = locationFromCoreData[i]
+            let code = locationCellData.dataToString(forKey: "code")
+            let city = locationCellData.dataToString(forKey: "city")
+            let province = locationCellData.dataToString(forKey: "province")
+            let location = LocationData(code: code, city: city, province: province)
+            locationList.append(location)
+        }
+    }
+    
+    func addSingleLocationCellData() {
+        let locationCellData = locationFromCoreData[-1]
+        let code = locationCellData.dataToString(forKey: "code")
+        let city = locationCellData.dataToString(forKey: "city")
+        let province = locationCellData.dataToString(forKey: "province")
+        let location = LocationData(code: code, city: city, province: province)
+        locationList.append(location)
     }
     
     private func bind() {
@@ -146,7 +169,9 @@ class LocationSelectionView: UIViewController {
             searchBar.endEditing(true)
             nothingSearchedLocationLabel.isHidden = true
             filteredSearchTableTypeData = [SearchingLocation]()
-            locationList = CoreDataManager.shared.fetchLocations()
+            locationFromCoreData = CoreDataManager.shared.fetchLocations()
+//            addSingleLocationCellData()
+//            inputLocationCellData()
         }
         changeCancelButtonState(isSearching)
         tableView.reloadData()
@@ -328,7 +353,7 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    CoreDataManager.shared.locationDelete(location: self.locationList[indexPath.row])
+                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row])
                     self.locationList.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
@@ -443,4 +468,16 @@ extension LocationSelectionView: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         
     }
+}
+
+extension NSManagedObject {
+    func dataToString(forKey: String) -> String {
+        return self.value(forKey: forKey) as? String ?? "정보를 불러올 수 없습니다."
+    }
+}
+
+struct LocationData {
+    var code: String
+    var city: String
+    var province: String
 }

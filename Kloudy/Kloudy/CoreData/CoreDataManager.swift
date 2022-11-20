@@ -41,7 +41,7 @@ class CoreDataManager {
         }
     }
     
-    func getLocationSequence(locationList: [Location]) {
+    func getLocationSequence(locationList: [LocationData]) {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
             let locations = try coreDataStack.managedContext.fetch(request)
