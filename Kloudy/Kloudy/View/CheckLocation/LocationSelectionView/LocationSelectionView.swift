@@ -110,7 +110,6 @@ class LocationSelectionView: UIViewController {
         locationSelectionNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.width.equalTo(111)
             $0.height.equalTo(40)
         }
         
