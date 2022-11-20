@@ -16,10 +16,10 @@ class IndexIconView: UIView {
     let iconTitleLabel = UILabel()
     let iconNumberLabel = UILabel()
     
-    var value: Double = 0
+    var value = ""
     let iconImage: BehaviorSubject<String> = BehaviorSubject(value: "")
     let iconTitle: BehaviorSubject<String> = BehaviorSubject(value: "")
-    let iconValue: BehaviorSubject<Double> = BehaviorSubject(value: 0)
+    let iconValue: BehaviorSubject<String> = BehaviorSubject(value: "")
     let iconUnit: BehaviorSubject<String> = BehaviorSubject(value: "")
     
     override init(frame: CGRect) {
