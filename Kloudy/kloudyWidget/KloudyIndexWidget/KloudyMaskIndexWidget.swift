@@ -43,7 +43,7 @@ struct KloudyMaskSystemSmallWidgetView1: View {
     
     var body: some View {
         VStack {
-            Image("mask_1")
+            Image("laundry_1")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -55,7 +55,7 @@ struct KloudyMaskAccessoryCircularWidgetView1: View {
     
     var body: some View {
         VStack {
-            Image("mask_1")
+            Image("laundry_1")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -96,7 +96,7 @@ struct KloudyMaskSystemSmallWidgetView2: View {
     
     var body: some View {
         VStack {
-            Image("mask_2")
+            Image("laundry_2")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -108,7 +108,7 @@ struct KloudyMaskAccessoryCircularWidgetView2: View {
     
     var body: some View {
         VStack {
-            Image("mask_2")
+            Image("laundry_2")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -149,7 +149,7 @@ struct KloudyMaskSystemSmallWidgetView3: View {
     
     var body: some View {
         VStack {
-            Image("mask_3")
+            Image("laundry_3")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -161,7 +161,7 @@ struct KloudyMaskAccessoryCircularWidgetView3: View {
     
     var body: some View {
         VStack {
-            Image("mask_3")
+            Image("laundry_3")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -202,7 +202,7 @@ struct KloudyMaskSystemSmallWidgetView4: View {
     
     var body: some View {
         VStack {
-            Image("mask_4")
+            Image("laundry_4")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -214,7 +214,7 @@ struct KloudyMaskAccessoryCircularWidgetView4: View {
     
     var body: some View {
         VStack {
-            Image("mask_4")
+            Image("laundry_4")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
