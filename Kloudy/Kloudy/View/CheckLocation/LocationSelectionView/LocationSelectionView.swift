@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
-import CoreData
 
 enum TableType {
     case search
@@ -67,6 +66,7 @@ class LocationSelectionView: UIViewController {
         inputLocationCellData()
     }
     
+    // https://github.com/PLREQ/PLREQ
     func inputLocationCellData() {
         for i in 0 ..< locationFromCoreData.count {
             let locationCellData = locationFromCoreData[i]
@@ -76,15 +76,6 @@ class LocationSelectionView: UIViewController {
             let location = LocationData(code: code, city: city, province: province)
             locationList.append(location)
         }
-    }
-    
-    func addSingleLocationCellData() {
-        let locationCellData = locationFromCoreData[-1]
-        let code = locationCellData.dataToString(forKey: "code")
-        let city = locationCellData.dataToString(forKey: "city")
-        let province = locationCellData.dataToString(forKey: "province")
-        let location = LocationData(code: code, city: city, province: province)
-        locationList.append(location)
     }
     
     private func bind() {
@@ -170,8 +161,6 @@ class LocationSelectionView: UIViewController {
             nothingSearchedLocationLabel.isHidden = true
             filteredSearchTableTypeData = [SearchingLocation]()
             locationFromCoreData = CoreDataManager.shared.fetchLocations()
-//            addSingleLocationCellData()
-//            inputLocationCellData()
         }
         changeCancelButtonState(isSearching)
         tableView.reloadData()
@@ -382,6 +371,11 @@ extension LocationSelectionView: UITableViewDelegate {
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
                         CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations())
+                        let code = information.code
+                        let city = information.city
+                        let province = information.province
+                        let location = LocationData(code: code, city: city, province: province)
+                        locationList.append(location)
                         self.changeTableType(false)
                     } else {
                         self.isSameLocationAlert()
@@ -448,9 +442,6 @@ extension LocationSelectionView: UITableViewDropDelegate {
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
         
-//        tableView.reloadData()
-        print(locationList)
-        
         CoreDataManager.shared.getLocationSequence(locationList: locationList)
     }
     
@@ -468,16 +459,4 @@ extension LocationSelectionView: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         
     }
-}
-
-extension NSManagedObject {
-    func dataToString(forKey: String) -> String {
-        return self.value(forKey: forKey) as? String ?? "정보를 불러올 수 없습니다."
-    }
-}
-
-struct LocationData {
-    var code: String
-    var city: String
-    var province: String
 }
