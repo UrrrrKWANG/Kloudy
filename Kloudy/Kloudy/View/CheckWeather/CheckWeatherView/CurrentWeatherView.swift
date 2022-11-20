@@ -56,7 +56,6 @@ class CurrentWeatherView: UIView {
             $0.trailing.equalToSuperview().inset(16)
             $0.height.equalTo(63)
         }
-        
     }
     
     required init?(coder: NSCoder) {

@@ -110,7 +110,7 @@ class CheckWeatherView: UIViewController {
             lazy var num: UIViewController = {
                 let vc = UIViewController()
                 let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
-                let weatherIndexView = WeatherIndexView(city: localWeather[0].localName)
+                let weatherIndexView = WeatherIndexView(weathers: location)
                 let detailWeatherView: UIButton = {
                     let detailWeatherView = UIButton()
                     detailWeatherView.backgroundColor = UIColor.KColor.white
@@ -118,6 +118,7 @@ class CheckWeatherView: UIViewController {
                     detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
                     return detailWeatherView
                 }()
+                
                 let currentWeatherImage: UIImageView = {
                     let currentWeatherImage = UIImageView()
                     currentWeatherImage.contentMode = .scaleAspectFit

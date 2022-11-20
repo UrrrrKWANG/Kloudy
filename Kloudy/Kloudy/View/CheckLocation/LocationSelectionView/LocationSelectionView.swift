@@ -364,13 +364,14 @@ extension LocationSelectionView: UITableViewDataSource {
 
 extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
         switch tableType {
         case .search:
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             self.cityData.forEach { information in
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations())
+                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
                         let code = information.code
                         let city = information.city
                         let province = information.province
@@ -441,7 +442,6 @@ extension LocationSelectionView: UITableViewDropDelegate {
         let itemMove = locationList[sourceIndexPath.row] //Get the item that we just moved
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
-        
         CoreDataManager.shared.getLocationSequence(locationList: locationList)
     }
     

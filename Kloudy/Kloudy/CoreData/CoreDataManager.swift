@@ -25,7 +25,7 @@ class CoreDataManager {
         }
     }
     
-    func saveLocation(code: String, city: String, province: String, sequence: Int) {
+    func saveLocation(code: String, city: String, province: String, sequence: Int, indexArray: [String]) {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
             let locations = try coreDataStack.managedContext.fetch(request)
@@ -33,12 +33,31 @@ class CoreDataManager {
             location.setValue(code, forKey: "code")
             location.setValue(city, forKey: "city")
             location.setValue(province, forKey: "province")
+            location.setValue(indexArray, forKey: "indexArray")
             coreDataStack.saveContext()
         } catch {
             print("-----fetchLocationsError-----")
         }
     }
     
+    func changeLocationIndexData(code: String, indexArray: [String]) {
+        //https://stackoverflow.com/questions/26345189/how-do-you-update-a-coredata-entry-that-has-already-been-saved-in-swift
+        let request = NSFetchRequest<Location>(entityName: "Location")
+        do {
+            let currentLoctaion: Location!
+            request.predicate = NSPredicate(format: "code = %@", code as String)
+            let results = try coreDataStack.managedContext.fetch(request)
+            if results.count == 0 {
+                currentLoctaion = Location(context: coreDataStack.managedContext)
+            } else {
+                currentLoctaion = results.first
+            }
+            currentLoctaion.indexArray = indexArray
+            coreDataStack.saveContext()
+        } catch {
+            print(error)
+        }
+    }
     // https://github.com/PLREQ/PLREQ
     func getLocationSequence(locationList: [LocationData]) {
         let request = NSFetchRequest<Location>(entityName: "Location")
