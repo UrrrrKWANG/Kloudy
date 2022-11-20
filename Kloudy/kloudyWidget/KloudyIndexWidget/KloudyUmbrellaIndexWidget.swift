@@ -43,7 +43,7 @@ struct KloudyUmbrellaSystemSmallWidgetView1: View {
     
     var body: some View {
         VStack {
-            Image("rain_1")
+            Image("carwash_1")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -55,7 +55,7 @@ struct KloudyUmbrellaAccessoryCircularWidgetView1: View {
     
     var body: some View {
         VStack {
-            Image("rain_1")
+            Image("carwash_1")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -97,7 +97,7 @@ struct KloudyUmbrellaSystemSmallWidgetView2: View {
     
     var body: some View {
         VStack {
-            Image("rain_2")
+            Image("carwash_2")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -109,7 +109,7 @@ struct KloudyUmbrellaAccessoryCircularWidgetView2: View {
     
     var body: some View {
         VStack {
-            Image("rain_2")
+            Image("carwash_2")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -151,7 +151,7 @@ struct KloudyUmbrellaSystemSmallWidgetView3: View {
     
     var body: some View {
         VStack {
-            Image("rain_3")
+            Image("carwash_3")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -163,7 +163,7 @@ struct KloudyUmbrellaAccessoryCircularWidgetView3: View {
     
     var body: some View {
         VStack {
-            Image("rain_3")
+            Image("carwash_3")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -205,7 +205,7 @@ struct KloudyUmbrellaSystemSmallWidgetView4: View {
     
     var body: some View {
         VStack {
-            Image("rain_4")
+            Image("carwash_4")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
@@ -217,7 +217,7 @@ struct KloudyUmbrellaAccessoryCircularWidgetView4: View {
     
     var body: some View {
         VStack {
-            Image("rain_4")
+            Image("carwash_4")
                 .resizable()
                 .aspectRatio(contentMode: .fill)
         }
