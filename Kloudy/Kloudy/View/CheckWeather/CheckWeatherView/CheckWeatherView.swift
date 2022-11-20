@@ -70,7 +70,7 @@ class CheckWeatherView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers {
+        if let weathers = appDelegate?.weathers as? [Weather] {
             self.weathers = weathers
         }
         
@@ -106,8 +106,7 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        locationList.forEach { locationCode in
-            let location = findWeatherInfo(cityCode: locationCode.code ?? "")
+        self.weathers.forEach { location in
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
             let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
@@ -214,16 +213,6 @@ class CheckWeatherView: UIViewController {
             dataViewControllers.append(num)
         }
     }
-    
-    private func findWeatherInfo(cityCode: String) -> Weather{
-          var weather: Weather?
-          for weather in self.weathers {
-              if weather.localWeather[0].localCode == cityCode {
-                  return weather
-              }
-          }
-          return weather!
-      }
     
     func configureCheckWeatherNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
