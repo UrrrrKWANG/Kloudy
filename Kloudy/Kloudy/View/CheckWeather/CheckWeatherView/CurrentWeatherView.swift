@@ -19,30 +19,15 @@ class CurrentWeatherView: UIView {
     let minTemperatureLabel = UILabel()
     let maxTemperatureView = UIView()
     let minTemperatureView = UIView()
+    let locationIcon = UIImageView()
+    let maxTemperatureIcon = UIImageView()
+    let minTemperatureIcon = UIImageView()
     let temperatureStackView: UIStackView = {
         let temperatureStackView = UIStackView()
         temperatureStackView.axis = .vertical
         temperatureStackView.distribution = .fillEqually
         temperatureStackView.spacing = 4
         return temperatureStackView
-    }()
-    let locationIcon: UIImageView = {
-        let locationIcon = UIImageView()
-        locationIcon.image = UIImage(named: "location_mark")
-        locationIcon.contentMode = .scaleAspectFit
-        return locationIcon
-    }()
-    let maxTemperatureIcon: UIImageView = {
-        let maxTemperatureIcon = UIImageView()
-        maxTemperatureIcon.image = UIImage(named: "arrow_up")
-        maxTemperatureIcon.contentMode = .scaleAspectFit
-        return maxTemperatureIcon
-    }()
-    let minTemperatureIcon: UIImageView = {
-        let minTemperatureIcon = UIImageView()
-        minTemperatureIcon.image = UIImage(named: "arrow_down")
-        minTemperatureIcon.contentMode = .scaleAspectFit
-        return minTemperatureIcon
     }()
     
     init(localWeather: [LocalWeather]) {
@@ -62,6 +47,10 @@ class CurrentWeatherView: UIView {
         [minTemperatureIcon, minTemperatureLabel].forEach { minTemperatureView.addSubview($0) }
     }
     private func addData() {
+        configureUIImageView(view: locationIcon, named: "location_mark")
+        configureUIImageView(view: maxTemperatureIcon, named: "arrow_up")
+        configureUIImageView(view: minTemperatureIcon, named: "arrow_down")
+        
         locationLabel.configureLabel(text: localWeather[0].localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
         currentTemperatureLabel.configureLabel(text: "\(Int(hourlyWeather[2].temperature))°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
         maxTemperatureLabel.configureLabel(text: "\(Int(main[0].dayMaxTemperature))°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
@@ -93,23 +82,23 @@ class CurrentWeatherView: UIView {
             $0.height.equalTo(63)
         }
         maxTemperatureIcon.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.centerY.leading.equalToSuperview()
             $0.size.equalTo(16)
         }
         maxTemperatureLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
-            $0.top.height.equalToSuperview()
+            $0.top.height.trailing.equalToSuperview()
         }
         minTemperatureIcon.snp.makeConstraints {
-            $0.leading.equalToSuperview()
-            $0.centerY.equalToSuperview()
+            $0.leading.centerY.equalToSuperview()
             $0.size.equalTo(16)
         }
         minTemperatureLabel.snp.makeConstraints {
-            $0.trailing.equalToSuperview()
-            $0.top.height.equalToSuperview()
+            $0.top.height.trailing.equalToSuperview()
         }
+    }
+    private func configureUIImageView(view: UIImageView, named: String) {
+        view.image = UIImage(named: named)
+        view.contentMode = .scaleAspectFit
     }
     
     required init?(coder: NSCoder) {
