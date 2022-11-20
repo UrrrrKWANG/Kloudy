@@ -350,13 +350,14 @@ extension LocationSelectionView: UITableViewDataSource {
 
 extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
         switch tableType {
         case .search:
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             self.cityData.forEach { information in
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer", "temperatureGap"])
+                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
                         self.changeTableType(false)
                     } else {
                         self.isSameLocationAlert()

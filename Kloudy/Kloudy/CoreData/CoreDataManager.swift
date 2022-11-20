@@ -25,7 +25,7 @@ class CoreDataManager {
         }
     }
     
-    func saveLocation(code: String, city: String, province: String, sequence: Int ,indexArray: [String]) {
+    func saveLocation(code: String, city: String, province: String, sequence: Int, indexArray: [String]) {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
             let locations = try coreDataStack.managedContext.fetch(request)
