@@ -29,12 +29,10 @@ class CoreDataManager {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
             let locations = try coreDataStack.managedContext.fetch(request)
-            let countLocations = locations.count
             let location = NSEntityDescription.insertNewObject(forEntityName: "Location", into: coreDataStack.managedContext)
             location.setValue(code, forKey: "code")
             location.setValue(city, forKey: "city")
             location.setValue(province, forKey: "province")
-            location.setValue(countLocations, forKey: "sequence")
             location.setValue(indexArray, forKey: "indexArray")
             coreDataStack.saveContext()
         } catch {
@@ -58,6 +56,21 @@ class CoreDataManager {
             coreDataStack.saveContext()
         } catch {
             print(error)
+        }
+    }
+    // https://github.com/PLREQ/PLREQ
+    func getLocationSequence(locationList: [LocationData]) {
+        let request = NSFetchRequest<Location>(entityName: "Location")
+        do {
+            let locations = try coreDataStack.managedContext.fetch(request)
+            for i in 0..<locations.count {
+                locations[i].setValue(locationList[i].code, forKey: "code")
+                locations[i].setValue(locationList[i].city, forKey: "city")
+                locations[i].setValue(locationList[i].province, forKey: "province")
+            }
+            coreDataStack.saveContext()
+        } catch {
+            print("------getLocationSequenceError------")
         }
     }
     
