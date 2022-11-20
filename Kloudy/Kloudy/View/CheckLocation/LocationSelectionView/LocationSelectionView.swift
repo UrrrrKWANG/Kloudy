@@ -39,6 +39,9 @@ class LocationSelectionView: UIViewController {
     // Fetch CoreData Location Entity
     var locationList: [LocationData] = []
     var locationFromCoreData = [Location]()
+    
+    // Location 추가
+    let additionalLocation = PublishSubject<Weather>()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -378,6 +381,18 @@ extension LocationSelectionView: UITableViewDelegate {
                         let location = LocationData(code: code, city: city, province: province)
                         locationList.append(location)
                         self.changeTableType(false)
+                        
+                        CityWeatherNetwork().fetchCityWeather(code: code)
+                            .subscribe { event in
+                                switch event {
+                                case .success(let data):
+                                    self.additionalLocation.onNext(data)
+                                case .failure(let error):
+                                    print("Error: ", error)
+                                }
+                            }
+                            .disposed(by: disposeBag)
+                        
                     } else {
                         self.isSameLocationAlert()
                     }
