@@ -172,10 +172,6 @@ class WeatherIndexView: UIView {
             } else if indexName == .car {
                 return weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 0
             }
-//            else if indexName == .temperatureGap {
-//                return Int(viewModel.indexDummyData[cityIndex].cityIndexData[0].campare_index.today_max_temperature)
-//            }
-        
         return 0
     }
 }
