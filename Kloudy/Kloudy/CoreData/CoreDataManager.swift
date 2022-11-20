@@ -44,22 +44,18 @@ class CoreDataManager {
     
     func changeLocationIndexData(code: String, indexArray: [String]) {
         //https://stackoverflow.com/questions/26345189/how-do-you-update-a-coredata-entry-that-has-already-been-saved-in-swift
+        let request = NSFetchRequest<Location>(entityName: "Location")
         do {
-            var context: NSManagedObjectContext {
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
-                return appDelegate.persistentContainer.viewContext
-            }
             let currentLoctaion: Location!
-            let fetchLocation: NSFetchRequest<Location> = Location.fetchRequest()
-            fetchLocation.predicate = NSPredicate(format: "code = %@", code as String)
-            let results = try? context.fetch(fetchLocation)
-            if results?.count == 0 {
-                currentLoctaion = Location(context: context)
+            request.predicate = NSPredicate(format: "code = %@", code as String)
+            let results = try coreDataStack.managedContext.fetch(request)
+            if results.count == 0 {
+                currentLoctaion = Location(context: coreDataStack.managedContext)
             } else {
-                currentLoctaion = results?.first
+                currentLoctaion = results.first
             }
             currentLoctaion.indexArray = indexArray
-            try context.save()
+            coreDataStack.saveContext()
         } catch {
             print(error)
         }
