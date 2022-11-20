@@ -325,8 +325,13 @@ extension LocationSelectionView: UITableViewDataSource {
 //            } else {
 //                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
 //            }
+            let hourlyWeather = weathers[indexPath.row].localWeather[0].hourlyWeather
+            let main = [Main](weathers[indexPath.row].localWeather[0].main)
+            
             cell.locationNameLabel.text = locationList[indexPath.row].city
-            cell.temperatureLabel.text = "\(Int(weathers[indexPath.row].localWeather[0].hourlyWeather[2].temperature))°"
+            cell.temperatureLabel.text = "\(Int(hourlyWeather[2].temperature))°"
+            cell.diurnalTemperatureLabel.text = "\(Int(main[0].dayMinTemperature))° | \(Int(main[0].dayMaxTemperature))°"
+            
             return cell
         }
     }
