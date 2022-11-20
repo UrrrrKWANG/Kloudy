@@ -9,24 +9,26 @@ import UIKit
 import SnapKit
 
 class CurrentWeatherView: UIView {
-    var localName:String = ""
-    var currentTemperature:Int = 0
+    var localWeather:[LocalWeather] = []
     
-    init(localName: String, currentTemperature: Int) {
+    init(localWeather: [LocalWeather]) {
         super.init(frame: .zero)
-        self.localName = localName
-        self.currentTemperature = currentTemperature
+        self.localWeather = localWeather
+        let main = [Main](localWeather[0].main)
+        let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
+//        main[0].dayMaxTemperature
+//        main[0].dayMinTemperature
         self.backgroundColor = UIColor.KColor.primaryBlue01
         self.layer.cornerRadius = 15
         
         let locationLabel: UILabel = {
             let locationLabel = UILabel()
-            locationLabel.configureLabel(text: localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
+            locationLabel.configureLabel(text: localWeather[0].localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
             return locationLabel
         }()
         let temperatureLabel: UILabel = {
             let temperatureLabel = UILabel()
-            temperatureLabel.configureLabel(text: "\(currentTemperature)°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
+            temperatureLabel.configureLabel(text: "\(Int(hourlyWeather[2].temperature))°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
             return temperatureLabel
         }()
         let locationIcon: UIImageView = {
