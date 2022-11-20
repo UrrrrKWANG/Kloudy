@@ -147,7 +147,7 @@ class FetchWeatherInformation: ObservableObject {
             if let dataArr = dataEncoded?.components(separatedBy: "\r\n").map({$0.components(separatedBy: ",")}) {
                                 for index in 0..<dataArr.count-1 {
                                     let item = dataArr[index]
-                                    let city = CityInformation(code: item[0], province: item[1], city: item[2], xCoordination: item[3], yCoordination: item[4])
+                                    let city = CityInformation(code: item[0], province: item[1], city: item[2], indexArray: ["rain", "mask", "laundry", "car", "outer", "temperatureGap"], xCoordination: item[3], yCoordination: item[4])
                                     cityList.append(city)
                                 }
                             }

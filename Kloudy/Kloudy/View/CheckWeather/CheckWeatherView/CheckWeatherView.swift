@@ -83,7 +83,7 @@ class CheckWeatherView: UIViewController {
             lazy var num: UIViewController = {
                 let vc = UIViewController()
                 let currentWeatherView = CurrentWeatherView(localName: localWeather[0].localName, currentTemperature: Int(main[0].currentTemperature))
-                let weatherIndexView = WeatherIndexView(city: localWeather[0].localName)
+                let weatherIndexView = WeatherIndexView(weathers: location)
                 let detailWeatherView = UIButton()
                 let currentWeatherImage: UIImageView = {
                     let currentWeatherImage = UIImageView()

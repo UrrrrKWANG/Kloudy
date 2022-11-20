@@ -356,7 +356,7 @@ extension LocationSelectionView: UITableViewDelegate {
             self.cityData.forEach { information in
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations())
+                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer", "temperatureGap"])
                         self.changeTableType(false)
                     } else {
                         self.isSameLocationAlert()
@@ -424,8 +424,6 @@ extension LocationSelectionView: UITableViewDropDelegate {
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
         
         tableView.reloadData()
-        print(locationList)
-        
         for i in 0..<locationList.count {
             
 //            CoreDataManager.shared.saveLocation(code: locationList[i].code!, city: locationList[i].city!, province: locationList[i].province!, sequence: i)

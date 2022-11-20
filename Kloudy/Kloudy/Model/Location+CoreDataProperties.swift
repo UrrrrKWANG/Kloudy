@@ -21,6 +21,7 @@ extension Location {
     @NSManaged public var province: String?
     @NSManaged public var city: String?
     @NSManaged public var weatherCell: NSSet?
+    @NSManaged public var indexArray: [String]?
     
     public var weatherCellArray: Set<WeatherCell> {
         let set = weatherCell as? Set<WeatherCell> ?? []
