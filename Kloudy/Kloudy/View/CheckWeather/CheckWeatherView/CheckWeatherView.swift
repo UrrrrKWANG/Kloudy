@@ -20,6 +20,10 @@ class CheckWeatherView: UIViewController {
     let pageControl = UIPageControl()
     let initialPage = 0
     
+    let cityInformationModel = FetchWeatherInformation()
+    lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
+    var locationList = CoreDataManager.shared.fetchLocations()
+    
     var weathers = [Weather]()
     
     lazy var pageViewController: UIPageViewController = {
@@ -102,7 +106,8 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        weathers.forEach { location in
+        locationList.forEach { locationCode in
+            let location = findWeatherInfo(cityCode: locationCode.code ?? "")
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
             let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
@@ -209,6 +214,16 @@ class CheckWeatherView: UIViewController {
             dataViewControllers.append(num)
         }
     }
+    
+    private func findWeatherInfo(cityCode: String) -> Weather{
+          var weather: Weather?
+          for weather in self.weathers {
+              if weather.localWeather[0].localCode == cityCode {
+                  return weather
+              }
+          }
+          return weather!
+      }
     
     func configureCheckWeatherNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
