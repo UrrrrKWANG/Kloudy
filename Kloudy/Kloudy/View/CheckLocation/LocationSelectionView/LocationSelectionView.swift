@@ -39,6 +39,8 @@ class LocationSelectionView: UIViewController {
     // Fetch CoreData Location Entity
     var locationList: [LocationData] = []
     var locationFromCoreData = [Location]()
+    
+    var weathers: [Weather] = []
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -58,6 +60,11 @@ class LocationSelectionView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = UIColor.KColor.white
+        
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        if let weathers = appDelegate?.weathers as? [Weather] {
+            self.weathers = weathers
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -319,6 +326,7 @@ extension LocationSelectionView: UITableViewDataSource {
 //                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
 //            }
             cell.locationNameLabel.text = locationList[indexPath.row].city
+            cell.temperatureLabel.text = "\(Int(weathers[indexPath.row].localWeather[0].hourlyWeather[2].temperature))°"
             return cell
         }
     }
