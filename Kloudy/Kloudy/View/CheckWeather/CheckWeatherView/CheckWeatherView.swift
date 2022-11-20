@@ -80,6 +80,16 @@ class CheckWeatherView: UIViewController {
                 self.weathers.append($0)
             })
             .disposed(by: disposeBag)
+        
+        locationSelectionView.deleteLocationCode
+            .subscribe(onNext: {
+                for index in 0..<self.weathers.count {
+                    if $0 == self.weathers[index].localWeather[0].localCode {
+                        self.weathers.remove(at: index)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func loadWeatherView() {
