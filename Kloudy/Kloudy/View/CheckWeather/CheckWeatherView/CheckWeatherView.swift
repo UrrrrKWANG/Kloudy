@@ -90,6 +90,7 @@ class CheckWeatherView: UIViewController {
                 for index in 0..<self.weathers.count {
                     if $0 == self.weathers[index].localWeather[0].localCode {
                         self.weathers.remove(at: index)
+                        return
                     }
                 }
             })
