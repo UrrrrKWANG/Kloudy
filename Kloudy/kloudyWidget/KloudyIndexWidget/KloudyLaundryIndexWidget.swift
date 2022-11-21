@@ -11,7 +11,7 @@ import Intents
 
 struct KloudyLaundryIndexWidget: Widget {
     let kind: String = "KloudyLaundryIndexWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
             KloudyLaundryIndexWidgetEntryView(entry: entry)
@@ -43,27 +43,31 @@ struct KloudyLaundrySystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].laundryIndex[0].status {
-            case 0:
-                Image("laundry_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("laundry_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("laundry_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("laundry_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("laundry_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].laundryIndex[0].status {
+                case 0:
+                    Image("laundry_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("laundry_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("laundry_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("laundry_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("laundry_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }
@@ -74,27 +78,31 @@ struct KloudyLaundryAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].laundryIndex[0].status {
-            case 0:
-                Image("laundry_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("laundry_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("laundry_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("laundry_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("laundry_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].laundryIndex[0].status {
+                case 0:
+                    Image("laundry_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("laundry_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("laundry_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("laundry_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("laundry_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }

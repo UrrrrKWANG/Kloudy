@@ -11,7 +11,7 @@ import Intents
 
 struct KloudyMaskIndexWidget: Widget {
     let kind: String = "KloudyMaskIndexWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
             KloudyMaskIndexWidgetEntryView(entry: entry)
@@ -43,27 +43,31 @@ struct KloudyMaskSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
-            case 0:
-                Image("mask_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("mask_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("mask_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("mask_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("mask_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
+                case 0:
+                    Image("mask_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("mask_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("mask_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("mask_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("mask_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }
@@ -74,27 +78,31 @@ struct KloudyMaskAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
-            case 0:
-                Image("mask_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("mask_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("mask_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("mask_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("mask_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
+                case 0:
+                    Image("mask_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("mask_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("mask_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("mask_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("mask_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }

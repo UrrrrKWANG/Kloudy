@@ -11,7 +11,7 @@ import Intents
 
 struct KloudyCarWashIndexWidget: Widget {
     let kind: String = "KloudyCarWashIndexWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
             KloudyCarWashIndexWidgetEntryView(entry: entry)
@@ -43,27 +43,31 @@ struct KloudyCarWashSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
-            case 0:
-                Image("carwash_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("carwash_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("carwash_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("carwash_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("carwash_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
+                case 0:
+                    Image("carwash_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("carwash_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("carwash_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("carwash_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("carwash_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }
@@ -74,27 +78,31 @@ struct KloudyCarWashAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
-            case 0:
-                Image("carwash_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("carwash_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("carwash_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("carwash_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("carwash_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
+                case 0:
+                    Image("carwash_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("carwash_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("carwash_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("carwash_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("carwash_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }
