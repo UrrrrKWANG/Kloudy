@@ -201,7 +201,6 @@ class LocationWeatherIndexView: UIView {
     
     func findImageOrLottieName(indexName: IndexType, status: Int) -> String {
         let foundElement =  (indexName, status)
-        print(foundElement)
         switch foundElement {
         case let(indexName, status) where indexName == .mask && status == 0 :
             return "mask_step1"
