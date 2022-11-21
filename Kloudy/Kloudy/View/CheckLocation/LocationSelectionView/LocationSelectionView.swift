@@ -114,30 +114,30 @@ class LocationSelectionView: UIViewController {
         
         locationSelectionNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
-            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.height.equalTo(40)
         }
         
         searchBarBackgroundView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(21)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(16)
             $0.height.equalTo(47)
         }
         
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalTo(searchBarBackgroundView)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.equalTo(searchBarBackgroundView.snp.top).offset(-4)
         }
         
         cancelSearchButton.snp.makeConstraints {
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(24)
+            $0.top.equalTo(searchBarBackgroundView)
             $0.height.equalTo(47)
-            $0.trailing.equalToSuperview().inset(21)
+            $0.trailing.equalToSuperview().inset(20)
         }
         
         tableView.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(13)
-            $0.top.equalTo(searchBar.snp.bottom).offset(10)
+            $0.leading.trailing.equalToSuperview().inset(12.5)
+            $0.top.equalTo(searchBarBackgroundView.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
         
@@ -149,8 +149,8 @@ class LocationSelectionView: UIViewController {
         
         magnifyingGlassImage.snp.makeConstraints {
             $0.size.equalTo(20)
-            $0.top.equalTo(locationSelectionNavigationView.snp.bottom).offset(28)
-            $0.trailing.equalTo(searchBar.snp.trailing).offset(-14)
+            $0.top.equalTo(searchBarBackgroundView.snp.top).offset(13)
+            $0.trailing.equalTo(searchBar.snp.trailing).offset(-17)
         }
     }
     
@@ -176,8 +176,8 @@ class LocationSelectionView: UIViewController {
                 self.magnifyingGlassImage.isHidden = true
                 self.cancelSearchButton.isHidden = false
                 self.searchBarBackgroundView.snp.remakeConstraints {
-                    $0.leading.equalToSuperview().inset(21)
-                    $0.top.equalTo(self.locationSelectionNavigationView.snp.bottom).offset(24)
+                    $0.leading.equalToSuperview().inset(20)
+                    $0.top.equalTo(self.locationSelectionNavigationView.snp.bottom).offset(16)
                     $0.height.equalTo(47)
                     $0.trailing.equalTo(self.cancelSearchButton.snp.leading).offset(-12)
                 }
@@ -192,13 +192,13 @@ class LocationSelectionView: UIViewController {
                 self.magnifyingGlassImage.isHidden = false
                 self.cancelSearchButton.isHidden = true
                 if self.isLoadedFirst {
-                    self.searchBarBackgroundView.snp.makeConstraints {
-                        $0.leading.trailing.equalToSuperview().inset(21)
-                        $0.top.equalTo(self.locationSelectionNavigationView.snp.bottom).offset(24)
+                    self.searchBarBackgroundView.snp.remakeConstraints {
+                        $0.leading.trailing.equalToSuperview().inset(20)
+                        $0.top.equalTo(self.locationSelectionNavigationView.snp.bottom).offset(16)
                         $0.height.equalTo(47)
                     }
-                    self.searchBar.snp.makeConstraints {
-                        $0.leading.trailing.equalTo(self.searchBarBackgroundView)
+                    self.searchBar.snp.remakeConstraints {
+                        $0.leading.trailing.equalToSuperview().inset(20)
                         $0.top.equalTo(self.searchBarBackgroundView.snp.top).offset(-4)
                     }
                 }
@@ -353,8 +353,8 @@ extension LocationSelectionView: UITableViewDataSource {
                     completionHandler(true)
                 }
                 
-                deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 64, height: 93)).image { _ in
-                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 58, height: 86))
+                deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
+                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
                 }
 
                 deleteAction.backgroundColor = .systemBackground
