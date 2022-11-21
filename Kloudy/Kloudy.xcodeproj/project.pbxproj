@@ -134,6 +134,14 @@
 		D59C95462927D40C00A1FEE5 /* mask_step1.png in Resources */ = {isa = PBXBuildFile; fileRef = D59C951D2927D40C00A1FEE5 /* mask_step1.png */; };
 		D59C95472927D40C00A1FEE5 /* mask_step4.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C951E2927D40C00A1FEE5 /* mask_step4.json */; };
 		D59C95482927D40C00A1FEE5 /* mask_step4.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C951E2927D40C00A1FEE5 /* mask_step4.json */; };
+		D59C9578292A90F100A1FEE5 /* CityWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D3292646270079FA48 /* CityWeatherAPI.swift */; };
+		D59C9579292A919900A1FEE5 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22E36BDD2928AD25000ACD33 /* CityInformation.csv */; };
+		D59C957A292A919C00A1FEE5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
+		D59C957B292A9B2E00A1FEE5 /* LocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = D558FECC29096B00002EEA22 /* LocationManager.swift */; };
+		D59C957C292AA07300A1FEE5 /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C69392927DA4D005FC7ED /* LocationConverter.swift */; };
+		D59C957E292AB12600A1FEE5 /* KloudyLaundryIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59C957D292AB12600A1FEE5 /* KloudyLaundryIndexWidget.swift */; };
+		D59C9580292AB30000A1FEE5 /* KloudyCarWashIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59C957F292AB30000A1FEE5 /* KloudyCarWashIndexWidget.swift */; };
+		D59C9582292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D59C9581292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift */; };
 		DE5612E53E6EFF41A23C78AA /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */; };
 		E0336133290997FE0098CF76 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Font+.swift */; };
 		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
@@ -315,6 +323,9 @@
 		D59C951C2927D40C00A1FEE5 /* mask_step2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask_step2.png; sourceTree = "<group>"; };
 		D59C951D2927D40C00A1FEE5 /* mask_step1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask_step1.png; sourceTree = "<group>"; };
 		D59C951E2927D40C00A1FEE5 /* mask_step4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mask_step4.json; sourceTree = "<group>"; };
+		D59C957D292AB12600A1FEE5 /* KloudyLaundryIndexWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyLaundryIndexWidget.swift; sourceTree = "<group>"; };
+		D59C957F292AB30000A1FEE5 /* KloudyCarWashIndexWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyCarWashIndexWidget.swift; sourceTree = "<group>"; };
+		D59C9581292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyOuterIndexWidget.swift; sourceTree = "<group>"; };
 		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E036F3332928FCA200003E8A /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
 		E0FE1273292231A1000AC3FC /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
@@ -714,6 +725,9 @@
 			children = (
 				D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */,
 				D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */,
+				D59C957D292AB12600A1FEE5 /* KloudyLaundryIndexWidget.swift */,
+				D59C957F292AB30000A1FEE5 /* KloudyCarWashIndexWidget.swift */,
+				D59C9581292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift */,
 			);
 			path = KloudyIndexWidget;
 			sourceTree = "<group>";
@@ -997,7 +1011,9 @@
 				D59C952E2927D40C00A1FEE5 /* outer_step4.png in Resources */,
 				D59C953E2927D40C00A1FEE5 /* rain_step3.json in Resources */,
 				8BC8F81A29011E3400EF83AE /* Assets.xcassets in Resources */,
+				D59C957A292A919C00A1FEE5 /* Localizable.strings in Resources */,
 				D59C95382927D40C00A1FEE5 /* carwash_step3.json in Resources */,
+				D59C9579292A919900A1FEE5 /* CityInformation.csv in Resources */,
 				D59C952C2927D40C00A1FEE5 /* outer_step5.png in Resources */,
 				D59C95462927D40C00A1FEE5 /* mask_step1.png in Resources */,
 				D59C953C2927D40C00A1FEE5 /* rain_step4.json in Resources */,
@@ -1235,12 +1251,17 @@
 			buildActionMask = 2147483647;
 			files = (
 				E033613A290998410098CF76 /* Location+CoreDataClass.swift in Sources */,
+				D59C957B292A9B2E00A1FEE5 /* LocationManager.swift in Sources */,
+				D59C9580292AB30000A1FEE5 /* KloudyCarWashIndexWidget.swift in Sources */,
 				E03361362909980D0098CF76 /* Location+CoreDataProperties.swift in Sources */,
+				D59C9578292A90F100A1FEE5 /* CityWeatherAPI.swift in Sources */,
 				E0336133290997FE0098CF76 /* Font+.swift in Sources */,
 				8BC8F81C29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
 				E03361392909983F0098CF76 /* CityInformation.swift in Sources */,
 				E03361372909980F0098CF76 /* CoreDataStack.swift in Sources */,
 				E033613C290998470098CF76 /* Weather.swift in Sources */,
+				D59C957E292AB12600A1FEE5 /* KloudyLaundryIndexWidget.swift in Sources */,
+				D59C957C292AA07300A1FEE5 /* LocationConverter.swift in Sources */,
 				E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */,
 				E033613B290998440098CF76 /* Notification.swift in Sources */,
 				8BC8F81729011E3300EF83AE /* kloudyWidget.swift in Sources */,
@@ -1248,6 +1269,7 @@
 				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
 				E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */,
 				E0336135290998030098CF76 /* Color+.swift in Sources */,
+				D59C9582292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift in Sources */,
 				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

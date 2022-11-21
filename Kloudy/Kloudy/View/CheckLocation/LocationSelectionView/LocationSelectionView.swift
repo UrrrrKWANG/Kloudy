@@ -41,6 +41,10 @@ class LocationSelectionView: UIViewController {
     var locationFromCoreData = [Location]()
     
     var weathers: [Weather] = []
+    
+    // Location 추가
+    let additionalLocation = PublishSubject<Weather>()
+    let deleteLocationCode = PublishSubject<String>()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -75,6 +79,7 @@ class LocationSelectionView: UIViewController {
     
     // https://github.com/PLREQ/PLREQ
     func inputLocationCellData() {
+        locationList = []
         for i in 0 ..< locationFromCoreData.count {
             let locationCellData = locationFromCoreData[i]
             let code = locationCellData.dataToString(forKey: "code")
@@ -356,6 +361,7 @@ extension LocationSelectionView: UITableViewDataSource {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
                     CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row])
                     self.locationList.remove(at: indexPath.row)
+                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row].code ?? "")
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }
@@ -390,6 +396,18 @@ extension LocationSelectionView: UITableViewDelegate {
                         let location = LocationData(code: code, city: city, province: province)
                         locationList.append(location)
                         self.changeTableType(false)
+                        
+                        CityWeatherNetwork().fetchCityWeather(code: code)
+                            .subscribe { event in
+                                switch event {
+                                case .success(let data):
+                                    self.additionalLocation.onNext(data)
+                                case .failure(let error):
+                                    print("Error: ", error)
+                                }
+                            }
+                            .disposed(by: disposeBag)
+                        
                     } else {
                         self.isSameLocationAlert()
                     }

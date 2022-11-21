@@ -16,6 +16,7 @@ import RxCocoa
 class CheckWeatherView: UIViewController {
     let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
+    let locationSelectionView = LocationSelectionView()
     
     let pageControl = UIPageControl()
     let initialPage = 0
@@ -40,43 +41,9 @@ class CheckWeatherView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        지역이 변경될 시 사용할 코드
-//        dataViewControllers = [UIViewController]()
-//        loadWeatherView()
-//
-//        addChild(pageViewController)
-//        [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { view.addSubview($0) }
-//        configureCheckWeatherNavigationView()
-//
-//        pageViewController.dataSource = self
-//        pageViewController.delegate = self
-//        configurePageViewController()
-//
-//        if let firstVC = dataViewControllers.first {
-//            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
-//        }
-//
-//        pageControl.frame = CGRect()
-//        pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
-//        pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
-//        pageControl.numberOfPages = self.dataViewControllers.count
-//        pageControl.currentPage = initialPage
-//
-//        pageControl.snp.makeConstraints {
-//            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).inset(6)
-//            $0.centerX.equalToSuperview()
-//        }
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers as? [Weather] {
-            self.weathers = weathers
-        }
-        
-        view.backgroundColor = UIColor.KColor.white
+        dataViewControllers = [UIViewController]()
         loadWeatherView()
-       
+
         addChild(pageViewController)
         [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { view.addSubview($0) }
         configureCheckWeatherNavigationView()
@@ -84,11 +51,11 @@ class CheckWeatherView: UIViewController {
         pageViewController.dataSource = self
         pageViewController.delegate = self
         configurePageViewController()
-        
+
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
-        
+
         pageControl.frame = CGRect()
         pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
         pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
@@ -100,9 +67,34 @@ class CheckWeatherView: UIViewController {
             $0.centerX.equalToSuperview()
         }
     }
-    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        if let weathers = appDelegate?.weathers as? [Weather] {
+            self.weathers = weathers
+        }
+        bind()
+        view.backgroundColor = UIColor.KColor.white
+    }
+
     private func bind() {
+        locationSelectionView.additionalLocation
+            .subscribe(onNext: {
+                self.weathers.append($0)
+            })
+            .disposed(by: disposeBag)
         
+        locationSelectionView.deleteLocationCode
+            .subscribe(onNext: {
+                for index in 0..<self.weathers.count {
+                    if $0 == self.weathers[index].localWeather[0].localCode {
+                        self.weathers.remove(at: index)
+                        return
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func loadWeatherView() {
@@ -235,7 +227,6 @@ class CheckWeatherView: UIViewController {
     }
     
     @objc func tapLocationButton() {
-        let locationSelectionView = LocationSelectionView()
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
     }
     @objc func tapSettingButton() {
