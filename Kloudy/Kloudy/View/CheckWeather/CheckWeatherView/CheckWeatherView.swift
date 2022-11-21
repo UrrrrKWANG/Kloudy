@@ -77,7 +77,7 @@ class CheckWeatherView: UIViewController {
         bind()
         view.backgroundColor = UIColor.KColor.white
     }
-
+    
     private func bind() {
         locationSelectionView.additionalLocation
             .subscribe(onNext: {
@@ -106,7 +106,9 @@ class CheckWeatherView: UIViewController {
             lazy var num: UIViewController = {
                 let vc = UIViewController()
                 let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
-                let weatherIndexView = WeatherIndexView(weathers: location)
+                let weatherIndexView = WeatherIndexView()
+                weatherIndexView.sentWeather.onNext(location)
+                
                 let detailWeatherView: UIButton = {
                     let detailWeatherView = UIButton()
                     detailWeatherView.backgroundColor = UIColor.KColor.white
@@ -238,7 +240,6 @@ class CheckWeatherView: UIViewController {
         let detailWeatherView = LocationSelectionView()
         self.present(detailWeatherView, animated: true)
     }
-    
 }
 
 extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {

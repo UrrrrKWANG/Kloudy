@@ -13,8 +13,6 @@ import RxCocoa
 
 class LocationWeatherIndexView: UIView {
     var cityIndex = Int()
-    var indexArray = [IndexType]()
-    var weathers: Weather?
     
     lazy var internalIndex = 0
     let weatherIndexNameLabel = UILabel()
@@ -34,21 +32,27 @@ class LocationWeatherIndexView: UIView {
     let tapGesture = UITapGestureRecognizer()
     let disposeBag = DisposeBag()
     
+    //
+    var indexArray = [IndexType]()
+    var weathers: Weather?
+    
+    let sentIndexArray = PublishSubject<[IndexType]>()
+    let sentWeather = PublishSubject<Weather>()
+    
+//    var indexName: IndexType?
+    var sentIndexName: IndexType?
+    var indexName = PublishSubject<IndexType>()
+    var transedIndexName: String = ""
+    var indexStatus = PublishSubject<Int>()
+    var imageOrLottieName: String = ""
+
+    
     //TODO: 페이지 개수 받아오는 부분 (임시)
-    init(weathers: Weather, indexArray: [IndexType]) {
+    init() {
         super.init(frame: .zero)
         setLayout()
         bind()
-        self.indexArray = indexArray
-        self.weathers = weathers
-        let indexName = indexArray[0]
-        let transedIndexName = transIndexName(indexName: indexName)
-        let indexStatus = findStatus(indexName: indexName)
-        let imageOrLottieName = findImageOrLottieName(indexName: indexName, status: indexStatus)
-        configureView(indexNameLabel:  transedIndexName, indexStatusLabel: "하루종일 내림")
-        changeImageView(name: imageOrLottieName)
-        changeCollectionView(index: 0)
-        changeTextView(indexType: indexArray[0])
+        changeCollectionView()
         containerView.addGestureRecognizer(tapGesture)
     }
     
@@ -56,6 +60,36 @@ class LocationWeatherIndexView: UIView {
         tapGesture.rx.event
             .bind(onNext: { _ in
                 self.indexViewTapped.onNext(true)
+            })
+            .disposed(by: disposeBag)
+        
+        sentWeather
+            .subscribe(onNext: {
+                self.weathers = $0
+            })
+            .disposed(by: disposeBag)
+        
+        sentIndexArray
+            .subscribe(onNext: {
+                self.indexArray = $0
+                self.indexName.onNext($0[0])
+            })
+            .disposed(by: disposeBag)
+        
+        indexName
+            .subscribe(onNext: {
+                self.transedIndexName = self.transIndexName(indexName: $0)
+                self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: "하루종일 내림")
+                self.indexStatus.onNext(self.findStatus(indexName: $0))
+                self.changeTextView(indexType: $0)
+                self.sentIndexName = $0
+            })
+            .disposed(by: disposeBag)
+        
+        indexStatus
+            .subscribe(onNext: {
+                self.imageOrLottieName = self.findImageOrLottieName(indexName: self.sentIndexName ?? .unbrella, status: $0)
+                self.changeImageView(name: self.imageOrLottieName)
             })
             .disposed(by: disposeBag)
     }
@@ -107,8 +141,7 @@ class LocationWeatherIndexView: UIView {
         }
     }
     
-    func changeCollectionView(index: Int) {
-        self.internalIndex = index
+    func changeCollectionView() {
         intenalIndexListView.backgroundColor = UIColor.KColor.black
         lazy var internalIndexCollectionView: UICollectionView = {
             let uiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
@@ -126,6 +159,7 @@ class LocationWeatherIndexView: UIView {
             $0.width.height.equalToSuperview()
         }
     }
+    
     private func setLayout() {
         [weatherIndexNameLabel, containerView, textContainerView, intenalIndexListView].forEach() {
             self.addSubview($0)
@@ -191,23 +225,23 @@ class LocationWeatherIndexView: UIView {
         case let(indexName, status) where indexName == .laundry && status == 0 :
             return "laundry_1"
         case let(indexName, status) where indexName == .laundry && status == 1 :
-            return "laundry_2"
+            return "laundry_1"
         case let(indexName, status) where indexName == .laundry &&  status == 2 :
-            return "laundry_3"
+            return "laundry_2"
         case let(indexName, status) where indexName == .laundry && status == 3 :
-            return "laundry_4"
+            return "laundry_3"
         case let(indexName, status) where indexName == .laundry && status == 4 :
             return "laundry_4"
         case let(indexName, status) where indexName == .car && status == 0 :
-            return "carwash_step1"
+            return "carwash_step4"
         case let(indexName, status) where indexName == .car && status == 1 :
-            return "carwash_step2"
-        case let(indexName, status) where indexName == .car &&  status == 2 :
             return "carwash_step3"
+        case let(indexName, status) where indexName == .car &&  status == 2 :
+            return "carwash_step2"
         case let(indexName, status) where indexName == .car && status == 3 :
-            return "carwash_step4"
+            return "carwash_step1"
         case let(indexName, status) where indexName == .car && status == 4 :
-            return "carwash_step4"
+            return "carwash_step1"
         case let(indexName, status) where indexName == .outer && status == 0 :
             return "outer_step1"
         case let(indexName, status) where indexName == .outer && status == 1 :

@@ -154,30 +154,23 @@ class WeatherIndexDetailView: UIViewController {
         } else if indexType == .outer {
             firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0)))
             secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].morningTemperature ?? 0)))
+            
+            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
         } else if indexType == .temperatureGap {
             firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature ?? 0)))
             secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature ?? 0)))
+            
         }
-        
         
         firstIconView.iconImage.onNext(indexType.detailIndexString[1])
         firstIconView.iconTitle.onNext(indexType.detailIndexString[2])
         firstIconView.iconUnit.onNext(indexType.detailIndexString[3])
+        
         secondIconView.iconImage.onNext(indexType.detailIndexString[4])
         secondIconView.iconTitle.onNext(indexType.detailIndexString[5])
         secondIconView.iconUnit.onNext(indexType.detailIndexString[6])
         
-        // API 데이터 받을 시 전달
-        //        secondIconView.iconValue.onNext(data.wind)
-        
-        // API 데이터 받을 시 전달
-        //        indexIconView.indexStatus.onNext(data.status)
-        
         presentButtonView.totalIndexStep.onNext(indexType.totalIndexStep)
-        
-        // API 데이터 받을 시 전달
-        //        indexIconView.indexStatus.onNext(data.step)
-        
         presentButtonView.isDismissButtonTapped
             .subscribe(onNext: {
                 if $0 {
@@ -187,7 +180,6 @@ class WeatherIndexDetailView: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
-        
         presentButtonView.presentButtonIndex
             .distinctUntilChanged()
             .subscribe(onNext: {
