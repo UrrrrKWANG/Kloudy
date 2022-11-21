@@ -497,6 +497,7 @@ def get_laundry_index(weather_24h_jsonObject):
             max_temperature = float(obj.get('fcstValue'))
         elif obj.get('category') == 'REH':
             humidities.append(float(obj.get('fcstValue')))
+        
         elif obj.get('category') == 'PTY':
             if obj.get('fcstValue') == "1":
                 rainy += 1
@@ -662,7 +663,7 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
     # 오늘 날씨 상태
     daily_precipitation = 0 if sum(daily_precipitations) == 0 else sum(daily_precipitations) / len(daily_precipitations)
     tomorrow_precipitation = 0 if sum(tomorrow_precipitations) == 0 else sum(tomorrow_precipitations) / len(tomorrow_precipitations)
-    weather_3Am7pm = "7일 내에 비 예보가 없어요." if when_is_rainy == 9 else f"가장 가까운 비 예보는 {when_is_rainy}일 후예요."
+    weather_3Am7pm = "예보없음" if when_is_rainy == 9 else f"{when_is_rainy}일 후"
     pollen_index = max(flower_qualities)
     # 0 : 세차하기 좋음, 1: 세차 괜찮음, 2: 세차 미루기, 3: 세차 하지마
     status = cal_carwash_status(when_is_rainy, day_max_temperature, pm10grade, pollen_index)
