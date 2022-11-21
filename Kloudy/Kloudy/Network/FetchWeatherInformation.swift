@@ -10,6 +10,8 @@ import Foundation
 class FetchWeatherInformation: ObservableObject {
     static let shared: FetchWeatherInformation = FetchWeatherInformation()
 //    let koreanCities: [CityInformation] = loadCityListFromCSV()
+    let dummyData: Weather = Weather(today: "dummy", localWeather: [LocalWeather(localCode: "dummy", localName: "dummy", main: [Main(currentWeather: 0, currentTemperature: 0, dayMaxTemperature: 0, dayMinTemperature: 0)], weatherIndex: [WeatherIndex(umbrellaIndex: [UmbrellaIndex(status: 0, precipitation24H: 0, precipitation1hMax: 0, precipitation3hMax: 0, wind: 0)], maskIndex: [MaskIndex(status: 0, pm25value: 0, pm10value: 0, pollenIndex: 0)], outerIndex: [OuterIndex(status: 0, dayMinTemperature: 0, morningTemperature: 0)], laundryIndex: [LaundryIndex(status: 0, humidity: 0, dayMaxTemperature: 0, dailyWeather: 0)], carwashIndex: [CarwashIndex(status: 0, dailyWeather: 0, dayMaxTemperature: 0, dailyPrecipitation: 0, tomorrowWeather: 0, tomorrowPrecipication: 0, weather3Am7pm: "", pm10grade: 0, pollenIndex: 0)], compareIndex: [CompareIndex(yesterdayMaxTemperature: 0, yesterdayMinTemperature: 0, todayMaxtemperature: 0, todayMinTemperature: 0)])], weeklyWeather: [], hourlyWeather: [])])
+
     
     func startLoad(province:String, city: String, _ completion: @escaping (Weather) -> Void) {
         // 도시 이름을 받아서 x, y값 받음
