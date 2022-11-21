@@ -17,7 +17,7 @@ class IndexIconView: UIView {
     let iconNumberLabel = UILabel()
     
     var value = ""
-    let iconImage: BehaviorSubject<String> = BehaviorSubject(value: "")
+    let iconImage: BehaviorSubject<String> = BehaviorSubject(value: "AppIcon")
     let iconTitle: BehaviorSubject<String> = BehaviorSubject(value: "")
     let iconValue: BehaviorSubject<String> = BehaviorSubject(value: "")
     let iconUnit: BehaviorSubject<String> = BehaviorSubject(value: "")
