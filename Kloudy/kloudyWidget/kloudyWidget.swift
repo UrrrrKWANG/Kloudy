@@ -9,53 +9,66 @@ import WidgetKit
 import SwiftUI
 import Intents
 
-struct Provider: IntentTimelineProvider {
-    typealias Entry = SimpleEntry
+struct KloudyProvider: IntentTimelineProvider {
+    typealias Entry = KloudyEntry
     typealias Intent = ConfigurationIntent
     
-    func placeholder(in context: Context) -> SimpleEntry {
-        SimpleEntry(date: Date(), configuration: ConfigurationIntent())
+    func placeholder(in context: Context) -> KloudyEntry {
+        KloudyEntry(date: Date(), configuration: ConfigurationIntent(), weatherInfo: Weather(today: "", localWeather: []))
     }
-
-    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (SimpleEntry) -> Void) {
-        let entry = SimpleEntry(date: Date(), configuration: configuration)
-        completion(entry)
-    }
-
-    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
-        var entries: [SimpleEntry] = []
-
-        // Generate a timeline consisting of five entries an hour apart, starting from the current date.
-        let currentDate = Date()
-        for hourOffset in 0 ..< 5 {
-            let entryDate = Calendar.current.date(byAdding: .hour, value: hourOffset, to: currentDate)!
-            let entry = SimpleEntry(date: entryDate, configuration: configuration)
-            entries.append(entry)
+    
+    func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (KloudyEntry) -> Void) {
+        let currentStatus = CLLocationManager().authorizationStatus
+        
+        if currentStatus == .authorizedAlways {
+            let XY = LocationManager.shared.requestNowLocationInfo()
+            let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+            guard let nowLocation = nowLocation else { return }
+            FetchWeatherInformation.shared.startLoad(province: nowLocation.province, city: nowLocation.city) { response in
+                let entry = KloudyEntry(date: Date(), configuration: configuration, weatherInfo: response)
+                completion(entry)
+            }
         }
-
-        let timeline = Timeline(entries: entries, policy: .atEnd)
-        completion(timeline)
+    }
+    
+    func getTimeline(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (Timeline<Entry>) -> Void) {
+        var entries: [KloudyEntry] = []
+        var weather: Weather = Weather(today: "", localWeather: [])
+        let currentStatus = CLLocationManager().authorizationStatus
+        
+        if currentStatus == .authorizedAlways {
+            let XY = LocationManager.shared.requestNowLocationInfo()
+            let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+            guard let nowLocation = nowLocation else { return }
+            FetchWeatherInformation.shared.startLoad(province: nowLocation.province, city: nowLocation.city) { response in
+                weather = response
+                let currentDate = Date()
+                let entryDate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
+                let entry = KloudyEntry(date: Date(), configuration: configuration, weatherInfo: response)
+                entries.append(entry)
+                let timeline = Timeline(entries: [entry], policy: .after(entryDate))
+                completion(timeline)
+            }
+        }
     }
 }
 
-struct SimpleEntry: TimelineEntry {
+struct KloudyEntry: TimelineEntry {
     let date: Date
     let configuration: ConfigurationIntent
+    let weatherInfo: Weather
 }
 
 @main
 struct KloudyWidget: WidgetBundle {
     @WidgetBundleBuilder
-        var body: some Widget {
-            KloudyUmbrellaIndexWidget1()
-            KloudyUmbrellaIndexWidget2()
-            KloudyUmbrellaIndexWidget3()
-            KloudyUmbrellaIndexWidget4()
-            KloudyMaskIndexWidget1()
-            KloudyMaskIndexWidget2()
-            KloudyMaskIndexWidget3()
-            KloudyMaskIndexWidget4()
-//            KloudyTodayWidget()
-//            KloudyWeeklyWidget()
-        }
+    var body: some Widget {
+        KloudyUmbrellaIndexWidget()
+        KloudyMaskIndexWidget()
+        KloudyLaundryIndexWidget()
+        KloudyCarWashIndexWidget()
+        KloudyOuterIndexWidget()
+        //            KloudyTodayWidget()
+        //            KloudyWeeklyWidget()
+    }
 }

@@ -1,71 +1,74 @@
 //
-//  KloudyIndexWidget.swift
-//  Kloudy
+//  KloudyOuterIndexWidget.swift
+//  kloudyWidgetExtension
 //
-//  Created by 이주화 on 2022/10/20.
+//  Created by 이주화 on 2022/11/21.
 //
-
 import WidgetKit
 import SwiftUI
 import Intents
 
-struct KloudyUmbrellaIndexWidget: Widget {
-    let kind: String = "KloudyUmbrellaIndexWidget"
+struct KloudyOuterIndexWidget: Widget {
+    let kind: String = "KloudyOuterIndexWidget"
 
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
-            KloudyUmbrellaIndexWidgetEntryView(entry: entry)
+            KloudyOuterIndexWidgetEntryView(entry: entry)
         }
         .configurationDisplayName("구르미 날씨 지수 위젯 목록")
-        .description("우산 위젯입니다..")
+        .description("겉옷 지수 위젯입니다.")
         .supportedFamilies([.systemSmall, .accessoryCircular])
     }
 }
 
-struct KloudyUmbrellaIndexWidgetEntryView: View {
+struct KloudyOuterIndexWidgetEntryView: View {
     var entry: KloudyProvider.Entry
     @Environment(\.widgetFamily) var family: WidgetFamily
     
     var body: some View {
         switch family {
         case .systemSmall:
-            KloudyUmbrellaSystemSmallWidgetView(entry: entry)
+            KloudyOuterSystemSmallWidgetView(entry: entry)
         case .accessoryCircular:
-            KloudyUmbrellaAccessoryCircularWidgetView(entry: entry)
+            KloudyOuterAccessoryCircularWidgetView(entry: entry)
         default:
-            KloudyUmbrellaSystemSmallWidgetView(entry: entry)
+            KloudyOuterSystemSmallWidgetView(entry: entry)
         }
     }
 }
 
-struct KloudyUmbrellaSystemSmallWidgetView: View {
+struct KloudyOuterSystemSmallWidgetView: View {
     var entry: KloudyProvider.Entry
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
             case 0:
-                Image("rain_1")
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 1:
-                Image("rain_2")
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 2:
-                Image("rain_3")
+                Image("outer_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 3:
-                Image("rain_4")
+                Image("outer_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 4:
-                Image("rain_4")
+                Image("outer_4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            case 5:
+                Image("outer_5")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             default:
-                Image("rain_1")
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
@@ -73,34 +76,38 @@ struct KloudyUmbrellaSystemSmallWidgetView: View {
     }
 }
 
-struct KloudyUmbrellaAccessoryCircularWidgetView: View {
+struct KloudyOuterAccessoryCircularWidgetView: View {
     var entry: KloudyProvider.Entry
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
             case 0:
-                Image("rain_1")
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 1:
-                Image("rain_2")
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 2:
-                Image("rain_3")
+                Image("outer_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 3:
-                Image("rain_4")
+                Image("outer_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             case 4:
-                Image("rain_4")
+                Image("outer_4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            case 5:
+                Image("outer_5")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             default:
-                Image("rain_1")
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
