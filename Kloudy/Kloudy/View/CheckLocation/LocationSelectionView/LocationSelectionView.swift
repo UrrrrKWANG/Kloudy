@@ -43,6 +43,9 @@ class LocationSelectionView: UIViewController {
     // Location 추가
     let additionalLocation = PublishSubject<Weather>()
     let deleteLocationCode = PublishSubject<String>()
+    
+    // delegate 로 전달 받는 Weather Data
+    var weatherData = [Weather]()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -167,7 +170,7 @@ class LocationSelectionView: UIViewController {
             locationFromCoreData = CoreDataManager.shared.fetchLocations()
         }
         changeCancelButtonState(isSearching)
-        tableView.reloadData()
+//        tableView.reloadData()
     }
     
     private func changeCancelButtonState(_ isSearching: Bool) {
@@ -324,6 +327,9 @@ extension LocationSelectionView: UITableViewDataSource {
 //                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
 //            }
             cell.locationNameLabel.text = locationList[indexPath.row].city
+            cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].main[0].currentTemperature)) + "°"
+            cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
+            
             return cell
         }
     }
@@ -389,6 +395,7 @@ extension LocationSelectionView: UITableViewDelegate {
                                 switch event {
                                 case .success(let data):
                                     self.additionalLocation.onNext(data)
+                                    self.weatherData.append(data)
                                 case .failure(let error):
                                     print("Error: ", error)
                                 }
@@ -475,5 +482,11 @@ extension LocationSelectionView: UITableViewDropDelegate {
     
     func tableView(_ tableView: UITableView, performDropWith coordinator: UITableViewDropCoordinator) {
         
+    }
+}
+
+extension LocationSelectionView: LocationSelectionDelegate {
+    func sendWeatherData(weatherData: [Weather]) {
+        self.weatherData = weatherData
     }
 }

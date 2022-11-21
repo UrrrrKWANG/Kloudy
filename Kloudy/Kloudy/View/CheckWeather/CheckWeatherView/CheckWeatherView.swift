@@ -13,6 +13,10 @@ import RxCocoa
 // https://www.linkedin.com/pulse/using-ios-pageviewcontroller-without-storyboards-paul-tangen/
 // https://ios-development.tistory.com/623
 
+protocol LocationSelectionDelegate: AnyObject {
+    func sendWeatherData(weatherData: [Weather])
+}
+
 class CheckWeatherView: UIViewController {
     let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
@@ -37,6 +41,8 @@ class CheckWeatherView: UIViewController {
     var dataViewControllers = [UIViewController]()
     
     var locations = [Location]()
+    
+    weak var delegate: LocationSelectionDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
@@ -75,6 +81,7 @@ class CheckWeatherView: UIViewController {
             self.weathers = weathers
         }
         bind()
+        self.delegate = self.locationSelectionView
         view.backgroundColor = UIColor.KColor.white
     }
     
@@ -230,6 +237,7 @@ class CheckWeatherView: UIViewController {
     
     @objc func tapLocationButton() {
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
+        self.delegate?.sendWeatherData(weatherData: weathers)
     }
     @objc func tapSettingButton() {
         let settingView = SettingView()
