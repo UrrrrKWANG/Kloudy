@@ -37,7 +37,12 @@ class LocationSelectionView: UIViewController {
     var isLoadedFirst = false
     
     // Fetch CoreData Location Entity
-    var locationList = [Location]()
+    var locationList: [LocationData] = []
+    var locationFromCoreData = [Location]()
+    
+    // Location 추가
+    let additionalLocation = PublishSubject<Weather>()
+    let deleteLocationCode = PublishSubject<String>()
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -61,7 +66,21 @@ class LocationSelectionView: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        locationList = CoreDataManager.shared.fetchLocations()
+        locationFromCoreData = CoreDataManager.shared.fetchLocations()
+        inputLocationCellData()
+    }
+    
+    // https://github.com/PLREQ/PLREQ
+    func inputLocationCellData() {
+        locationList = []
+        for i in 0 ..< locationFromCoreData.count {
+            let locationCellData = locationFromCoreData[i]
+            let code = locationCellData.dataToString(forKey: "code")
+            let city = locationCellData.dataToString(forKey: "city")
+            let province = locationCellData.dataToString(forKey: "province")
+            let location = LocationData(code: code, city: city, province: province)
+            locationList.append(location)
+        }
     }
     
     private func bind() {
@@ -96,7 +115,6 @@ class LocationSelectionView: UIViewController {
         locationSelectionNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
             $0.leading.trailing.equalToSuperview().inset(21)
-            $0.width.equalTo(111)
             $0.height.equalTo(40)
         }
         
@@ -146,7 +164,7 @@ class LocationSelectionView: UIViewController {
             searchBar.endEditing(true)
             nothingSearchedLocationLabel.isHidden = true
             filteredSearchTableTypeData = [SearchingLocation]()
-            locationList = CoreDataManager.shared.fetchLocations()
+            locationFromCoreData = CoreDataManager.shared.fetchLocations()
         }
         changeCancelButtonState(isSearching)
         tableView.reloadData()
@@ -328,8 +346,9 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    CoreDataManager.shared.locationDelete(location: self.locationList[indexPath.row])
+                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row])
                     self.locationList.remove(at: indexPath.row)
+                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row].code ?? "")
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }
@@ -350,14 +369,32 @@ extension LocationSelectionView: UITableViewDataSource {
 
 extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
         switch tableType {
         case .search:
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             self.cityData.forEach { information in
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations())
+                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
+                        let code = information.code
+                        let city = information.city
+                        let province = information.province
+                        let location = LocationData(code: code, city: city, province: province)
+                        locationList.append(location)
                         self.changeTableType(false)
+                        
+                        CityWeatherNetwork().fetchCityWeather(code: code)
+                            .subscribe { event in
+                                switch event {
+                                case .success(let data):
+                                    self.additionalLocation.onNext(data)
+                                case .failure(let error):
+                                    print("Error: ", error)
+                                }
+                            }
+                            .disposed(by: disposeBag)
+                        
                     } else {
                         self.isSameLocationAlert()
                     }
@@ -422,14 +459,7 @@ extension LocationSelectionView: UITableViewDropDelegate {
         let itemMove = locationList[sourceIndexPath.row] //Get the item that we just moved
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
-        
-        tableView.reloadData()
-        print(locationList)
-        
-        for i in 0..<locationList.count {
-            
-//            CoreDataManager.shared.saveLocation(code: locationList[i].code!, city: locationList[i].city!, province: locationList[i].province!, sequence: i)
-        }
+        CoreDataManager.shared.getLocationSequence(locationList: locationList)
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Group 138.svg",
+      "filename" : "location_mark.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Group 138@2x.svg",
+      "filename" : "location_mark@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Group 138@3x.svg",
+      "filename" : "location_mark@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

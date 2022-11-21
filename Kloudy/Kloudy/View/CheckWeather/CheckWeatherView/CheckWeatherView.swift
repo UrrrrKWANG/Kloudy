@@ -16,9 +16,14 @@ import RxCocoa
 class CheckWeatherView: UIViewController {
     let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
+    let locationSelectionView = LocationSelectionView()
     
     let pageControl = UIPageControl()
     let initialPage = 0
+    
+    let cityInformationModel = FetchWeatherInformation()
+    lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
+    var locationList = CoreDataManager.shared.fetchLocations()
     
     var weathers = [Weather]()
     
@@ -31,21 +36,14 @@ class CheckWeatherView: UIViewController {
     
     var dataViewControllers = [UIViewController]()
     
+    var locations = [Location]()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        print(self.weathers)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers {
-            self.weathers = weathers
-        }
-        
-        view.backgroundColor = UIColor.KColor.white
+//        지역이 변경될 시 사용할 코드
+        dataViewControllers = [UIViewController]()
         loadWeatherView()
-       
+
         addChild(pageViewController)
         [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { view.addSubview($0) }
         configureCheckWeatherNavigationView()
@@ -53,11 +51,11 @@ class CheckWeatherView: UIViewController {
         pageViewController.dataSource = self
         pageViewController.delegate = self
         configurePageViewController()
-        
+
         if let firstVC = dataViewControllers.first {
             pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
         }
-        
+
         pageControl.frame = CGRect()
         pageControl.currentPageIndicatorTintColor = UIColor.KColor.primaryBlue01
         pageControl.pageIndicatorTintColor = UIColor.KColor.primaryBlue03
@@ -69,49 +67,88 @@ class CheckWeatherView: UIViewController {
             $0.centerX.equalToSuperview()
         }
     }
-    
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+        if let weathers = appDelegate?.weathers as? [Weather] {
+            self.weathers = weathers
+        }
+        bind()
+        view.backgroundColor = UIColor.KColor.white
+    }
+
     private func bind() {
+        locationSelectionView.additionalLocation
+            .subscribe(onNext: {
+                self.weathers.append($0)
+            })
+            .disposed(by: disposeBag)
         
+        locationSelectionView.deleteLocationCode
+            .subscribe(onNext: {
+                for index in 0..<self.weathers.count {
+                    if $0 == self.weathers[index].localWeather[0].localCode {
+                        self.weathers.remove(at: index)
+                        return
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     func loadWeatherView() {
-        checkWeatherViewModel.cityWeather.forEach { city in
-            // 여기서 Controller를 그린다.
-            // view를 그릴 때 viewModel을 가져와 사용한다.
-            // viewmodel에 init을 줘서 코어데이터에 있는 도시를 가져와서 사용하면 될 듯
+        self.weathers.forEach { location in
+            let localWeather = [LocalWeather](location.localWeather)
+            let main = [Main](localWeather[0].main)
+            let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
+            
             lazy var num: UIViewController = {
                 let vc = UIViewController()
-                let locationView = UIView()
-                let weatherIndexView = WeatherIndexView(city: city.localName)
-                let detailWeatherView = UIButton()
-                let currentWeatherImage = UIImageView()
-                let detailWeatherViewLabel = UILabel()
-                let rightIcon = UIImageView()
+                let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
+                let weatherIndexView = WeatherIndexView(weathers: location)
+                let detailWeatherView: UIButton = {
+                    let detailWeatherView = UIButton()
+                    detailWeatherView.backgroundColor = UIColor.KColor.white
+                    detailWeatherView.layer.cornerRadius = 10
+                    detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
+                    return detailWeatherView
+                }()
                 
-                vc.view.backgroundColor = .clear
-                [locationView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
+                let currentWeatherImage: UIImageView = {
+                    let currentWeatherImage = UIImageView()
+                    currentWeatherImage.contentMode = .scaleAspectFit
+                    currentWeatherImage.image = UIImage(named: "detailWeather-\(main[0].currentWeather)")
+                    return currentWeatherImage
+                }()
+                let detailWeatherViewLabel: UILabel = {
+                    let detailWeatherViewLabel = UILabel()
+                    detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
+                    return detailWeatherViewLabel
+                }()
+                let rightIcon: UIImageView = {
+                    let rightIcon = UIImageView()
+                    rightIcon.image = UIImage(named: "right")
+                    rightIcon.contentMode = .scaleAspectFit
+                    return rightIcon
+                }()
                 
-                temp_locationView(view: locationView, city: city)
-                locationView.backgroundColor = UIColor.KColor.primaryBlue01
-                locationView.layer.cornerRadius = 15
-                locationView.snp.makeConstraints {
+                vc.view.backgroundColor = UIColor.KColor.clear
+                [currentWeatherView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
+                
+                currentWeatherView.snp.makeConstraints {
                     $0.top.equalToSuperview().inset(24)
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(108)
                 }
-                
-                currentWeatherImage.image = UIImage(named: "detailWeather-\(city.currentWeather)")
                 currentWeatherImage.snp.makeConstraints {
                     $0.top.equalToSuperview().inset(-6)
                     $0.leading.equalToSuperview().inset(36)
                     $0.width.equalTo(150)
                     $0.height.equalTo(130)
                 }
-                weatherIndexView.backgroundColor = UIColor.KColor.white
-                weatherIndexView.layer.cornerRadius = 12
-                weatherIndexView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
                 weatherIndexView.snp.makeConstraints {
-                    $0.top.equalTo(locationView.snp.bottom).offset(32)
+                    $0.top.equalTo(currentWeatherView.snp.bottom).offset(32)
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(385)
                 }
@@ -127,7 +164,8 @@ class CheckWeatherView: UIViewController {
                                 })
                                 .disposed(by: self.disposeBag)
                             
-                            weatherIndexDetailView.city = city.localName
+                            weatherIndexDetailView.weatherData = location
+                            weatherIndexDetailView.city = localWeather[0].localName
                             weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
                             weatherIndexDetailView.modalTransitionStyle = .crossDissolve
                             self.present(weatherIndexDetailView, animated: true)
@@ -137,28 +175,21 @@ class CheckWeatherView: UIViewController {
                 
                 detailWeatherView.rx.tap
                     .bind {
-                        let detailWeatherView = DetailWeatherView()
+                        let detailWeatherView = DetailWeatherView(weatherDatas: location)
                         detailWeatherView.modalPresentationStyle = .pageSheet
                         detailWeatherView.modalTransitionStyle = .coverVertical
                         self.present(detailWeatherView, animated: true)
                     }
                     .disposed(by: disposeBag)
                 
-                detailWeatherView.backgroundColor = UIColor.KColor.white
-                detailWeatherView.layer.cornerRadius = 10
-                detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
                 detailWeatherView.snp.makeConstraints {
                     $0.top.equalTo(weatherIndexView.snp.bottom).offset(32)
                     $0.leading.trailing.equalToSuperview().inset(20)
                     $0.height.equalTo(58)
                 }
                 
-                rightIcon.image = UIImage(named: "right")
-                rightIcon.contentMode = .scaleToFill
-                
                 [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
 
-                detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
                 detailWeatherViewLabel.snp.makeConstraints {
                     $0.centerY.equalToSuperview()
                     $0.leading.equalToSuperview().inset(16)
@@ -172,35 +203,6 @@ class CheckWeatherView: UIViewController {
                 return vc
             }()
             dataViewControllers.append(num)
-        }
-    }
-    
-    func temp_locationView(view: UIView, city: CityWeather) {
-        let locationLabel = UILabel()
-        let locationIcon = UIImageView()
-        let temperature = UILabel()
-        
-        [locationLabel, locationIcon, temperature].forEach { view.addSubview($0) }
-        locationIcon.image = UIImage(named: "location_mark")
-        locationLabel.configureLabel(text: "\(city.localName)", font: UIFont.KFont.appleSDNeoBoldSmallest, textColor: UIColor.KColor.white)
-        temperature.configureLabel(text: "\(Int(city.currentTemperature))°", font: UIFont.KFont.lexendXLarge, textColor: UIColor.KColor.white)
-
-        locationLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(13)
-            $0.trailing.equalToSuperview().inset(10)
-            $0.height.equalTo(20)
-        }
-        locationIcon.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(15)
-            $0.trailing.equalTo(locationLabel.snp.leading).offset(-5)
-            $0.width.equalTo(11)
-            $0.height.equalTo(14)
-        }
-        
-        temperature.snp.makeConstraints {
-            $0.top.equalTo(locationLabel.snp.bottom).offset(2)
-            $0.trailing.equalToSuperview().inset(16)
-            $0.height.equalTo(63)
         }
     }
     
@@ -225,7 +227,6 @@ class CheckWeatherView: UIViewController {
     }
     
     @objc func tapLocationButton() {
-        let locationSelectionView = LocationSelectionView()
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
     }
     @objc func tapSettingButton() {
@@ -237,12 +238,6 @@ class CheckWeatherView: UIViewController {
         let detailWeatherView = LocationSelectionView()
         self.present(detailWeatherView, animated: true)
     }
-    
-    
-    //    @objc func tapAddIndexButton() {
-    //        self.delegate?.sendFirstSequenceLocation(self.firstSequenceLocation)
-    //        self.present(self.addLivingIndexCellView, animated: true)
-    //    }
     
 }
 

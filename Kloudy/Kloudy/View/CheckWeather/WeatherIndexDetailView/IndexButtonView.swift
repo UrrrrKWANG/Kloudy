@@ -59,8 +59,8 @@ class IndexButtonView: UIView {
         return collectionView
     }()
     
-    var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 4)
-    var status: Int = 4
+    var indexStatus: BehaviorSubject<Int> = BehaviorSubject(value: 0)
+    var status: Int = 0
     
     
     // 지수 별 단계 갯수
@@ -168,10 +168,10 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: SequenceLabelCell.identifier, for: indexPath) as? SequenceLabelCell else { return UICollectionViewCell() }
 
-        cell.backgroundColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
-        cell.sequenceLabel.textColor = (self.status - 1) == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
+        cell.backgroundColor = self.status == indexPath.row ? UIColor.KColor.primaryBlue06 : UIColor.KColor.clear
+        cell.sequenceLabel.textColor = self.status == indexPath.row ? UIColor.KColor.primaryBlue01 : UIColor.KColor.black
         cell.sequenceLabel.text = "\(indexPath.row + 1)"
-        if indexPath.row == self.status - 1 {
+        if indexPath.row == self.status {
             presentButtonIndex.onNext(indexPath.row)
         }
         return cell
@@ -193,7 +193,7 @@ extension IndexButtonView: UICollectionViewDelegate, UICollectionViewDataSource,
         if !firstTap {
             firstTap = true
             var fetchIndex = collectionView.indexPathsForSelectedItems?.last ?? IndexPath(item: 0, section: 0)
-            fetchIndex.row = self.status - 1
+            fetchIndex.row = self.status
             let cell = collectionView.cellForItem(at: fetchIndex) as! SequenceLabelCell
             cell.isSelected = false
         }

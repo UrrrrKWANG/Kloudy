@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		113D3E312909817800A72594 /* LocationSelectionNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */; };
 		11E34889291CF179006EA966 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E34888291CF179006EA966 /* LocationTableViewCell.swift */; };
+		11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488A2929BD8B006EA966 /* LocationData.swift */; };
+		11E3488D2929BDDF006EA966 /* NSManagedObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */; };
 		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C69392927DA4D005FC7ED /* LocationConverter.swift */; };
@@ -81,7 +83,7 @@
 		BAFCEAF52920E65B0084F28E /* TodayWeatherDataCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEAF32920E65B0084F28E /* TodayWeatherDataCell.swift.swift */; };
 		BAFCEAF62920E65B0084F28E /* WeekWeatherDataCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEAF42920E65B0084F28E /* WeekWeatherDataCell.swift.swift */; };
 		BAFCEB082923C0930084F28E /* LocationWeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEB072923C0930084F28E /* LocationWeatherIndexView.swift */; };
-		BAFCEB0D2923F6A20084F28E /* InternalIndexViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEB0C2923F6A20084F28E /* InternalIndexViewCell.swift */; };
+		BAFCEB0D2923F6A20084F28E /* InternalIndexCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEB0C2923F6A20084F28E /* InternalIndexCollectionViewCell.swift */; };
 		D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */; };
 		D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */; };
 		D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */; };
@@ -144,6 +146,7 @@
 		E033613B290998440098CF76 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77B29011DB100EF83AE /* Notification.swift */; };
 		E033613C290998470098CF76 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77C29011DB100EF83AE /* Weather.swift */; };
 		E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */; };
+		E036F3342928FCA200003E8A /* CurrentWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E036F3332928FCA200003E8A /* CurrentWeatherView.swift */; };
 		E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE1273292231A1000AC3FC /* CALayer+.swift */; };
 		FAD9CEBADF8415C4EB78D146 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */; };
 /* End PBXBuildFile section */
@@ -205,6 +208,8 @@
 		10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionNavigationView.swift; sourceTree = "<group>"; };
 		11E34888291CF179006EA966 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
+		11E3488A2929BD8B006EA966 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
+		11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+.swift"; sourceTree = "<group>"; };
 		184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -281,7 +286,7 @@
 		BAFCEAF32920E65B0084F28E /* TodayWeatherDataCell.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWeatherDataCell.swift.swift; sourceTree = "<group>"; };
 		BAFCEAF42920E65B0084F28E /* WeekWeatherDataCell.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekWeatherDataCell.swift.swift; sourceTree = "<group>"; };
 		BAFCEB072923C0930084F28E /* LocationWeatherIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherIndexView.swift; sourceTree = "<group>"; };
-		BAFCEB0C2923F6A20084F28E /* InternalIndexViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalIndexViewCell.swift; sourceTree = "<group>"; };
+		BAFCEB0C2923F6A20084F28E /* InternalIndexCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalIndexCollectionViewCell.swift; sourceTree = "<group>"; };
 		D537D2062901BC6800271037 /* KloudyUmbrellaIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyUmbrellaIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2072901BC6800271037 /* KloudyMaskIndexWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KloudyMaskIndexWidget.swift; sourceTree = "<group>"; };
 		D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionCollectionViewCell.swift; sourceTree = "<group>"; };
@@ -311,6 +316,7 @@
 		D59C951D2927D40C00A1FEE5 /* mask_step1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mask_step1.png; sourceTree = "<group>"; };
 		D59C951E2927D40C00A1FEE5 /* mask_step4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = mask_step4.json; sourceTree = "<group>"; };
 		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
+		E036F3332928FCA200003E8A /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
 		E0FE1273292231A1000AC3FC /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -513,6 +519,7 @@
 				8BC8F76F29011DB100EF83AE /* Color+.swift */,
 				D558FECA2907D987002EEA22 /* UILabel+.swift */,
 				E0FE1273292231A1000AC3FC /* CALayer+.swift */,
+				11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -539,6 +546,7 @@
 				8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */,
 				D558FECC29096B00002EEA22 /* LocationManager.swift */,
 				222C69392927DA4D005FC7ED /* LocationConverter.swift */,
+				11E3488A2929BD8B006EA966 /* LocationData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -570,6 +578,7 @@
 			children = (
 				8BC8F7A429011DB100EF83AE /* CheckWeatherViewModel.swift */,
 				8BC8F7A529011DB100EF83AE /* CheckWeatherView.swift */,
+				E036F3332928FCA200003E8A /* CurrentWeatherView.swift */,
 			);
 			path = CheckWeatherView;
 			sourceTree = "<group>";
@@ -695,7 +704,7 @@
 		BAFCEB0B2923F6900084F28E /* WeatherIndexViewCell */ = {
 			isa = PBXGroup;
 			children = (
-				BAFCEB0C2923F6A20084F28E /* InternalIndexViewCell.swift */,
+				BAFCEB0C2923F6A20084F28E /* InternalIndexCollectionViewCell.swift */,
 			);
 			path = WeatherIndexViewCell;
 			sourceTree = "<group>";
@@ -1140,7 +1149,9 @@
 			files = (
 				2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */,
 				8BC8F7D229011DB200EF83AE /* CoreDataStack.swift in Sources */,
+				11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */,
 				8BC8F7CC29011DB200EF83AE /* Font+.swift in Sources */,
+				E036F3342928FCA200003E8A /* CurrentWeatherView.swift in Sources */,
 				222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */,
 				8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */,
 				E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */,
@@ -1175,6 +1186,7 @@
 				2286B44F2924B8E2003965F2 /* SettingLicenseView.swift in Sources */,
 				D592C999290B26FB00C53F06 /* Protocol+.swift in Sources */,
 				8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */,
+				11E3488D2929BDDF006EA966 /* NSManagedObject+.swift in Sources */,
 				8BC8F7FB29011DB200EF83AE /* LocationSelectionView.swift in Sources */,
 				11E34889291CF179006EA966 /* LocationTableViewCell.swift in Sources */,
 				8B22A3BD291A3B820079FA48 /* LocationSearchBar.swift in Sources */,
@@ -1182,7 +1194,7 @@
 				8BC8F7D429011DB200EF83AE /* CityInformation.swift in Sources */,
 				8BC8F7CD29011DB200EF83AE /* FetchWeatherInformation.swift in Sources */,
 				8B22A3C4291F63C10079FA48 /* IndexButtonView.swift in Sources */,
-				BAFCEB0D2923F6A20084F28E /* InternalIndexViewCell.swift in Sources */,
+				BAFCEB0D2923F6A20084F28E /* InternalIndexCollectionViewCell.swift in Sources */,
 				8BC8F7CE29011DB200EF83AE /* Color+.swift in Sources */,
 				8BC8F7D329011DB200EF83AE /* WeatherCell+CoreDataClass.swift in Sources */,
 				8BC8F7D629011DB200EF83AE /* Notification.swift in Sources */,

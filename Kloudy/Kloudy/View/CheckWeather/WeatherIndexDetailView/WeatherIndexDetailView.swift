@@ -24,7 +24,7 @@ enum IndexType {
         case .mask: return ["마스크", "dust_png", "미세먼지", "㎍/㎥", "fineDust_png", "초미세먼지", "㎍/㎥", "", ""]
         case .laundry: return ["빨래", "todayWeather_png", "오늘의 날씨", "", "humidity_png", "습도", "%", "", ""]
         case .outer: return ["겉옷", "lowestTemperature_png", "일 최저 기온", "℃", "goWorkingTemperature_png", "출근시간대 온도", "℃", "", ""]
-        case .car: return ["세차", "todayWeather_png", "오늘의 날씨", "", "precipitation_png", "강수 예정", "일 후", "", ""]
+        case .car: return ["세차", "todayWeather_png", "오늘의 날씨", "", "precipitation_png", "강수 예정", "", "", ""]
         case .temperatureGap: return ["일교차", "lowestTemperature_png", "최저 기온", "℃", "highestTemperature_png", "최고 온도", "℃", "", ""]
         }
     }
@@ -69,7 +69,7 @@ enum IndexType {
         case .laundry: return false
         case .outer: return false
         case .car: return false
-        case .temperatureGap: return true
+        case .temperatureGap: return false
         }
     }
 }
@@ -88,6 +88,7 @@ class WeatherIndexDetailView: UIViewController {
     
     var city = String()
     var indexType: IndexType = .unbrella
+    var weatherData: Weather?
     
     // API 데이터 받을 시 전달 (_24h)
     var chartValue: Double = 0
@@ -104,12 +105,64 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     private func bind() {
+        // API 데이터 받을 시 전달
+        if indexType == .unbrella {
+            firstIconView.iconValue.onNext(String(
+                round(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0 * 10)/10
+            ))
+            
+            secondIconView.iconValue.onNext(String(
+                round(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 * 100)/100
+            ))
+            
+            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 1)
+            
+            chartView.chartLabelText.onNext(indexType.detailIndexString[7])
+            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartUnitText.onNext(String(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) + "mm")
+            
+        } else if indexType == .mask {
+            firstIconView.iconValue.onNext(String(
+                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0)
+            ))
+            
+            secondIconView.iconValue.onNext(String(
+                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].pm25value ?? 0)
+            ))
+            
+            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
+
+        } else if indexType == .car {
+            // 기획 확인 필요
+            firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
+            
+            // 서버에서 전달되는 문구 변경 필요
+            secondIconView.iconValue.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm ?? "")
+            
+            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 1)
+            
+        } else if indexType == .laundry {
+            // 기획 확인 필요
+            firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather ?? 0))
+            
+            secondIconView.iconValue.onNext(String(
+                Int(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidity ?? 0)
+            ))
+            
+            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 1)
+            
+        } else if indexType == .outer {
+            firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0)))
+            secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].morningTemperature ?? 0)))
+        } else if indexType == .temperatureGap {
+            firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature ?? 0)))
+            secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature ?? 0)))
+        }
+        
+        
         firstIconView.iconImage.onNext(indexType.detailIndexString[1])
         firstIconView.iconTitle.onNext(indexType.detailIndexString[2])
         firstIconView.iconUnit.onNext(indexType.detailIndexString[3])
-        // API 데이터 받을 시 전달
-        //        firstIconView.iconValue.onNext(data.precipitaion_24h)
-        
         secondIconView.iconImage.onNext(indexType.detailIndexString[4])
         secondIconView.iconTitle.onNext(indexType.detailIndexString[5])
         secondIconView.iconUnit.onNext(indexType.detailIndexString[6])
@@ -119,10 +172,6 @@ class WeatherIndexDetailView: UIViewController {
         
         // API 데이터 받을 시 전달
         //        indexIconView.indexStatus.onNext(data.status)
-        
-        
-        chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-        chartView.chartUnitText.onNext(indexType.detailIndexString[8])
         
         presentButtonView.totalIndexStep.onNext(indexType.totalIndexStep)
         
@@ -148,6 +197,28 @@ class WeatherIndexDetailView: UIViewController {
                 self.indexStepView.explainString
                     .onNext(self.indexType.stepExplainString[$0])
             }).disposed(by: disposeBag)
+    }
+    
+    private func changeCarWashToString(step: Int) -> String {
+        switch step {
+        case 0: return "맑음"
+        case 1: return "비"
+        case 2: return "비/눈"
+        case 3: return "구름 많음"
+        case 4: return "흐림"
+        case 5: return "눈"
+        default: return "적당함"
+        }
+    }
+    
+    private func changeLaundryToString(step: Int) -> String {
+        switch step {
+        case -15: return "비"
+        case -10: return "비"
+        case 0: return "흐림"
+        case 10: return "맑음"
+        default: return "적당함"
+        }
     }
     
     private func layout() {

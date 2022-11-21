@@ -1,15 +1,12 @@
 {
   "images" : [
     {
-      "filename" : "IMG_3165.svg",
+      "filename" : "IMG_3165.png",
       "idiom" : "universal"
     }
   ],
   "info" : {
     "author" : "xcode",
     "version" : 1
-  },
-  "properties" : {
-    "preserves-vector-representation" : true
   }
 }

@@ -12,7 +12,11 @@ import CoreLocation
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     
-    var weathers = [Weather]()
+    let cityInformationModel = FetchWeatherInformation()
+    lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
+    var locationCount = CoreDataManager.shared.countLocations()
+    lazy var weathers = [Any](repeating: 0 , count: locationCount)
+//    let weatherArray = findWeatherInfo(cityCode: locationCode.code ?? "")
     
     lazy var coreDataStack: CoreDataStack = .init(modelName: "Kloudy")
     
@@ -27,12 +31,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         
         let myLocations = CoreDataManager.shared.fetchLocations()
-        for location in myLocations {
+        for locationIndex in myLocations.indices {
             // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
-            guard let province = location.province else { return true }
-            guard let city = location.city else { return true }
+            guard let province = myLocations[locationIndex].province else { return true }
+            guard let city = myLocations[locationIndex].city else { return true }
             FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
-                self.weathers.append(response)
+                self.weathers[locationIndex] = response
             }
         }
         

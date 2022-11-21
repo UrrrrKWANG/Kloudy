@@ -11,6 +11,7 @@ struct CityInformation: Codable {
     let code: String
     let province: String
     let city: String
+    let indexArray: [String]
     let xCoordination: String
     let yCoordination: String
 }
