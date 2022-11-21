@@ -43,20 +43,25 @@ struct KloudyCarWashSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            if entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status >= 55 {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
+            case 0:
                 Image("carwash_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status >= 41 {
+            case 1:
                 Image("carwash_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status >= 31 {
+            case 2:
                 Image("carwash_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else {
+            case 3:
                 Image("carwash_4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            default:
+                Image("carwash_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
@@ -69,20 +74,25 @@ struct KloudyCarWashAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            if entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status >= 55 {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
+            case 0:
                 Image("carwash_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status >= 41 {
+            case 1:
                 Image("carwash_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status >= 31 {
+            case 2:
                 Image("carwash_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else {
+            case 3:
                 Image("carwash_4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            default:
+                Image("carwash_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }

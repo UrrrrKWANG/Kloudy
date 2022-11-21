@@ -43,20 +43,25 @@ struct KloudyMaskSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            if entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status < 15 {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
+            case 0:
                 Image("mask_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status <= 35 {
+            case 1:
                 Image("mask_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status <= 75 {
+            case 2:
                 Image("mask_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else {
+            case 3:
                 Image("mask_4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            default:
+                Image("mask_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
@@ -69,20 +74,25 @@ struct KloudyMaskAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            if entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status < 15 {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
+            case 0:
                 Image("mask_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status <= 35 {
+            case 1:
                 Image("mask_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status <= 75 {
+            case 2:
                 Image("mask_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else {
+            case 3:
                 Image("mask_4")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            default:
+                Image("mask_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }

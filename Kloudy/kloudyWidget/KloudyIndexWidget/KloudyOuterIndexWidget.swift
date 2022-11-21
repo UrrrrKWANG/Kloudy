@@ -42,24 +42,33 @@ struct KloudyOuterSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= 12 {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
+            case 0:
                 Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= 9 {
+            case 1:
+                Image("outer_1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            case 2:
                 Image("outer_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= 5 {
+            case 3:
                 Image("outer_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= -5 {
+            case 4:
                 Image("outer_4")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else {
+            case 5:
                 Image("outer_5")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            default:
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
@@ -72,24 +81,33 @@ struct KloudyOuterAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= 12 {
+            switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
+            case 0:
                 Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= 9 {
+            case 1:
+                Image("outer_1")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            case 2:
                 Image("outer_2")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= 5 {
+            case 3:
                 Image("outer_3")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else if entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status >= -5 {
+            case 4:
                 Image("outer_4")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
-            } else {
+            case 5:
                 Image("outer_5")
+                    .resizable()
+                    .aspectRatio(contentMode: .fill)
+            default:
+                Image("outer_1")
                     .resizable()
                     .aspectRatio(contentMode: .fill)
             }
