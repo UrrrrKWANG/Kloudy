@@ -27,7 +27,6 @@ struct KloudyProvider: IntentTimelineProvider {
         var weather: Weather = Weather(today: "", localWeather: [])
         let currentStatus = CLLocationManager().authorizationStatus
         
-        
         if currentStatus == .authorizedAlways {
             let XY = LocationManager.shared.requestNowLocationInfo()
             let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
