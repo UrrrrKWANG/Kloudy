@@ -77,7 +77,7 @@ class CheckWeatherView: UIViewController {
         bind()
         view.backgroundColor = UIColor.KColor.white
     }
-
+    
     private func bind() {
         locationSelectionView.additionalLocation
             .subscribe(onNext: {

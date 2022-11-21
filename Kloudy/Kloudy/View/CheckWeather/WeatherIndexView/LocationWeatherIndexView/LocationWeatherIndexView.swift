@@ -201,6 +201,7 @@ class LocationWeatherIndexView: UIView {
     
     func findImageOrLottieName(indexName: IndexType, status: Int) -> String {
         let foundElement =  (indexName, status)
+        print(foundElement)
         switch foundElement {
         case let(indexName, status) where indexName == .mask && status == 0 :
             return "mask_step1"
@@ -225,23 +226,23 @@ class LocationWeatherIndexView: UIView {
         case let(indexName, status) where indexName == .laundry && status == 0 :
             return "laundry_1"
         case let(indexName, status) where indexName == .laundry && status == 1 :
-            return "laundry_2"
+            return "laundry_1"
         case let(indexName, status) where indexName == .laundry &&  status == 2 :
-            return "laundry_3"
+            return "laundry_2"
         case let(indexName, status) where indexName == .laundry && status == 3 :
-            return "laundry_4"
+            return "laundry_3"
         case let(indexName, status) where indexName == .laundry && status == 4 :
             return "laundry_4"
         case let(indexName, status) where indexName == .car && status == 0 :
-            return "carwash_step1"
+            return "carwash_step4"
         case let(indexName, status) where indexName == .car && status == 1 :
-            return "carwash_step2"
-        case let(indexName, status) where indexName == .car &&  status == 2 :
             return "carwash_step3"
+        case let(indexName, status) where indexName == .car &&  status == 2 :
+            return "carwash_step2"
         case let(indexName, status) where indexName == .car && status == 3 :
-            return "carwash_step4"
+            return "carwash_step1"
         case let(indexName, status) where indexName == .car && status == 4 :
-            return "carwash_step4"
+            return "carwash_step1"
         case let(indexName, status) where indexName == .outer && status == 0 :
             return "outer_step1"
         case let(indexName, status) where indexName == .outer && status == 1 :
