@@ -11,7 +11,7 @@ import Intents
 
 struct KloudyUmbrellaIndexWidget: Widget {
     let kind: String = "KloudyUmbrellaIndexWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
             KloudyUmbrellaIndexWidgetEntryView(entry: entry)
@@ -43,32 +43,37 @@ struct KloudyUmbrellaSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
-            case 0:
-                Image("rain_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("rain_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("rain_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("rain_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 4:
-                Image("rain_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("rain_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
+                case 0:
+                    Image("rain_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("rain_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("rain_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("rain_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 4:
+                    Image("rain_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("rain_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
+            
         }
     }
 }
@@ -78,31 +83,35 @@ struct KloudyUmbrellaAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
-            case 0:
-                Image("rain_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("rain_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("rain_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("rain_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 4:
-                Image("rain_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("rain_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
+                case 0:
+                    Image("rain_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("rain_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("rain_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("rain_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 4:
+                    Image("rain_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("rain_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }

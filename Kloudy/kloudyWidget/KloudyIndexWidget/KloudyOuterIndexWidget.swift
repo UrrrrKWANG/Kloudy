@@ -10,7 +10,7 @@ import Intents
 
 struct KloudyOuterIndexWidget: Widget {
     let kind: String = "KloudyOuterIndexWidget"
-
+    
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
             KloudyOuterIndexWidgetEntryView(entry: entry)
@@ -42,35 +42,39 @@ struct KloudyOuterSystemSmallWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
-            case 0:
-                Image("outer_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("outer_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("outer_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("outer_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 4:
-                Image("outer_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 5:
-                Image("outer_5")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("outer_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
+                case 0:
+                    Image("outer_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("outer_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("outer_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("outer_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 4:
+                    Image("outer_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 5:
+                    Image("outer_5")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("outer_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }
@@ -81,35 +85,39 @@ struct KloudyOuterAccessoryCircularWidgetView: View {
     
     var body: some View {
         VStack {
-            switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
-            case 0:
-                Image("outer_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 1:
-                Image("outer_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 2:
-                Image("outer_2")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 3:
-                Image("outer_3")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 4:
-                Image("outer_4")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            case 5:
-                Image("outer_5")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
-            default:
-                Image("outer_1")
-                    .resizable()
-                    .aspectRatio(contentMode: .fill)
+            if entry.locationAuth {
+                switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
+                case 0:
+                    Image("outer_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 1:
+                    Image("outer_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 2:
+                    Image("outer_2")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 3:
+                    Image("outer_3")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 4:
+                    Image("outer_4")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                case 5:
+                    Image("outer_5")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                default:
+                    Image("outer_1")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                }
+            } else {
+                Text("앱의 위치 사용을 허용해주세요!")
             }
         }
     }
