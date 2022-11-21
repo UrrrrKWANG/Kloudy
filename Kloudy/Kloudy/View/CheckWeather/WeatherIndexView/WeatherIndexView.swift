@@ -25,12 +25,8 @@ class WeatherIndexView: UIView {
    
     let cityInformationModel = FetchWeatherInformation()
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
-    var locationList = CoreDataManager.shared.fetchLocations()
-    var indexArray = [IndexType]()
-    var indexStrArray = [String]()
     var disposeBag = DisposeBag()
-    var weathers: Weather?
-    lazy var locationWeatherIndexView = LocationWeatherIndexView(weathers: self.weathers!, indexArray: self.indexArray)
+    lazy var locationWeatherIndexView = LocationWeatherIndexView()
     let weatherIndexListView: UIView = {
         let uiView = UIView()
         uiView.backgroundColor = UIColor.KColor.primaryBlue06
@@ -56,6 +52,12 @@ class WeatherIndexView: UIView {
     }()
 
     let indexNameString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
+    //
+    var weathers: Weather?
+    let sentWeather = PublishSubject<Weather>()
+    var locationList = [Location]()
+    var indexArray = [IndexType]()
+    var indexStrArray = [String]()
     
     //롱텝 핸들링
     @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -96,13 +98,33 @@ class WeatherIndexView: UIView {
         return lottieView
     }
     
-    init(weathers: Weather) {
+    init() {
         super.init(frame: .zero)
-        self.weathers = weathers
-        for location in locationList {
-            if location.code == weathers.localWeather[0].localCode {
-                self.indexStrArray = location.indexArray!
-                for index in location.indexArray! {
+        bind()
+        addLayout()
+        setLayout()
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+    }
+    
+    private func bind() {
+        sentWeather
+            .subscribe(onNext: {
+                self.weathers = $0
+                self.fetchLocationIndexArray(sentWeather: $0)
+                self.locationWeatherIndexView.sentWeather.onNext($0)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchLocationIndexArray(sentWeather: Weather) {
+        self.locationList = CoreDataManager.shared.fetchLocations()
+        self.locationList.forEach { location in
+            if location.code == sentWeather.localWeather[0].localCode {
+                self.indexStrArray = location.indexArray ?? []
+                self.indexStrArray.forEach { index in
                     switch index {
                     case "rain":
                         self.indexArray.append(.unbrella)
@@ -120,14 +142,10 @@ class WeatherIndexView: UIView {
                         break
                     }
                 }
+                self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
+                return
             }
         }
-        addLayout()
-        setLayout()
-    }
-    
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
     }
     
     private func addLayout() {
@@ -161,6 +179,7 @@ class WeatherIndexView: UIView {
             $0.width.height.equalToSuperview()
         }
     }
+    
     func findStatus(indexName: IndexType) -> Int {
             if indexName == .unbrella {
                 return weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 0
@@ -183,7 +202,7 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let indexStatus = findStatus(indexName: indexName)
         let imageOrLottieName = locationWeatherIndexView.findImageOrLottieName(indexName: indexName, status: indexStatus)
         locationWeatherIndexView.changeImageView(name: imageOrLottieName)
-        locationWeatherIndexView.changeCollectionView(index: indexPath.row)
+//        locationWeatherIndexView.changeCollectionView(index: indexPath.row)
         locationWeatherIndexView.changeTextView(indexType: indexName)
         let transedIndexName = locationWeatherIndexView.transIndexName(indexName: indexName)
         locationWeatherIndexView.configureView(indexNameLabel: transedIndexName, indexStatusLabel: "지수별 text 받아올 부분")

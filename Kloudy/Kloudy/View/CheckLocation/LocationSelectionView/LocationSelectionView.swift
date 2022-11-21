@@ -346,9 +346,9 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row].code ?? "")
                     CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row])
                     self.locationList.remove(at: indexPath.row)
-                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row].code ?? "")
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }
