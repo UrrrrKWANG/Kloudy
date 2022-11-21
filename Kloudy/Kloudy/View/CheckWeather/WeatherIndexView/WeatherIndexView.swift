@@ -22,7 +22,7 @@ enum InternalIndexType {
 }
 
 class WeatherIndexView: UIView {
-   
+    
     let cityInformationModel = FetchWeatherInformation()
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var disposeBag = DisposeBag()
@@ -50,7 +50,7 @@ class WeatherIndexView: UIView {
         uiCollectionView.dataSource = self
         return uiCollectionView
     }()
-
+    
     let indexNameString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
     //
     var weathers: Weather?
@@ -159,21 +159,21 @@ class WeatherIndexView: UIView {
         self.layer.cornerRadius = 12
         self.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
         let gesture = UILongPressGestureRecognizer(target: self, action: #selector(handleLongPressGesture(_ :)))
-
+        
         indexCollectionView.addGestureRecognizer(gesture)
-
+        
         weatherIndexListView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(16)
             $0.leading.equalToSuperview().inset(283)
             $0.trailing.equalToSuperview().inset(12)
         }
-
+        
         locationWeatherIndexView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
             $0.trailing.equalTo(weatherIndexListView.snp.leading)
         }
-
+        
         indexCollectionView.snp.makeConstraints {
             $0.top.equalToSuperview() // 나중에 checkWeatherCellLabelView안에 넣게 된다면 수정 할 것
             $0.width.height.equalToSuperview()
@@ -181,17 +181,17 @@ class WeatherIndexView: UIView {
     }
     
     func findStatus(indexName: IndexType) -> Int {
-            if indexName == .unbrella {
-                return weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 0
-            } else if indexName == .mask {
-                return weathers?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 0
-            } else if indexName == .outer {
-                return weathers?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 0
-            } else if indexName == .laundry {
-                return weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 0
-            } else if indexName == .car {
-                return weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 0
-            }
+        if indexName == .unbrella {
+            return weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 0
+        } else if indexName == .mask {
+            return weathers?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 0
+        } else if indexName == .outer {
+            return weathers?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 0
+        } else if indexName == .laundry {
+            return weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 0
+        } else if indexName == .car {
+            return weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 0
+        }
         return 0
     }
 }
@@ -201,12 +201,9 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let indexName = self.indexArray[indexPath.row]
         let indexStatus = findStatus(indexName: indexName)
         let imageOrLottieName = locationWeatherIndexView.findImageOrLottieName(indexName: indexName, status: indexStatus)
-        locationWeatherIndexView.changeImageView(name: imageOrLottieName)
-//        locationWeatherIndexView.changeCollectionView(index: indexPath.row)
-        locationWeatherIndexView.changeTextView(indexType: indexName)
-        let transedIndexName = locationWeatherIndexView.transIndexName(indexName: indexName)
-        locationWeatherIndexView.configureView(indexNameLabel: transedIndexName, indexStatusLabel: "지수별 text 받아올 부분")
-
+        
+        locationWeatherIndexView.indexName.onNext(indexName)
+        
         // WeatherDetailIndexView 에 어떤 Index 가 Tap 되었는지 전달
         indexNameString.onNext(indexName)
     }
@@ -214,7 +211,7 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.indexArray.count
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
         let indexName = self.indexArray[indexPath.row]
@@ -232,11 +229,11 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         cell.addSubview(makeLottieViewOrImage(indexName: imageOrLottieName) as! UIView)
         return cell
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return  CGSize(width: 35 , height: 35)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
         let item = self.indexArray.remove(at: sourceIndexPath.row)
         let strItem =  self.indexStrArray.remove(at: sourceIndexPath.row)
