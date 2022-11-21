@@ -1,15 +1,25 @@
 from rest_framework import serializers
 from .models import *
 
+class UmbrellaHourlySerializerOdd(serializers.ModelSerializer):
+    class Meta:
+        model = UmbrellaHourlyOdd
+        fields = [
+            "time",
+            "precipitation"
+        ]
+
 class UmbrellaIndexSerializerOdd(serializers.ModelSerializer):
+    umbrella_hourly = UmbrellaHourlySerializerOdd(many=True, read_only=True)
     class Meta:
         model = UmbrellaIndexOdd
         fields = [
             "status",
-            "precipitaion_24h",
-            "precipitaion_1h_max",
+            "precipitation_24h",
+            "precipitation_1h_max",
             "precipitation_3h_max",
-            "wind"
+            "wind",
+            "umbrella_hourly"
         ]
     def create(self):
         return
@@ -67,7 +77,7 @@ class CarwashIndexSerializerOdd(serializers.ModelSerializer):
         fields = [
             "status",
             "daily_weather",
-            "day_min_temperature",
+            "day_max_temperature",
             "daily_precipitation",
             "tomorrow_weather",
             "tomorrow_precipitation",
@@ -206,17 +216,25 @@ class WeatherSerializerOdd(serializers.ModelSerializer):
         return
 
 ############
-
+class UmbrellaHourlySerializerEven(serializers.ModelSerializer):
+    class Meta:
+        model = UmbrellaHourlyEven
+        fields = [
+            "time",
+            "precipitation"
+        ]
 
 class UmbrellaIndexSerializerEven(serializers.ModelSerializer):
+    umbrella_hourly = UmbrellaHourlySerializerEven(many=True, read_only=True)
     class Meta:
         model = UmbrellaIndexEven
         fields = [
             "status",
-            "precipitaion_24h",
-            "precipitaion_1h_max",
+            "precipitation_24h",
+            "precipitation_1h_max",
             "precipitation_3h_max",
-            "wind"
+            "wind",
+            "umbrella_hourly",
         ]
     def create(self):
         return
@@ -274,7 +292,7 @@ class CarwashIndexSerializerEven(serializers.ModelSerializer):
         fields = [
             "status",
             "daily_weather",
-            "day_min_temperature",
+            "day_max_temperature",
             "daily_precipitation",
             "tomorrow_weather",
             "tomorrow_precipitation",
