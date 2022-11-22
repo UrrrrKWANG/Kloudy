@@ -58,22 +58,14 @@
       "size" : "40x40"
     },
     {
-<<<<<<< HEAD
       "filename" : "120.png",
-=======
-      "filename" : "Icon-120 1.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "40x40"
     },
     {
-<<<<<<< HEAD
       "filename" : "120 1.png",
-=======
-      "filename" : "Icon-120.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
@@ -87,54 +79,34 @@
       "size" : "60x60"
     },
     {
-<<<<<<< HEAD
       "filename" : "128x128.png",
-=======
-      "filename" : "Icon-128.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "64x64"
     },
     {
-<<<<<<< HEAD
       "filename" : "192x192.png",
-=======
-      "filename" : "192.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
       "size" : "64x64"
     },
     {
-<<<<<<< HEAD
       "filename" : "136x136.png",
-=======
-      "filename" : "136.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "68x68"
     },
     {
-<<<<<<< HEAD
       "filename" : "152x152.png",
-=======
-      "filename" : "Icon-152.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "76x76"
     },
     {
-<<<<<<< HEAD
-=======
-      "filename" : "Icon-167.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
