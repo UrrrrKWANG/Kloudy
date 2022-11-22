@@ -48,25 +48,12 @@ class CurrentWeatherView: UIView {
         configureUIImageView(view: locationIcon, named: "location_mark")
         configureUIImageView(view: maxTemperatureIcon, named: "arrow_up")
         configureUIImageView(view: minTemperatureIcon, named: "arrow_down")
-
-        let currentTemperature = Int(hourlyWeather[2].temperature)
-        var dayMaxTemperature = Int(localWeather[0].weeklyWeather[0].maxTemperature)
-        var dayMinTemperature = Int(localWeather[0].weeklyWeather[0].minTemperature)
-        dayMaxTemperature = max(currentTemperature, dayMaxTemperature)
-        dayMinTemperature = min(currentTemperature, dayMinTemperature)
         
-        let count = 24 - (Int(Date().getTimeOfDay()) ?? 0)
-
-        (0...count).forEach {
-            dayMaxTemperature = max(Int(hourlyWeather[$0].temperature), dayMaxTemperature)
-            dayMinTemperature = min(Int(hourlyWeather[$0].temperature), dayMinTemperature)
-        }
-
- 
+        let temperatureList = localWeather[0].minMaxTemperature()
         locationLabel.configureLabel(text: localWeather[0].localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
-        currentTemperatureLabel.configureLabel(text: "\(currentTemperature)°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
-        maxTemperatureLabel.configureLabel(text: "\(dayMaxTemperature)°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
-        minTemperatureLabel.configureLabel(text: "\(dayMinTemperature)°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        currentTemperatureLabel.configureLabel(text: "\(temperatureList[0])°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
+        maxTemperatureLabel.configureLabel(text: "\(temperatureList[1])°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        minTemperatureLabel.configureLabel(text: "\(temperatureList[2])°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
     }
     private func setLayout() {
         self.backgroundColor = UIColor.KColor.primaryBlue01
@@ -112,7 +99,7 @@ class CurrentWeatherView: UIView {
         view.image = UIImage(named: named)
         view.contentMode = .scaleAspectFit
     }
-    
+        
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }

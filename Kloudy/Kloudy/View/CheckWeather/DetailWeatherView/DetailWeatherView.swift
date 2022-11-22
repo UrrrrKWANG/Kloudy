@@ -15,8 +15,7 @@ class DetailWeatherView: UIViewController {
     var todayWeatherDatas = Observable.of([HourlyWeather]())
     var weekWeatherDatas = Observable.of([WeeklyWeather]())
     
-    var dayMaxTemperature:Int = -100
-    var dayMinTemperature:Int = 100
+    var temperatureList: [Int] = []
     
     init(weatherDatas: Weather) {
         super.init(nibName: nil, bundle: nil)
@@ -26,11 +25,7 @@ class DetailWeatherView: UIViewController {
         self.todayWeatherDatas = todayWeatherDatas
         self.weekWeatherDatas = weekWeatherDatas
         
-        let count = 24 - (Int(Date().getTimeOfDay()) ?? 0)
-        (0...count).forEach {
-            self.dayMaxTemperature = max(Int(weatherDatas.localWeather[0].hourlyWeather[$0].temperature), self.dayMaxTemperature)
-            self.dayMinTemperature = min(Int(weatherDatas.localWeather[0].hourlyWeather[$0].temperature), self.dayMinTemperature)
-        }
+        temperatureList = weatherDatas.localWeather[0].minMaxTemperature()
     }
     
     required init?(coder: NSCoder) {
@@ -229,11 +224,9 @@ class DetailWeatherView: UIViewController {
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
             
             if index == 0 {
-                self.dayMaxTemperature = max(Int(datas.maxTemperature), self.dayMaxTemperature)
-                self.dayMinTemperature = min(Int(datas.minTemperature), self.dayMinTemperature)
-                self.minMaxTemperatureLabel.text = String(self.dayMinTemperature) + "°" + " |  " + String(self.dayMaxTemperature) + "°"
-                cell.minTemperature.text = String(self.dayMinTemperature) + "°"
-                cell.maxTemperature.text = String(self.dayMaxTemperature) + "°"
+                self.minMaxTemperatureLabel.text = String(self.temperatureList[1]) + "°" + " |  " + String(self.temperatureList[2]) + "°"
+                cell.minTemperature.text = String(self.temperatureList[1]) + "°"
+                cell.maxTemperature.text = String(self.temperatureList[2]) + "°"
             } else {
                 cell.minTemperature.text = String(Int(datas.minTemperature)) + "°"
                 cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
@@ -258,7 +251,6 @@ class DetailWeatherView: UIViewController {
             return [""]
         }
     }
-    
 }
 
 extension Date {
