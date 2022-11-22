@@ -39,11 +39,7 @@ class SettingLicenseNavigationView: UIView {
             $0.top.equalToSuperview().inset(5)
             $0.width.equalTo(36)
             $0.height.equalTo(31)
-<<<<<<< HEAD
             $0.leading.equalToSuperview().offset(-10)
-=======
-            $0.leading.equalToSuperview()
->>>>>>> 302e1dfbfd96fe98393115a70f5f193b11d5849d
         }
     }
     
