@@ -71,7 +71,7 @@ class CheckWeatherView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers as? [Weather] {
+        if let weathers = appDelegate?.weathers {
             self.weathers = weathers
         }
         bind()
