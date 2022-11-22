@@ -113,21 +113,21 @@ class LocationWeatherIndexView: UIView {
         let compareMinTemperature = Int(compareIndex.todayMinTemperature) - Int(compareIndex.yesterdayMinTemperature)
         
         if compareMaxTemperature > 2 {
-            compareIndexText = "어제보다 최고 기온이 \(compareMaxTemperature)°C 높고 \n "
+            compareIndexText = "어제보다 최고 기온이".localized + "\(compareMaxTemperature)" + "°C 높고 \n ".localized
         } else if compareMaxTemperature < -2 {
-            compareIndexText = "어제보다 최고 기온이 \(compareMaxTemperature)°C 낮고 \n "
+            compareIndexText = "어제보다 최고 기온이".localized + "\(compareMaxTemperature)" + "°C 낮고 \n ".localized
         } else {
-            compareIndexText = "최고 기온은 어제와 비슷하며 \n "
+            compareIndexText = "최고 기온은 어제와 비슷하며 \n ".localized
         }
         if compareMinTemperature > 2 {
-            compareIndexText += "최저 기온은 \(compareMinTemperature)°C 높습니다."
+            compareIndexText += "최저 기온은".localized + "\(compareMinTemperature)" + "°C 높습니다.".localized
         } else if compareMinTemperature < -2 {
-            compareIndexText += "최저 기온은 \(compareMinTemperature)°C 낮습니다."
+            compareIndexText += "최저 기온은".localized + "\(compareMinTemperature)" + "°C 낮습니다.".localized
         } else {
-            compareIndexText += "최저 기온은 비슷합니다."
+            compareIndexText += "최저 기온은 비슷합니다.".localized
         }
-        if compareIndexText == "최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다." {
-            compareIndexText = "어제와 기온이 비슷합니다"
+        if compareIndexText == "최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다.".localized {
+            compareIndexText = "어제와 기온이 비슷합니다".localized
         }
     }
     
@@ -230,9 +230,9 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         
-        if indexNameLabel == "우산 지수" {
+        if indexNameLabel == "우산 지수".localized {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
-            weatherIndexStatusLabel.configureLabel(text: "하루종일 내림", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
+            weatherIndexStatusLabel.configureLabel(text: "하루종일 내림".localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
             textContainerView.snp.remakeConstraints {
                 $0.leading.equalToSuperview().inset(16)
@@ -240,7 +240,7 @@ class LocationWeatherIndexView: UIView {
                 $0.height.equalTo(36)
             }
         }
-        if indexNameLabel == "일교차 지수" {
+        if indexNameLabel == "일교차 지수".localized {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.gray05.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel, font: UIFont.KFont.appleSDNeoSemiBold15, textColor: UIColor.KColor.black)
             textContainerView.snp.remakeConstraints {
@@ -317,17 +317,17 @@ class LocationWeatherIndexView: UIView {
     func transIndexName(indexName: IndexType) -> String {
         switch indexName {
         case .mask :
-            return "마스크 지수"
+            return "마스크 지수".localized
         case .unbrella :
-            return "우산 지수"
+            return "우산 지수".localized
         case .outer :
-            return "겉옷 지수"
+            return "겉옷 지수".localized
         case .laundry :
-            return "빨래 지수"
+            return "빨래 지수".localized
         case .car :
-            return "세차 지수"
+            return "세차 지수".localized
         case .temperatureGap :
-            return "일교차 지수"
+            return "일교차 지수".localized
         }
     }
     

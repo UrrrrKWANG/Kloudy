@@ -20,12 +20,12 @@ enum IndexType {
     
     var detailIndexString: [String] {
         switch self {
-        case .unbrella: return ["우산", "precipitation_png", "하루 강수량", "mm", "wind_png", "최대 풍속", "m/s", "강수량", "mm"]
-        case .mask: return ["마스크", "dust_png", "미세먼지", "㎍/㎥", "fineDust_png", "초미세먼지", "㎍/㎥", "", ""]
-        case .laundry: return ["빨래", "todayWeather_png", "오늘의 날씨", "", "humidity_png", "습도", "%", "", ""]
-        case .outer: return ["겉옷", "lowestTemperature_png", "일 최저 기온", "℃", "goWorkingTemperature_png", "출근시간대 온도", "℃", "", ""]
-        case .car: return ["세차", "todayWeather_png", "오늘의 날씨", "", "precipitation_png", "강수 예정", "", "", ""]
-        case .temperatureGap: return ["일교차", "lowestTemperature_png", "최저 기온", "℃", "highestTemperature_png", "최고 온도", "℃", "", ""]
+        case .unbrella: return ["우산".localized, "precipitation_png", "하루 강수량".localized, "mm", "wind_png", "최대 풍속".localized, "m/s", "강수량".localized, "mm"]
+        case .mask: return ["마스크".localized, "dust_png", "미세먼지".localized, "㎍/㎥", "fineDust_png", "초미세먼지".localized, "㎍/㎥", "", ""]
+        case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "습도".localized, "%", "", ""]
+        case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "", ""]
+        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "", ""]
+        case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "", ""]
         }
     }
     
@@ -53,11 +53,11 @@ enum IndexType {
     
     var stepExplainString: [String] {
         switch self {
-        case .unbrella: return ["비가 오지 않습니다.", "우산 없이 후드티를 입고도 가까운 거리를 이동할 수 있습니다.", "우산을 쓰고 이동해야하며, 신발이나 옷이 젖습니다.", "우비를 뚫고 옷이 젖기도 하며, 장화를 신어야할만큼 비가 옵니다.", "위험합니다."]
-        case .mask: return ["바깥 활동하기 좋은 공기입니다.", "장시간 노출 시, 건강상 경미한 영향을 줍니다.", "환자와 민감군에게 유해, 일반인에게 건강상 불쾌감을 줍니다.", "환자와 민감군에게 심각한 영향, 일반인에게 영향을 끼칩니다."]
-        case .laundry: return ["빨래하기 좋은 날입니다.", "빨래하셔도 괜찮습니다.", "실내 건조하세요.", "빨래를 다음으로 미루는 것을 추천드려요."]
-        case .outer: return ["캐주얼 재킷, 가디건", "라이더 재킷, 트렌치 코트", "코트, 무스탕, 항공점퍼", "패딩, 두꺼운 코트", "목도리나 장갑 등 방한용품 착용"]
-        case .car: return ["세차하기 좋은 날입니다.", "세차하셔도 괜찮습니다.", "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요.", "세차를 다음으로 미루는 것을 추천드려요."]
+        case .unbrella: return ["비가 오지 않습니다.".localized, "우산 없이 후드티를 입고도 가까운 거리를 이동할 수 있습니다.".localized, "우산을 쓰고 이동해야하며, 신발이나 옷이 젖습니다.".localized, "우비를 뚫고 옷이 젖기도 하며, 장화를 신어야할만큼 비가 옵니다.".localized, "위험합니다.".localized]
+        case .mask: return ["바깥 활동하기 좋은 공기입니다.".localized, "장시간 노출 시, 건강상 경미한 영향을 줍니다.".localized, "환자와 민감군에게 유해, 일반인에게 건강상 불쾌감을 줍니다.".localized, "환자와 민감군에게 심각한 영향, 일반인에게 영향을 끼칩니다.".localized]
+        case .laundry: return ["빨래하기 좋은 날입니다.".localized, "빨래하셔도 괜찮습니다.".localized, "실내 건조하세요.".localized, "빨래를 다음으로 미루는 것을 추천드려요.".localized]
+        case .outer: return ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
+        case .car: return ["세차하기 좋은 날입니다.".localized, "세차하셔도 괜찮습니다.".localized, "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요.".localized, "세차를 다음으로 미루는 것을 추천드려요.".localized]
         case .temperatureGap: return ["", "", "", "", ""]
         }
     }
@@ -193,23 +193,23 @@ class WeatherIndexDetailView: UIViewController {
     
     private func changeCarWashToString(step: Int) -> String {
         switch step {
-        case 0: return "맑음"
-        case 1: return "비"
-        case 2: return "비/눈"
-        case 3: return "구름 많음"
-        case 4: return "흐림"
-        case 5: return "눈"
-        default: return "적당함"
+        case 0: return "맑음".localized
+        case 1: return "비".localized
+        case 2: return "비/눈".localized
+        case 3: return "구름 많음".localized
+        case 4: return "흐림".localized
+        case 5: return "눈".localized
+        default: return "적당함".localized
         }
     }
     
     private func changeLaundryToString(step: Int) -> String {
         switch step {
-        case -15: return "비"
-        case -10: return "비"
-        case 0: return "흐림"
-        case 10: return "맑음"
-        default: return "적당함"
+        case -15: return "비".localized
+        case -10: return "비".localized
+        case 0: return "흐림".localized
+        case 10: return "맑음".localized
+        default: return "적당함".localized
         }
     }
     
@@ -290,7 +290,7 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     private func configureTitleLabel() {
-        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0]) 지수", font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
+        titleLabel.configureLabel(text: "\(indexType.detailIndexString[0])" + "지수".localized, font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
         titleLabel.sizeToFit()
     }
     

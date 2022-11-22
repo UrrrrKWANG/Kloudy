@@ -43,7 +43,7 @@ class LocationSelectionNavigationView: UIView {
     
     func configureNavigationTitle() {
         navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        navigationTitle.text = "지역"
+        navigationTitle.text = "지역".localized
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {
             $0.center.equalToSuperview()

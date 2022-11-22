@@ -40,7 +40,7 @@ class SettingLicenseNavigationView: UIView {
     }
     
     func configureNavigationTitle() {
-        navigationTitle.text = "라이센스"
+        navigationTitle.text = "라이센스".localized
         navigationTitle.font = UIFont.KFont.appleSDNeoBold20
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {

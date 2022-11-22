@@ -39,7 +39,7 @@ class SettingNavigationView: UIView {
     
     func configureNavigationTitle() {
         navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        navigationTitle.text = "설정"
+        navigationTitle.text = "설정".localized
         navigationTitle.font = UIFont.KFont.appleSDNeoBold20
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {

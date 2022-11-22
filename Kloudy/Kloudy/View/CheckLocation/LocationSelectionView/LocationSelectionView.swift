@@ -232,7 +232,7 @@ class LocationSelectionView: UIViewController {
     
     //MARK: attribute function
     private func configureCancelSearchButton() {
-        cancelSearchButton.setTitle("취소", for: .normal)
+        cancelSearchButton.setTitle("취소".localized, for: .normal)
         cancelSearchButton.setTitleColor(UIColor.KColor.gray01, for: .normal)
         cancelSearchButton.titleLabel?.sizeToFit()
         cancelSearchButton.titleLabel?.font = UIFont.KFont.appleSDNeoRegularLarge
@@ -250,7 +250,7 @@ class LocationSelectionView: UIViewController {
     }
     
     private func configureNothingSearchedLocationLabel() {
-        nothingSearchedLocationLabel.text = "검색된 지역이 없습니다."
+        nothingSearchedLocationLabel.text = "검색된 지역이 없습니다.".localized
         nothingSearchedLocationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
         nothingSearchedLocationLabel.textColor = UIColor.KColor.gray01
         nothingSearchedLocationLabel.sizeToFit()
@@ -416,8 +416,8 @@ extension LocationSelectionView: UITableViewDelegate {
     
     // Select already Saved Location
     private func isSameLocationAlert() {
-        let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.", message: "다른 지역을 추가해주세요.", preferredStyle: .alert)
-        let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+        let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.".localized, message: "다른 지역을 추가해주세요.".localized, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인".localized, style: .default) { _ in
             self.dismiss(animated: true)
         }
         alert.addAction(confirm)

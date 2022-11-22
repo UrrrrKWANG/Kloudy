@@ -11,6 +11,7 @@
 		11E34889291CF179006EA966 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E34888291CF179006EA966 /* LocationTableViewCell.swift */; };
 		11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488A2929BD8B006EA966 /* LocationData.swift */; };
 		11E3488D2929BDDF006EA966 /* NSManagedObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */; };
+		11EAFF68292CFAB20091F8C7 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EAFF67292CFAB20091F8C7 /* String+.swift */; };
 		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C69392927DA4D005FC7ED /* LocationConverter.swift */; };
@@ -218,6 +219,7 @@
 		11E34888291CF179006EA966 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		11E3488A2929BD8B006EA966 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+.swift"; sourceTree = "<group>"; };
+		11EAFF67292CFAB20091F8C7 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@
 				D558FECA2907D987002EEA22 /* UILabel+.swift */,
 				E0FE1273292231A1000AC3FC /* CALayer+.swift */,
 				11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */,
+				11EAFF67292CFAB20091F8C7 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1173,6 +1176,7 @@
 				E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */,
 				8BC8F81D29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */,
 				8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */,
+				11EAFF68292CFAB20091F8C7 /* String+.swift in Sources */,
 				8BC8F80029011DB200EF83AE /* AppDelegate.swift in Sources */,
 				8BC8F7D829011DB200EF83AE /* WeatherCell+CoreDataProperties.swift in Sources */,
 				8BC8F7F029011DB200EF83AE /* CheckWeatherView.swift in Sources */,

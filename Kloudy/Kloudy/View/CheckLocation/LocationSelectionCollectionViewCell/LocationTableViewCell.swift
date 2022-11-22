@@ -21,7 +21,7 @@ class LocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    var locationName: String = "현재 위치"
+    var locationName: String = "현재 위치".localized
     var temperature: Int = 0
     var diurnalTemperature: [Int] = [0, 0]
     static let identifier = "locationCell"
