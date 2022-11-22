@@ -11,6 +11,13 @@ import Intents
 
 struct KloudyUmbrellaIndexWidget: Widget {
     let kind: String = "KloudyUmbrellaIndexWidget"
+    private let supportedFamilies:[WidgetFamily] = {
+        if #available(iOSApplicationExtension 16.0, *) {
+            return [.systemSmall, .accessoryCircular]
+        } else {
+            return [.systemSmall]
+        }
+    }()
     
     var body: some WidgetConfiguration {
         IntentConfiguration(kind: kind, intent: ConfigurationIntent.self, provider: KloudyProvider()) { entry in
@@ -18,7 +25,7 @@ struct KloudyUmbrellaIndexWidget: Widget {
         }
         .configurationDisplayName("구르미 날씨 지수 위젯 목록")
         .description("우산 위젯입니다..")
-        .supportedFamilies([.systemSmall, .accessoryCircular])
+        .supportedFamilies(supportedFamilies)
     }
 }
 
