@@ -76,12 +76,23 @@ struct UmbrellaIndex: Codable {
     let precipitation1hMax: Double
     let precipitation3hMax: Double
     let wind: Double
+    let umbrellaHourly: [UmbrellaHourly]
     
     enum CodingKeys: String, CodingKey {
         case status, wind
         case precipitation24H = "precipitation_24h"
         case precipitation1hMax = "precipitation_1h_max"
         case precipitation3hMax = "precipitation_3h_max"
+        case umbrellaHourly = "umbrella_hourly"
+    }
+}
+
+struct UmbrellaHourly: Codable {
+    let time: Int
+    let precipitation: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case time, precipitation
     }
 }
 
