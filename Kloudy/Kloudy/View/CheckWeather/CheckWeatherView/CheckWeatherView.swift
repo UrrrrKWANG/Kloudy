@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import CoreLocation
 
 // https://www.linkedin.com/pulse/using-ios-pageviewcontroller-without-storyboards-paul-tangen/
 // https://ios-development.tistory.com/623
@@ -79,7 +80,7 @@ class CheckWeatherView: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers as? [Weather] {
+        if let weathers = appDelegate?.weathers {
             self.weathers = weathers
             self.updateWeathers = weathers
         }
@@ -116,7 +117,13 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        self.weathers.forEach { location in
+        let currentStatus = CLLocationManager().authorizationStatus
+        self.weathers.indices.forEach { locationIndex in
+            
+            if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
+            
+            let location = weathers[locationIndex]
+            
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
             let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)

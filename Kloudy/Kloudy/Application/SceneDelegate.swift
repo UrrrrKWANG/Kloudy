@@ -18,14 +18,12 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         window?.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
         self.window?.makeKeyAndVisible()
         
-        // 2초 정도 런치 스크린에서 기다림
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 2) {
-            let checkWeatherView = CheckWeatherView()
-            let rootNavigationController = UINavigationController(rootViewController: checkWeatherView)
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
+            let viewController = ViewController()
+            let rootNavigationController = UINavigationController(rootViewController: viewController)
             rootNavigationController.navigationBar.isHidden = true
             self.window?.rootViewController = rootNavigationController
         }
-        
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {

@@ -13,6 +13,7 @@
 		11E3488D2929BDDF006EA966 /* NSManagedObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */; };
 		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
+		22092FDF292CBC44007B8913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22092FDE292CBC44007B8913 /* ViewController.swift */; };
 		222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C69392927DA4D005FC7ED /* LocationConverter.swift */; };
 		2286B44F2924B8E2003965F2 /* SettingLicenseView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */; };
 		2286B4512924BAB2003965F2 /* SettingNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B4502924BAB2003965F2 /* SettingNavigationView.swift */; };
@@ -224,6 +225,7 @@
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2207250F291A322B00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
+		22092FDE292CBC44007B8913 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		222C69392927DA4D005FC7ED /* LocationConverter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationConverter.swift; sourceTree = "<group>"; };
 		2286B44E2924B8E2003965F2 /* SettingLicenseView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseView.swift; sourceTree = "<group>"; };
 		2286B4502924BAB2003965F2 /* SettingNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingNavigationView.swift; sourceTree = "<group>"; };
@@ -634,6 +636,7 @@
 				8BC8F7BD29011DB100EF83AE /* LaunchScreen.storyboard */,
 				8BC8F7BF29011DB100EF83AE /* AppDelegate.swift */,
 				8BC8F7C029011DB100EF83AE /* SceneDelegate.swift */,
+				22092FDE292CBC44007B8913 /* ViewController.swift */,
 			);
 			path = Application;
 			sourceTree = "<group>";
@@ -1216,6 +1219,7 @@
 				8B22A3D4292646270079FA48 /* CityWeatherAPI.swift in Sources */,
 				8BC8F7D429011DB200EF83AE /* CityInformation.swift in Sources */,
 				8BC8F7CD29011DB200EF83AE /* FetchWeatherInformation.swift in Sources */,
+				22092FDF292CBC44007B8913 /* ViewController.swift in Sources */,
 				8B22A3C4291F63C10079FA48 /* IndexButtonView.swift in Sources */,
 				BAFCEB0D2923F6A20084F28E /* InternalIndexCollectionViewCell.swift in Sources */,
 				8BC8F7CE29011DB200EF83AE /* Color+.swift in Sources */,
@@ -1469,9 +1473,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = provisioningKloudy;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1504,9 +1511,12 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				"PROVISIONING_PROFILE_SPECIFIER[sdk=iphoneos*]" = provisioningKloudy;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -1520,7 +1530,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JASCMY8XL7;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KloudyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1541,7 +1551,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = JASCMY8XL7;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.KloudyTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1618,7 +1628,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1650,7 +1660,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

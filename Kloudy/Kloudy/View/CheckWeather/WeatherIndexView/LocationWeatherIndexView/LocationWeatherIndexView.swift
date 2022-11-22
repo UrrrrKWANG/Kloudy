@@ -32,7 +32,6 @@ class LocationWeatherIndexView: UIView {
     let tapGesture = UITapGestureRecognizer()
     let disposeBag = DisposeBag()
     
-    //
     var indexArray = [IndexType]()
     var weathers: Weather?
     
@@ -66,10 +65,6 @@ class LocationWeatherIndexView: UIView {
         sentWeather
             .subscribe(onNext: {
                 self.weathers = $0
-                if self.sentIndexName == .unbrella || self.sentIndexName == .temperatureGap {
-                    self.makeCompareIndexText(compareIndex: $0.localWeather[0].weatherIndex[0].compareIndex[0])
-                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
-                }
             })
             .disposed(by: disposeBag)
         
