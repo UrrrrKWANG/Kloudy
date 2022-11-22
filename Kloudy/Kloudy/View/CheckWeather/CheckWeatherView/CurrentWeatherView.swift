@@ -10,7 +10,6 @@ import SnapKit
 
 class CurrentWeatherView: UIView {
     var localWeather:[LocalWeather] = []
-    var main:[Main] = []
     var hourlyWeather:[HourlyWeather] = []
     
     let locationLabel = UILabel()
@@ -33,7 +32,6 @@ class CurrentWeatherView: UIView {
     init(localWeather: [LocalWeather]) {
         super.init(frame: .zero)
         self.localWeather = localWeather
-        self.main = [Main](localWeather[0].main)
         self.hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
         addLayout()
         addData()
@@ -50,11 +48,25 @@ class CurrentWeatherView: UIView {
         configureUIImageView(view: locationIcon, named: "location_mark")
         configureUIImageView(view: maxTemperatureIcon, named: "arrow_up")
         configureUIImageView(view: minTemperatureIcon, named: "arrow_down")
+
+        let currentTemperature = Int(hourlyWeather[2].temperature)
+        var dayMaxTemperature = Int(localWeather[0].weeklyWeather[0].maxTemperature)
+        var dayMinTemperature = Int(localWeather[0].weeklyWeather[0].minTemperature)
+        dayMaxTemperature = max(currentTemperature, dayMaxTemperature)
+        dayMinTemperature = min(currentTemperature, dayMinTemperature)
         
+        let count = 24 - (Int(Date().getTimeOfDay()) ?? 0)
+
+        (0...count).forEach {
+            dayMaxTemperature = max(Int(hourlyWeather[$0].temperature), dayMaxTemperature)
+            dayMinTemperature = min(Int(hourlyWeather[$0].temperature), dayMinTemperature)
+        }
+
+ 
         locationLabel.configureLabel(text: localWeather[0].localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
-        currentTemperatureLabel.configureLabel(text: "\(Int(hourlyWeather[2].temperature))°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
-        maxTemperatureLabel.configureLabel(text: "\(Int(main[0].dayMaxTemperature))°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
-        minTemperatureLabel.configureLabel(text: "\(Int(main[0].dayMinTemperature))°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        currentTemperatureLabel.configureLabel(text: "\(currentTemperature)°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
+        maxTemperatureLabel.configureLabel(text: "\(dayMaxTemperature)°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        minTemperatureLabel.configureLabel(text: "\(dayMinTemperature)°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
     }
     private func setLayout() {
         self.backgroundColor = UIColor.KColor.primaryBlue01
