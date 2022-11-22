@@ -341,9 +341,9 @@ def cal_min_max_temperature(main_max_min_jsonObject):
 
 
 def get_umbrella_index(weather_24h_jsonObject):
-    
+    temp_rains = [0.0] * 24
     if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0, 0]
+        return [0, 0, 0, 0, 0, temp_rains]
 
     rains = []
     winds = []
@@ -399,16 +399,9 @@ def save_umbrella_hourly(umbrella_index, rains, code):
     else:
         umbrella_index_odd = UmbrellaIndexOdd.objects.filter(code = code).first()
         umbrella_index_even = UmbrellaIndexEven.objects.filter(code = code).first()
-        print(umbrella_index_odd)
-        print(umbrella_index_even)
         for i in range(len(rains)):
-            print(i)
-            print(rains)
-            print(rains[i])
             umbrella_hourly_odd = UmbrellaHourlyOdd.objects.create(umbrella_index = umbrella_index_odd, code = code, time = i, precipitation = rains[i])
             umbrella_hourly_even = UmbrellaHourlyEven.objects.create(umbrella_index = umbrella_index_even, code = code, time = i, precipitation = rains[i])
-            print(umbrella_hourly_odd.precipitation)
-            print(umbrella_hourly_even.precipitation)
             umbrella_hourly_odd.save()
             umbrella_hourly_even.save()
 
@@ -613,7 +606,7 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
         return [0, 0, 0, 0, 0, 0, "", 0, 0]
 
     # 오늘 날씨 => 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
-    day_min_temperature = 0.0
+    day_max_temperature = 0.0
     daily_weathers = []
     daily_precipitations = []
     # 내일 날씨 => 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
