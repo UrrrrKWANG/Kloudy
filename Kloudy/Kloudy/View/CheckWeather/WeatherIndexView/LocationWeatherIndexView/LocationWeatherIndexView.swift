@@ -139,7 +139,7 @@ class LocationWeatherIndexView: UIView {
         if now == 0 {
             if newArray.reduce(0, +) >= 16 {
                 rainText = "하루종일 내림"
-            } else if newArray.count == 0 {
+            } else if newArray.reduce(0, +) == 0 {
                 rainText = "비 안옴"
             } else {
                 for (index, rain) in newArray.enumerated() {
@@ -162,7 +162,7 @@ class LocationWeatherIndexView: UIView {
         } else if now == 1 {
             if newArray.reduce(0, +) >= 12 {
                 rainText = "하루종일 내림"
-            } else if newArray.count == 0 {
+            } else if newArray.reduce(0, +) == 0 {
                 rainText = "비 안옴"
             } else {
                 for (index, rain) in newArray.enumerated() {
