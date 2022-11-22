@@ -176,8 +176,8 @@ class LocationWeatherIndexView: UIView {
             uiCollectionView.register(InternalIndexCollectionViewCell.self, forCellWithReuseIdentifier: InternalIndexCollectionViewCell.identifier)
             return uiCollectionView
         }()
-        internalIndexCollectionView.delegate = self
-        internalIndexCollectionView.dataSource = self
+//        internalIndexCollectionView.delegate = self
+//        internalIndexCollectionView.dataSource = self
         if intenalIndexListView.subviews.count != 0 {
             intenalIndexListView.subviews[0].removeFromSuperview()
         }
@@ -409,35 +409,35 @@ class LocationWeatherIndexView: UIView {
     }
 }
 
-extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let indexName = self.indexArray[self.internalIndex]
-        let cellCount = calculateInternalIndexCount(indexName: indexName).count
-        return cellCount
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
-        let indexName = self.indexArray[self.internalIndex]
-        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
-        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
-        cell.addSubview(internalIndexView)
-        internalIndexView.snp.makeConstraints{
-            $0.top.equalToSuperview()
-            $0.width.height.equalTo(30)
-        }
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return  CGSize(width: 30 , height: 30)
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
-    }
-}
+//extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
+//
+//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        let indexName = self.indexArray[self.internalIndex]
+//        let cellCount = calculateInternalIndexCount(indexName: indexName).count
+//        return cellCount
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
+//        let indexName = self.indexArray[self.internalIndex]
+//        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
+//        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
+//        cell.addSubview(internalIndexView)
+//        internalIndexView.snp.makeConstraints{
+//            $0.top.equalToSuperview()
+//            $0.width.height.equalTo(30)
+//        }
+//        return cell
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+//        return  CGSize(width: 30 , height: 30)
+//    }
+//
+//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+//        //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
+//    }
+//}
 
 class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
     let cellSpacing: CGFloat = 8
