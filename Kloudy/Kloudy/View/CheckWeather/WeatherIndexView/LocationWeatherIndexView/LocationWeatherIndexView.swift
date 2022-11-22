@@ -45,6 +45,7 @@ class LocationWeatherIndexView: UIView {
     var indexStatus = PublishSubject<Int>()
     var imageOrLottieName: String = ""
     var compareIndexText = ""
+    var umbrellaIndexText = ""
     
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init() {
@@ -81,8 +82,11 @@ class LocationWeatherIndexView: UIView {
                 self.sentIndexName = $0
                 self.indexStatus.onNext(self.findStatus(indexName: $0))
                 self.changeTextView(indexType: $0)
-                if $0 == .unbrella || $0 == .temperatureGap {
-                    guard let weathers = self.weathers else { return }
+                guard let weathers = self.weathers else { return }
+                if $0 == .unbrella {
+                    self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
+                } else if $0 == .temperatureGap {
                     self.makeCompareIndexText(compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
                 } else {
@@ -97,6 +101,122 @@ class LocationWeatherIndexView: UIView {
                 self.changeImageView(name: self.imageOrLottieName)
             })
             .disposed(by: disposeBag)
+    }
+    
+    func makeUmbrellaIndexText(umbrellaHourly: [UmbrellaHourly]) {
+        var index:[Int] = [0,0,0,0]
+        var now = (Int(Date().getTimeOfDay()) ?? 0)
+        
+        switch now {
+        case 0...5:
+            now = 0
+        case 6...11:
+            now = 1
+        case 12...17:
+            now = 2
+        case 18...23:
+            now = 3
+        default :
+            now = 4
+        }
+        
+        umbrellaHourly.forEach {
+            if $0.time <= 5 && $0.precipitation != 0.0 {
+                index[0] += 1
+            } else if $0.time >= 6 && $0.time < 12 && $0.precipitation != 0.0 {
+                index[1] += 1
+            } else if $0.time >= 12 && $0.time < 18 && $0.precipitation != 0.0 {
+                index[2] += 1
+            } else if $0.time >= 18 && $0.time < 24 && $0.precipitation != 0.0 {
+                index[3] += 1
+            }
+        }
+        var newArray:[Int] = []
+        (now...3).forEach {
+            newArray.append(index[$0])
+        }
+        var rainText = ""
+        if now == 0 {
+            if newArray.reduce(0, +) >= 16 {
+                rainText = "하루종일 내림"
+            } else if newArray.reduce(0, +) == 0 {
+                rainText = "비 안옴"
+            } else {
+                for (index, rain) in newArray.enumerated() {
+                    if index == 0 && rain > 0{
+                        rainText += "새벽 "
+                    }
+                    if index == 1 && rain > 0{
+                        rainText += "오전 "
+                    }
+                    if index == 2 && rain > 0{
+                        rainText += "오후 "
+                    }
+                    if index == 3 && rain > 0{
+                        rainText += "밤"
+                    }
+                }
+                rainText += "에 비"
+            }
+            
+        } else if now == 1 {
+            if newArray.reduce(0, +) >= 12 {
+                rainText = "하루종일 내림"
+            } else if newArray.reduce(0, +) == 0 {
+                rainText = "비 안옴"
+            } else {
+                for (index, rain) in newArray.enumerated() {
+                    if index == 0 && rain > 0{
+                        rainText += "오전 "
+                    }
+                    if index == 1 && rain > 0{
+                        rainText += "오후 "
+                    }
+                    if index == 2 && rain > 0{
+                        rainText += "밤"
+                    }
+                }
+                rainText += "에 비"
+            }
+        } else if now == 2 {
+            if newArray.reduce(0, +) >= 9 {
+                rainText = "하루종일 내림"
+            } else {
+                let rain = newArray.filter{ $0 >= 4 }
+                if rain.count == 2 {
+                    rainText = "하루종일 내림"
+                } else if rain.count == 1 {
+                    if newArray[0] >= 4 {
+                        rainText = "오후에 비"
+                    } else {
+                        rainText = "밤에 비"
+                    }
+                } else {
+                    let sometime = newArray.filter{ $0 >= 1 }
+                    if sometime.count == 2 {
+                        rainText = "오후 밤 한때 비"
+                    } else if sometime.count == 1 {
+                        if newArray[0] >= 1 {
+                            rainText = "오후 한때 비"
+                        } else {
+                            rainText = "밤 한때 비"
+                        }
+                    } else {
+                        rainText = "비 안옴"
+                    }
+                }
+            }
+        } else if now == 3 {
+            switch newArray[0] {
+            case 4...6:
+                rainText = "남은 하루 계속 비"
+            case 2...3:
+                rainText = "밤 한때 비"
+            default:
+                rainText = "비 안옴"
+            }
+        }
+        umbrellaIndexText = rainText
     }
     
     required init?(coder: NSCoder) {
@@ -225,10 +345,10 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.layer.cornerRadius = 10
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
-        
+
         if indexNameLabel == "우산 지수".localized {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
-            weatherIndexStatusLabel.configureLabel(text: "하루종일 내림".localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
+            weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
             textContainerView.snp.remakeConstraints {
                 $0.leading.equalToSuperview().inset(16)
