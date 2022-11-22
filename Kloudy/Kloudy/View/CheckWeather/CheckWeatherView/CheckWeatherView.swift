@@ -43,6 +43,9 @@ class CheckWeatherView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        지역이 변경될 시 사용할 코드
+        for i in 0..<dataViewControllers.count {
+            dataViewControllers[i].viewDidDisappear(false)
+        }
         dataViewControllers = [UIViewController]()
         [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { $0.removeFromSuperview() }
         
