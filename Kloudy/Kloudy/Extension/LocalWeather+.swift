@@ -12,7 +12,7 @@ extension LocalWeather {
         let currentTemperature = Int(self.hourlyWeather[2].temperature)
         var dayMaxTemperatureArray: [Int] = []
         var dayMinTemperatureArray: [Int] = []
-        let count = 26 - (Int(Date().getTimeOfDay()) ?? 0)
+        var count = 26 - (Int(Date().getTimeOfDay()) ?? 0)
         if count > 24 {
             count = 24
         }
