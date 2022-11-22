@@ -10,3 +10,7 @@ import Foundation
 protocol collectionViewCelDeleteButtonlClicked {
     func buttonClicked(indexPath: Int)
 }
+
+protocol LocationSelectionDelegate: AnyObject {
+    func sendWeatherData(weatherData: [Weather])
+}

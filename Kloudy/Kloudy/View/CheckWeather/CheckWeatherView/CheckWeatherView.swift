@@ -38,6 +38,8 @@ class CheckWeatherView: UIViewController {
     
     var locations = [Location]()
     
+    weak var delegate: LocationSelectionDelegate?
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
 //        지역이 변경될 시 사용할 코드
@@ -75,6 +77,7 @@ class CheckWeatherView: UIViewController {
             self.weathers = weathers
         }
         bind()
+        self.delegate = self.locationSelectionView
         view.backgroundColor = UIColor.KColor.white
     }
     
@@ -230,6 +233,7 @@ class CheckWeatherView: UIViewController {
     
     @objc func tapLocationButton() {
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
+        self.delegate?.sendWeatherData(weatherData: weathers)
     }
     @objc func tapSettingButton() {
         let settingView = SettingView()
