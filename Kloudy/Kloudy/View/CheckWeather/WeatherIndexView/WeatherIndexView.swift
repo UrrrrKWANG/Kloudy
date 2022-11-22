@@ -220,7 +220,9 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         locationWeatherIndexView.indexName.onNext(indexName)
         // WeatherDetailIndexView 에 어떤 Index 가 Tap 되었는지 전달
         indexNameString.onNext(indexName)
+        locationWeatherIndexView.changeCollectionView(internalIndex: indexPath.row)
     }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.indexArray.count
     }

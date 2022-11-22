@@ -31,14 +31,10 @@ class LocationWeatherIndexView: UIView {
     var indexString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
     let tapGesture = UITapGestureRecognizer()
     let disposeBag = DisposeBag()
-    
     var indexArray = [IndexType]()
     var weathers: Weather?
-    
     let sentIndexArray = PublishSubject<[IndexType]>()
     let sentWeather = PublishSubject<Weather>()
-    
-    //    var indexName: IndexType?
     var sentIndexName: IndexType?
     var indexName = PublishSubject<IndexType>()
     var transedIndexName: String = ""
@@ -46,12 +42,11 @@ class LocationWeatherIndexView: UIView {
     var imageOrLottieName: String = ""
     var compareIndexText = ""
     
-    //TODO: 페이지 개수 받아오는 부분 (임시)
     init() {
         super.init(frame: .zero)
         setLayout()
         bind()
-        changeCollectionView()
+        changeCollectionView(internalIndex: 0)
         containerView.addGestureRecognizer(tapGesture)
     }
     
@@ -65,6 +60,10 @@ class LocationWeatherIndexView: UIView {
         sentWeather
             .subscribe(onNext: {
                 self.weathers = $0
+                if self.sentIndexName == .unbrella || self.sentIndexName == .temperatureGap {
+                    self.makeCompareIndexText(compareIndex: $0.localWeather[0].weatherIndex[0].compareIndex[0])
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -108,21 +107,21 @@ class LocationWeatherIndexView: UIView {
         let compareMinTemperature = Int(compareIndex.todayMinTemperature) - Int(compareIndex.yesterdayMinTemperature)
         
         if compareMaxTemperature > 2 {
-            compareIndexText = "어제보다 최고 기온이".localized + "\(compareMaxTemperature)" + "°C 높고 \n ".localized
+            compareIndexText = "어제보다 최고 기온이 \(compareMaxTemperature)°C 높고 \n "
         } else if compareMaxTemperature < -2 {
-            compareIndexText = "어제보다 최고 기온이".localized + "\(compareMaxTemperature)" + "°C 낮고 \n ".localized
+            compareIndexText = "어제보다 최고 기온이 \(compareMaxTemperature)°C 낮고 \n "
         } else {
-            compareIndexText = "최고 기온은 어제와 비슷하며 \n ".localized
+            compareIndexText = "최고 기온은 어제와 비슷하며 \n "
         }
         if compareMinTemperature > 2 {
-            compareIndexText += "최저 기온은".localized + "\(compareMinTemperature)" + "°C 높습니다.".localized
+            compareIndexText += "최저 기온은 \(compareMinTemperature)°C 높습니다."
         } else if compareMinTemperature < -2 {
-            compareIndexText += "최저 기온은".localized + "\(compareMinTemperature)" + "°C 낮습니다.".localized
+            compareIndexText += "최저 기온은 \(compareMinTemperature)°C 낮습니다."
         } else {
-            compareIndexText += "최저 기온은 비슷합니다.".localized
+            compareIndexText += "최저 기온은 비슷합니다."
         }
-        if compareIndexText == "최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다.".localized {
-            compareIndexText = "어제와 기온이 비슷합니다".localized
+        if compareIndexText == "최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다." {
+            compareIndexText = "어제와 기온이 비슷합니다"
         }
     }
     
@@ -169,15 +168,16 @@ class LocationWeatherIndexView: UIView {
         }
     }
     
-    func changeCollectionView() {
+    func changeCollectionView(internalIndex: Int) {
+        self.internalIndex = internalIndex
         intenalIndexListView.backgroundColor = UIColor.KColor.black
         lazy var internalIndexCollectionView: UICollectionView = {
             let uiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
             uiCollectionView.register(InternalIndexCollectionViewCell.self, forCellWithReuseIdentifier: InternalIndexCollectionViewCell.identifier)
             return uiCollectionView
         }()
-//        internalIndexCollectionView.delegate = self
-//        internalIndexCollectionView.dataSource = self
+        internalIndexCollectionView.delegate = self
+        internalIndexCollectionView.dataSource = self
         if intenalIndexListView.subviews.count != 0 {
             intenalIndexListView.subviews[0].removeFromSuperview()
         }
@@ -225,9 +225,9 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         
-        if indexNameLabel == "우산 지수".localized {
+        if indexNameLabel == "우산 지수" {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
-            weatherIndexStatusLabel.configureLabel(text: "하루종일 내림".localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
+            weatherIndexStatusLabel.configureLabel(text: "하루종일 내림", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
             textContainerView.snp.remakeConstraints {
                 $0.leading.equalToSuperview().inset(16)
@@ -235,7 +235,7 @@ class LocationWeatherIndexView: UIView {
                 $0.height.equalTo(36)
             }
         }
-        if indexNameLabel == "일교차 지수".localized {
+        if indexNameLabel == "일교차 지수" {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.gray05.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel, font: UIFont.KFont.appleSDNeoSemiBold15, textColor: UIColor.KColor.black)
             textContainerView.snp.remakeConstraints {
@@ -312,17 +312,17 @@ class LocationWeatherIndexView: UIView {
     func transIndexName(indexName: IndexType) -> String {
         switch indexName {
         case .mask :
-            return "마스크 지수".localized
+            return "마스크 지수"
         case .unbrella :
-            return "우산 지수".localized
+            return "우산 지수"
         case .outer :
-            return "겉옷 지수".localized
+            return "겉옷 지수"
         case .laundry :
-            return "빨래 지수".localized
+            return "빨래 지수"
         case .car :
-            return "세차 지수".localized
+            return "세차 지수"
         case .temperatureGap :
-            return "일교차 지수".localized
+            return "일교차 지수"
         }
     }
     
@@ -409,35 +409,35 @@ class LocationWeatherIndexView: UIView {
     }
 }
 
-//extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
-//
-//    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        let indexName = self.indexArray[self.internalIndex]
-//        let cellCount = calculateInternalIndexCount(indexName: indexName).count
-//        return cellCount
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
-//        let indexName = self.indexArray[self.internalIndex]
-//        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
-//        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
-//        cell.addSubview(internalIndexView)
-//        internalIndexView.snp.makeConstraints{
-//            $0.top.equalToSuperview()
-//            $0.width.height.equalTo(30)
-//        }
-//        return cell
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-//        return  CGSize(width: 30 , height: 30)
-//    }
-//
-//    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
-//    }
-//}
+extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
+
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        let indexName = self.indexArray[self.internalIndex]
+        let cellCount = calculateInternalIndexCount(indexName: indexName).count
+        return cellCount
+    }
+
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
+        let indexName = self.indexArray[self.internalIndex]
+        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
+        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
+        cell.addSubview(internalIndexView)
+        internalIndexView.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.width.height.equalTo(30)
+        }
+        return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        return  CGSize(width: 30 , height: 30)
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
+    }
+}
 
 class CollectionViewRightAlignFlowLayout: UICollectionViewFlowLayout {
     let cellSpacing: CGFloat = 8
