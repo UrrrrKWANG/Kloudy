@@ -291,7 +291,7 @@ class LocationSelectionView: UIViewController {
     }
     
     @objc func tapBackButton() {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
