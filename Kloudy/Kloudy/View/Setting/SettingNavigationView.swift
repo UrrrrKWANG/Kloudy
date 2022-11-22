@@ -36,7 +36,7 @@ class SettingNavigationView: UIView {
             $0.top.equalToSuperview().inset(5)
             $0.width.equalTo(36)
             $0.height.equalTo(31)
-            $0.leading.equalToSuperview()
+            $0.leading.equalToSuperview().offset(-10)
         }
     }
     

@@ -30,14 +30,14 @@ class SettingLicenseView: UIViewController {
         [settingLicenseNavigationView, tableView].forEach { self.view.addSubview($0) }
         
         settingLicenseNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(62)
-            $0.leading.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(40)
         }
         
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(settingLicenseNavigationView.snp.bottom).offset(32)
+            $0.top.equalTo(settingLicenseNavigationView.snp.bottom).offset(24)
             $0.bottom.equalToSuperview()
         }
     }

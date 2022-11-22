@@ -128,7 +128,7 @@ class LocationSelectionView: UIViewController {
         }
         
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(searchBarBackgroundView.snp.top).offset(-4)
         }
         

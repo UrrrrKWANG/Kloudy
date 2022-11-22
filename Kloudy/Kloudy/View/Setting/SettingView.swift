@@ -22,14 +22,14 @@ class SettingView: UIViewController {
         [tableView, settingNavigationView].forEach { self.view.addSubview($0) }
         
         settingNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(62)
-            $0.leading.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(40)
         }
         
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(settingNavigationView.snp.bottom).offset(18)
+            $0.top.equalTo(settingNavigationView.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
     }
@@ -87,7 +87,7 @@ extension SettingView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingLocationAllowCellView", for: indexPath) as? SettingLocationAllowCellView else { return UITableViewCell() }
             cell.locationAllowTextLabel.text = "위치 서비스 약관 동의"
             cell.selectionStyle = .none
-            cell.layer.addBorder([.top], color: UIColor.KColor.gray03, width: 1.0)
+            cell.layer.addBorder([.top], color: UIColor.KColor.gray04, width: 1.0)
             
             resultCell = cell
         }
