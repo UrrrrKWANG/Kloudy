@@ -22,7 +22,6 @@ enum InternalIndexType {
 }
 
 class WeatherIndexView: UIView {
-    
     let cityInformationModel = FetchWeatherInformation()
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var disposeBag = DisposeBag()
@@ -44,7 +43,7 @@ class WeatherIndexView: UIView {
     lazy var indexCollectionView: UICollectionView = {
         var uiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
         uiCollectionView.backgroundColor = UIColor.KColor.clear
-        uiCollectionView.register(UICollectionViewCell.self, forCellWithReuseIdentifier: "cell")
+        uiCollectionView.register(indexCollectionViewCell.self, forCellWithReuseIdentifier: indexCollectionViewCell.identifier)
         uiCollectionView.showsVerticalScrollIndicator = false
         uiCollectionView.delegate = self
         uiCollectionView.dataSource = self
@@ -87,11 +86,11 @@ class WeatherIndexView: UIView {
             imageView.contentMode = .scaleAspectFit
             imageView.image = UIImage(named: indexName)
             imageView.translatesAutoresizingMaskIntoConstraints = true
-            imageView.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
+            imageView.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
             return imageView
         }
         lottieView.contentMode = .scaleAspectFit
-        lottieView.frame = CGRect(x: 0, y: 0, width: 35, height: 35)
+        lottieView.frame = CGRect(x: 0, y: 0, width: 28, height: 28)
         lottieView.loopMode = .loop
         lottieView.backgroundBehavior = .pauseAndRestore
         lottieView.isUserInteractionEnabled = false
@@ -194,41 +193,58 @@ class WeatherIndexView: UIView {
         }
         return 0
     }
+    
+    func findIndexImage(indexName: IndexType) -> UIImageView {
+        let uiImageView = UIImageView()
+        switch indexName {
+        case .car:
+            uiImageView.image = UIImage(named: "carwash")
+        case .laundry:
+            uiImageView.image = UIImage(named: "laundry")
+        case .mask:
+            uiImageView.image = UIImage(named: "mask")
+        case .outer:
+            uiImageView.image = UIImage(named: "outer")
+        case .temperatureGap:
+            uiImageView.image = UIImage(named: "updown")
+        case .unbrella:
+            uiImageView.image = UIImage(named: "umbrella")
+        }
+        return uiImageView
+    }
 }
 
 extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let indexName = self.indexArray[indexPath.row]
-        let indexStatus = findStatus(indexName: indexName)
         locationWeatherIndexView.indexName.onNext(indexName)
         // WeatherDetailIndexView 에 어떤 Index 가 Tap 되었는지 전달
         indexNameString.onNext(indexName)
     }
-    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return self.indexArray.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "cell", for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: indexCollectionViewCell.identifier, for: indexPath) as! indexCollectionViewCell
         let indexName = self.indexArray[indexPath.row]
-        let indexStatus = findStatus(indexName: indexName)
-        let imageOrLottieName = locationWeatherIndexView.findImageOrLottieName(indexName: indexName, status: indexStatus)
-        let circle: UIView = UIView()
-        circle.layer.cornerRadius = 17.5
-        circle.layer.backgroundColor = UIColor.KColor.white.cgColor
-        cell.addSubview(circle)
-        circle.snp.makeConstraints{
-            $0.top.equalToSuperview()
-            $0.width.height.equalTo(35)
+        if(indexPath.row == 0){
+            collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
         }
-        // lottieView 나 ImageView를 anyObject로 반환 받아 UIView로 다운 캐스팅 후 cell에 addSubView
-        cell.addSubview(makeLottieViewOrImage(indexName: imageOrLottieName) as! UIView)
+        
+        cell.isSelected = indexPath.row == 0
+        
+        
+        let indexImage = findIndexImage(indexName: indexName)
+        cell.addSubview(indexImage)
+        indexImage.snp.makeConstraints{
+            $0.centerX.centerY.equalToSuperview()
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return  CGSize(width: 35 , height: 35)
+        return  CGSize(width: 42 , height: 42)
     }
     
     func collectionView(_ collectionView: UICollectionView, moveItemAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
