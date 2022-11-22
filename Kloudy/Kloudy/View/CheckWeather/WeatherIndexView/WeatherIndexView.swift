@@ -112,8 +112,8 @@ class WeatherIndexView: UIView {
         sentWeather
             .subscribe(onNext: {
                 self.weathers = $0
-                self.fetchLocationIndexArray(sentWeather: $0)
                 self.locationWeatherIndexView.sentWeather.onNext($0)
+                self.fetchLocationIndexArray(sentWeather: $0)
             })
             .disposed(by: disposeBag)
     }
