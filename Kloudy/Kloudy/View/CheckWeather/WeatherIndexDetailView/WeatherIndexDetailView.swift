@@ -119,7 +119,7 @@ class WeatherIndexDetailView: UIViewController {
             
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
             chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
-            chartView.chartUnitText.onNext(String(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) + "mm")
+            chartView.chartUnitText.onNext(String(round((weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) * 100)/100) + "mm")
             
         } else if indexType == .mask {
             firstIconView.iconValue.onNext(String(
