@@ -32,18 +32,23 @@ class SettingLicenseNavigationView: UIView {
     
     private func configureBackButton() {
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        backButton.setPreferredSymbolConfiguration(.init(pointSize: 24, weight: .regular, scale: .default), forImageIn: .normal)
         backButton.tintColor = UIColor.KColor.gray01
         backButton.setPreferredSymbolConfiguration(.init(pointSize: 24, weight: .regular, scale: .default), forImageIn: .normal)
         self.backButton.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
             $0.width.equalTo(36)
             $0.height.equalTo(31)
+<<<<<<< HEAD
             $0.leading.equalToSuperview().offset(-10)
+=======
+            $0.leading.equalToSuperview()
+>>>>>>> 302e1dfbfd96fe98393115a70f5f193b11d5849d
         }
     }
     
     func configureNavigationTitle() {
-        navigationTitle.text = "라이센스"
+        navigationTitle.text = "라이센스".localized
         navigationTitle.font = UIFont.KFont.appleSDNeoBold20
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {

@@ -30,6 +30,7 @@ class SettingNavigationView: UIView {
     
     private func configureBackButton() {
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        backButton.setPreferredSymbolConfiguration(.init(pointSize: 24, weight: .regular, scale: .default), forImageIn: .normal)
         backButton.tintColor = UIColor.KColor.gray01
         backButton.setPreferredSymbolConfiguration(.init(pointSize: 24, weight: .regular, scale: .default), forImageIn: .normal)
         self.backButton.snp.makeConstraints {
@@ -42,7 +43,7 @@ class SettingNavigationView: UIView {
     
     func configureNavigationTitle() {
         navigationTitle.font = UIFont.boldSystemFont(ofSize: 20)
-        navigationTitle.text = "설정"
+        navigationTitle.text = "설정".localized
         navigationTitle.font = UIFont.KFont.appleSDNeoBold20
         navigationTitle.textColor = UIColor.KColor.gray01
         self.navigationTitle.snp.makeConstraints {

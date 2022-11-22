@@ -34,13 +34,13 @@ class DetailWeatherView: UIViewController {
     private let disposeBag = DisposeBag()
     lazy var labelInTodayCollectionView: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "시간대별 날씨", font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
+        uiLabel.configureLabel(text: "시간대별 날씨".localized, font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
         return uiLabel
     }()
     
     lazy var labelInWeekCollectionView: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: "주간 날씨", font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
+        label.configureLabel(text: "주간 날씨".localized, font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
         return label
     }()
     
@@ -200,7 +200,7 @@ class DetailWeatherView: UIViewController {
         { index, datas, cell in
             
             if index == 0 {
-                cell.time.text = "지금"
+                cell.time.text = "지금".localized
             } else {
                 cell.time.text =  Date().getTimeOfDay(hour: index)
             }
@@ -218,7 +218,7 @@ class DetailWeatherView: UIViewController {
                                 self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
         { index, datas, cell in
             if index == 0 {
-                cell.dayLabel.text = "지금"
+                cell.dayLabel.text = "지금".localized
             } else {
                 cell.dayLabel.text = Date().getDayOfWeek(day: index)
             }

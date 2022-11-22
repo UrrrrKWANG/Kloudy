@@ -140,7 +140,7 @@ class CheckWeatherView: UIViewController {
                 }()
                 let detailWeatherViewLabel: UILabel = {
                     let detailWeatherViewLabel = UILabel()
-                    detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
+                    detailWeatherViewLabel.configureLabel(text: "상세 날씨".localized, font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
                     return detailWeatherViewLabel
                 }()
                 let rightIcon: UIImageView = {
