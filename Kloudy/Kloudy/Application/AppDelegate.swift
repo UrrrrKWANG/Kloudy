@@ -29,20 +29,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     // 어플리케이션의 런치 프로세스가 끝났을 때 -> Fetch 요청을 보냄, 요청이 끝나고 난 후 메인화면으로 넘어감.
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
         let currentStatus = CLLocationManager().authorizationStatus
-        if locationCount == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-            self.weathers[0] = dummyData
-            CityWeatherNetwork().fetchCityWeather(code: "1111000000")
-                .subscribe { event in
-                    switch event {
-                    case .success(let data):
-                        self.weathers.append(data)
-                    case .failure(let error):
-                        print("Error: ", error)
+        if locationCount == 0 {
+            if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
+                self.weathers[0] = dummyData
+                CityWeatherNetwork().fetchCityWeather(code: "1111000000")
+                    .subscribe { event in
+                        switch event {
+                        case .success(let data):
+                            self.weathers.append(data)
+                        case .failure(let error):
+                            print("Error: ", error)
+                        }
                     }
-                }
-                .disposed(by: disposeBag)
-            CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer"])
-        } else {
+                    .disposed(by: disposeBag)
+                CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer"])
+            } else {
+                let XY = LocationManager.shared.requestNowLocationInfo()
+                let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+                guard let nowLocation = nowLocation else { return true }
+                
+                CityWeatherNetwork().fetchCityWeather(code: nowLocation.city)
+                    .subscribe { event in
+                        switch event {
+                        case .success(let data):
+                            self.weathers[0] = data
+                        case .failure(let error):
+                            print("Error: ", error)
+                        }
+                    }
+                    .disposed(by: disposeBag)
+            }
+        }
+        else {
+            self.weathers[0] = dummyData
             loadLocation()
         }
         return true
@@ -73,9 +92,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
             // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
             guard let province = myLocations[locationIndex].province else { return }
             guard let city = myLocations[locationIndex].city else { return }
-            lazy var weathers = [Weather](repeating: dummyData , count: self.locationCount+1)
             FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
-                self.weathers[locationIndex+1] = response
+                self.weathers[locationIndex + 1] = response
             }
         let currentStatus = CLLocationManager().authorizationStatus
             if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {

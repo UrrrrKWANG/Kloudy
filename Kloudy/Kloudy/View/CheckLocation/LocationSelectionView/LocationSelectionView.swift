@@ -327,15 +327,15 @@ extension LocationSelectionView: UITableViewDataSource {
             
             if indexPath.row == 0 {
                 cell.locationNameLabel.text = "현재 위치"
-                if (currentStatus == .denied || currentStatus != .notDetermined || currentStatus != .restricted)
+                if (currentStatus == .denied || currentStatus == .notDetermined || currentStatus == .restricted)
 //                if weatherData[indexPath.row].localWeather[0].localCode == "970304"
                 {
-                    cell.temperatureLabel.text = "위치 동의"
-                    cell.diurnalTemperatureLabel.text = ""
+                    cell.temperatureLabel.text = ""
+                    cell.diurnalTemperatureLabel.text = "위치 동의 >"
                 } else {
 //                    cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
-                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
-                    cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
+                    cell.temperatureLabel.text = String(Int(weatherData[0].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.diurnalTemperatureLabel.text = "\(Int(weatherData[0].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[0].localWeather[0].main[0].dayMaxTemperature))°"
                 }
             } else {
                 cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
@@ -414,7 +414,6 @@ extension LocationSelectionView: UITableViewDelegate {
                                     print("Error: ", error)
                                 }
                             }
-                            
                             .disposed(by: disposeBag)
                         
                     } else {
@@ -475,15 +474,19 @@ extension LocationSelectionView: UITableViewDropDelegate {
     }
     
     // 셀 위치 변경 함수
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-                
-        // +1로 해줘야할듯
-        let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
-        locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
-        locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
-        CoreDataManager.shared.getLocationSequence(locationList: locationList)
-        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
-    }
+//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//
+//        // +1로 해줘야할듯
+//        let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
+//        locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
+//        locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
+//        CoreDataManager.shared.getLocationSequence(locationList: locationList)
+//
+//        let itemMove2 = weatherData[sourceIndexPath.row]
+//        weatherData.remove(at: sourceIndexPath.row)
+//        weatherData.insert(itemMove2, at: destinationIndexPath.row)
+//        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
+//    }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         if session.localDragSession != nil {
