@@ -13,13 +13,16 @@ extension LocalWeather {
         var dayMaxTemperatureArray: [Int] = []
         var dayMinTemperatureArray: [Int] = []
         let count = 26 - (Int(Date().getTimeOfDay()) ?? 0)
+        if count > 24 {
+            count = 24
+        }
         
         dayMaxTemperatureArray.append(Int(self.weeklyWeather[0].maxTemperature))
         dayMaxTemperatureArray.append(currentTemperature)
         dayMinTemperatureArray.append(Int(self.weeklyWeather[0].minTemperature))
         dayMinTemperatureArray.append(currentTemperature)
         
-        (0...count).forEach {
+        (0..<count).forEach {
             print(Int(self.hourlyWeather[$0].temperature))
             dayMaxTemperatureArray.append(Int(self.hourlyWeather[$0].temperature))
             dayMinTemperatureArray.append(Int(self.hourlyWeather[$0].temperature))
