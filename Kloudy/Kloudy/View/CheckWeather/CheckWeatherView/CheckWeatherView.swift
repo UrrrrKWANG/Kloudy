@@ -44,6 +44,8 @@ class CheckWeatherView: UIViewController {
         super.viewWillAppear(animated)
 //        지역이 변경될 시 사용할 코드
         dataViewControllers = [UIViewController]()
+        [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { $0.removeFromSuperview() }
+        
         loadWeatherView()
 
         addChild(pageViewController)
