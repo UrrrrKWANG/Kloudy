@@ -60,7 +60,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         DispatchQueue.main.async {
             CoreDataManager().saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: 0, indexArray: ["rain", "mask", "laundry", "car", "outer"])
             completionHandler()
-            self.weathers = [[]]
+            self.weathers = [self.defaultData]
         }
     }
     func loadLocation() {
