@@ -19,11 +19,7 @@ class indexCollectionViewCell: UICollectionViewCell {
     }
     override var isSelected: Bool{
           didSet {
-                  if isSelected {
-                      self.backgroundColor = .white
-                  } else {
-                      self.backgroundColor = .clear
-                  }
+              self.backgroundColor = isSelected ? .white : .clear
               }
       }
 }
