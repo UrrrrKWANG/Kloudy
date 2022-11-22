@@ -291,8 +291,8 @@ class LocationSelectionView: UIViewController {
     }
     
     @objc func tapBackButton() {
-           self.navigationController?.popToRootViewController(animated: true)
-       }
+        self.navigationController?.popToRootViewController(animated: true)
+    }
 }
 
 extension LocationSelectionView: UITableViewDataSource {
@@ -301,7 +301,7 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return locationList.count //+ 1
+            return weatherData.count
         }
     }
 
@@ -326,7 +326,8 @@ extension LocationSelectionView: UITableViewDataSource {
 //            } else {
 //                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
 //            }
-            cell.locationNameLabel.text = locationList[indexPath.row].city
+//            cell.locationNameLabel.text = locationList[indexPath.row].city
+            cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
             cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].main[0].currentTemperature)) + "°"
             cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
             
@@ -354,7 +355,7 @@ extension LocationSelectionView: UITableViewDataSource {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
                     self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row].code ?? "")
                     CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row])
-                    self.locationList.remove(at: indexPath.row)
+                    self.weatherData.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }
@@ -383,23 +384,23 @@ extension LocationSelectionView: UITableViewDelegate {
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
                         CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
-                        let code = information.code
-                        let city = information.city
-                        let province = information.province
-                        let location = LocationData(code: code, city: city, province: province)
-                        locationList.append(location)
                         self.changeTableType(false)
-                        
-                        CityWeatherNetwork().fetchCityWeather(code: code)
+                        self.weatherData.append(FetchWeatherInformation().dummyData)
+                        CityWeatherNetwork().fetchCityWeather(code: information.code)
+                            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
                             .subscribe { event in
                                 switch event {
                                 case .success(let data):
                                     self.additionalLocation.onNext(data)
-                                    self.weatherData.append(data)
+                                    DispatchQueue.main.async {
+                                        self.weatherData[self.weatherData.count - 1] = data
+                                        self.tableView.reloadData()
+                                    }
                                 case .failure(let error):
                                     print("Error: ", error)
                                 }
                             }
+                            
                             .disposed(by: disposeBag)
                         
                     } else {
