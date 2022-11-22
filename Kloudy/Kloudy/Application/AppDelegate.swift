@@ -13,6 +13,7 @@ import RxSwift
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate {
     var locationCount = CoreDataManager.shared.countLocations()
+    
     let dummyData = FetchWeatherInformation().dummyData
     lazy var weathers = [Weather](repeating: dummyData , count: locationCount+1)
     let disposeBag = DisposeBag()

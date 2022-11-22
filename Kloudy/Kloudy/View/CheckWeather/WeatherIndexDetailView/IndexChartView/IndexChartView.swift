@@ -19,10 +19,10 @@ enum ChartsAxisValue: Int {
     
     var label: String {
         switch self {
-        case .zero: return "오전 0시"
-        case .six: return "오전 6시"
-        case .noon: return "오후 12시"
-        case .eighteen: return "오후 6시"
+        case .zero: return "오전 0시".localized
+        case .six: return "오전 6시".localized
+        case .noon: return "오후 12시".localized
+        case .eighteen: return "오후 6시".localized
         case .midNight: return ""
         }
     }
