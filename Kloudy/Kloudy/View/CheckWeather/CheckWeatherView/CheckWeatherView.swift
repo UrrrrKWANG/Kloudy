@@ -13,10 +13,6 @@ import RxCocoa
 // https://www.linkedin.com/pulse/using-ios-pageviewcontroller-without-storyboards-paul-tangen/
 // https://ios-development.tistory.com/623
 
-protocol LocationSelectionDelegate: AnyObject {
-    func sendWeatherData(weatherData: [Weather])
-}
-
 class CheckWeatherView: UIViewController {
     let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
