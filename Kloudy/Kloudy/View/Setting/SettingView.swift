@@ -29,7 +29,7 @@ class SettingView: UIViewController {
         
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(settingNavigationView.snp.bottom).offset(18)
+            $0.top.equalTo(settingNavigationView.snp.bottom).offset(10)
             $0.bottom.equalToSuperview()
         }
     }
@@ -55,7 +55,7 @@ class SettingView: UIViewController {
     }
     
     @objc func tapBackButton() {
-       self.navigationController?.popToRootViewController(animated: true)
+       self.navigationController?.popViewController(animated: true)
    }
 }
 
@@ -87,7 +87,7 @@ extension SettingView: UITableViewDataSource {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingLocationAllowCellView", for: indexPath) as? SettingLocationAllowCellView else { return UITableViewCell() }
             cell.locationAllowTextLabel.text = "위치 서비스 약관 동의".localized
             cell.selectionStyle = .none
-            cell.layer.addBorder([.top], color: UIColor.KColor.gray03, width: 1.0)
+            cell.layer.addBorder([.top], color: UIColor.KColor.gray04, width: 1.0)
             
             resultCell = cell
         }

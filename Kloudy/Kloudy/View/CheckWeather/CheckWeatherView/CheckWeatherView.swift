@@ -86,6 +86,8 @@ class CheckWeatherView: UIViewController {
         }
         bind()
         self.delegate = self.locationSelectionView
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         view.backgroundColor = UIColor.KColor.white
     }
     

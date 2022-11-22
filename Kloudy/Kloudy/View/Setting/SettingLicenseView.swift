@@ -37,7 +37,7 @@ class SettingLicenseView: UIViewController {
         
         tableView.snp.makeConstraints {
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.top.equalTo(settingLicenseNavigationView.snp.bottom).offset(32)
+            $0.top.equalTo(settingLicenseNavigationView.snp.bottom).offset(24)
             $0.bottom.equalToSuperview()
         }
     }
