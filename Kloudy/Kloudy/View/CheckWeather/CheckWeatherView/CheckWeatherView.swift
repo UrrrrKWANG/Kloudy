@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import CoreLocation
 
 // https://www.linkedin.com/pulse/using-ios-pageviewcontroller-without-storyboards-paul-tangen/
 // https://ios-development.tistory.com/623
@@ -37,11 +38,12 @@ class CheckWeatherView: UIViewController {
     var dataViewControllers = [UIViewController]()
     
     var locations = [Location]()
-    
+    var updateWeathers = [Weather]()
     weak var delegate: LocationSelectionDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
 //        지역이 변경될 시 사용할 코드
         for i in 0..<dataViewControllers.count {
             dataViewControllers[i].viewDidDisappear(false)
@@ -80,9 +82,13 @@ class CheckWeatherView: UIViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         if let weathers = appDelegate?.weathers {
             self.weathers = weathers
+            self.updateWeathers = weathers
         }
         bind()
         self.delegate = self.locationSelectionView
+        // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        
         view.backgroundColor = UIColor.KColor.white
     }
     
@@ -103,10 +109,24 @@ class CheckWeatherView: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+        
+        locationSelectionView.exchangeLocationIndex
+            .subscribe(onNext: {
+                let itemMove = self.weathers[$0[0]]
+                self.weathers.remove(at: $0[0])
+                self.weathers.insert(itemMove, at: $0[1])
+            })
+            .disposed(by: disposeBag)
     }
     
     func loadWeatherView() {
-        self.weathers.forEach { location in
+        let currentStatus = CLLocationManager().authorizationStatus
+        self.weathers.indices.forEach { locationIndex in
+            
+            if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
+            
+            let location = weathers[locationIndex]
+            
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
             let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
@@ -133,7 +153,7 @@ class CheckWeatherView: UIViewController {
                 }()
                 let detailWeatherViewLabel: UILabel = {
                     let detailWeatherViewLabel = UILabel()
-                    detailWeatherViewLabel.configureLabel(text: "상세 날씨", font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
+                    detailWeatherViewLabel.configureLabel(text: "상세 날씨".localized, font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
                     return detailWeatherViewLabel
                 }()
                 let rightIcon: UIImageView = {

@@ -266,3 +266,123 @@ Hapcheon-gun="Hapcheon-gun";
 Jeju-do="Jeju-do";
 Jeju-si="Jeju-si";
 Seogwipo-si="Seogwipo-si";
+
+
+// MARK: - 그외
+
+"상세 날씨" = "Weather in Detail";
+
+"어제보다 최고 기온이" = "Today's max temp is";
+"°C 높고 \n " = "°C higher, \n ";
+"°C 낮고 \n " = "°C lower, \n ";
+"최고 기온은 어제와 비슷하며 \n " = "Today's max temp is the same, \n";
+"최저 기온은" = "and min temp is";
+"°C 높습니다." = "°C higher than yesterday.";
+"°C 낮습니다." = "°C lower than yesterday.";
+"최저 기온은 비슷합니다." = "and min temp is the same as yesterday.";
+"최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다." = "Today's max and min temp \n are the same as yesterday.";
+"어제와 기온이 비슷합니다" = "Today's temp is the same as yesterday.";
+
+"우산 지수" = "Umbrella Index";
+"하루종일 내림" = "Rain all day";
+"일교차 지수" = "Daily Temp Range Index";
+"겉옷 지수" = "Coat Index";
+"빨래 지수" = "Laundry Index";
+"세차 지수" = "Carwash Index";
+"마스크 지수" = "Mask Index";
+
+"지역" = "Location";
+
+
+"우산" = "Umbrella";
+"하루 강수량" = "Daily Precip";
+"최대 풍속" = "Max Wind Speed";
+"강수량" = "Precip";
+"마스크" = "Mask";
+"미세먼지" = "Fine Dust";
+"초미세먼지" = "Ultrafine Dust";
+"빨래" = "Laundry";
+"습도" = "Humidity";
+"겉옷" = "Coat";
+"일 최저 기온" = "Daily Min Temp";
+"출근시간대 온도" = "Commute Temp";
+"세차" = "Carwash";
+"오늘의 날씨" = "Weather";
+"강수 예정" = "Rain Expected";
+"일교차" = "Daily Temp Range";
+"최저 기온" = "Min Temp";
+"최고 온도" = "Max Temp";
+
+
+"비가 오지 않습니다." = "No rain expected";
+"우산 없이 후드티를 입고도 가까운 거리를 이동할 수 있습니다." = "Wear hoodies for short distance.";
+"우산을 쓰고 이동해야하며, 신발이나 옷이 젖습니다." = "Umbrella recommended. Shoes and clothes may get wet.";
+"우비를 뚫고 옷이 젖기도 하며, 장화를 신어야할만큼 비가 옵니다." = "High chances of getting wet. Wear rain boots.";
+"위험합니다." = "Dangerous level of rain";
+"바깥 활동하기 좋은 공기입니다." = "Great air quality";
+"장시간 노출 시, 건강상 경미한 영향을 줍니다." = "Good air quality";
+"환자와 민감군에게 유해, 일반인에게 건강상 불쾌감을 줍니다." = "Bad air quality";
+"환자와 민감군에게 심각한 영향, 일반인에게 영향을 끼칩니다." = "Hazardous air quality";
+"빨래하기 좋은 날입니다." = "Great day for laundry";
+"빨래하셔도 괜찮습니다." = "Good day for laundry";
+"실내 건조하세요." = "Hang clothes indoor";
+"빨래를 다음으로 미루는 것을 추천드려요." = "Maybe do laundry some other day.";
+"캐주얼 재킷, 가디건" = "Casual jackets and cardigans";
+"라이더 재킷, 트렌치 코트" = "Rider jackets and trench coats";
+"코트, 무스탕, 항공점퍼" = "Coats, shearling jackets, and flight jackets";
+"패딩, 두꺼운 코트" = "Padded jackets and thick coats";
+"목도리나 장갑 등 방한용품 착용" = "Mufflers and knitted gloves";
+"세차하기 좋은 날입니다." = "Great day to wash your car.";
+"세차하셔도 괜찮습니다." = "Good day to wash your car.";
+"꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요." = "Reconsider washing your car unless urgent.";
+"세차를 다음으로 미루는 것을 추천드려요." = "Wash your car some other day.";
+
+
+"맑음" = "Clear";
+"비" = "Rainy";
+"비/눈" = "Rain or Snow";
+"구름 많음" = "Partly cloudy";
+"흐림" = "Cloudy";
+"눈" = "Snowy";
+"적당함" = "Moderate";
+
+"지수" = "Index";
+
+"지수 단계" = "Index Level";
+
+"오전 0시" = "0AM";
+"오전 6시" = "6AM";
+"오후 12시" = "12PM";
+"오후 6시" = "6PM";
+
+
+"시간대별 날씨" = "Hourly Weather";
+"주간 날씨" = "Weekly Weather";
+"지금" = "Now";
+"시" = "Hour";
+
+
+"현재 위치" = "Current Location";
+
+"이미 동일한 지역을 추가했어요." = "Already added.";
+"다른 지역을 추가해주세요." = "Please choose other locations.";
+"취소" = "Cancel";
+"확인" = "Confirm";
+"검색된 지역이 없습니다." = "No Location Found";
+
+"지역을 검색해 보세요" = "Search";
+
+
+"라이센스" = "License";
+"버전정보" = "Version";
+"최신 버전입니다" = "Newest Version";
+"위치 서비스 약관 동의" = "Authorize GPS";
+
+"설정" = "Settings";
+
+"출처 : 기상청 / 에어코리아" = "Source of Weather Data: Korea Meteorological Administration / Air Korea";
+"데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음" = "Real-time observed data: May not be received depending on the local circumstances of the measuring station or the reception status of the data.";
+
+"CityInformation" = "CityInformation";
+
+"위치 동의 " = "Authorize GPS ";

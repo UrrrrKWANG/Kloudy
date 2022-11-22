@@ -9,6 +9,7 @@ import UIKit
 import SnapKit
 import RxSwift
 import RxCocoa
+import CoreLocation
 
 enum TableType {
     case search
@@ -43,9 +44,12 @@ class LocationSelectionView: UIViewController {
     // Location 추가
     let additionalLocation = PublishSubject<Weather>()
     let deleteLocationCode = PublishSubject<String>()
+    let exchangeLocationIndex = PublishSubject<[Int]>()
     
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
+    
+    let currentStatus = CLLocationManager().authorizationStatus
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -128,7 +132,7 @@ class LocationSelectionView: UIViewController {
         }
         
         searchBar.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.leading.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(searchBarBackgroundView.snp.top).offset(-4)
         }
         
@@ -235,7 +239,7 @@ class LocationSelectionView: UIViewController {
     
     //MARK: attribute function
     private func configureCancelSearchButton() {
-        cancelSearchButton.setTitle("취소", for: .normal)
+        cancelSearchButton.setTitle("취소".localized, for: .normal)
         cancelSearchButton.setTitleColor(UIColor.KColor.gray01, for: .normal)
         cancelSearchButton.titleLabel?.sizeToFit()
         cancelSearchButton.titleLabel?.font = UIFont.KFont.appleSDNeoRegularLarge
@@ -253,7 +257,7 @@ class LocationSelectionView: UIViewController {
     }
     
     private func configureNothingSearchedLocationLabel() {
-        nothingSearchedLocationLabel.text = "검색된 지역이 없습니다."
+        nothingSearchedLocationLabel.text = "검색된 지역이 없습니다.".localized
         nothingSearchedLocationLabel.font = UIFont.KFont.appleSDNeoRegularLarge
         nothingSearchedLocationLabel.textColor = UIColor.KColor.gray01
         nothingSearchedLocationLabel.sizeToFit()
@@ -291,7 +295,7 @@ class LocationSelectionView: UIViewController {
     }
     
     @objc func tapBackButton() {
-        self.navigationController?.popToRootViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
@@ -320,15 +324,24 @@ extension LocationSelectionView: UITableViewDataSource {
             }
             cell.backgroundColor = UIColor.KColor.clear
             cell.selectionStyle = .none
-            // 추후에 코드 사용할 예정
-//            if indexPath.row == 0 {
-//                cell.locationNameLabel.text = "현재 위치"
-//            } else {
-//                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
-//            }
-            cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
-            cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
-            cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
+            
+            if indexPath.row == 0 {
+                cell.locationNameLabel.text = "현재 위치"
+                if (currentStatus == .denied || currentStatus != .notDetermined || currentStatus != .restricted)
+//                if weatherData[indexPath.row].localWeather[0].localCode == "970304"
+                {
+                    cell.temperatureLabel.text = "위치 동의"
+                    cell.diurnalTemperatureLabel.text = ""
+                } else {
+//                    cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
+                }
+            } else {
+                cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
+                cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
+            }
             
             return cell
         }
@@ -352,8 +365,8 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row].code ?? "")
-                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row])
+                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row - 1].code ?? "")
+                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row - 1])
                     self.weatherData.remove(at: indexPath.row)
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
@@ -425,8 +438,8 @@ extension LocationSelectionView: UITableViewDelegate {
     
     // Select already Saved Location
     private func isSameLocationAlert() {
-        let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.", message: "다른 지역을 추가해주세요.", preferredStyle: .alert)
-        let confirm = UIAlertAction(title: "확인", style: .default) { _ in
+        let alert = UIAlertController(title: "이미 동일한 지역을 추가했어요.".localized, message: "다른 지역을 추가해주세요.".localized, preferredStyle: .alert)
+        let confirm = UIAlertAction(title: "확인".localized, style: .default) { _ in
             self.dismiss(animated: true)
         }
         alert.addAction(confirm)
@@ -465,10 +478,11 @@ extension LocationSelectionView: UITableViewDropDelegate {
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
                 
         // +1로 해줘야할듯
-        let itemMove = locationList[sourceIndexPath.row] //Get the item that we just moved
-        locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
-        locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
+        let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
+        locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
+        locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
         CoreDataManager.shared.getLocationSequence(locationList: locationList)
+        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {

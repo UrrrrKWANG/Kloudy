@@ -50,7 +50,7 @@ class LocationSearchBar: UISearchBar {
    }
     
     private func attribute() {
-        self.placeholder = "지역을 검색해 보세요"
+        self.placeholder = "지역을 검색해 보세요".localized
         self.setImage(UIImage(), for: .search, state: .normal)
         self.setImage(UIImage(), for: .clear, state: .normal)
         self.searchBarStyle = .prominent
@@ -59,7 +59,7 @@ class LocationSearchBar: UISearchBar {
         if let textField = self.value(forKey: "searchField") as? UITextField {
             textField.backgroundColor = UIColor.KColor.gray04
             textField.attributedPlaceholder = NSAttributedString(string: textField.placeholder ?? "", attributes: [NSAttributedString.Key.foregroundColor : UIColor.KColor.gray02, NSAttributedString.Key.font : UIFont.KFont.appleSDNeoRegularLarge])
-            textField.textColor = UIColor.KColor.gray02
+            textField.textColor = UIColor.KColor.gray01
         }
     }
 }
