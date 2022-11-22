@@ -11,6 +11,10 @@
 		11E34889291CF179006EA966 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E34888291CF179006EA966 /* LocationTableViewCell.swift */; };
 		11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488A2929BD8B006EA966 /* LocationData.swift */; };
 		11E3488D2929BDDF006EA966 /* NSManagedObject+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */; };
+		11EAFF7A292D41210091F8C7 /* CityInformation_KOR.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */; };
+		11EAFF7B292D41210091F8C7 /* CityInformation_KOR.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */; };
+		11EAFF7D292D419D0091F8C7 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EAFF7C292D419D0091F8C7 /* String+.swift */; };
+		11EAFF7E292D419D0091F8C7 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EAFF7C292D419D0091F8C7 /* String+.swift */; };
 		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		22092FDF292CBC44007B8913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22092FDE292CBC44007B8913 /* ViewController.swift */; };
@@ -200,6 +204,8 @@
 		11E34888291CF179006EA966 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		11E3488A2929BD8B006EA966 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
 		11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+.swift"; sourceTree = "<group>"; };
+		11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation_KOR.csv; sourceTree = "<group>"; };
+		11EAFF7C292D419D0091F8C7 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
 		184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -368,6 +374,7 @@
 			isa = PBXGroup;
 			children = (
 				22E36BDD2928AD25000ACD33 /* CityInformation.csv */,
+				11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */,
 				2207250D291A31DB00E01508 /* Localizable.strings */,
 			);
 			path = Localization;
@@ -517,6 +524,7 @@
 				E0FE1273292231A1000AC3FC /* CALayer+.swift */,
 				11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */,
 				E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */,
+				11EAFF7C292D419D0091F8C7 /* String+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -944,6 +952,11 @@
 				D59C95D8292D450D00A1FEE5 /* carwash_step3.json in Resources */,
 				D59C95E8292D454300A1FEE5 /* mask_step3.png in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
+				D59C95212927D40C00A1FEE5 /* laundry_3.json in Resources */,
+				D59C95252927D40C00A1FEE5 /* laundry_4.json in Resources */,
+				D59C95392927D40C00A1FEE5 /* rain_step1.json in Resources */,
+				D59C953B2927D40C00A1FEE5 /* rain_step4.json in Resources */,
+				11EAFF7A292D41210091F8C7 /* CityInformation_KOR.csv in Resources */,
 				D59C95F3292D455000A1FEE5 /* outer_step4.png in Resources */,
 				D59C95FA292D455D00A1FEE5 /* rain_step2.json in Resources */,
 				D59C95F2292D455000A1FEE5 /* outer_step3.png in Resources */,
@@ -993,6 +1006,12 @@
 				8BC8F81A29011E3400EF83AE /* Assets.xcassets in Resources */,
 				D59C957A292A919C00A1FEE5 /* Localizable.strings in Resources */,
 				D59C9579292A919900A1FEE5 /* CityInformation.csv in Resources */,
+				11EAFF7B292D41210091F8C7 /* CityInformation_KOR.csv in Resources */,
+				D59C952C2927D40C00A1FEE5 /* outer_step5.png in Resources */,
+				D59C95462927D40C00A1FEE5 /* mask_step1.png in Resources */,
+				D59C953C2927D40C00A1FEE5 /* rain_step4.json in Resources */,
+				D59C95282927D40C00A1FEE5 /* outer_step2.png in Resources */,
+				D59C95342927D40C00A1FEE5 /* carwash_step1.json in Resources */,
 				D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				BA0686A52926502700AB3849 /* Lexend-Light.ttf in Resources */,
 			);
@@ -1158,6 +1177,7 @@
 				8B6409992918F1E200DC2962 /* SettingViewModel.swift in Sources */,
 				8BC8F80129011DB200EF83AE /* SceneDelegate.swift in Sources */,
 				8B22A3D6292646480079FA48 /* CityWeatherNetwork.swift in Sources */,
+				11EAFF7D292D419D0091F8C7 /* String+.swift in Sources */,
 				BAFCEB082923C0930084F28E /* LocationWeatherIndexView.swift in Sources */,
 				BAFCEAF62920E65B0084F28E /* WeekWeatherDataCell.swift.swift in Sources */,
 				8BC8F7FC29011DB200EF83AE /* LocationSelectionViewModel.swift in Sources */,
@@ -1238,6 +1258,7 @@
 				E0336138290998120098CF76 /* WeatherCell+CoreDataClass.swift in Sources */,
 				D537D20B2901BC6800271037 /* KloudyMaskIndexWidget.swift in Sources */,
 				E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */,
+				11EAFF7E292D419D0091F8C7 /* String+.swift in Sources */,
 				E0336135290998030098CF76 /* Color+.swift in Sources */,
 				D59C9582292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift in Sources */,
 				D537D2092901BC6800271037 /* KloudyUmbrellaIndexWidget.swift in Sources */,
