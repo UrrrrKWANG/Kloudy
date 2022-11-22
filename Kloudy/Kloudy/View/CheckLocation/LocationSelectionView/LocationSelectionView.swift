@@ -254,6 +254,7 @@ class LocationSelectionView: UIViewController {
         tableView.clipsToBounds = false
         tableView.register(SearchLocationCell.self, forCellReuseIdentifier: "SearchLocationCell")
         tableView.register(LocationTableViewCell.self, forCellReuseIdentifier: "locationCell")
+        tableView.register(CurrentLocationTableViewCell.self, forCellReuseIdentifier: "currentCell")
     }
     
     private func configureNothingSearchedLocationLabel() {
@@ -319,31 +320,38 @@ extension LocationSelectionView: UITableViewDataSource {
             cell.locationLabel.text = searchingLocation.locationString
             return cell
         case .check:
-            guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
-                return UITableViewCell()
-            }
-            cell.backgroundColor = UIColor.KColor.clear
-            cell.selectionStyle = .none
             
             if indexPath.row == 0 {
-                cell.locationNameLabel.text = "현재 위치"
                 if (currentStatus == .denied || currentStatus == .notDetermined || currentStatus == .restricted)
-//                if weatherData[indexPath.row].localWeather[0].localCode == "970304"
                 {
-                    cell.temperatureLabel.text = ""
-                    cell.diurnalTemperatureLabel.text = "위치 동의 >"
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as? CurrentLocationTableViewCell else {
+                        return UITableViewCell() }
+                    cell.locationNameLabel.text = "현재 위치"
+                    cell.backgroundColor = UIColor.KColor.clear
+                    cell.selectionStyle = .none
+                    return cell
                 } else {
-//                    cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
+                        return UITableViewCell()
+                    }
+                    cell.locationNameLabel.text = "현재 위치"
                     cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
                     cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
+                    cell.backgroundColor = UIColor.KColor.clear
+                    cell.selectionStyle = .none
+                    return cell
                 }
             } else {
+                guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
+                    return UITableViewCell()
+                }
                 cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
                 cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
                 cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
+                cell.backgroundColor = UIColor.KColor.clear
+                cell.selectionStyle = .none
+                return cell
             }
-            
-            return cell
         }
     }
     

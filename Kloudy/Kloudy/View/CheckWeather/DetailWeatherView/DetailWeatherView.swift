@@ -259,7 +259,7 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat =  "EEEEEE"
         formatter.locale = Locale(identifier: "ko_KR")
-        let convertStr = formatter.string(from:  Date() + TimeInterval(86400 * day))
+        let convertStr = formatter.string(from:  Date() + TimeInterval(86400 * day)).localized
         return convertStr
     }
     
@@ -267,7 +267,7 @@ extension Date {
         let formatter = DateFormatter()
         formatter.dateFormat = "a h시"
         formatter.locale = Locale(identifier: "ko_KR")
-        let convertStr = formatter.string(from:  Date() + TimeInterval(3600 * hour))
+        let convertStr = formatter.string(from:  Date() + TimeInterval(3600 * hour)).localized
         return convertStr
     }
     
