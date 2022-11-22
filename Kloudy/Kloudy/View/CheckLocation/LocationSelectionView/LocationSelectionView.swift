@@ -43,6 +43,7 @@ class LocationSelectionView: UIViewController {
     // Location 추가
     let additionalLocation = PublishSubject<Weather>()
     let deleteLocationCode = PublishSubject<String>()
+    let exchangeLocationIndex = PublishSubject<[Int]>()
     
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
@@ -467,6 +468,7 @@ extension LocationSelectionView: UITableViewDropDelegate {
         locationList.remove(at: sourceIndexPath.row) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
         CoreDataManager.shared.getLocationSequence(locationList: locationList)
+        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {

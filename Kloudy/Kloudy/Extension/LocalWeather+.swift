@@ -23,7 +23,6 @@ extension LocalWeather {
         dayMinTemperatureArray.append(currentTemperature)
         
         (0..<count).forEach {
-            print(Int(self.hourlyWeather[$0].temperature))
             dayMaxTemperatureArray.append(Int(self.hourlyWeather[$0].temperature))
             dayMinTemperatureArray.append(Int(self.hourlyWeather[$0].temperature))
         }

@@ -37,11 +37,12 @@ class CheckWeatherView: UIViewController {
     var dataViewControllers = [UIViewController]()
     
     var locations = [Location]()
-    
+    var updateWeathers = [Weather]()
     weak var delegate: LocationSelectionDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
 //        지역이 변경될 시 사용할 코드
         dataViewControllers = [UIViewController]()
         loadWeatherView()
@@ -75,6 +76,7 @@ class CheckWeatherView: UIViewController {
         let appDelegate = UIApplication.shared.delegate as? AppDelegate
         if let weathers = appDelegate?.weathers as? [Weather] {
             self.weathers = weathers
+            self.updateWeathers = weathers
         }
         bind()
         self.delegate = self.locationSelectionView
@@ -96,6 +98,14 @@ class CheckWeatherView: UIViewController {
                         return
                     }
                 }
+            })
+            .disposed(by: disposeBag)
+        
+        locationSelectionView.exchangeLocationIndex
+            .subscribe(onNext: {
+                let itemMove = self.weathers[$0[0]]
+                self.weathers.remove(at: $0[0])
+                self.weathers.insert(itemMove, at: $0[1])
             })
             .disposed(by: disposeBag)
     }
