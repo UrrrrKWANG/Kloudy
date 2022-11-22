@@ -22,9 +22,9 @@ class SettingView: UIViewController {
         [tableView, settingNavigationView].forEach { self.view.addSubview($0) }
         
         settingNavigationView.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(62)
-            $0.leading.trailing.equalToSuperview().inset(21)
-            $0.height.equalTo(24)
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.height.equalTo(40)
         }
         
         tableView.snp.makeConstraints {
