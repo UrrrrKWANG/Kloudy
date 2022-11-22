@@ -106,11 +106,11 @@ class FetchWeatherInformation: ObservableObject {
     }
     
     func calculateTime(timeStrings: [String]) -> String {
-        var hour = timeStrings[1]
+        let hour = timeStrings[1]
         let minute = timeStrings[2]
         
         if hour == "00" {
-            var tempMinute = Int(minute)!
+            let tempMinute = Int(minute)!
             if 0 <= tempMinute && tempMinute < 30 {
                 return "2330"
             }
@@ -140,7 +140,9 @@ class FetchWeatherInformation: ObservableObject {
     
     func parseCSVAt(url: URL) -> [CityInformation] {
         var cityList: [CityInformation] = []
-        var defaultIndexArray = ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
+        //TODO: 전날과 온도를 비교하는 지수 추가 이후 주석 사용
+//        var defaultIndexArray = ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
+        let defaultIndexArray = ["rain", "mask", "laundry", "car", "outer"]
         do {
             // url을 받은 data
             let data = try Data(contentsOf: url)
