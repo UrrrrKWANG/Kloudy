@@ -46,7 +46,7 @@ class CurrentLocationTableViewCell: UITableViewCell {
     
     var agreeButton: UIButton = {
         let button = UIButton()
-        let agreement = "위치 동의 "
+        let agreement = "위치 동의 ".localized
         let arrowImage = UIImage(systemName: "chevron.right")
         
         button.translatesAutoresizingMaskIntoConstraints = false
