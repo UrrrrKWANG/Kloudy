@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1131D4D1292D558E00D80547 /* CurrentLocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1131D4D0292D558E00D80547 /* CurrentLocationTableViewCell.swift */; };
 		113D3E312909817800A72594 /* LocationSelectionNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */; };
 		11E34889291CF179006EA966 /* LocationTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E34888291CF179006EA966 /* LocationTableViewCell.swift */; };
 		11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11E3488A2929BD8B006EA966 /* LocationData.swift */; };
@@ -200,6 +201,7 @@
 		08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
 		0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KloudyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
+		1131D4D0292D558E00D80547 /* CurrentLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationTableViewCell.swift; sourceTree = "<group>"; };
 		113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionNavigationView.swift; sourceTree = "<group>"; };
 		11E34888291CF179006EA966 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
 		11E3488A2929BD8B006EA966 /* LocationData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationData.swift; sourceTree = "<group>"; };
@@ -733,6 +735,7 @@
 			children = (
 				D537D2152907B34900271037 /* LocationSelectionCollectionViewCell.swift */,
 				11E34888291CF179006EA966 /* LocationTableViewCell.swift */,
+				1131D4D0292D558E00D80547 /* CurrentLocationTableViewCell.swift */,
 			);
 			path = LocationSelectionCollectionViewCell;
 			sourceTree = "<group>";
@@ -952,10 +955,6 @@
 				D59C95D8292D450D00A1FEE5 /* carwash_step3.json in Resources */,
 				D59C95E8292D454300A1FEE5 /* mask_step3.png in Resources */,
 				8BC8F80229011DB200EF83AE /* Assets.xcassets in Resources */,
-				D59C95212927D40C00A1FEE5 /* laundry_3.json in Resources */,
-				D59C95252927D40C00A1FEE5 /* laundry_4.json in Resources */,
-				D59C95392927D40C00A1FEE5 /* rain_step1.json in Resources */,
-				D59C953B2927D40C00A1FEE5 /* rain_step4.json in Resources */,
 				11EAFF7A292D41210091F8C7 /* CityInformation_KOR.csv in Resources */,
 				D59C95F3292D455000A1FEE5 /* outer_step4.png in Resources */,
 				D59C95FA292D455D00A1FEE5 /* rain_step2.json in Resources */,
@@ -1007,11 +1006,6 @@
 				D59C957A292A919C00A1FEE5 /* Localizable.strings in Resources */,
 				D59C9579292A919900A1FEE5 /* CityInformation.csv in Resources */,
 				11EAFF7B292D41210091F8C7 /* CityInformation_KOR.csv in Resources */,
-				D59C952C2927D40C00A1FEE5 /* outer_step5.png in Resources */,
-				D59C95462927D40C00A1FEE5 /* mask_step1.png in Resources */,
-				D59C953C2927D40C00A1FEE5 /* rain_step4.json in Resources */,
-				D59C95282927D40C00A1FEE5 /* outer_step2.png in Resources */,
-				D59C95342927D40C00A1FEE5 /* carwash_step1.json in Resources */,
 				D592C993290AED5B00C53F06 /* Lexend-Regular.ttf in Resources */,
 				BA0686A52926502700AB3849 /* Lexend-Light.ttf in Resources */,
 			);
@@ -1149,6 +1143,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1131D4D1292D558E00D80547 /* CurrentLocationTableViewCell.swift in Sources */,
 				2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */,
 				8BC8F7D229011DB200EF83AE /* CoreDataStack.swift in Sources */,
 				11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */,

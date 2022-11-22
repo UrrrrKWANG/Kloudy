@@ -384,3 +384,5 @@ Seogwipo-si="Seogwipo-si";
 "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음" = "Real-time observed data: May not be received depending on the local circumstances of the measuring station or the reception status of the data.";
 
 "CityInformation" = "CityInformation";
+
+"위치 동의 " = "Authorize GPS ";
