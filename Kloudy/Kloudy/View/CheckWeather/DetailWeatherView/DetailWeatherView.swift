@@ -14,6 +14,9 @@ class DetailWeatherView: UIViewController {
     
     var todayWeatherDatas = Observable.of([HourlyWeather]())
     var weekWeatherDatas = Observable.of([WeeklyWeather]())
+    
+    var temperatureList: [Int] = []
+    
     init(weatherDatas: Weather) {
         super.init(nibName: nil, bundle: nil)
         let todayWeatherDatas = Observable.of(weatherDatas.localWeather[0].hourlyWeather
@@ -21,6 +24,8 @@ class DetailWeatherView: UIViewController {
         let weekWeatherDatas = Observable.of(weatherDatas.localWeather[0].weeklyWeather)
         self.todayWeatherDatas = todayWeatherDatas
         self.weekWeatherDatas = weekWeatherDatas
+        
+        temperatureList = weatherDatas.localWeather[0].minMaxTemperature()
     }
     
     required init?(coder: NSCoder) {
@@ -47,7 +52,7 @@ class DetailWeatherView: UIViewController {
         scrollView.automaticallyAdjustsScrollIndicatorInsets = false
         return scrollView
     }()
-
+    
     lazy var todayCollectionView = makeCollectionView(direction: .horizontal, itemSizeWith: 65, itemSizeheight: 100, cell: TodayWeatherDataCell.self, identifier: TodayWeatherDataCell.identifier, contentInsetLeft: -2, contentInsetRight: 0, isScroll: true, minimumLineSpacing: 15)
     lazy var weekCollectionView = makeCollectionView(direction: .vertical, itemSizeWith: 348, itemSizeheight: 59, cell: WeekWeatherDataCell.self, identifier: WeekWeatherDataCell.identifier, contentInsetLeft: 0, contentInsetRight: 0, isScroll: false, minimumLineSpacing: 0)
     
@@ -209,7 +214,7 @@ class DetailWeatherView: UIViewController {
     }
     private func weekBind() {
         weekWeatherDatas.bind(to:
-                                            self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
+                                self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
         { index, datas, cell in
             if index == 0 {
                 cell.dayLabel.text = "지금"
@@ -217,13 +222,19 @@ class DetailWeatherView: UIViewController {
                 cell.dayLabel.text = Date().getDayOfWeek(day: index)
             }
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
+            
             if index == 0 {
-                cell.weatherCondition.image = UIImage(named: weatherCondition[1])
-                self.minMaxTemperatureLabel.text = String(Int(datas.minTemperature)) + "°" + " |  " + String(Int(datas.maxTemperature)) + "°"
+                self.minMaxTemperatureLabel.text = String(self.temperatureList[1]) + "°" + " |  " + String(self.temperatureList[2]) + "°"
+                cell.minTemperature.text = String(self.temperatureList[1]) + "°"
+                cell.maxTemperature.text = String(self.temperatureList[2]) + "°"
+            } else {
+                cell.minTemperature.text = String(Int(datas.minTemperature)) + "°"
+                cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
             }
             cell.weatherCondition.image = UIImage(named: weatherCondition[1])
-            cell.minTemperature.text = String(Int(datas.minTemperature)) + "°"
-            cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
+            
+            
+            
         }
         .disposed(by: disposeBag)
     }
@@ -240,7 +251,6 @@ class DetailWeatherView: UIViewController {
             return [""]
         }
     }
-    
 }
 
 extension Date {
@@ -257,6 +267,14 @@ extension Date {
         formatter.dateFormat = "a h시"
         formatter.locale = Locale(identifier: "ko_KR")
         let convertStr = formatter.string(from:  Date() + TimeInterval(3600 * hour))
+        return convertStr
+    }
+    
+    public func getTimeOfDay() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        formatter.locale = Locale(identifier: "ko_KR")
+        let convertStr = formatter.string(from:  Date())
         return convertStr
     }
 }

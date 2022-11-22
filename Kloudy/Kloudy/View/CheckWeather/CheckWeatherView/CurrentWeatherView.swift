@@ -10,7 +10,6 @@ import SnapKit
 
 class CurrentWeatherView: UIView {
     var localWeather:[LocalWeather] = []
-    var main:[Main] = []
     var hourlyWeather:[HourlyWeather] = []
     
     let locationLabel = UILabel()
@@ -33,7 +32,6 @@ class CurrentWeatherView: UIView {
     init(localWeather: [LocalWeather]) {
         super.init(frame: .zero)
         self.localWeather = localWeather
-        self.main = [Main](localWeather[0].main)
         self.hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
         addLayout()
         addData()
@@ -51,10 +49,11 @@ class CurrentWeatherView: UIView {
         configureUIImageView(view: maxTemperatureIcon, named: "arrow_up")
         configureUIImageView(view: minTemperatureIcon, named: "arrow_down")
         
+        let temperatureList = localWeather[0].minMaxTemperature()
         locationLabel.configureLabel(text: localWeather[0].localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
-        currentTemperatureLabel.configureLabel(text: "\(Int(hourlyWeather[2].temperature))°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
-        maxTemperatureLabel.configureLabel(text: "\(Int(main[0].dayMaxTemperature))°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
-        minTemperatureLabel.configureLabel(text: "\(Int(main[0].dayMinTemperature))°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        currentTemperatureLabel.configureLabel(text: "\(temperatureList[0])°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
+        maxTemperatureLabel.configureLabel(text: "\(temperatureList[1])°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        minTemperatureLabel.configureLabel(text: "\(temperatureList[2])°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
     }
     private func setLayout() {
         self.backgroundColor = UIColor.KColor.primaryBlue01
@@ -100,7 +99,7 @@ class CurrentWeatherView: UIView {
         view.image = UIImage(named: named)
         view.contentMode = .scaleAspectFit
     }
-    
+        
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }

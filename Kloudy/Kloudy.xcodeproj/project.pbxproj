@@ -156,6 +156,7 @@
 		E033613C290998470098CF76 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77C29011DB100EF83AE /* Weather.swift */; };
 		E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */; };
 		E036F3342928FCA200003E8A /* CurrentWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E036F3332928FCA200003E8A /* CurrentWeatherView.swift */; };
+		E0BEFB51292CFD7A00D16B69 /* LocalWeather+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */; };
 		E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE1273292231A1000AC3FC /* CALayer+.swift */; };
 		FAD9CEBADF8415C4EB78D146 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */; };
 /* End PBXBuildFile section */
@@ -330,6 +331,7 @@
 		D59C9581292AB47600A1FEE5 /* KloudyOuterIndexWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KloudyOuterIndexWidget.swift; sourceTree = "<group>"; };
 		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E036F3332928FCA200003E8A /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
+		E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalWeather+.swift"; sourceTree = "<group>"; };
 		E0FE1273292231A1000AC3FC /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
 		F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
 		FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -533,6 +535,7 @@
 				D558FECA2907D987002EEA22 /* UILabel+.swift */,
 				E0FE1273292231A1000AC3FC /* CALayer+.swift */,
 				11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */,
+				E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -1186,6 +1189,7 @@
 				D537D2162907B34900271037 /* LocationSelectionCollectionViewCell.swift in Sources */,
 				8B22A3CC29221CBD0079FA48 /* IndexStepView.swift in Sources */,
 				8BC8F7F729011DB200EF83AE /* CheckWeatherBasicNavigationView.swift in Sources */,
+				E0BEFB51292CFD7A00D16B69 /* LocalWeather+.swift in Sources */,
 				8B6409A12918F29500DC2962 /* SearchLocationViewModel.swift in Sources */,
 				BAFCEAF52920E65B0084F28E /* TodayWeatherDataCell.swift.swift in Sources */,
 				8BC8F7D729011DB200EF83AE /* Weather.swift in Sources */,
