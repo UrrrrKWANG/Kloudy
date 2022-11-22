@@ -322,24 +322,34 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             
             if indexPath.row == 0 {
-                guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as? CurrentLocationTableViewCell else {
-                    return UITableViewCell()
+                if (currentStatus == .denied || currentStatus == .notDetermined || currentStatus == .restricted)
+                {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as? CurrentLocationTableViewCell else {
+                        return UITableViewCell() }
+                    cell.locationNameLabel.text = "현재 위치"
+                    cell.backgroundColor = UIColor.KColor.clear
+                    cell.selectionStyle = .none
+                    return cell
+                } else {
+                    guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
+                        return UITableViewCell()
+                    }
+                    cell.locationNameLabel.text = "현재 위치"
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
+                    cell.backgroundColor = UIColor.KColor.clear
+                    cell.selectionStyle = .none
+                    return cell
                 }
-                cell.backgroundColor = UIColor.KColor.clear
-                cell.selectionStyle = .none
-                
-                return cell
             } else {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                     return UITableViewCell()
                 }
                 cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
                 cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
-                cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMinTemperature))° | \(Int(weatherData[indexPath.row].localWeather[0].main[0].dayMaxTemperature))°"
-                
+                cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                 cell.backgroundColor = UIColor.KColor.clear
                 cell.selectionStyle = .none
-                
                 return cell
             }
         }
@@ -412,7 +422,6 @@ extension LocationSelectionView: UITableViewDelegate {
                                     print("Error: ", error)
                                 }
                             }
-                            
                             .disposed(by: disposeBag)
                         
                     } else {
@@ -473,15 +482,19 @@ extension LocationSelectionView: UITableViewDropDelegate {
     }
     
     // 셀 위치 변경 함수
-    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-                
-        // +1로 해줘야할듯
-        let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
-        locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
-        locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
-        CoreDataManager.shared.getLocationSequence(locationList: locationList)
-        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
-    }
+//    func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
+//
+//        // +1로 해줘야할듯
+//        let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
+//        locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
+//        locationList.insert(itemMove, at: destinationIndexPath.row) //Re-insert back into array
+//        CoreDataManager.shared.getLocationSequence(locationList: locationList)
+//
+//        let itemMove2 = weatherData[sourceIndexPath.row]
+//        weatherData.remove(at: sourceIndexPath.row)
+//        weatherData.insert(itemMove2, at: destinationIndexPath.row)
+//        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
+//    }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
         if session.localDragSession != nil {

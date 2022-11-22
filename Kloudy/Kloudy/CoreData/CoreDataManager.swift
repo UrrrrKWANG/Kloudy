@@ -58,6 +58,7 @@ class CoreDataManager {
             print(error)
         }
     }
+    
     // https://github.com/PLREQ/PLREQ
     func getLocationSequence(locationList: [LocationData]) {
         let request = NSFetchRequest<Location>(entityName: "Location")
@@ -117,7 +118,6 @@ class CoreDataManager {
     // 지역을 삭제
     func locationDelete(location: NSManagedObject) {
         coreDataStack.managedContext.delete(location)
-
         coreDataStack.saveContext()
     }
 }
