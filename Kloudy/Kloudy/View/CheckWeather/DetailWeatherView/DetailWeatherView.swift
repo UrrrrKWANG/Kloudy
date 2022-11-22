@@ -176,6 +176,7 @@ class DetailWeatherView: UIViewController {
             $0.top.equalTo(dividingLineView.snp.bottom).offset(40)
             $0.leading.equalToSuperview().inset(20)
         }
+        
         weekCollectionView.snp.makeConstraints{
             $0.top.equalTo(labelInWeekCollectionView.snp.bottom).offset(12)
             $0.bottom.equalToSuperview()
