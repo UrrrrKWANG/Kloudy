@@ -52,7 +52,7 @@ class CurrentLocationTableViewCell: UITableViewCell {
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle(agreement, for: .normal)
         button.setImage(arrowImage, for: .normal)
-        button.setTitleColor(UIColor.KColor.gray02, for: .normal)
+        button.setTitleColor(UIColor.KColor.gray01, for: .normal)
         button.titleLabel?.font = UIFont.KFont.lexendMini
         button.setPreferredSymbolConfiguration(.init(pointSize: 10, weight: .regular, scale: .default), forImageIn: .normal)
         button.contentHorizontalAlignment = .center
