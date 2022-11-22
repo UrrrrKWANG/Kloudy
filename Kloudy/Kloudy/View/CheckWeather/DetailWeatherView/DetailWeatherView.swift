@@ -225,9 +225,9 @@ class DetailWeatherView: UIViewController {
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
             
             if index == 0 {
-                self.minMaxTemperatureLabel.text = String(self.temperatureList[1]) + "°" + " |  " + String(self.temperatureList[2]) + "°"
-                cell.minTemperature.text = String(self.temperatureList[1]) + "°"
-                cell.maxTemperature.text = String(self.temperatureList[2]) + "°"
+                self.minMaxTemperatureLabel.text = String(self.temperatureList[2]) + "°" + " |  " + String(self.temperatureList[1]) + "°"
+                cell.minTemperature.text = String(self.temperatureList[2]) + "°"
+                cell.maxTemperature.text = String(self.temperatureList[1]) + "°"
             } else {
                 cell.minTemperature.text = String(Int(datas.minTemperature)) + "°"
                 cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
