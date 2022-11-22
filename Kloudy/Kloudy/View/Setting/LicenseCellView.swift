@@ -15,6 +15,9 @@ class LicenseCellView: UITableViewCell {
         let licenseNameLabel = UILabel()
         licenseNameLabel.font = UIFont.KFont.appleSDNeoBold15
         licenseNameLabel.textColor = UIColor.KColor.black
+        licenseNameLabel.lineBreakMode = .byCharWrapping
+        licenseNameLabel.numberOfLines = 0
+        
         return licenseNameLabel
     }()
     
@@ -43,7 +46,7 @@ class LicenseCellView: UITableViewCell {
         
         licenseNameLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(20)
-            $0.leading.equalToSuperview().inset(16)
+            $0.leading.trailing.equalToSuperview().inset(16)
         }
         
         licenseContentLabel.snp.makeConstraints {
