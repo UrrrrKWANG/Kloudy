@@ -47,6 +47,12 @@ class UmbrellaIndexOdd(models.Model):
     precipitation_3h_max = models.FloatField()
     wind = models.FloatField()
 
+class UmbrellaHourlyOdd(models.Model):
+    umbrella_index = models.ForeignKey(UmbrellaIndexOdd, related_name="umbrella_hourly", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    time = models.IntegerField()
+    precipitation = models.FloatField()
+
 class MaskIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -142,6 +148,12 @@ class UmbrellaIndexEven(models.Model):
     precipitation_1h_max = models.FloatField()
     precipitation_3h_max = models.FloatField()
     wind = models.FloatField()
+
+class UmbrellaHourlyEven(models.Model):
+    umbrella_index = models.ForeignKey(UmbrellaIndexEven, related_name="umbrella_hourly", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    time = models.IntegerField()
+    precipitation = models.FloatField()
 
 class MaskIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="mask_index", on_delete=models.CASCADE)

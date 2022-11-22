@@ -36,7 +36,7 @@ def csv_reader():
     print('LOCATION DATA UPLOADED SUCCESSFULY!')
 
     # Weather에 아무것도 없으면 DB 처음 킨 것임으로 일단 한번 실행함.
-    if MainOdd.objects.count() == 0:
+    if WeatherEven.objects.count() == 0:
         time_interval_weather()
 
     return
@@ -44,9 +44,10 @@ def csv_reader():
 # 30분 혹은 00분 마다 DB에 저장.
 def time_interval_weather():
     print("HI. It's Update Time")
-
+    
     # 모든 지역을 갱신 혹은 만듬
     locations = Locations.objects.all()
+    print(locations)
     for location in locations:
         today, time = calculate_time()
         if time == "2330":
@@ -96,6 +97,7 @@ def time_interval_weather():
                     umbrella_index = UmbrellaIndexEven.objects.filter(code = location.code).first()
                 else:
                     umbrella_index = UmbrellaIndexOdd.objects.filter(code = location.code).first()
+                    
                 umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind = umbrella_info
                 # 갱신
                 umbrella_index.status               = umbrella_status
@@ -105,6 +107,8 @@ def time_interval_weather():
                 umbrella_index.wind                 = wind
                 umbrella_index.save()
 
+                save_umbrella_hourly(umbrella_index, rains, location.code)
+                
             # 마스크 지수
             mask_info = get_mask_index(air_jsonObject, flower_jsonObject)
             if mask_info != [0, 0, 0, 0]:
@@ -227,12 +231,13 @@ def time_interval_weather():
             weather_index_even.save()
 
             umbrella_info = get_umbrella_index(weather_24h_jsonObject)
-            umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind = umbrella_info
+            umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains = umbrella_info
             print(f'우산 지수: {umbrella_status}, {precipitation_24h}, {precipitation_1h_max}, {precipitation_3h_max}, {wind}')
             umbrella_index_odd = UmbrellaIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
             umbrella_index_even = UmbrellaIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
             umbrella_index_odd.save()
             umbrella_index_even.save()
+            save_umbrella_hourly(umbrella_index_odd, rains, location.code)
 
             mask_info = get_mask_index(air_jsonObject, flower_jsonObject)
             mask_status, pm25value, pm10value, pollen_index = mask_info
@@ -336,9 +341,9 @@ def cal_min_max_temperature(main_max_min_jsonObject):
 
 
 def get_umbrella_index(weather_24h_jsonObject):
-    
+    temp_rains = [0.0] * 24
     if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0, 0]
+        return [0, 0, 0, 0, 0, temp_rains]
 
     rains = []
     winds = []
@@ -367,12 +372,39 @@ def get_umbrella_index(weather_24h_jsonObject):
     umbrella_index = (P + (PMAX1 * 1.2) + (PMAX3 * 1.1)) / 3 + (P * (V/4))
     
     status = cal_umbrella_status(umbrella_index)
-    precipitaion_24h = P
-    precipitaion_1h_max = PMAX1
+    precipitation_24h = P
+    precipitation_1h_max = PMAX1
     precipitation_3h_max = PMAX3
     wind = V
 
-    return [status, precipitaion_24h, precipitaion_1h_max, precipitation_3h_max, wind]
+    return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
+
+def save_umbrella_hourly(umbrella_index, rains, code):
+    print("Save Umbrella Hourly")
+    time = int(datetime.datetime.now().strftime("%H"))
+    # 지금 처음이 아니면
+    if UmbrellaHourlyEven.objects.filter(code = code):
+        if time % 2 != 0:
+            umbrella_hourly_queries = UmbrellaHourlyEven.objects.filter(code = code).all()
+        else:
+            umbrella_hourly_queries = UmbrellaHourlyOdd.objects.filter(code = code).all()
+        for umbrella_hour_query in umbrella_hourly_queries:
+            try:
+                now_time = umbrella_hour_query.time
+                umbrella_hour_query.precipitation = rains[now_time]
+                umbrella_hour_query.save()
+            except:
+                return
+
+    else:
+        umbrella_index_odd = UmbrellaIndexOdd.objects.filter(code = code).first()
+        umbrella_index_even = UmbrellaIndexEven.objects.filter(code = code).first()
+        for i in range(len(rains)):
+            umbrella_hourly_odd = UmbrellaHourlyOdd.objects.create(umbrella_index = umbrella_index_odd, code = code, time = i, precipitation = rains[i])
+            umbrella_hourly_even = UmbrellaHourlyEven.objects.create(umbrella_index = umbrella_index_even, code = code, time = i, precipitation = rains[i])
+            umbrella_hourly_odd.save()
+            umbrella_hourly_even.save()
+
 
 # 30~ : 경보 특보 급(4) / ~30 : 많이(3) / ~15 : 적당히(2) / ~3 : 조금(1) / 0 : 안 써도 된다.(0)
 def cal_umbrella_status(umbrella_index):
@@ -497,6 +529,7 @@ def get_laundry_index(weather_24h_jsonObject):
             max_temperature = float(obj.get('fcstValue'))
         elif obj.get('category') == 'REH':
             humidities.append(float(obj.get('fcstValue')))
+        
         elif obj.get('category') == 'PTY':
             if obj.get('fcstValue') == "1":
                 rainy += 1
@@ -573,7 +606,7 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
         return [0, 0, 0, 0, 0, 0, "", 0, 0]
 
     # 오늘 날씨 => 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
-    day_min_temperature = 0.0
+    day_max_temperature = 0.0
     daily_weathers = []
     daily_precipitations = []
     # 내일 날씨 => 0: "맑음", 1: "비", 2: "비/눈, 3: "구름 많음", 4: "흐림", 5: "눈"
@@ -662,7 +695,7 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
     # 오늘 날씨 상태
     daily_precipitation = 0 if sum(daily_precipitations) == 0 else sum(daily_precipitations) / len(daily_precipitations)
     tomorrow_precipitation = 0 if sum(tomorrow_precipitations) == 0 else sum(tomorrow_precipitations) / len(tomorrow_precipitations)
-    weather_3Am7pm = "7일 내에 비 예보가 없어요." if when_is_rainy == 9 else f"가장 가까운 비 예보는 {when_is_rainy}일 후예요."
+    weather_3Am7pm = "예보없음" if when_is_rainy == 9 else f"{when_is_rainy}일 후"
     pollen_index = max(flower_qualities)
     # 0 : 세차하기 좋음, 1: 세차 괜찮음, 2: 세차 미루기, 3: 세차 하지마
     status = cal_carwash_status(when_is_rainy, day_max_temperature, pm10grade, pollen_index)
