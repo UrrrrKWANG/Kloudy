@@ -323,7 +323,7 @@ extension LocationSelectionView: UITableViewDataSource {
 //            } else {
 //                cell.locationNameLabel.text = locationList[indexPath.row - 1].city
 //            }
-            cell.locationNameLabel.text = locationList[indexPath.row].city
+            cell.locationNameLabel.text = locationList[indexPath.row].city.localized
             return cell
         }
     }

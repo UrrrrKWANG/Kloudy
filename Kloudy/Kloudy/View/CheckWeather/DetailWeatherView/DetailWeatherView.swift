@@ -254,7 +254,7 @@ extension Date {
     
     public func getTimeOfDay(hour: Int) -> String {
         let formatter = DateFormatter()
-        formatter.dateFormat = "a h" + "시".localized
+        formatter.dateFormat = "a h시"
         formatter.locale = Locale(identifier: "ko_KR")
         let convertStr = formatter.string(from:  Date() + TimeInterval(3600 * hour))
         return convertStr

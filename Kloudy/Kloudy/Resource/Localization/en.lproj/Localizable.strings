@@ -371,15 +371,17 @@ Seogwipo-si="Seogwipo-si";
 "확인" = "Confirm";
 "검색된 지역이 없습니다." = "No Location Found";
 
-"지역을 검색해 보세요" = "Search for a location";
+"지역을 검색해 보세요" = "Search";
 
 
 "라이센스" = "License";
-"버전정보" = "Version Status";
+"버전정보" = "Version";
 "최신 버전입니다" = "Newest Version";
-"위치 서비스 약관 동의" = "Authorize GPS to Use Location Services";
+"위치 서비스 약관 동의" = "Authorize GPS";
 
 "설정" = "Settings";
 
 "출처 : 기상청 / 에어코리아" = "Source of Weather Data: Korea Meteorological Administration / Air Korea";
 "데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음" = "Real-time observed data: May not be received depending on the local circumstances of the measuring station or the reception status of the data.";
+
+"CityInformation" = "CityInformation";

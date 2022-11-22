@@ -39,7 +39,7 @@ class LocationTableViewCell: UITableViewCell {
     
     lazy var locationNameLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.gray01)
+        label.configureLabel(text: locationName.localized, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.gray01)
         return label
     }()
     
