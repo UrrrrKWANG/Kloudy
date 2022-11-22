@@ -24,12 +24,18 @@ class CheckWeatherBasicNavigationView: UIView {
     override func layoutSubviews() {
         super.layoutSubviews()
         self.backgroundColor = UIColor.KColor.white
-        [settingButton, locationButton, bellButton].forEach {
+        //TODO: 노티 작업 이후 사용하면 됩니다
+//        [settingButton, locationButton, bellButton].forEach {
+//            self.addSubview($0)
+//        }
+        
+        [settingButton, locationButton].forEach {
             self.addSubview($0)
         }
+        
         configureSettingButton()
         configureLocationButton()
-        configureBellButton()
+//        configureBellButton()
     }
     
     private func configureBellButton() {
