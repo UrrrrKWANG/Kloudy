@@ -42,7 +42,7 @@ enum IndexType {
     
     var stepImageString: [String] {
         switch self {
-        case .unbrella: return ["rain_step1", "rain_step2", "rain_step3", "rain_step4", ""]
+        case .unbrella: return ["rain_step1", "rain_step2", "rain_step3", "rain_step4", "rain_step4"]
         case .mask: return ["mask_step1", "mask_step2", "mask_step3", "mask_step4"]
         case .laundry: return ["laundry_4", "laundry_3", "laundry_2", "laundry_1"]
         case .outer: return ["outer_step1", "outer_step2", "outer_step3", "outer_step4", "outer_step5"]
