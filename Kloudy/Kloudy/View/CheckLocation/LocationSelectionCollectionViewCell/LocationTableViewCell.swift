@@ -21,7 +21,7 @@ class LocationTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-    var locationName: String = "현재 위치"
+    var locationName: String = "현재 위치".localized
     var temperature: Int = 0
     var diurnalTemperature: [Int] = [0, 0]
     static let identifier = "locationCell"
@@ -39,7 +39,7 @@ class LocationTableViewCell: UITableViewCell {
     
     lazy var locationNameLabel: UILabel = {
         let label = UILabel()
-        label.configureLabel(text: locationName, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.gray01)
+        label.configureLabel(text: locationName.localized, font: UIFont.KFont.appleSDNeoBoldMedium, textColor: UIColor.KColor.gray01)
         return label
     }()
     

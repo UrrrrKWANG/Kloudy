@@ -59,7 +59,7 @@ class IndexStepView: UIView {
         
         valueString
             .subscribe(onNext: {
-                self.configureStepValueLabel(valueText: "지수 단계: \($0)")
+                self.configureStepValueLabel(valueText: "지수 단계".localized + ": \($0)")
             })
             .disposed(by: disposeBag)
         

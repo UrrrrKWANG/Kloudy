@@ -50,7 +50,7 @@ class LocationSearchBar: UISearchBar {
    }
     
     private func attribute() {
-        self.placeholder = "지역을 검색해 보세요"
+        self.placeholder = "지역을 검색해 보세요".localized
         self.setImage(UIImage(), for: .search, state: .normal)
         self.setImage(UIImage(), for: .clear, state: .normal)
         self.searchBarStyle = .prominent
