@@ -56,13 +56,8 @@ class ViewController: UIViewController {
         configure()
         myAnimation()
         
-        let fetchDataGroup = DispatchGroup()
-        fetchDataGroup.enter()
-        DispatchQueue.main.async(group: fetchDataGroup) {
-            self.fetchWeatherDatas()
-            fetchDataGroup.leave()
-        }
-        fetchDataGroup.notify(queue: DispatchQueue.main) {
+        self.fetchWeatherDatas()
+        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
             let checkWeatherView = CheckWeatherView()
             self.navigationController?.pushViewController(checkWeatherView, animated: false)
         }

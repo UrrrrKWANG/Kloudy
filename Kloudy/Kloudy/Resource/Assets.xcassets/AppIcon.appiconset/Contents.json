@@ -29,22 +29,14 @@
       "size" : "29x29"
     },
     {
-<<<<<<< HEAD
       "filename" : "76x76.png",
-=======
-      "filename" : "Icon-76.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "2x",
       "size" : "38x38"
     },
     {
-<<<<<<< HEAD
       "filename" : "114.png",
-=======
-      "filename" : "Icon-114.png",
->>>>>>> df9579e0694a94c7efbef83bf86978b3f117fa8a
       "idiom" : "universal",
       "platform" : "ios",
       "scale" : "3x",
