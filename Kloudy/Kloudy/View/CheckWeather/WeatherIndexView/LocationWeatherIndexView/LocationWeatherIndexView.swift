@@ -39,13 +39,13 @@ class LocationWeatherIndexView: UIView {
     let sentIndexArray = PublishSubject<[IndexType]>()
     let sentWeather = PublishSubject<Weather>()
     
-//    var indexName: IndexType?
+    //    var indexName: IndexType?
     var sentIndexName: IndexType?
     var indexName = PublishSubject<IndexType>()
     var transedIndexName: String = ""
     var indexStatus = PublishSubject<Int>()
     var imageOrLottieName: String = ""
-
+    var compareIndexText = ""
     
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init() {
@@ -66,6 +66,10 @@ class LocationWeatherIndexView: UIView {
         sentWeather
             .subscribe(onNext: {
                 self.weathers = $0
+                if self.sentIndexName == .unbrella || self.sentIndexName == .temperatureGap {
+                    self.makeCompareIndexText(compareIndex: $0.localWeather[0].weatherIndex[0].compareIndex[0])
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
+                }
             })
             .disposed(by: disposeBag)
         
@@ -79,10 +83,16 @@ class LocationWeatherIndexView: UIView {
         indexName
             .subscribe(onNext: {
                 self.transedIndexName = self.transIndexName(indexName: $0)
-                self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: "하루종일 내림")
+                self.sentIndexName = $0
                 self.indexStatus.onNext(self.findStatus(indexName: $0))
                 self.changeTextView(indexType: $0)
-                self.sentIndexName = $0
+                if $0 == .unbrella || $0 == .temperatureGap {
+                    guard let weathers = self.weathers else { return }
+                    self.makeCompareIndexText(compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
+                } else {
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: "")
+                }
             })
             .disposed(by: disposeBag)
         
@@ -96,6 +106,29 @@ class LocationWeatherIndexView: UIView {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
+    }
+    
+    func makeCompareIndexText(compareIndex: CompareIndex) {
+        let compareMaxTemperature = Int(compareIndex.todayMaxtemperature) - Int(compareIndex.yesterdayMaxTemperature)
+        let compareMinTemperature = Int(compareIndex.todayMinTemperature) - Int(compareIndex.yesterdayMinTemperature)
+        
+        if compareMaxTemperature > 2 {
+            compareIndexText = "어제보다 최고 기온이 \(compareMaxTemperature)°C 높고 \n "
+        } else if compareMaxTemperature < -2 {
+            compareIndexText = "어제보다 최고 기온이 \(compareMaxTemperature)°C 낮고 \n "
+        } else {
+            compareIndexText = "최고 기온은 어제와 비슷하며 \n "
+        }
+        if compareMinTemperature > 2 {
+            compareIndexText += "최저 기온은 \(compareMinTemperature)°C 높습니다."
+        } else if compareMinTemperature < -2 {
+            compareIndexText += "최저 기온은 \(compareMinTemperature)°C 낮습니다."
+        } else {
+            compareIndexText += "최저 기온은 비슷합니다."
+        }
+        if compareIndexText == "최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다." {
+            compareIndexText = "어제와 기온이 비슷합니다"
+        }
     }
     
     func makeLottieView(name: String) -> LottieAnimationView {
@@ -133,8 +166,8 @@ class LocationWeatherIndexView: UIView {
         if textContainerView.subviews.count != 0 {
             textContainerView.subviews[0].removeFromSuperview()
         }
-        if indexType == .unbrella {
-        textContainerView.addSubview(weatherIndexStatusLabel)
+        if indexType == .unbrella || indexType == .temperatureGap {
+            textContainerView.addSubview(weatherIndexStatusLabel)
             weatherIndexStatusLabel.snp.makeConstraints {
                 $0.edges.equalToSuperview()
             }
@@ -176,7 +209,7 @@ class LocationWeatherIndexView: UIView {
             $0.trailing.equalToSuperview().inset(26)
             $0.bottom.equalToSuperview().inset(74)
         }
-      
+        
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview().inset(16)
@@ -192,11 +225,35 @@ class LocationWeatherIndexView: UIView {
     }
     
     func configureView(indexNameLabel: String, indexStatusLabel: String) {
-        weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
-        weatherIndexStatusLabel.configureLabel(text: indexStatusLabel, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01) // 색상, 폰트 추가 필요
         weatherIndexStatusLabel.textAlignment = .center
         weatherIndexStatusLabel.layer.cornerRadius = 10
-        weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue06.cgColor
+        weatherIndexStatusLabel.numberOfLines = 2
+        weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
+        
+        if indexNameLabel == "우산 지수" {
+            weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
+            weatherIndexStatusLabel.configureLabel(text: "하루종일 내림", font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
+            
+            textContainerView.snp.remakeConstraints {
+                $0.leading.equalToSuperview().inset(16)
+                $0.bottom.equalToSuperview().inset(14)
+                $0.height.equalTo(36)
+            }
+        }
+        if indexNameLabel == "일교차 지수" {
+            weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.gray05.cgColor
+            weatherIndexStatusLabel.configureLabel(text: indexStatusLabel, font: UIFont.KFont.appleSDNeoSemiBold15, textColor: UIColor.KColor.black)
+            textContainerView.snp.remakeConstraints {
+                $0.leading.equalToSuperview().inset(16)
+                $0.bottom.equalToSuperview().inset(14)
+                if indexStatusLabel.count == 13 {
+                    $0.height.equalTo(36)
+                } else {
+                    $0.width.equalTo(251)
+                    $0.height.equalTo(60)
+                }
+            }
+        }
     }
     
     func findImageOrLottieName(indexName: IndexType, status: Int) -> String {
@@ -273,7 +330,7 @@ class LocationWeatherIndexView: UIView {
             return "일교차 지수"
         }
     }
-
+    
     func findInternalIndexColorAndImage(indexName: IndexType, isIndexOn: [InternalIndexType], pathIndex: Int) -> UIImageView {
         let uiImageView = UIImageView()
         let foundElement = (indexName, pathIndex)
@@ -311,8 +368,8 @@ class LocationWeatherIndexView: UIView {
             }
         case .mask :
             if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
-                    isIndexOn.append(.yellowDust)
-                    break
+                isIndexOn.append(.yellowDust)
+                break
             }
             if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 2 {
                 isIndexOn.append(.pollen)
@@ -325,8 +382,8 @@ class LocationWeatherIndexView: UIView {
                 isIndexOn.append(.pollen)
             }
             if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
-                    isIndexOn.append(.yellowDust)
-                    break
+                isIndexOn.append(.yellowDust)
+                break
             }
         case .outer :
             if weathers?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0 <= -12 {
@@ -383,7 +440,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-      //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
+        //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
     }
 }
 
@@ -421,7 +478,7 @@ class WeatherIndexStatusLabel: UILabel {
         self.init()
         self.padding = padding
     }
-
+    
     override func drawText(in rect: CGRect) {
         super.drawText(in: rect.inset(by: padding))
     }
@@ -429,7 +486,7 @@ class WeatherIndexStatusLabel: UILabel {
         var contentSize = super.intrinsicContentSize
         contentSize.height += padding.top + padding.bottom
         contentSize.width += padding.left + padding.right
-
+        
         return contentSize
     }
 }
