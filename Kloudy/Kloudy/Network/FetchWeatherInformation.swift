@@ -162,6 +162,7 @@ class FetchWeatherInformation: ObservableObject {
     
     func loadCityListFromCSV() -> [CityInformation] {
         let path = Bundle.main.path(forResource: "CityInformation".localized, ofType: "csv")!
+        
         return parseCSVAt(url: URL(fileURLWithPath: path))
     }
 }
