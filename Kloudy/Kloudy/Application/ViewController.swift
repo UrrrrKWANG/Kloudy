@@ -148,7 +148,6 @@ class ViewController: UIViewController {
         
         let locations = CoreDataManager.shared.fetchLocations()
         weathers = [Weather](repeating: dummyData , count: locations.count + 1)
-        print(locations)
         
         if locations.count == 0 {
             if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {

@@ -1419,6 +1419,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kloudy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "구르미";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1457,6 +1458,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kloudy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "구르미";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
