@@ -44,7 +44,10 @@ class CheckWeatherView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
-//        지역이 변경될 시 사용할 코드
+        // 현재 위치가 동의되어 있는 경우
+//        fetchCurrentLocationWeatherData()
+        
+        // 지역이 변경될 시 사용할 코드
         for i in 0..<dataViewControllers.count {
             dataViewControllers[i].viewDidDisappear(false)
         }
@@ -79,11 +82,11 @@ class CheckWeatherView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-        if let weathers = appDelegate?.weathers {
-            self.weathers = weathers
-            self.updateWeathers = weathers
-        }
+//        let appDelegate = UIApplication.shared.delegate as? AppDelegate
+//        if let weathers = appDelegate?.weathers {
+//            self.weathers = weathers
+//            self.updateWeathers = weathers
+//        }
         bind()
         self.delegate = self.locationSelectionView
         // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
