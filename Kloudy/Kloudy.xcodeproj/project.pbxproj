@@ -128,6 +128,8 @@
 		D59C95FC292D455D00A1FEE5 /* rain_step1.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C95F8292D455D00A1FEE5 /* rain_step1.json */; };
 		D59C95FD292D455E00A1FEE5 /* rain_step4.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C95F9292D455D00A1FEE5 /* rain_step4.json */; };
 		D59C95FF292D457500A1FEE5 /* carwash_step2.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C95FE292D457500A1FEE5 /* carwash_step2.json */; };
+		D59C9603292F988D00A1FEE5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D59C9606292F988D00A1FEE5 /* InfoPlist.strings */; };
+		D59C9604292F988D00A1FEE5 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = D59C9606292F988D00A1FEE5 /* InfoPlist.strings */; };
 		E0336133290997FE0098CF76 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Font+.swift */; };
 		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
 		E0336135290998030098CF76 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Color+.swift */; };
@@ -306,6 +308,8 @@
 		D59C95F8292D455D00A1FEE5 /* rain_step1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rain_step1.json; sourceTree = "<group>"; };
 		D59C95F9292D455D00A1FEE5 /* rain_step4.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rain_step4.json; sourceTree = "<group>"; };
 		D59C95FE292D457500A1FEE5 /* carwash_step2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carwash_step2.json; sourceTree = "<group>"; };
+		D59C9605292F988D00A1FEE5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		D59C9607292F989000A1FEE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E036F3332928FCA200003E8A /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
 		E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalWeather+.swift"; sourceTree = "<group>"; };
@@ -366,6 +370,7 @@
 				22E36BDD2928AD25000ACD33 /* CityInformation.csv */,
 				11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */,
 				2207250D291A31DB00E01508 /* Localizable.strings */,
+				D59C9606292F988D00A1FEE5 /* InfoPlist.strings */,
 			);
 			path = Localization;
 			sourceTree = "<group>";
@@ -951,6 +956,7 @@
 				D59C95FF292D457500A1FEE5 /* carwash_step2.json in Resources */,
 				D59C95E9292D454300A1FEE5 /* mask_step2.png in Resources */,
 				22E36BDE2928AD25000ACD33 /* CityInformation.csv in Resources */,
+				D59C9603292F988D00A1FEE5 /* InfoPlist.strings in Resources */,
 				BA0686A22926502700AB3849 /* Lexend-Light.ttf in Resources */,
 				D59C95F1292D455000A1FEE5 /* outer_step1.png in Resources */,
 				D59C95DA292D450D00A1FEE5 /* carwash_step1.json in Resources */,
@@ -990,6 +996,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8BC8F81A29011E3400EF83AE /* Assets.xcassets in Resources */,
+				D59C9604292F988D00A1FEE5 /* InfoPlist.strings in Resources */,
 				D59C957A292A919C00A1FEE5 /* Localizable.strings in Resources */,
 				D59C9579292A919900A1FEE5 /* CityInformation.csv in Resources */,
 				11EAFF7B292D41210091F8C7 /* CityInformation_KOR.csv in Resources */,
@@ -1284,6 +1291,15 @@
 				2207250E291A322A00E01508 /* ko */,
 			);
 			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+		D59C9606292F988D00A1FEE5 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				D59C9605292F988D00A1FEE5 /* ko */,
+				D59C9607292F989000A1FEE5 /* en */,
+			);
+			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

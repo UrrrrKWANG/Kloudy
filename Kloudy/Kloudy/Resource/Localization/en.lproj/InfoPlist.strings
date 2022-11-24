@@ -1,0 +1,11 @@
+/* 
+  InfoPlist.strings
+  Kloudy
+
+  Created by 이주화 on 2022/11/24.
+  
+*/
+
+CFBundleDisplayName = "Kloudy";
+NSLocationAlwaysAndWhenInUseUsageDescription = "Location information is required to know the weather in the area where you are located.";
+NSLocationWhenInUseUsageDescription = "Location information is required to know the weather in the area where you are located.";
