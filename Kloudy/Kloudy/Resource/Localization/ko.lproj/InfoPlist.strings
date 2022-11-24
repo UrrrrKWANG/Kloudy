@@ -7,5 +7,5 @@
 */
 
 CFBundleDisplayName = "구르미";
-NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
-NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
+NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기 위해서는 위치 정보가 필요합니다.";
+NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기 위해서는 위치정보가 필요합니다.";

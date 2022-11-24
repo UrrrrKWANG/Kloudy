@@ -7,5 +7,5 @@
 */
 
 CFBundleDisplayName = "Kloudy";
-NSLocationAlwaysAndWhenInUseUsageDescription = "You need location information to know the weather in the area where you are located.";
-NSLocationWhenInUseUsageDescription = "You need location information to know the weather in the area where you are located.";
+NSLocationAlwaysAndWhenInUseUsageDescription = "Location information is required to know the weather in the area where you are located.";
+NSLocationWhenInUseUsageDescription = "Location information is required to know the weather in the area where you are located.";
