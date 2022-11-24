@@ -38,6 +38,7 @@
 		8B22A3CC29221CBD0079FA48 /* IndexStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3CB29221CBD0079FA48 /* IndexStepView.swift */; };
 		8B22A3D4292646270079FA48 /* CityWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D3292646270079FA48 /* CityWeatherAPI.swift */; };
 		8B22A3D6292646480079FA48 /* CityWeatherNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D5292646480079FA48 /* CityWeatherNetwork.swift */; };
+		8B614128292D80260039AC6B /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */; };
 		8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409822918DA5A00DC2962 /* SearchLocationView.swift */; };
 		8B6409852918DB9700DC2962 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409842918DB9700DC2962 /* CoreDataManager.swift */; };
 		8B64098D2918EFC900DC2962 /* WeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B64098C2918EFC900DC2962 /* WeatherIndexView.swift */; };
@@ -81,7 +82,6 @@
 		8BC8F81D29011E3400EF83AE /* kloudyWidget.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */; };
 		8BC8F82029011E3400EF83AE /* kloudyWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 8BC8F80F29011E3300EF83AE /* kloudyWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; };
-		8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 8BC8F81129011E3300EF83AE /* WidgetKit.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BA0686A22926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
 		BA0686A32926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
 		BA0686A42926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
@@ -128,7 +128,6 @@
 		D59C95FC292D455D00A1FEE5 /* rain_step1.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C95F8292D455D00A1FEE5 /* rain_step1.json */; };
 		D59C95FD292D455E00A1FEE5 /* rain_step4.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C95F9292D455D00A1FEE5 /* rain_step4.json */; };
 		D59C95FF292D457500A1FEE5 /* carwash_step2.json in Resources */ = {isa = PBXBuildFile; fileRef = D59C95FE292D457500A1FEE5 /* carwash_step2.json */; };
-		DE5612E53E6EFF41A23C78AA /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */; };
 		E0336133290997FE0098CF76 /* Font+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76D29011DB100EF83AE /* Font+.swift */; };
 		E0336134290998010098CF76 /* FetchWeatherInformation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76E29011DB100EF83AE /* FetchWeatherInformation.swift */; };
 		E0336135290998030098CF76 /* Color+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F76F29011DB100EF83AE /* Color+.swift */; };
@@ -180,17 +179,6 @@
 				8BC8F82029011E3400EF83AE /* kloudyWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		8BC8F82729011E4400EF83AE /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				8BC8F82629011E4400EF83AE /* WidgetKit.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXCopyFilesBuildPhase section */
@@ -355,9 +343,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B614128292D80260039AC6B /* Pods_kloudyWidgetExtension.framework in Frameworks */,
 				8BC8F81429011E3300EF83AE /* SwiftUI.framework in Frameworks */,
 				8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */,
-				DE5612E53E6EFF41A23C78AA /* Pods_kloudyWidgetExtension.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -887,7 +875,6 @@
 				8BC8F80B29011E3300EF83AE /* Sources */,
 				8BC8F80C29011E3300EF83AE /* Frameworks */,
 				8BC8F80D29011E3300EF83AE /* Resources */,
-				8BC8F82729011E4400EF83AE /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1432,6 +1419,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kloudy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "구르미";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -1470,6 +1458,7 @@
 				"DEVELOPMENT_TEAM[sdk=iphoneos*]" = V8U96P27D9;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = Kloudy/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "구르미";
 				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "사용자가 위치한 지역의 날씨를 알기위해서는 위치정보가 필요합니다.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
