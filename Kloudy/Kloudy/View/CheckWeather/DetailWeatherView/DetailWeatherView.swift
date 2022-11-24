@@ -115,6 +115,7 @@ class DetailWeatherView: UIViewController {
     }()
     
     override func viewDidLoad() {
+        self.view.backgroundColor = .brown
         self.view.backgroundColor = UIColor.KColor.white
         addLayout()
         setUplayout()
