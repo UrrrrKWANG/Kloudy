@@ -127,9 +127,11 @@ class CheckWeatherView: UIViewController {
             
             if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
             let location = weathers[locationIndex]
-            let num = InternalCheckWeatherPageView()
-            num.weathers = self.weathers[locationIndex]
-            dataViewControllers.append(num)
+            let internalCheckWeatherPageView = InternalCheckWeatherPageView()
+          
+            internalCheckWeatherPageView.weathers = self.weathers[locationIndex]
+            internalCheckWeatherPageView.sentWeather.onNext(location)
+            dataViewControllers.append(internalCheckWeatherPageView)
         }
     }
     
@@ -149,7 +151,7 @@ class CheckWeatherView: UIViewController {
         pageViewController.view.snp.makeConstraints {
             $0.top.equalTo(checkWeatherBasicNavigationView.snp.bottom)
             $0.leading.trailing.equalToSuperview()
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom)
+            $0.bottom.equalToSuperview()
         }
     }
     

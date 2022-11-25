@@ -113,13 +113,13 @@ class DetailWeatherView: UIViewController {
         uiView.backgroundColor = UIColor.KColor.primaryBlue06
         return uiView
     }()
-    
-    override func viewDidLoad() {
-        self.view.backgroundColor = .brown
-        self.view.backgroundColor = UIColor.KColor.white
+    override func viewWillAppear(_ animated: Bool) {
         addLayout()
         setUplayout()
         bind()
+    }
+    override func viewDidLoad() {
+        self.view.backgroundColor = UIColor.KColor.white
     }
     
     func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int, isScroll: Bool, minimumLineSpacing: CGFloat) -> UICollectionView {

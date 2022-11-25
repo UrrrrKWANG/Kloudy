@@ -13,12 +13,11 @@ import CoreLocation
 
 class InternalCheckWeatherPageView: UIViewController {
     let locationIndex = Int()
-    let checkWeatherView = CheckWeatherView()
     let localWeather =  [LocalWeather]?.self
     var dataViewControllers = [UIViewController]()
     let pageControl = UIPageControl()
     var weathers: Weather?
-    let sentWeather = PublishSubject<Weather>()
+    lazy var sentWeather = PublishSubject<Weather>()
     let disposeBag = DisposeBag()
     let initialPage = 0
     lazy var pageViewController: UIPageViewController = {
@@ -40,7 +39,6 @@ class InternalCheckWeatherPageView: UIViewController {
             dataViewControllers[i].viewDidDisappear(false)
         }
         dataViewControllers = [UIViewController]()
-      
     }
     override func viewDidLoad() {
         
@@ -62,15 +60,20 @@ class InternalCheckWeatherPageView: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         view.backgroundColor = UIColor.KColor.white
+        
+        
+        sentWeather.debug().subscribe().disposed(by: disposeBag)
+        
     }
     func loadWeatherView() {
         let location = self.weathers
-        let localWeather = [LocalWeather](location!.localWeather)
+        lazy var localWeather = [LocalWeather](location!.localWeather)
         let main = [Main](localWeather[0].main)
         lazy var num: UIViewController = {
             let vc = UIViewController()
             let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
             let weatherIndexView = WeatherIndexView()
+            
             let currentWeatherImage: UIImageView = {
                 let currentWeatherImage = UIImageView()
                 currentWeatherImage.contentMode = .scaleAspectFit
@@ -106,7 +109,7 @@ class InternalCheckWeatherPageView: UIViewController {
                 $0.leading.trailing.equalToSuperview().inset(20)
                 $0.height.equalTo(385)
             }
-            
+    
             // CheckWeatherView 의 Lottie 선택 시 WeatherDetailIndexView 로 city 와 indexType 전달
             weatherIndexView.indexNameString
                 .subscribe(
@@ -115,7 +118,11 @@ class InternalCheckWeatherPageView: UIViewController {
                 })
                 .disposed(by: disposeBag)
             
-            
+            sentWeather
+                .subscribe(onNext: {
+                    weatherIndexView.weathers = $0
+                })
+                .disposed(by: disposeBag)
             
             
             weatherIndexView.locationWeatherIndexView.indexViewTapped
@@ -159,10 +166,8 @@ class InternalCheckWeatherPageView: UIViewController {
     private func configurePageViewController() {
         pageViewController.view.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            
         }
     }
-    
 }
 
 

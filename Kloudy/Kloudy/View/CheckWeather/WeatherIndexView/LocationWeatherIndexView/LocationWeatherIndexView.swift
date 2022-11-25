@@ -76,12 +76,11 @@ class LocationWeatherIndexView: UIView {
             .disposed(by: disposeBag)
         
         indexName
-            .subscribe(onNext: {
+            .subscribe(onNext: { [self] in
                 self.transedIndexName = self.transIndexName(indexName: $0)
                 self.sentIndexName = $0
                 self.indexStatus.onNext(self.findStatus(indexName: $0))
                 self.changeTextView(indexType: $0)
-                print($0 , "indexType")
                 guard let weathers = self.weathers else {
                     print("return")
                     return }
