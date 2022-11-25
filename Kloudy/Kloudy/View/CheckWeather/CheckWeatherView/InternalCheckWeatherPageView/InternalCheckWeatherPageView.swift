@@ -36,15 +36,16 @@ class InternalCheckWeatherPageView: UIViewController {
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        for i in 0..<dataViewControllers.count {
+            dataViewControllers[i].viewDidDisappear(false)
+        }
+        dataViewControllers = [UIViewController]()
       
     }
     override func viewDidLoad() {
         
         super.viewDidLoad()
-        for i in 0..<dataViewControllers.count {
-            dataViewControllers[i].viewDidDisappear(false)
-        }
-        dataViewControllers = [UIViewController]()
+
         
         addChild(pageViewController)
         loadWeatherView()
