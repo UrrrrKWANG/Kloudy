@@ -174,7 +174,7 @@ class LocationSelectionView: UIViewController {
             locationFromCoreData = CoreDataManager.shared.fetchLocations()
         }
         changeCancelButtonState(isSearching)
-//        tableView.reloadData()
+        tableView.reloadData()
     }
     
     private func changeCancelButtonState(_ isSearching: Bool) {
