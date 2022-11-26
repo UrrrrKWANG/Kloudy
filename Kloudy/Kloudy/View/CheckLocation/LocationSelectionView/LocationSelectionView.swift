@@ -458,7 +458,7 @@ extension LocationSelectionView: UITableViewDelegate {
 
 extension LocationSelectionView: UITableViewDragDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-            return [UIDragItem(itemProvider: NSItemProvider())]
+        return [UIDragItem(itemProvider: NSItemProvider())]
     }
 }
 
@@ -483,8 +483,8 @@ extension LocationSelectionView: UITableViewDropDelegate {
     
     // 셀 위치 변경 함수
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-
-        // +1로 해줘야할듯
+        guard sourceIndexPath.row != 0 else { return }
+        
         let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
         locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
