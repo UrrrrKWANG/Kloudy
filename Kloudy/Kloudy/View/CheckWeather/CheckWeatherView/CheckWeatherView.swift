@@ -26,7 +26,6 @@ class CheckWeatherView: UIViewController {
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var locationList = CoreDataManager.shared.fetchLocations()
     
-    var weathers = [Weather]()
     
     lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
@@ -37,8 +36,9 @@ class CheckWeatherView: UIViewController {
     
     var dataViewControllers = [UIViewController]()
     
+    var weathers = [Weather]()
+    var initialWeathers = [Weather]()
     var locations = [Location]()
-    var updateWeathers = [Weather]()
     weak var delegate: LocationSelectionDelegate?
     
     override func viewWillAppear(_ animated: Bool) {
@@ -82,12 +82,9 @@ class CheckWeatherView: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-//        if let weathers = appDelegate?.weathers {
-//            self.weathers = weathers
-//            self.updateWeathers = weathers
-//        }
         bind()
+        locations = CoreDataManager.shared.fetchLocations()
+        self.weathers = serializeLocationSequence(locations: locations, initialWeathers: initialWeathers)
         self.delegate = self.locationSelectionView
         // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -120,6 +117,20 @@ class CheckWeatherView: UIViewController {
                 self.weathers.insert(itemMove, at: $0[1])
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func serializeLocationSequence(locations: [Location], initialWeathers: [Weather]) -> [Weather] {
+        var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: locations.count + 1)
+        weatherData[0] = initialWeathers[0]
+        for weatherIndex in 1..<initialWeathers.count {
+            for index in 0..<locations.count {
+                if initialWeathers[weatherIndex].localWeather[0].localCode == locations[index].code {
+                    weatherData[index + 1] = initialWeathers[weatherIndex]
+                    continue
+                }
+            }
+        }
+        return weatherData
     }
     
     func loadWeatherView() {
