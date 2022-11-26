@@ -123,9 +123,9 @@ class CheckWeatherView: UIViewController {
         var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: locations.count + 1)
         weatherData[0] = initialWeathers[0]
         for weatherIndex in 1..<initialWeathers.count {
-            for index in 0..<locations.count {
-                if initialWeathers[weatherIndex].localWeather[0].localCode == locations[index].code {
-                    weatherData[index + 1] = initialWeathers[weatherIndex]
+            for locationIndex in 0..<locations.count {
+                if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
+                    weatherData[locationIndex + 1] = initialWeathers[weatherIndex]
                     continue
                 }
             }
