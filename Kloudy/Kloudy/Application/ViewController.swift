@@ -9,6 +9,7 @@ import Foundation
 import UIKit
 import CoreLocation
 import RxSwift
+import RxCocoa
 
 class ViewController: UIViewController {
     
@@ -54,19 +55,36 @@ class ViewController: UIViewController {
     let dummyData = FetchWeatherInformation().dummyData
     var weathers = [Weather]()
     let disposeBag = DisposeBag()
+    let checkWeatherView = CheckWeatherView()
+    let locationCount = CoreDataManager.shared.countLocations()
+    var fetchedWeathers: BehaviorRelay<[Weather]> = BehaviorRelay(value: [FetchWeatherInformation().dummyData])
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.KColor.primaryBlue01
         configure()
         myAnimation()
+        bind()
         
-        self.fetchWeatherDatas()
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 3) {
-            let checkWeatherView = CheckWeatherView()
-            checkWeatherView.weathers = self.weathers
-            self.navigationController?.pushViewController(checkWeatherView, animated: false)
-        }
+        self.fetchWeatherData()
+    }
+    
+    private func bind() {
+        fetchedWeathers.asObservable()
+            .subscribe(onNext: {
+                if self.locationCount == 0 {
+                    if $0.count != 1 {
+                        self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+                        self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                    }
+                } else {
+                    if $0.count == self.locationCount + 1{
+                        self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+                        self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                    }
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func configure() {
@@ -116,121 +134,91 @@ class ViewController: UIViewController {
         })
     }
     
-    func fetchWeatherDatas() {
-        
-//        let cityInformationModel = FetchWeatherInformation()
-//        lazy var cityData = cityInformationModel.loadCityListFromCSV()
-//        let appDelegate = UIApplication.shared.delegate as? AppDelegate
-//
-//        let myLocations = CoreDataManager.shared.fetchLocations()
-//        for locationIndex in myLocations.indices {
-//            // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
-//            guard let province = myLocations[locationIndex].province else { return }
-//            guard let city = myLocations[locationIndex].city else { return }
-//            FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
-//                appDelegate?.weathers[locationIndex] = response
-//            }
-//        }
-//
-//        let currentStatus = CLLocationManager().authorizationStatus
-//
-//        if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
-//            // 현재 지역의 위도 경도로 기상청에서 제공하는 XY값을 계산 -> XY값으로 현재 지역정보 반환 후 요청을 보냄.
-//            let XY = LocationManager.shared.requestNowLocationInfo()
-//            let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-//            guard let nowLocation = nowLocation else { return }
-//            FetchWeatherInformation.shared.startLoad(province: nowLocation.province, city: nowLocation.city) { response in
-//                appDelegate?.weathers.append(response)
-//            }
-//        }
-//
+    func fetchWeatherData() {
         let currentStatus = CLLocationManager().authorizationStatus
-        
         let locations = CoreDataManager.shared.fetchLocations()
         weathers = [Weather](repeating: dummyData , count: locations.count + 1)
         
         if locations.count == 0 {
             if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-                CityWeatherNetwork().fetchCityWeather(code: "1111000000")
-                    .subscribe { event in
-                        switch event {
-                        case .success(let data):
-                            self.weathers.append(data)
-                        case .failure(let error):
-                            print("Error: ", error)
-                        }
-                    }
-                    .disposed(by: disposeBag)
                 CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer"])
-            } else {
-                let XY = LocationManager.shared.requestNowLocationInfo()
-                let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-                guard let nowLocation = nowLocation else { return }
-                
-                CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
-                    .subscribe { event in
-                        switch event {
-                        case .success(let data):
-                            self.weathers[0] = data
-                        case .failure(let error):
-                            print("Error: ", error)
-                        }
-                    }
-                    .disposed(by: disposeBag)
-            }
-        }
-        else {
-            if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-                for index in locations.indices {
-                    CityWeatherNetwork().fetchCityWeather(code: locations[index].code ?? "")
-                        .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-                        .subscribe { event in
-                            switch event {
-                            case .success(let data):
-                                DispatchQueue.main.async {
-                                    self.weathers[index + 1] = data
-                                }
-                            case .failure(let error):
-                                print("Error: ", error)
-                            }
-                        }
-                        .disposed(by: disposeBag)
-                }
-            } else {
-                let XY = LocationManager.shared.requestNowLocationInfo()
-                let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-                guard let nowLocation = nowLocation else { return }
-                
-                CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+                CityWeatherNetwork().fetchCityWeather(code: "1111000000")
                     .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
                     .subscribe { event in
                         switch event {
                         case .success(let data):
                             DispatchQueue.main.async {
-                                self.weathers[0] = data
+                                self.fetchedWeathers.accept(self.fetchedWeathers.value + [data])
                             }
                         case .failure(let error):
                             print("Error: ", error)
                         }
                     }
                     .disposed(by: disposeBag)
-                
-                for index in locations.indices {
-                    CityWeatherNetwork().fetchCityWeather(code: locations[index].code ?? "")
-                        .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-                        .subscribe { event in
-                            switch event {
-                            case .success(let data):
-                                DispatchQueue.main.async {
-                                    self.weathers[index + 1] = data
-                                }
-                            case .failure(let error):
-                                print("Error: ", error)
-                            }
-                        }
-                        .disposed(by: disposeBag)
-                }
+            } else {
+                fetchCurrentLocationWeatherData()
             }
         }
+        else {
+            if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
+                fetchLocationsWeatherData(locations: locations)
+            } else {
+                fetchCurrentLocationWeatherData()
+                fetchLocationsWeatherData(locations: locations)
+            }
+        }
+    }
+    
+    private func fetchLocationsWeatherData(locations: [Location]) {
+        for index in locations.indices {
+            CityWeatherNetwork().fetchCityWeather(code: locations[index].code ?? "")
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                .subscribe { event in
+                    switch event {
+                    case .success(let data):
+                        DispatchQueue.main.async {
+                            self.fetchedWeathers.accept(self.fetchedWeathers.value + [data])
+                        }
+                    case .failure(let error):
+                        print("Error: ", error)
+                    }
+                }
+                .disposed(by: disposeBag)
+        }
+    }
+    
+    private func fetchCurrentLocationWeatherData() {
+        let XY = LocationManager.shared.requestNowLocationInfo()
+        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+        guard let nowLocation = nowLocation else { return }
+        
+        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .subscribe { event in
+                switch event {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.fetchedWeathers.insert(data, at: 0)
+                    }
+                case .failure(let error):
+                    print("Error: ", error)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+}
+
+public extension BehaviorRelay where Element: RangeReplaceableCollection {
+
+    func insert(_ subElement: Element.Element, at index: Element.Index) {
+        var newValue = value
+        newValue.insert(subElement, at: index)
+        accept(newValue)
+    }
+    
+    func remove(at index: Element.Index) {
+        var newValue = value
+        newValue.remove(at: index)
+        accept(newValue)
     }
 }
