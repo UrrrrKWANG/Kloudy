@@ -30,8 +30,6 @@ class CurrentLocationTableViewCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         addView()
         setLayout()
-//        self.locationManager.delegate = self
-//        agreeButton.addTarget(self, action: #selector(authorizeGPS), for: .touchUpInside)
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -85,21 +83,5 @@ class CurrentLocationTableViewCell: UITableViewCell {
         contentView.backgroundColor = UIColor.KColor.white
         contentView.layer.cornerRadius = contentView.frame.height / 5
         contentView.layer.applySketchShadow(color: UIColor.KColor.gray02, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
-    }
-}
-
-extension CurrentLocationTableViewCell: CLLocationManagerDelegate {
-    @objc func authorizeGPS() {
-        let currentStatus = CLLocationManager().authorizationStatus
-        
-        if currentStatus == .notDetermined {
-            self.locationManager.requestAlwaysAuthorization()
-        } else if currentStatus == .restricted || currentStatus == .denied {
-            if let appSettings = URL(string: UIApplication.openSettingsURLString) {
-                UIApplication.shared.open(appSettings, options: [:], completionHandler: nil)
-            }
-        } else {
-            print("--exception--")
-        }
     }
 }
