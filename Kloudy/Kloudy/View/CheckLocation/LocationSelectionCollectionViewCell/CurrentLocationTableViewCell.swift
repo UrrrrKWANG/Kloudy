@@ -81,11 +81,8 @@ class CurrentLocationTableViewCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        contentView.backgroundColor = UIColor.KColor.white
         contentView.frame = contentView.frame.inset(by: UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
-        
         contentView.layer.cornerRadius = contentView.frame.height / 5
-        
         contentView.layer.applySketchShadow(color: UIColor.KColor.gray02, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
     }
 }

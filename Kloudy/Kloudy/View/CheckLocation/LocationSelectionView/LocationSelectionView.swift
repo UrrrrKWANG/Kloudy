@@ -332,6 +332,7 @@ extension LocationSelectionView: UITableViewDataSource {
                         return UITableViewCell() }
                     cell.locationNameLabel.text = "현재 위치"
                     cell.backgroundColor = UIColor.KColor.clear
+                    cell.contentView.backgroundColor = UIColor.KColor.gray04
                     cell.selectionStyle = .none
                     return cell
                 } else {
@@ -342,6 +343,7 @@ extension LocationSelectionView: UITableViewDataSource {
                     cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
                     cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                     cell.backgroundColor = UIColor.KColor.clear
+                    cell.contentView.backgroundColor = UIColor.KColor.gray04
                     cell.selectionStyle = .none
                     return cell
                 }
@@ -353,6 +355,7 @@ extension LocationSelectionView: UITableViewDataSource {
                 cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
                 cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                 cell.backgroundColor = UIColor.KColor.clear
+                cell.contentView.backgroundColor = UIColor.KColor.white
                 cell.selectionStyle = .none
                 return cell
             }
@@ -376,27 +379,53 @@ extension LocationSelectionView: UITableViewDataSource {
             return nil
         case .check:
             if indexPath.row != 0 {
-                let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    
-                    CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
-                    self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
-                    
-                    self.locationList.remove(at: indexPath.row - 1)
-                    
-                    self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
-                    print("\(self.weatherData[indexPath.row].localWeather[0].localName)🐳")
-                    self.weatherData.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                    completionHandler(true)
-                }
-                
-                deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
-                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
-                }
+                if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
+                    if indexPath.row != 1 {
+                        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+                            
+                            CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
+                            self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
+                            
+                            self.locationList.remove(at: indexPath.row - 1)
+                            
+                            self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
+                            self.weatherData.remove(at: indexPath.row)
+                            tableView.deleteRows(at: [indexPath], with: .fade)
+                            completionHandler(true)
+                        }
+                        
+                        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
+                            UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
+                        }
 
-                deleteAction.backgroundColor = .systemBackground
-                let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-                return configuration
+                        deleteAction.backgroundColor = .systemBackground
+                        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+                        return configuration
+                    } else {
+                        return nil
+                    }
+                } else {
+                    let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+                        
+                        CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
+                        self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
+                        
+                        self.locationList.remove(at: indexPath.row - 1)
+                        
+                        self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
+                        self.weatherData.remove(at: indexPath.row)
+                        tableView.deleteRows(at: [indexPath], with: .fade)
+                        completionHandler(true)
+                    }
+                    
+                    deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
+                        UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
+                    }
+
+                    deleteAction.backgroundColor = .systemBackground
+                    let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+                    return configuration
+                }
             } else {
                 return nil
             }
