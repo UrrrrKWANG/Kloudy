@@ -65,9 +65,9 @@ class CoreDataManager {
         do {
             let locations = try coreDataStack.managedContext.fetch(request)
             for i in 0..<locations.count {
-                locations[i].setValue(locationList[i].code, forKey: "code")
-                locations[i].setValue(locationList[i].city, forKey: "city")
-                locations[i].setValue(locationList[i].province, forKey: "province")
+                locations[i].code = locationList[i].code
+                locations[i].city = locationList[i].city
+                locations[i].province = locationList[i].province
             }
             coreDataStack.saveContext()
         } catch {

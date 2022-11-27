@@ -315,7 +315,6 @@ extension LocationSelectionView: UITableViewDataSource {
         switch tableType {
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchLocationCell", for: indexPath) as? SearchLocationCell else { return UITableViewCell() }
-            // snapkit remakeConstraint 처리 유무 체크 필요
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             cell.locationLabel.text = searchingLocation.locationString
             return cell
@@ -373,9 +372,9 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row - 1].code ?? "")
-                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row - 1])
+                    self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
                     self.weatherData.remove(at: indexPath.row)
+                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row - 1])
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }
