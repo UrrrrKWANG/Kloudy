@@ -77,6 +77,11 @@ class LocationSelectionView: UIViewController {
         inputLocationCellData()
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationFromCoreData = []
+    }
+    
     // https://github.com/PLREQ/PLREQ
     func inputLocationCellData() {
         locationList = []
@@ -372,9 +377,15 @@ extension LocationSelectionView: UITableViewDataSource {
         case .check:
             if indexPath.row != 0 {
                 let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+                    
+                    CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
+                    self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
+                    
+                    self.locationList.remove(at: indexPath.row - 1)
+                    
                     self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
+                    print("\(self.weatherData[indexPath.row].localWeather[0].localName)🐳")
                     self.weatherData.remove(at: indexPath.row)
-                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row - 1])
                     tableView.deleteRows(at: [indexPath], with: .fade)
                     completionHandler(true)
                 }

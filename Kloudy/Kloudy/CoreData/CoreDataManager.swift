@@ -120,4 +120,20 @@ class CoreDataManager {
         coreDataStack.managedContext.delete(location)
         coreDataStack.saveContext()
     }
+    
+    func deleteLocation(location: Location){
+        let request = NSFetchRequest<Location>(entityName: "Location")
+        do {
+            var locations = try coreDataStack.managedContext.fetch(request)
+            for locationIndex in locations.indices {
+                if locations[locationIndex].code == location.code {
+                    self.coreDataStack.managedContext.delete(location)
+                    break
+                }
+            }
+        } catch {
+            print("-----SameLocationsError-----")
+        }
+        coreDataStack.saveContext()
+    }
 }
