@@ -27,12 +27,7 @@ class CheckWeatherView: UIViewController {
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var locationList = CoreDataManager.shared.fetchLocations()
     
-    
-    lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        
-        return vc
-    }()
+    lazy var pageViewController = UIPageViewController()
     let checkWeatherViewModel = CheckWeatherViewModel()
     
     var dataViewControllers = [UIViewController]()
@@ -53,6 +48,8 @@ class CheckWeatherView: UIViewController {
             dataViewControllers[i].viewDidDisappear(false)
         }
         dataViewControllers = [UIViewController]()
+        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        
         [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { $0.removeFromSuperview() }
         
         loadWeatherView()
