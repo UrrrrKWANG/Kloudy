@@ -115,9 +115,20 @@ class CoreDataManager {
             (location as! Location).addToWeatherCell(cellObject)
         }
     }
-    // 지역을 삭제
-    func locationDelete(location: NSManagedObject) {
-        coreDataStack.managedContext.delete(location)
+    
+    func deleteLocation(location: Location){
+        let request = NSFetchRequest<Location>(entityName: "Location")
+        do {
+            var locations = try coreDataStack.managedContext.fetch(request)
+            for locationIndex in locations.indices {
+                if locations[locationIndex].code == location.code {
+                    self.coreDataStack.managedContext.delete(location)
+                    break
+                }
+            }
+        } catch {
+            print("-----SameLocationsError-----")
+        }
         coreDataStack.saveContext()
     }
 }

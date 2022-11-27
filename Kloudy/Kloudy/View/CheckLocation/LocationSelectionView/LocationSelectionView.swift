@@ -46,6 +46,9 @@ class LocationSelectionView: UIViewController {
     let deleteLocationCode = PublishSubject<String>()
     let exchangeLocationIndex = PublishSubject<[Int]>()
     
+    // 지역 동의 버튼
+    let authorizeButtonTapped = PublishRelay<Void>()
+    
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
     
@@ -75,6 +78,11 @@ class LocationSelectionView: UIViewController {
         super.viewWillAppear(animated)
         locationFromCoreData = CoreDataManager.shared.fetchLocations()
         inputLocationCellData()
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        locationFromCoreData = []
     }
     
     // https://github.com/PLREQ/PLREQ
@@ -315,7 +323,6 @@ extension LocationSelectionView: UITableViewDataSource {
         switch tableType {
         case .search:
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchLocationCell", for: indexPath) as? SearchLocationCell else { return UITableViewCell() }
-            // snapkit remakeConstraint 처리 유무 체크 필요
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             cell.locationLabel.text = searchingLocation.locationString
             return cell
@@ -327,6 +334,10 @@ extension LocationSelectionView: UITableViewDataSource {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as? CurrentLocationTableViewCell else {
                         return UITableViewCell() }
                     cell.locationNameLabel.text = "현재 위치"
+                    cell.agreeButton.rx.tap
+                        .asObservable()
+                        .bind(to: authorizeButtonTapped)
+                        .disposed(by: disposeBag)
                     cell.backgroundColor = UIColor.KColor.clear
                     cell.selectionStyle = .none
                     return cell
@@ -372,25 +383,44 @@ extension LocationSelectionView: UITableViewDataSource {
             return nil
         case .check:
             if indexPath.row != 0 {
-                let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                    self.deleteLocationCode.onNext(self.locationFromCoreData[indexPath.row - 1].code ?? "")
-                    CoreDataManager.shared.locationDelete(location: self.locationFromCoreData[indexPath.row - 1])
-                    self.weatherData.remove(at: indexPath.row)
-                    tableView.deleteRows(at: [indexPath], with: .fade)
-                    completionHandler(true)
+                if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
+                    if indexPath.row != 1 {
+                        let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
+                        return configuration
+                    } else {
+                        return nil
+                    }
+                } else {
+                    let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
+                    return configuration
                 }
-                
-                deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
-                    UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
-                }
-
-                deleteAction.backgroundColor = .systemBackground
-                let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
-                return configuration
             } else {
                 return nil
             }
         }
+    }
+    
+    private func deleteLocation(indexPath: IndexPath) -> UIContextualAction {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+            
+            CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
+            self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
+            
+            self.locationList.remove(at: indexPath.row - 1)
+            
+            self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
+            self.weatherData.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            completionHandler(true)
+        }
+        
+        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
+            UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
+        }
+
+        deleteAction.backgroundColor = .systemBackground
+        
+        return deleteAction
     }
 }
 
@@ -406,6 +436,8 @@ extension LocationSelectionView: UITableViewDelegate {
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
                         CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
+                        self.locationList.append(LocationData(code: information.code, city: information.city, province: information.province))
+                        
                         self.changeTableType(false)
                         self.weatherData.append(FetchWeatherInformation().dummyData)
                         CityWeatherNetwork().fetchCityWeather(code: information.code)
@@ -458,7 +490,7 @@ extension LocationSelectionView: UITableViewDelegate {
 
 extension LocationSelectionView: UITableViewDragDelegate {
     func tableView(_ tableView: UITableView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] {
-            return [UIDragItem(itemProvider: NSItemProvider())]
+        return [UIDragItem(itemProvider: NSItemProvider())]
     }
 }
 
@@ -483,8 +515,8 @@ extension LocationSelectionView: UITableViewDropDelegate {
     
     // 셀 위치 변경 함수
     func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-
-        // +1로 해줘야할듯
+        guard sourceIndexPath.row != 0 else { return }
+        
         let itemMove = locationList[sourceIndexPath.row - 1] //Get the item that we just moved
         locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
