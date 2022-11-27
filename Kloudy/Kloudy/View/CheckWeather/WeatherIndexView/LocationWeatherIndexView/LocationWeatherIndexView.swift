@@ -47,6 +47,8 @@ class LocationWeatherIndexView: UIView {
     var compareIndexText = ""
     var umbrellaIndexText = ""
     
+    let temperatureGapView = TemperatureGapView()
+    
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init() {
         super.init(frame: .zero)
@@ -54,6 +56,7 @@ class LocationWeatherIndexView: UIView {
         bind()
         changeCollectionView(internalIndex: 0)
         containerView.addGestureRecognizer(tapGesture)
+        temperatureGapView.addGestureRecognizer(tapGesture)
     }
     
     private func bind() {
@@ -80,17 +83,22 @@ class LocationWeatherIndexView: UIView {
             .subscribe(onNext: {
                 self.transedIndexName = self.transIndexName(indexName: $0)
                 self.sentIndexName = $0
-                self.indexStatus.onNext(self.findStatus(indexName: $0))
                 self.changeTextView(indexType: $0)
                 guard let weathers = self.weathers else { return }
-                if $0 == .unbrella {
+                if $0 == .temperatureGap {
+                    if self.containerView.subviews.count != 0 {
+                        self.containerView.subviews[0].removeFromSuperview()
+                    }
+                    self.temperatureGapView.sentWeather.onNext(weathers)
+                    self.makeCompareIndexText(weather: weathers.localWeather[0], compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
+                } else if $0 == .unbrella {
                     self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
-                } else if $0 == .temperatureGap {
-                    self.makeCompareIndexText(compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
-                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
+                    self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else {
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: "")
+                    self.indexStatus.onNext(self.findStatus(indexName: $0))
                 }
             })
             .disposed(by: disposeBag)
@@ -223,21 +231,20 @@ class LocationWeatherIndexView: UIView {
         super.init(coder: coder)
     }
     
-    func makeCompareIndexText(compareIndex: CompareIndex) {
-        let compareMaxTemperature = Int(compareIndex.todayMaxtemperature) - Int(compareIndex.yesterdayMaxTemperature)
-        let compareMinTemperature = Int(compareIndex.todayMinTemperature) - Int(compareIndex.yesterdayMinTemperature)
-        
+    func makeCompareIndexText(weather: LocalWeather, compareIndex: CompareIndex) {
+        let compareMaxTemperature = Int(weather.minMaxTemperature()[1]) - Int(compareIndex.yesterdayMaxTemperature)
+        let compareMinTemperature = Int(weather.minMaxTemperature()[2]) - Int(compareIndex.yesterdayMinTemperature)
         if compareMaxTemperature > 2 {
-            compareIndexText = "어제보다 최고 기온이".localized + "\(compareMaxTemperature)" + "°C 높고 \n ".localized
+            compareIndexText = "어제보다 최고 기온이 ".localized + "\(compareMaxTemperature)" + "°C 높고 \n ".localized
         } else if compareMaxTemperature < -2 {
-            compareIndexText = "어제보다 최고 기온이".localized + "\(compareMaxTemperature)" + "°C 낮고 \n ".localized
+            compareIndexText = "어제보다 최고 기온이 ".localized + "\(compareMaxTemperature)" + "°C 낮고 \n ".localized
         } else {
             compareIndexText = "최고 기온은 어제와 비슷하며 \n ".localized
         }
         if compareMinTemperature > 2 {
-            compareIndexText += "최저 기온은".localized + "\(compareMinTemperature)" + "°C 높습니다.".localized
+            compareIndexText += "최저 기온은 ".localized + "\(compareMinTemperature)" + "°C 높습니다.".localized
         } else if compareMinTemperature < -2 {
-            compareIndexText += "최저 기온은".localized + "\(compareMinTemperature)" + "°C 낮습니다.".localized
+            compareIndexText += "최저 기온은 ".localized + "\(compareMinTemperature)" + "°C 낮습니다.".localized
         } else {
             compareIndexText += "최저 기온은 비슷합니다.".localized
         }
@@ -265,6 +272,9 @@ class LocationWeatherIndexView: UIView {
     func changeImageView(name: String) {
         if containerView.subviews.count != 0 {
             containerView.subviews[0].removeFromSuperview()
+        }
+        if temperatureGapView.subviews.count != 0 {
+            temperatureGapView.subviews.forEach { $0.removeFromSuperview() }
         }
         let view = makeLottieView(name: name)
         if view.frame.width == 0 {
@@ -310,7 +320,7 @@ class LocationWeatherIndexView: UIView {
     }
     
     private func setLayout() {
-        [weatherIndexNameLabel, containerView, textContainerView, intenalIndexListView].forEach() {
+        [weatherIndexNameLabel, containerView, temperatureGapView, textContainerView, intenalIndexListView].forEach() {
             self.addSubview($0)
         }
         
@@ -325,7 +335,12 @@ class LocationWeatherIndexView: UIView {
             $0.trailing.equalToSuperview().inset(26)
             $0.bottom.equalToSuperview().inset(74)
         }
-        
+        temperatureGapView.snp.makeConstraints {
+            $0.top.equalTo(weatherIndexNameLabel.snp.bottom).offset(12)
+            $0.leading.equalToSuperview().inset(43)
+            $0.width.equalTo(202)
+            $0.height.equalTo(223)
+        }
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
             $0.trailing.equalToSuperview().inset(16)
