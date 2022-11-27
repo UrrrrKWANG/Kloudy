@@ -405,6 +405,8 @@ extension LocationSelectionView: UITableViewDelegate {
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
                         CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
+                        self.locationList.append(LocationData(code: information.code, city: information.city, province: information.province))
+                        
                         self.changeTableType(false)
                         self.weatherData.append(FetchWeatherInformation().dummyData)
                         CityWeatherNetwork().fetchCityWeather(code: information.code)
