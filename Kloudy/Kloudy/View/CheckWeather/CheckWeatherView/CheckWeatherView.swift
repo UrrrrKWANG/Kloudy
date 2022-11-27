@@ -18,6 +18,7 @@ class CheckWeatherView: UIViewController {
     let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let locationSelectionView = LocationSelectionView()
+    let settingView = SettingView()
     
     let pageControl = UIPageControl()
     let initialPage = 0
@@ -115,6 +116,13 @@ class CheckWeatherView: UIViewController {
                 let itemMove = self.weathers[$0[0]]
                 self.weathers.remove(at: $0[0])
                 self.weathers.insert(itemMove, at: $0[1])
+            })
+            .disposed(by: disposeBag)
+        
+        locationSelectionView.authorizeButtonTapped
+            .subscribe(onNext: {
+                self.locationSelectionView.navigationController?.popViewController(animated: true)
+                self.navigationController?.pushViewController(self.settingView, animated: true)
             })
             .disposed(by: disposeBag)
     }
@@ -275,7 +283,6 @@ class CheckWeatherView: UIViewController {
         self.delegate?.sendWeatherData(weatherData: weathers)
     }
     @objc func tapSettingButton() {
-        let settingView = SettingView()
         self.navigationController?.pushViewController(settingView, animated: true)
     }
     

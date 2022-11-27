@@ -46,6 +46,9 @@ class LocationSelectionView: UIViewController {
     let deleteLocationCode = PublishSubject<String>()
     let exchangeLocationIndex = PublishSubject<[Int]>()
     
+    // 지역 동의 버튼
+    let authorizeButtonTapped = PublishRelay<Void>()
+    
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
     
@@ -331,8 +334,11 @@ extension LocationSelectionView: UITableViewDataSource {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as? CurrentLocationTableViewCell else {
                         return UITableViewCell() }
                     cell.locationNameLabel.text = "현재 위치"
+                    cell.agreeButton.rx.tap
+                        .asObservable()
+                        .bind(to: authorizeButtonTapped)
+                        .disposed(by: disposeBag)
                     cell.backgroundColor = UIColor.KColor.clear
-                    cell.contentView.backgroundColor = UIColor.KColor.gray04
                     cell.selectionStyle = .none
                     return cell
                 } else {
@@ -343,7 +349,6 @@ extension LocationSelectionView: UITableViewDataSource {
                     cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
                     cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                     cell.backgroundColor = UIColor.KColor.clear
-                    cell.contentView.backgroundColor = UIColor.KColor.gray04
                     cell.selectionStyle = .none
                     return cell
                 }
@@ -355,7 +360,6 @@ extension LocationSelectionView: UITableViewDataSource {
                 cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
                 cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                 cell.backgroundColor = UIColor.KColor.clear
-                cell.contentView.backgroundColor = UIColor.KColor.white
                 cell.selectionStyle = .none
                 return cell
             }
