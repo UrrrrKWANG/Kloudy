@@ -385,55 +385,42 @@ extension LocationSelectionView: UITableViewDataSource {
             if indexPath.row != 0 {
                 if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
                     if indexPath.row != 1 {
-                        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                            
-                            CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
-                            self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
-                            
-                            self.locationList.remove(at: indexPath.row - 1)
-                            
-                            self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
-                            self.weatherData.remove(at: indexPath.row)
-                            tableView.deleteRows(at: [indexPath], with: .fade)
-                            completionHandler(true)
-                        }
-                        
-                        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
-                            UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
-                        }
-
-                        deleteAction.backgroundColor = .systemBackground
-                        let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+                        let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
                         return configuration
                     } else {
                         return nil
                     }
                 } else {
-                    let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-                        
-                        CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
-                        self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
-                        
-                        self.locationList.remove(at: indexPath.row - 1)
-                        
-                        self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
-                        self.weatherData.remove(at: indexPath.row)
-                        tableView.deleteRows(at: [indexPath], with: .fade)
-                        completionHandler(true)
-                    }
-                    
-                    deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
-                        UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
-                    }
-
-                    deleteAction.backgroundColor = .systemBackground
-                    let configuration = UISwipeActionsConfiguration(actions: [deleteAction])
+                    let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
                     return configuration
                 }
             } else {
                 return nil
             }
         }
+    }
+    
+    private func deleteLocation(indexPath: IndexPath) -> UIContextualAction {
+        let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
+            
+            CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
+            self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
+            
+            self.locationList.remove(at: indexPath.row - 1)
+            
+            self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
+            self.weatherData.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: .fade)
+            completionHandler(true)
+        }
+        
+        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
+            UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
+        }
+
+        deleteAction.backgroundColor = .systemBackground
+        
+        return deleteAction
     }
 }
 
