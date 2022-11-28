@@ -23,7 +23,7 @@ enum IndexType {
         case .unbrella: return ["우산".localized, "precipitation_png", "하루 강수량".localized, "mm", "wind_png", "최대 풍속".localized, "m/s", "강수량".localized, "mm"]
         case .mask: return ["마스크".localized, "dust_png", "미세먼지".localized, "㎍/㎥", "fineDust_png", "초미세먼지".localized, "㎍/㎥", "", ""]
         case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "습도".localized, "%", "", ""]
-        case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "", ""]
+        case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "현재 온도".localized, ""]
         case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "", ""]
         case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "", ""]
         }
@@ -67,7 +67,7 @@ enum IndexType {
         case .unbrella: return true
         case .mask: return false
         case .laundry: return false
-        case .outer: return false
+        case .outer: return true
         case .car: return false
         case .temperatureGap: return false
         }
@@ -117,6 +117,7 @@ class WeatherIndexDetailView: UIViewController {
             
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 1)
             
+            chartView.chartType.onNext(.precipitation)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
             chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
             chartView.chartUnitText.onNext(String(round((weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) * 100)/100) + "mm")
@@ -156,6 +157,12 @@ class WeatherIndexDetailView: UIViewController {
             secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].morningTemperature ?? 0)))
             
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
+            
+            chartView.chartType.onNext(.temperature)
+            chartView.chartLabelText.onNext(indexType.detailIndexString[7])
+            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
+            
         } else if indexType == .temperatureGap {
             firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature ?? 0)))
             secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature ?? 0)))
