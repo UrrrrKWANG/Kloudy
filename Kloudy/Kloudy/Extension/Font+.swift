@@ -54,6 +54,7 @@ extension UIFont {
         static var appleSDNeoBold16: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 16)! }
         static var appleSDNeoMedium18: UIFont { UIFont(name: "AppleSDGothicNeo-Medium", size: 18)! }
         static var appleSDNeoMedium20: UIFont { UIFont(name: "AppleSDGothicNeo-Medium", size: 20)! }
+        static var lexendRegular24: UIFont { UIFont(name: "Lexend-Regular", size: 24)! }
         static var appleSDNeoSemiBold20: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 20)! }
         static var appleSDNeoSemiBold15: UIFont { UIFont(name: "AppleSDGothicNeo-SemiBold", size: 15)! }
         static var appleSDNeoBold15: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 15)! }

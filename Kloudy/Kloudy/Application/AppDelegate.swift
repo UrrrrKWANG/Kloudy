@@ -26,96 +26,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
     
     // 어플리케이션의 런치 프로세스가 끝났을 때 -> Fetch 요청을 보냄, 요청이 끝나고 난 후 메인화면으로 넘어감.
     func application(_ application: UIApplication, willFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil) -> Bool {
-//        let currentStatus = CLLocationManager().authorizationStatus
-//        
-//        let locations = CoreDataManager.shared.fetchLocations()
-//        weathers = [Weather](repeating: dummyData , count: locations.count + 1)
-//        print(locations)
-//        
-//        if locations.count == 0 {
-//            if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-//                CityWeatherNetwork().fetchCityWeather(code: "1111000000")
-//                    .subscribe { event in
-//                        switch event {
-//                        case .success(let data):
-//                            self.weathers.append(data)
-//                        case .failure(let error):
-//                            print("Error: ", error)
-//                        }
-//                    }
-//                    .disposed(by: disposeBag)
-//                CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer"])
-//            } else {
-//                let XY = LocationManager.shared.requestNowLocationInfo()
-//                let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-//                guard let nowLocation = nowLocation else { return true }
-//                
-//                CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
-//                    .subscribe { event in
-//                        switch event {
-//                        case .success(let data):
-//                            self.weathers[0] = data
-//                        case .failure(let error):
-//                            print("Error: ", error)
-//                        }
-//                    }
-//                    .disposed(by: disposeBag)
-//            }
-//        }
-//        else {
-////            loadLocation()
-//            if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-//                for index in locations.indices {
-//                    CityWeatherNetwork().fetchCityWeather(code: locations[index].code ?? "")
-//                        .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-//                        .subscribe { event in
-//                            switch event {
-//                            case .success(let data):
-//                                DispatchQueue.main.async {
-//                                    self.weathers[index + 1] = data
-//                                }
-//                            case .failure(let error):
-//                                print("Error: ", error)
-//                            }
-//                        }
-//                        .disposed(by: disposeBag)
-//                }
-//            } else {
-//                let XY = LocationManager.shared.requestNowLocationInfo()
-//                let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-//                guard let nowLocation = nowLocation else { return true }
-//                
-//                CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
-//                    .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-//                    .subscribe { event in
-//                        switch event {
-//                        case .success(let data):
-//                            DispatchQueue.main.async {
-//                                self.weathers[0] = data
-//                            }
-//                        case .failure(let error):
-//                            print("Error: ", error)
-//                        }
-//                    }
-//                    .disposed(by: disposeBag)
-//                
-//                for index in locations.indices {
-//                    CityWeatherNetwork().fetchCityWeather(code: locations[index].code ?? "")
-//                        .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-//                        .subscribe { event in
-//                            switch event {
-//                            case .success(let data):
-//                                DispatchQueue.main.async {
-//                                    self.weathers[index + 1] = data
-//                                }
-//                            case .failure(let error):
-//                                print("Error: ", error)
-//                            }
-//                        }
-//                        .disposed(by: disposeBag)
-//                }
-//            }
-//        }
         return true
     }
     
@@ -138,31 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
     }
     
-    func loadLocation() {
-        let myLocations = CoreDataManager.shared.fetchLocations()
-//        for
-        for locationIndex in myLocations.indices {
-            // 지역 값이 뭔가 잘못된 것이 들어왔다면 끝내야함
-            guard let province = myLocations[locationIndex].province else { return }
-            guard let city = myLocations[locationIndex].city else { return }
-            FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
-                self.weathers[locationIndex + 1] = response
-            }
-            
-//            CityWeatherNetwork().fetchCityWeather(code: myLocations[locationIndex].code ?? "")
-            
-        let currentStatus = CLLocationManager().authorizationStatus
-            if currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways {
-                // 현재 지역의 위도 경도로 기상청에서 제공하는 XY값을 계산 -> XY값으로 현재 지역정보 반환 후 요청을 보냄.
-                let XY = LocationManager.shared.requestNowLocationInfo()
-                let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-                guard let nowLocation = nowLocation else { return }
-                FetchWeatherInformation.shared.startLoad(province: nowLocation.province, city: nowLocation.city) { response in
-                    self.weathers[0] = response
-                }
-            }
-        }
-    }
     // MARK: - Core Data stack
     
     lazy var persistentContainer: NSPersistentCloudKitContainer = {
@@ -204,20 +89,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, CLLocationManagerDelegate
                 // fatalError() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
                 let nserror = error as NSError
                 fatalError("Unresolved error \(nserror), \(nserror.userInfo)")
-            }
-        }
-    }
-    
-    func loadNowLocationWeather(currentProvince: String, currentCity: String) {
-        print([currentProvince, currentCity])
-        let nowLocationInfo = FetchWeatherInformation.shared.getLocationInfo(province: currentProvince, city: currentCity)
-        
-        // 잘못된 도시 정보를 요청할 수 있음.
-        if let nowLocation = nowLocationInfo {
-            let province = nowLocation.province
-            let city = nowLocation.city
-            FetchWeatherInformation.shared.startLoad(province:province, city: city) { response in
-                self.weathers.append(response)
             }
         }
     }

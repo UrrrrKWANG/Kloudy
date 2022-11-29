@@ -18,6 +18,7 @@ class CheckWeatherView: UIViewController {
     let disposeBag = DisposeBag()
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let locationSelectionView = LocationSelectionView()
+    let settingView = SettingView()
     
     var currentPageIndex = PublishSubject<Int>()
     var pageIndex = 1
@@ -28,15 +29,15 @@ class CheckWeatherView: UIViewController {
     let cityInformationModel = FetchWeatherInformation()
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var locationList = CoreDataManager.shared.fetchLocations()
-    var weathers = [Weather]()
-    lazy var pageViewController: UIPageViewController = {
-        let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
-        return vc
-    }()
+
+    lazy var pageViewController = UIPageViewController()
     let checkWeatherViewModel = CheckWeatherViewModel()
     var dataViewControllers = [UIViewController]()
+    
+    var weathers = [Weather]()
+    var initialWeathers = [Weather]()
+    
     var locations = [Location]()
-    var updateWeathers = [Weather]()
     weak var delegate: LocationSelectionDelegate?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -52,6 +53,8 @@ class CheckWeatherView: UIViewController {
             dataViewControllers[i].viewDidDisappear(false)
         }
         dataViewControllers = [UIViewController]()
+        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        
         [checkWeatherBasicNavigationView, pageViewController.view, pageControl].forEach { $0.removeFromSuperview() }
         loadWeatherView()
 
@@ -88,6 +91,8 @@ class CheckWeatherView: UIViewController {
             .disposed(by: disposeBag)
         super.viewDidLoad()
         bind()
+        locations = CoreDataManager.shared.fetchLocations()
+        self.weathers = serializeLocationSequence(locations: locations, initialWeathers: initialWeathers)
         self.delegate = self.locationSelectionView
         // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
@@ -119,6 +124,27 @@ class CheckWeatherView: UIViewController {
                 self.weathers.insert(itemMove, at: $0[1])
             })
             .disposed(by: disposeBag)
+        
+        locationSelectionView.authorizeButtonTapped
+            .subscribe(onNext: {
+                self.locationSelectionView.navigationController?.popViewController(animated: true)
+                self.navigationController?.pushViewController(self.settingView, animated: true)
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func serializeLocationSequence(locations: [Location], initialWeathers: [Weather]) -> [Weather] {
+        var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: locations.count + 1)
+        weatherData[0] = initialWeathers[0]
+        for weatherIndex in 1..<initialWeathers.count {
+            for locationIndex in 0..<locations.count {
+                if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
+                    weatherData[locationIndex + 1] = initialWeathers[weatherIndex]
+                    continue
+                }
+            }
+        }
+        return weatherData
     }
     
     func loadWeatherView() {
@@ -164,7 +190,6 @@ class CheckWeatherView: UIViewController {
         self.delegate?.sendWeatherData(weatherData: weathers)
     }
     @objc func tapSettingButton() {
-        let settingView = SettingView()
         self.navigationController?.pushViewController(settingView, animated: true)
     }
     
