@@ -52,36 +52,22 @@ struct KloudyOuterSystemSmallWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
                 case 0:
-                    Image("outer_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("outer_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("outer_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("outer_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 4:
-                    Image("outer_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 5:
-                    Image("outer_5")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "5", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("outer_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }
@@ -95,36 +81,22 @@ struct KloudyOuterAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
                 case 0:
-                    Image("outer_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("outer_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("outer_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("outer_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 4:
-                    Image("outer_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 5:
-                    Image("outer_5")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "5", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("outer_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }
