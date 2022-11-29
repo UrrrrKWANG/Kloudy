@@ -19,28 +19,26 @@ class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let locationSelectionView = LocationSelectionView()
     
+    var currentPageIndex = PublishSubject<Int>()
+    var pageIndex = 1
+    
     let pageControl = UIPageControl()
     let initialPage = 0
     
     let cityInformationModel = FetchWeatherInformation()
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var locationList = CoreDataManager.shared.fetchLocations()
-    
     var weathers = [Weather]()
-    
     lazy var pageViewController: UIPageViewController = {
         let vc = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         return vc
     }()
     let checkWeatherViewModel = CheckWeatherViewModel()
-    
     var dataViewControllers = [UIViewController]()
-    
     var locations = [Location]()
     var updateWeathers = [Weather]()
     weak var delegate: LocationSelectionDelegate?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
         bind()
     }
@@ -82,8 +80,13 @@ class CheckWeatherView: UIViewController {
     }
 
     override func viewDidLoad() {
+        currentPageIndex.onNext(0)
+        currentPageIndex
+            .subscribe( onNext: {
+                self.pageIndex = $0
+            })
+            .disposed(by: disposeBag)
         super.viewDidLoad()
-
         bind()
         self.delegate = self.locationSelectionView
         // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
@@ -93,8 +96,6 @@ class CheckWeatherView: UIViewController {
     }
     
     private func bind() {
-        
-        
         locationSelectionView.additionalLocation
             .subscribe(onNext: {
                 self.weathers.append($0)
@@ -102,16 +103,15 @@ class CheckWeatherView: UIViewController {
             .disposed(by: disposeBag)
         
         locationSelectionView.deleteLocationCode
-            .subscribe(onNext: {
+            .subscribe(onNext: { [self] in
                 for index in 0..<self.weathers.count {
-                    if $0 == self.weathers[index].localWeather[0].localCode {
+                    if $0 == self.weathers[index].localWeather[pageIndex].localCode {
                         self.weathers.remove(at: index)
                         return
                     }
                 }
             })
             .disposed(by: disposeBag)
-        
         locationSelectionView.exchangeLocationIndex
             .subscribe(onNext: {
                 let itemMove = self.weathers[$0[0]]
@@ -128,9 +128,13 @@ class CheckWeatherView: UIViewController {
             if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
             let location = weathers[locationIndex]
             let internalCheckWeatherPageView = InternalCheckWeatherPageView()
-          
+            let weatherIndexView = WeatherIndexView()
             internalCheckWeatherPageView.weathers = self.weathers[locationIndex]
             internalCheckWeatherPageView.sentWeather.onNext(location)
+            internalCheckWeatherPageView.currentPageIndex.onNext(self.pageIndex)
+            print(self.pageIndex)
+            
+            weatherIndexView.sentWeather.onNext(location)
             dataViewControllers.append(internalCheckWeatherPageView)
         }
     }

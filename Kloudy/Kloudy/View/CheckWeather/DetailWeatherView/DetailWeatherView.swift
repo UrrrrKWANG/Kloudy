@@ -11,10 +11,8 @@ import RxCocoa
 import RxSwift
 
 class DetailWeatherView: UIViewController {
-    
     var todayWeatherDatas = Observable.of([HourlyWeather]())
     var weekWeatherDatas = Observable.of([WeeklyWeather]())
-    
     var temperatureList: [Int] = []
     
     init(weatherDatas: Weather) {
@@ -139,16 +137,17 @@ class DetailWeatherView: UIViewController {
     }
     
     private func addLayout() {
-        self.view.addSubview(scrollView)
-        [titleWeatherView, labelInWeekCollectionView, labelInTodayCollectionView, todayCollectionView, dividingLineView,weekCollectionView].forEach() {
+        [titleWeatherView, labelInWeekCollectionView, labelInTodayCollectionView, todayCollectionView, dividingLineView,weekCollectionView].forEach {
             scrollView.addSubview($0)
         }
+        self.view.addSubview(scrollView)
     }
     
     private func setUplayout() {
         scrollView.snp.makeConstraints{
             $0.top.equalToSuperview()
-            $0.size.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
         
@@ -192,6 +191,10 @@ class DetailWeatherView: UIViewController {
     }
     
     private func bind() {
+        todayCollectionView.delegate = nil
+        todayCollectionView.dataSource = nil
+        weekCollectionView.delegate = nil
+        weekCollectionView.dataSource = nil
         self.todayBind()
         self.weekBind()
     }
@@ -214,6 +217,7 @@ class DetailWeatherView: UIViewController {
         }
         .disposed(by: disposeBag)
     }
+    
     private func weekBind() {
         weekWeatherDatas.bind(to:
                                 self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
@@ -234,9 +238,6 @@ class DetailWeatherView: UIViewController {
                 cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
             }
             cell.weatherCondition.image = UIImage(named: weatherCondition[1])
-            
-            
-            
         }
         .disposed(by: disposeBag)
     }

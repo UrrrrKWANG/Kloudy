@@ -15,6 +15,9 @@ class InternalCheckWeatherPageView: UIViewController {
     let locationIndex = Int()
     let localWeather =  [LocalWeather]?.self
     var dataViewControllers = [UIViewController]()
+    var pageIndex = 0
+    var currentPageIndex =  PublishSubject<Int>()
+    
     let pageControl = UIPageControl()
     var weathers: Weather?
     lazy var sentWeather = PublishSubject<Weather>()
@@ -25,49 +28,62 @@ class InternalCheckWeatherPageView: UIViewController {
         return vc
     }()
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
-        
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
-   
     }
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        print("viewWill")
+        print(currentPageIndex)
+        self.currentPageIndex.debug()
+            .subscribe(
+                onNext: {
+                    print("????")
+                    self.pageIndex = $0
+                    print($0, "???????")
+                },
+                onError: {_ in
+                print("error")
+                    
+                },
+                onCompleted: {
+                    print("complete")
+                }
+            )
+            .disposed(by: disposeBag)
+        let firstVC = dataViewControllers[self.pageIndex]
+        pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
+    }
+    override func viewDidLoad() {
+//        super.viewDidLoad() // 왜 필요한지 공부
+        sentWeather
+            .subscribe(
+                onNext: {
+                    self.weathers = $0
+                })
+            .disposed(by: disposeBag)
         for i in 0..<dataViewControllers.count {
             dataViewControllers[i].viewDidDisappear(false)
         }
         dataViewControllers = [UIViewController]()
-    }
-    override func viewDidLoad() {
-        
-        super.viewDidLoad()
-
-        
-        addChild(pageViewController)
+//        addChild(pageViewController) 왜 필요한지 공부
         loadWeatherView()
-        
         [pageViewController.view].forEach { view.addSubview($0) }
         pageViewController.dataSource = self
         pageViewController.delegate = self
         configurePageViewController()
-        
-        if let firstVC = dataViewControllers.first {
-            pageViewController.setViewControllers([firstVC], direction: .forward, animated: true, completion: nil)
-        }
+    
         // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
-        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
-        
+//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         view.backgroundColor = UIColor.KColor.white
-        
-        
-        sentWeather.debug().subscribe().disposed(by: disposeBag)
-        
     }
+    
     func loadWeatherView() {
         let location = self.weathers
         lazy var localWeather = [LocalWeather](location!.localWeather)
+        
         let main = [Main](localWeather[0].main)
         lazy var num: UIViewController = {
             let vc = UIViewController()
@@ -109,7 +125,6 @@ class InternalCheckWeatherPageView: UIViewController {
                 $0.leading.trailing.equalToSuperview().inset(20)
                 $0.height.equalTo(385)
             }
-    
             // CheckWeatherView 의 Lottie 선택 시 WeatherDetailIndexView 로 city 와 indexType 전달
             weatherIndexView.indexNameString
                 .subscribe(
@@ -123,8 +138,7 @@ class InternalCheckWeatherPageView: UIViewController {
                     weatherIndexView.weathers = $0
                 })
                 .disposed(by: disposeBag)
-            
-            
+                    
             weatherIndexView.locationWeatherIndexView.indexViewTapped
                 .subscribe(onNext: {
                     if $0 {
@@ -134,7 +148,6 @@ class InternalCheckWeatherPageView: UIViewController {
                                 weatherIndexDetailView.indexType = $0
                             })
                             .disposed(by: self.disposeBag)
-                        
                         weatherIndexDetailView.weatherData = location
                         weatherIndexDetailView.city = localWeather[0].localName
                         weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
@@ -143,8 +156,6 @@ class InternalCheckWeatherPageView: UIViewController {
                     }
                 })
                 .disposed(by: disposeBag)
-//
-//
 //            [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
 //
 //            detailWeatherViewLabel.snp.makeConstraints {
@@ -170,8 +181,6 @@ class InternalCheckWeatherPageView: UIViewController {
     }
 }
 
-
-
 extension InternalCheckWeatherPageView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
@@ -185,7 +194,6 @@ extension InternalCheckWeatherPageView: UIPageViewControllerDataSource, UIPageVi
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let nextIndex = index + 1
-
         if nextIndex == dataViewControllers.count {
             return nil
         }

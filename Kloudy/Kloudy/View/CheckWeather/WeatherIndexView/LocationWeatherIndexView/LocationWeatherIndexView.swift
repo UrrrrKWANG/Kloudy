@@ -82,10 +82,8 @@ class LocationWeatherIndexView: UIView {
                 self.indexStatus.onNext(self.findStatus(indexName: $0))
                 self.changeTextView(indexType: $0)
                 guard let weathers = self.weathers else {
-                    print("return")
                     return }
                 if $0 == .unbrella {
-                    print(weathers , "weathers")
                     self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
                 } else if $0 == .temperatureGap {
@@ -343,7 +341,6 @@ class LocationWeatherIndexView: UIView {
     }
     
     func configureView(indexNameLabel: String, indexStatusLabel: String) {
-        print("configureView")
         weatherIndexStatusLabel.textAlignment = .center
         weatherIndexStatusLabel.layer.cornerRadius = 10
         weatherIndexStatusLabel.numberOfLines = 2
