@@ -427,8 +427,7 @@ extension LocationSelectionView: UITableViewDataSource {
 extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         //TODO: 전날과 온도를 비교하는 지수 추가 이후 주석 사용
-//        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
-        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer"]
+        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
         switch tableType {
         case .search:
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
