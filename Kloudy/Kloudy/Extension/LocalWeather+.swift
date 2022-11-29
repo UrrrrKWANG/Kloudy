@@ -9,13 +9,10 @@ import Foundation
 
 extension LocalWeather {
     func minMaxTemperature() -> [Int] {
-        let currentTemperature = Int(self.hourlyWeather[2].temperature)
+        let currentTemperature: Int = Int(self.hourlyWeather[2].temperature)
         var dayMaxTemperatureArray: [Int] = []
         var dayMinTemperatureArray: [Int] = []
-        var count = 26 - (Int(Date().getTimeOfDay()) ?? 0)
-        if count > 24 {
-            count = 24
-        }
+        let count: Int = 26 - (Int(Date().getTimeOfDay()) ?? 0) > 24 ? 24 : 26 - (Int(Date().getTimeOfDay()) ?? 0)
         
         dayMaxTemperatureArray.append(Int(self.weeklyWeather[0].maxTemperature))
         dayMaxTemperatureArray.append(currentTemperature)
