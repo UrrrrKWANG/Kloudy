@@ -62,11 +62,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.KColor.primaryBlue01
-        configure()
-        myAnimation()
-        bind()
+        if NetworkReachability.isConnectedToNetwork() {
+            configure()
+            myAnimation()
+            bind()
+            fetchWeatherData()
+        } else {
+            navigationController?.pushViewController(NetworkUnreachableView(), animated: false)
+        }
         
-        self.fetchWeatherData()
     }
     
     private func bind() {
