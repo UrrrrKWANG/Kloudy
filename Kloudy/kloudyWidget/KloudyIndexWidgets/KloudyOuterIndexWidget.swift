@@ -81,22 +81,22 @@ struct KloudyOuterAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].outerIndex[0].status {
                 case 0:
-                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "1")
                 case 1:
-                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "1")
                 case 2:
-                    KloudyIndexWidget(name: "outer", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "2")
                 case 3:
-                    KloudyIndexWidget(name: "outer", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "3")
                 case 4:
-                    KloudyIndexWidget(name: "outer", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "4")
                 case 5:
-                    KloudyIndexWidget(name: "outer", index: "5", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "5")
                 default:
-                    KloudyIndexWidget(name: "outer", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "outer", index: "1")
                 }
             } else {
-                KloudyWarningWidget()
+                KloudyWarningAccessoryCircularWidget()
             }
         }
     }
