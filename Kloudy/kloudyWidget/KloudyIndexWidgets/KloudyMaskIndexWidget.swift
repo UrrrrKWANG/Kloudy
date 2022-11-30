@@ -78,18 +78,18 @@ struct KloudyMaskAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
                 case 0:
-                    KloudyIndexWidget(name: "mask", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "mask", index: "1")
                 case 1:
-                    KloudyIndexWidget(name: "mask", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "mask", index: "2")
                 case 2:
-                    KloudyIndexWidget(name: "mask", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "mask", index: "3")
                 case 3:
-                    KloudyIndexWidget(name: "mask", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "mask", index: "4")
                 default:
-                    KloudyIndexWidget(name: "mask", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "mask", index: "1")
                 }
             } else {
-                KloudyWarningWidget()
+                KloudyWarningAccessoryCircularWidget()
             }
         }
     }

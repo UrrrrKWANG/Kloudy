@@ -78,18 +78,18 @@ struct KloudyCarWashAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
                 case 0:
-                    KloudyIndexWidget(name: "carwash", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "carwash", index: "1")
                 case 1:
-                    KloudyIndexWidget(name: "carwash", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "carwash", index: "2")
                 case 2:
-                    KloudyIndexWidget(name: "carwash", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "carwash", index: "3")
                 case 3:
-                    KloudyIndexWidget(name: "carwash", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "carwash", index: "4")
                 default:
-                    KloudyIndexWidget(name: "carwash", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
+                    KloudyIndexAccessoryCircularWidget(name: "carwash", index: "1")
                 }
             } else {
-                KloudyWarningWidget()
+                KloudyWarningAccessoryCircularWidget()
             }
         }
     }
