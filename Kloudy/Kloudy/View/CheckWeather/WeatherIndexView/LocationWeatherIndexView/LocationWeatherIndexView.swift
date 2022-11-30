@@ -349,10 +349,10 @@ class LocationWeatherIndexView: UIView {
             $0.bottom.equalToSuperview().inset(74)
         }
         temperatureGapView.snp.makeConstraints {
-            $0.top.equalTo(weatherIndexNameLabel.snp.bottom).offset(12)
+            $0.top.equalTo(weatherIndexNameLabel.snp.bottom).offset(30)
             $0.leading.equalToSuperview().inset(43)
             $0.width.equalTo(202)
-            $0.height.equalTo(223)
+            $0.height.equalTo(223.5)
         }
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
