@@ -53,28 +53,18 @@ struct KloudyCarWashSystemSmallWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
                 case 0:
-                    Image("carwash_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("carwash_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("carwash_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("carwash_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("carwash_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }
@@ -88,28 +78,18 @@ struct KloudyCarWashAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].carwashIndex[0].status {
                 case 0:
-                    Image("carwash_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("carwash_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("carwash_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("carwash_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("carwash_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "carwash", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }

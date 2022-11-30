@@ -53,32 +53,20 @@ struct KloudyUmbrellaSystemSmallWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
                 case 0:
-                    Image("rain_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("rain_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("rain_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("rain_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 4:
-                    Image("rain_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("rain_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
             
         }
@@ -93,32 +81,86 @@ struct KloudyUmbrellaAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].umbrellaIndex[0].status {
                 case 0:
-                    Image("rain_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("rain_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("rain_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("rain_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 4:
-                    Image("rain_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("rain_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "rain", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
+            }
+        }
+    }
+}
+
+struct KloudyIndexWidget: View {
+    var name: String = ""
+    var index: String = ""
+    var temperature: Int = 0
+    var city: String = ""
+    
+    var body: some View {
+        GeometryReader { geo in
+            ZStack {
+                Color("PrimaryBlue07")
+                VStack {
+                    HStack {
+                        Spacer()
+                        Image("\(name)_\(index)")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: geo.size.width * 11/17, height: geo.size.width * 11/17)
+                            .padding([.trailing, .top], geo.size.width * 16/170)
+                    }
+                    Spacer()
+                }
+                VStack {
+                    HStack {
+                        Text("\(String(temperature))°")
+                            .foregroundColor(Color("Black"))
+                            .font(.system(size: geo.size.width * 34/170))
+                            .fontWeight(.regular)
+                            .multilineTextAlignment(.leading)
+                        Spacer()
+                    }
+                }
+                .padding(.top, geo.size.width * 90/170)
+                .padding([.leading, .bottom], geo.size.width * 16/170)
+                VStack {
+                    HStack {
+                        Text("\(city)")
+                            .foregroundColor(Color("Black"))
+                            .font(.system(size: geo.size.width * 14/170))
+                            .fontWeight(.bold)
+                            .multilineTextAlignment(.leading)
+                        Image("locaition")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: geo.size.width * 12/170, height: geo.size.width * 12/170)
+                        Spacer()
+                    }
+                }
+                .padding(.top, geo.size.width * 140/170)
+                .padding(.bottom, geo.size.width * 19/170)
+                .padding(.leading, geo.size.width * 16/170)
+                VStack {
+                    HStack {
+                        Image("\(name)_index")
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .frame(width: geo.size.width * 32/170, height: geo.size.width * 32/170)
+                            .padding([.leading, .top], geo.size.width * 16/170)
+                        Spacer()
+                    }
+                    Spacer()
+                }
             }
         }
     }

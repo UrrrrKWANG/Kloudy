@@ -53,28 +53,18 @@ struct KloudyMaskSystemSmallWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
                 case 0:
-                    Image("mask_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("mask_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("mask_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("mask_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("mask_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }
@@ -88,28 +78,18 @@ struct KloudyMaskAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].maskIndex[0].status {
                 case 0:
-                    Image("mask_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("mask_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("mask_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("mask_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("mask_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "mask", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }
