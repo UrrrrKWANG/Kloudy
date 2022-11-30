@@ -29,7 +29,7 @@ class WeatherIndexView: UIView {
     lazy var locationWeatherIndexView = LocationWeatherIndexView()
     let weatherIndexListView: UIView = {
         let uiView = UIView()
-        uiView.backgroundColor = UIColor.KColor.primaryBlue06
+        uiView.backgroundColor = UIColor.KColor.primaryBlue07
         uiView.layer.cornerRadius = 10
         return uiView
     }()
@@ -265,6 +265,8 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let indexImage = findIndexImage(indexName: indexName)
         cell.addSubview(indexImage)
         indexImage.snp.makeConstraints{
+            $0.width.equalTo(28)
+            $0.height.equalTo(29)
             $0.centerX.centerY.equalToSuperview()
         }
         return cell
