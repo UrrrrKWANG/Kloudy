@@ -52,13 +52,12 @@ class ViewController: UIViewController {
         return logoImageView
     }()
     
-    let dummyData = FetchWeatherInformation().dummyData
-    var weathers = [Weather]()
     let disposeBag = DisposeBag()
     let checkWeatherView = CheckWeatherView()
     let locationCount = CoreDataManager.shared.countLocations()
-    var fetchedWeathers: BehaviorRelay<[Weather]> = BehaviorRelay(value: [FetchWeatherInformation().dummyData])
-    
+    let currentStatus = CLLocationManager().authorizationStatus
+    let fetchedWeathers: BehaviorRelay<[Weather]> = BehaviorRelay(value: [])
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.KColor.primaryBlue01
@@ -70,21 +69,27 @@ class ViewController: UIViewController {
         } else {
             navigationController?.pushViewController(NetworkUnreachableView(), animated: false)
         }
-        
     }
     
     private func bind() {
         fetchedWeathers.asObservable()
             .subscribe(onNext: {
                 if self.locationCount == 0 {
-                    if $0.count != 1 {
+                    if $0.count != 0 {
                         self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
                         self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
                     }
                 } else {
-                    if $0.count == self.locationCount + 1{
-                        self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
-                        self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                    if (self.currentStatus == .restricted || self.currentStatus == .notDetermined || self.currentStatus == .denied) {
+                        if $0.count == self.locationCount {
+                            self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+                            self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                        }
+                    } else {
+                        if $0.count == self.locationCount + 1 {
+                            self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+                            self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                        }
                     }
                 }
             })
@@ -141,7 +146,6 @@ class ViewController: UIViewController {
     func fetchWeatherData() {
         let currentStatus = CLLocationManager().authorizationStatus
         let locations = CoreDataManager.shared.fetchLocations()
-        weathers = [Weather](repeating: dummyData , count: locations.count + 1)
         
         if locations.count == 0 {
             if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
@@ -202,27 +206,12 @@ class ViewController: UIViewController {
                 switch event {
                 case .success(let data):
                     DispatchQueue.main.async {
-                        self.fetchedWeathers.insert(data, at: 0)
+                        self.fetchedWeathers.accept([data] + self.fetchedWeathers.value)
                     }
                 case .failure(let error):
                     print("Error: ", error)
                 }
             }
             .disposed(by: disposeBag)
-    }
-}
-
-public extension BehaviorRelay where Element: RangeReplaceableCollection {
-
-    func insert(_ subElement: Element.Element, at index: Element.Index) {
-        var newValue = value
-        newValue.insert(subElement, at: index)
-        accept(newValue)
-    }
-    
-    func remove(at index: Element.Index) {
-        var newValue = value
-        newValue.remove(at: index)
-        accept(newValue)
     }
 }

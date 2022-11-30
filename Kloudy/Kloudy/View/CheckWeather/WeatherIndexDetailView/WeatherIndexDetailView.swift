@@ -86,7 +86,7 @@ class WeatherIndexDetailView: UIViewController {
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
-    var city = String()
+    var city = ""
     var indexType: IndexType = .unbrella
     var weatherData: Weather?
     
@@ -134,16 +134,13 @@ class WeatherIndexDetailView: UIViewController {
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
 
         } else if indexType == .car {
-            // 기획 확인 필요
             firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
             
-            // 서버에서 전달되는 문구 변경 필요
             secondIconView.iconValue.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm ?? "")
             
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 1)
             
         } else if indexType == .laundry {
-            // 기획 확인 필요
             firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather ?? 0))
             
             secondIconView.iconValue.onNext(String(
@@ -156,7 +153,11 @@ class WeatherIndexDetailView: UIViewController {
             firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0)))
             secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].morningTemperature ?? 0)))
             
-            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
+            if weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1 > 4 {
+                presentButtonView.indexStatus.onNext(4)
+            } else {
+                presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
+            }
             
             chartView.chartType.onNext(.temperature)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
