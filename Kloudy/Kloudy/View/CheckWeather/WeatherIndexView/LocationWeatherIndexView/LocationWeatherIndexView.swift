@@ -112,7 +112,7 @@ class LocationWeatherIndexView: UIView {
     }
     
     func makeUmbrellaIndexText(umbrellaHourly: [UmbrellaHourly]) {
-        var index:[Int] = [0,0,0,0]
+        var rainArray:[Int] = [0,0,0,0]
         var now = (Int(Date().getTimeOfDay()) ?? 0)
         
         switch now {
@@ -124,98 +124,78 @@ class LocationWeatherIndexView: UIView {
             now = 2
         case 18...23:
             now = 3
-        default :
-            now = 4
+        default:
+            break
         }
         
         umbrellaHourly.forEach {
             if $0.time <= 5 && $0.precipitation != 0.0 {
-                index[0] += 1
+                rainArray[0] += 1
             } else if $0.time >= 6 && $0.time < 12 && $0.precipitation != 0.0 {
-                index[1] += 1
+                rainArray[1] += 1
             } else if $0.time >= 12 && $0.time < 18 && $0.precipitation != 0.0 {
-                index[2] += 1
+                rainArray[2] += 1
             } else if $0.time >= 18 && $0.time < 24 && $0.precipitation != 0.0 {
-                index[3] += 1
+                rainArray[3] += 1
             }
         }
-        var newArray:[Int] = []
-        (now...3).forEach {
-            newArray.append(index[$0])
+        var capricious: [Int] = []
+        var raining: [Int] = []
+        var once: [Int] = []
+        for (index, rain) in rainArray.enumerated() {
+            if index >= now && rain > 0 && rain < 4 {
+                capricious.append(index)
+                once.append(index)
+            }
+            if index >= now && rain >= 4{
+                raining.append(index)
+            }
         }
         var rainText = ""
         if now == 0 {
-            if newArray.reduce(0, +) >= 16 {
+            if rainArray.reduce(0, +) >= 16 {
                 rainText = "하루종일 내림"
-            } else if newArray.reduce(0, +) == 0 {
+            } else if raining.count >= 3 {
+                rainText = "하루종일 내림"
+            } else if rainArray.reduce(0, +) == 0 {
                 rainText = "비 안옴"
             } else {
-                for (index, rain) in newArray.enumerated() {
-                    if index == 0 && rain > 0{
-                        rainText += "새벽 "
-                    }
-                    if index == 1 && rain > 0{
-                        rainText += "오전 "
-                    }
-                    if index == 2 && rain > 0{
-                        rainText += "오후 "
-                    }
-                    if index == 3 && rain > 0{
-                        rainText += "밤"
-                    }
+                if capricious.count >= 3 {
+                    rainText = "변덕스럽게 내림"
+                } else if !raining.isEmpty {
+                    rainText = fetchRainText(rainType: "raining", indexArray: raining)
+                } else {
+                    rainText = fetchRainText(rainType: "once", indexArray: once)
                 }
-                rainText += "에 비"
             }
-            
         } else if now == 1 {
-            if newArray.reduce(0, +) >= 12 {
+            if rainArray[1] + rainArray[2] + rainArray[3] >= 12 {
                 rainText = "하루종일 내림"
-            } else if newArray.reduce(0, +) == 0 {
+            } else if raining.count == 3 {
+                rainText = "하루종일 내림"
+            } else if rainArray[1] + rainArray[2] + rainArray[3] == 0 {
                 rainText = "비 안옴"
+            } else if capricious.count == 3 {
+                rainText = "변덕스럽게 내림"
+            } else if !raining.isEmpty {
+                rainText = fetchRainText(rainType: "raining", indexArray: raining)
             } else {
-                for (index, rain) in newArray.enumerated() {
-                    if index == 0 && rain > 0{
-                        rainText += "오전 "
-                    }
-                    if index == 1 && rain > 0{
-                        rainText += "오후 "
-                    }
-                    if index == 2 && rain > 0{
-                        rainText += "밤"
-                    }
-                }
-                rainText += "에 비"
+                rainText = fetchRainText(rainType: "once", indexArray: once)
             }
         } else if now == 2 {
-            if newArray.reduce(0, +) >= 9 {
+            if rainArray[1] + rainArray[2] + rainArray[3] >= 9 {
                 rainText = "하루종일 내림"
+            } else if raining.count == 2 {
+                rainText = "하루종일 내림"
+            } else if rainArray[1] + rainArray[2] == 0 {
+                rainText = "비 안옴"
+            } else if !raining.isEmpty {
+                rainText = fetchRainText(rainType: "raining", indexArray: raining)
             } else {
-                let rain = newArray.filter{ $0 >= 4 }
-                if rain.count == 2 {
-                    rainText = "하루종일 내림"
-                } else if rain.count == 1 {
-                    if newArray[0] >= 4 {
-                        rainText = "오후에 비"
-                    } else {
-                        rainText = "밤에 비"
-                    }
-                } else {
-                    let sometime = newArray.filter{ $0 >= 1 }
-                    if sometime.count == 2 {
-                        rainText = "오후 밤 한때 비"
-                    } else if sometime.count == 1 {
-                        if newArray[0] >= 1 {
-                            rainText = "오후 한때 비"
-                        } else {
-                            rainText = "밤 한때 비"
-                        }
-                    } else {
-                        rainText = "비 안옴"
-                    }
-                }
+                rainText = fetchRainText(rainType: "once", indexArray: once)
             }
         } else if now == 3 {
-            switch newArray[0] {
+            switch rainArray[0] {
             case 4...6:
                 rainText = "남은 하루 계속 비"
             case 2...3:
@@ -225,6 +205,39 @@ class LocationWeatherIndexView: UIView {
             }
         }
         umbrellaIndexText = rainText
+    }
+    private func fetchRainText(rainType: String, indexArray: [Int]) -> String {
+        var dayArray: [String] = []
+        var rainText = ""
+        
+        indexArray.forEach {
+            switch $0 {
+            case 0:
+                dayArray.append("새벽")
+            case 1:
+                dayArray.append("아침")
+            case 2:
+                dayArray.append("점심")
+            case 3:
+                dayArray.append("저녁")
+            default:
+                break
+            }
+        }
+        
+        for (index, rain) in dayArray.enumerated() {
+            if index == dayArray.endIndex-1 {
+                rainText += "\(rain)"
+                if rainType == "raining" {
+                    rainText += "에 비"
+                } else {
+                    rainText += "한때 비"
+                }
+            } else {
+                rainText += "\(rain) "
+            }
+        }
+        return rainText
     }
     
     required init?(coder: NSCoder) {
