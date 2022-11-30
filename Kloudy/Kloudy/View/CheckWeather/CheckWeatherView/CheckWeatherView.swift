@@ -207,7 +207,6 @@ class CheckWeatherView: UIViewController {
                             let weatherIndexDetailView = WeatherIndexDetailView()
                             weatherIndexView.indexNameString
                                 .subscribe(onNext: {
-                                    print($0 , " weatherIndexoo")
                                     weatherIndexDetailView.indexType = $0
                                 })
                                 .disposed(by: self.disposeBag)

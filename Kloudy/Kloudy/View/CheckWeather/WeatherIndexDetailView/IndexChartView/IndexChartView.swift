@@ -54,7 +54,7 @@ class IndexChartView: UIView {
     let chartUnitText: BehaviorSubject<String> = BehaviorSubject(value: "")
     let chartData = PublishSubject<[HourlyWeather]>()
     let chartType = PublishSubject<ChartType>()
-    var precipitationChart = true
+    var isPrecipitationChart = true
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -82,7 +82,7 @@ class IndexChartView: UIView {
         chartData
             .subscribe(onNext: {
                 $0.forEach { hourlyData in
-                    self.data[hourlyData.hour] = self.precipitationChart ? hourlyData.precipitation : hourlyData.temperature
+                    self.data[hourlyData.hour] = self.isPrecipitationChart ? hourlyData.precipitation : hourlyData.temperature
                 }
                 for (key, value) in self.data {
                     let value = ChartDataEntry(x: Double(key), y: value)
@@ -96,9 +96,9 @@ class IndexChartView: UIView {
         chartType
             .subscribe(onNext: {
                 if $0 == .precipitation {
-                    self.precipitationChart = true
+                    self.isPrecipitationChart = true
                 } else {
-                    self.precipitationChart = false
+                    self.isPrecipitationChart = false
                 }
             })
             .disposed(by: disposeBag)
