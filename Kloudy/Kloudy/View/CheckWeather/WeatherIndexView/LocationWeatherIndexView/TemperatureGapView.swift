@@ -84,27 +84,34 @@ class TemperatureGapView: UIView {
     
     private func addData() {
         guard let weathers = weathers else { return }
-        let todayMaxTemperature = weathers.localWeather[0].minMaxTemperature()[1]
-        let todayMinTemperature = weathers.localWeather[0].minMaxTemperature()[2]
-        let yesterdayMaxTemperature = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].yesterdayMaxTemperature)
-        let yesterdayMinTemperature = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].yesterdayMinTemperature)
-        let maxTemp = max(todayMaxTemperature, yesterdayMaxTemperature)
-        let minTemp = min(todayMinTemperature, yesterdayMinTemperature)
-        let total = minTemp > 0 ? maxTemp : Int(abs(maxTemp) + abs(minTemp))
-        let compareMax = todayMaxTemperature - yesterdayMaxTemperature
-        let compareMin = todayMinTemperature - yesterdayMinTemperature
-        
-        yesterdayMaxHeight = (Int(150 * yesterdayMaxTemperature / total)) + 30
-        todayMaxHeight = (Int(150 * todayMaxTemperature / total)) + 30
-        yesterdayMinHeight = (Int(150 * yesterdayMinTemperature / total)) + 30
-        todayMinHeight = (Int(150 * todayMinTemperature / total)) + 30
+        let yesterdayMaxTemperature: Int = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].yesterdayMaxTemperature)
+        let todayMaxTemperature: Int = Int(weathers.localWeather[0].minMaxTemperature()[1])
+        let yesterdayMinTemperature: Int = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].yesterdayMinTemperature)
+        let todayMinTemperature: Int = Int(weathers.localWeather[0].minMaxTemperature()[2])
+        let maxTemp: Int = max(todayMaxTemperature, yesterdayMaxTemperature)
+        let minTemp: Int = min(todayMinTemperature, yesterdayMinTemperature)
+        let total: Int = minTemp > 0 ? maxTemp - minTemp : maxTemp + abs(minTemp)
+        let compareMax: Int = todayMaxTemperature - yesterdayMaxTemperature
+        let compareMin: Int = todayMinTemperature - yesterdayMinTemperature
+
+        if minTemp < 0 {
+            yesterdayMaxHeight = (Int(144 * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
+            todayMaxHeight = (Int(144 * (todayMaxTemperature + abs(minTemp)) / total)) + 36
+            yesterdayMinHeight = (Int(144 * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
+            todayMinHeight = (Int(144 * (todayMinTemperature + abs(minTemp)) / total)) + 36
+        } else {
+            yesterdayMaxHeight = Int(144 * (yesterdayMaxTemperature - minTemp) / total) + 36
+            todayMaxHeight = Int(144 * (todayMaxTemperature - minTemp) / total) + 36
+            yesterdayMinHeight = Int(144 * (yesterdayMinTemperature - minTemp) / total) + 36
+            todayMinHeight = Int(144 * (todayMinTemperature - minTemp) / total) + 36
+        }
         
         maxTemperatureLabel.configureLabel(text: "\(abs(compareMax))°", font: UIFont.KFont.lexendRegular24, textColor: UIColor.KColor.black)
         minTemperatureLabel.configureLabel(text: "\(abs(compareMin))°", font: UIFont.KFont.lexendRegular24, textColor: UIColor.KColor.black)
-        yesterdayMaxTemperatureLabel.configureLabel(text: "\(Int(yesterdayMaxTemperature))", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.gray02)
-        todayMaxTemperatureLabel.configureLabel(text: "\(Int(todayMaxTemperature))", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
-        yesterdayMinTemperatureLabel.configureLabel(text: "\(Int(yesterdayMinTemperature))", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.gray02)
-        todayMinTemperatureLabel.configureLabel(text: "\(Int(todayMinTemperature))", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        yesterdayMaxTemperatureLabel.configureLabel(text: "\(yesterdayMaxTemperature)", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.gray02)
+        todayMaxTemperatureLabel.configureLabel(text: "\(todayMaxTemperature)", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
+        yesterdayMinTemperatureLabel.configureLabel(text: "\(yesterdayMinTemperature)", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.gray02)
+        todayMinTemperatureLabel.configureLabel(text: "\(todayMinTemperature)", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
         
         switch compareMax {
         case _ where compareMax > 0:
@@ -179,18 +186,18 @@ class TemperatureGapView: UIView {
             }
         }
         maxTemperatureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(7)
-            $0.leading.equalTo(maxTemperatureLabel.snp.trailing).offset(3)
+            $0.top.equalToSuperview().inset(6.25)
+            $0.leading.equalTo(maxTemperatureLabel.snp.trailing).offset(4)
             $0.trailing.equalToSuperview()
-            $0.width.equalTo(12)
-            $0.height.equalTo(16)
+            $0.width.equalTo(13)
+            $0.height.equalTo(17.5)
         }
         minTemperatureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(7)
-            $0.leading.equalTo(minTemperatureLabel.snp.trailing).offset(3)
+            $0.top.equalToSuperview().inset(6.25)
+            $0.leading.equalTo(minTemperatureLabel.snp.trailing).offset(4)
             $0.trailing.equalToSuperview()
-            $0.width.equalTo(12)
-            $0.height.equalTo(16)
+            $0.width.equalTo(13)
+            $0.height.equalTo(17.5)
         }
         
         // 차트 스택뷰
