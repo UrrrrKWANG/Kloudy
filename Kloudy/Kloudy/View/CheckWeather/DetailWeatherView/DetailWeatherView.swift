@@ -11,25 +11,32 @@ import RxCocoa
 import RxSwift
 
 class DetailWeatherView: UIViewController {
+    private let disposeBag = DisposeBag()
+    var weekWeatehrDatasCount = Int()
     var todayWeatherDatas = Observable.of([HourlyWeather]())
     var weekWeatherDatas = Observable.of([WeeklyWeather]())
     var temperatureList: [Int] = []
     
     init(weatherDatas: Weather) {
+      
         super.init(nibName: nil, bundle: nil)
+        self.view.frame = CGRect(x: 0, y: 0, width: 1298, height: 4123)
+      
         let todayWeatherDatas = Observable.of(weatherDatas.localWeather[0].hourlyWeather
             .filter({$0.hour >= 2}))
         let weekWeatherDatas = Observable.of(weatherDatas.localWeather[0].weeklyWeather)
         self.todayWeatherDatas = todayWeatherDatas
         self.weekWeatherDatas = weekWeatherDatas
-        
+        self.weekWeatehrDatasCount = weatherDatas.localWeather[0].weeklyWeather.count
+        print(weekWeatehrDatasCount, "weekWeatehrDatasCount")
         temperatureList = weatherDatas.localWeather[0].minMaxTemperature()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private let disposeBag = DisposeBag()
+    
     lazy var labelInTodayCollectionView: UILabel = {
         let uiLabel = UILabel()
         uiLabel.configureLabel(text: "시간대별 날씨".localized, font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
@@ -114,10 +121,14 @@ class DetailWeatherView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         addLayout()
         setUplayout()
-        bind()
+    
     }
     override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.KColor.white
+        let gesture = UITapGestureRecognizer()
+        self.weekCollectionView.addGestureRecognizer(gesture)
+        gesture.rx.event.bind {_ in
+            print("터치")
+        }.disposed(by: disposeBag)
     }
     
     func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int, isScroll: Bool, minimumLineSpacing: CGFloat) -> UICollectionView {
@@ -186,7 +197,7 @@ class DetailWeatherView: UIViewController {
             $0.top.equalTo(labelInWeekCollectionView.snp.bottom).offset(12)
             $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(440)
+            $0.height.equalTo(600)
         }
     }
     
@@ -238,6 +249,10 @@ class DetailWeatherView: UIViewController {
                 cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
             }
             cell.weatherCondition.image = UIImage(named: weatherCondition[1])
+            // 마지막은 구분선 삭제
+            if index == self.weekWeatehrDatasCount-1 {
+                cell.dividingLineView.removeFromSuperview()
+            }
         }
         .disposed(by: disposeBag)
     }

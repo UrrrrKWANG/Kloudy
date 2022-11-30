@@ -439,6 +439,8 @@ class LocationWeatherIndexView: UIView {
             return "outer_step4"
         case let(indexName, status) where indexName == .outer && status == 4 :
             return "outer_step5"
+        case let(indexName, status) where indexName == .outer && status == 5 :
+            return "outer_step5"
         default:
             return ""
         }

@@ -179,20 +179,6 @@ class WeatherIndexView: UIView {
         }
     }
     
-    func findStatus(indexName: IndexType) -> Int {
-        if indexName == .unbrella {
-            return weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 0
-        } else if indexName == .mask {
-            return weathers?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 0
-        } else if indexName == .outer {
-            return weathers?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 0
-        } else if indexName == .laundry {
-            return weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 0
-        } else if indexName == .car {
-            return weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 0
-        }
-        return 0
-    }
     
     func findIndexImage(indexName: IndexType) -> UIImageView {
         let uiImageView = UIImageView()

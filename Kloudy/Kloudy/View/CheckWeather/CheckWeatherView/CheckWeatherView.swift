@@ -21,7 +21,7 @@ class CheckWeatherView: UIViewController {
     let settingView = SettingView()
     
     var currentPageIndex = PublishSubject<Int>()
-    var pageIndex = 1
+    var pageIndex = 0
     
     let pageControl = UIPageControl()
     let initialPage = 0
@@ -83,14 +83,8 @@ class CheckWeatherView: UIViewController {
     }
 
     override func viewDidLoad() {
-        currentPageIndex.onNext(0)
-        currentPageIndex
-            .subscribe( onNext: {
-                self.pageIndex = $0
-            })
-            .disposed(by: disposeBag)
         super.viewDidLoad()
-        bind()
+        self.pageViewController.view.setNeedsLayout()
         locations = CoreDataManager.shared.fetchLocations()
         self.weathers = serializeLocationSequence(locations: locations, initialWeathers: initialWeathers)
         self.delegate = self.locationSelectionView
@@ -103,6 +97,7 @@ class CheckWeatherView: UIViewController {
     private func bind() {
         locationSelectionView.additionalLocation
             .subscribe(onNext: {
+                print($0)
                 self.weathers.append($0)
             })
             .disposed(by: disposeBag)
@@ -150,7 +145,6 @@ class CheckWeatherView: UIViewController {
     func loadWeatherView() {
         let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
-            
             if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
             let location = weathers[locationIndex]
             let internalCheckWeatherPageView = InternalCheckWeatherPageView()
@@ -158,8 +152,15 @@ class CheckWeatherView: UIViewController {
             internalCheckWeatherPageView.weathers = self.weathers[locationIndex]
             internalCheckWeatherPageView.sentWeather.onNext(location)
             internalCheckWeatherPageView.currentPageIndex.onNext(self.pageIndex)
-            print(self.pageIndex)
-            
+            internalCheckWeatherPageView.currentPageIndex
+                .observe(on: MainScheduler.asyncInstance)
+                .subscribe(
+                onNext: {
+                    self.pageIndex = $0
+//                    print(self.pageIndex)
+//                    internalCheckWeatherPageView.currentPageIndex.onNext($0)
+                })
+            .disposed(by: disposeBag)
             weatherIndexView.sentWeather.onNext(location)
             dataViewControllers.append(internalCheckWeatherPageView)
         }
@@ -201,6 +202,7 @@ class CheckWeatherView: UIViewController {
 
 extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
+        print("checkWeather 이전페이지")
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let previousIndex = index - 1
         if previousIndex < 0 {
