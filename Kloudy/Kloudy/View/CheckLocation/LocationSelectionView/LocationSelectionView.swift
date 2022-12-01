@@ -314,10 +314,10 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
-                return weatherData.count + 1
-            } else {
+            if self.currentStatus == .authorizedAlways || self.currentStatus == .authorizedWhenInUse {
                 return weatherData.count
+            } else {
+                return weatherData.count + 1
             }
         }
     }
@@ -395,16 +395,16 @@ extension LocationSelectionView: UITableViewDataSource {
             return nil
         case .check:
             if indexPath.row != 0 {
-                if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
+                if self.currentStatus == .authorizedAlways || self.currentStatus == .authorizedWhenInUse {
+                    let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
+                    return configuration
+                } else {
                     if indexPath.row != 1 {
                         let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
                         return configuration
                     } else {
                         return nil
                     }
-                } else {
-                    let configuration = UISwipeActionsConfiguration(actions: [deleteLocation(indexPath: indexPath)])
-                    return configuration
                 }
             } else {
                 return nil
@@ -420,8 +420,14 @@ extension LocationSelectionView: UITableViewDataSource {
             
             self.locationList.remove(at: indexPath.row - 1)
             
-            self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
-            self.weatherData.remove(at: indexPath.row)
+            if self.currentStatus == .authorizedAlways || self.currentStatus == .authorizedWhenInUse {
+                self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
+                self.weatherData.remove(at: indexPath.row)
+            } else {
+                self.deleteLocationCode.onNext(self.weatherData[indexPath.row - 1].localWeather[0].localCode)
+                self.weatherData.remove(at: indexPath.row - 1)
+            }
+            
             self.tableView.deleteRows(at: [indexPath], with: .fade)
             completionHandler(true)
         }
@@ -533,10 +539,17 @@ extension LocationSelectionView: UITableViewDropDelegate {
         locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
         CoreDataManager.shared.getLocationSequence(locationList: locationList)
 
-        let itemMove2 = weatherData[sourceIndexPath.row]
-        weatherData.remove(at: sourceIndexPath.row)
-        weatherData.insert(itemMove2, at: destinationIndexPath.row)
-        exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
+        if self.currentStatus == .authorizedAlways || self.currentStatus == .authorizedWhenInUse {
+            let itemMove2 = weatherData[sourceIndexPath.row]
+            weatherData.remove(at: sourceIndexPath.row)
+            weatherData.insert(itemMove2, at: destinationIndexPath.row)
+            exchangeLocationIndex.onNext([sourceIndexPath.row, destinationIndexPath.row])
+        } else {
+            let itemMove2 = weatherData[sourceIndexPath.row - 1]
+            weatherData.remove(at: sourceIndexPath.row - 1)
+            weatherData.insert(itemMove2, at: destinationIndexPath.row - 1)
+            exchangeLocationIndex.onNext([sourceIndexPath.row - 1, destinationIndexPath.row - 1])
+        }
     }
     
     func tableView(_ tableView: UITableView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UITableViewDropProposal {
