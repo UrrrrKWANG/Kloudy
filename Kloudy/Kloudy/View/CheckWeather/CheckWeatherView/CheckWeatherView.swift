@@ -141,16 +141,12 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
             self.indexArray = []
             self.indexStrArray = []
-            if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
             let location = weathers[locationIndex]
-            
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
-            let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
             
             lazy var num: UIViewController = {
                 let vc = UIViewController()
