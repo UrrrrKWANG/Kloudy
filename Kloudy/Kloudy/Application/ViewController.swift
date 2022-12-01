@@ -75,7 +75,7 @@ class ViewController: UIViewController {
         fetchedWeathers.asObservable()
             .subscribe(onNext: {
                 if self.locationCount == 0 {
-                    if $0.count != 0 {
+                    if !$0.isEmpty {
                         self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
                         self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
                     }

@@ -170,7 +170,6 @@ class WeatherIndexView: UIView {
                 return
             }
         }
-        
     }
     
     private func addLayout() {
@@ -260,7 +259,6 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         }
         
         cell.isSelected = indexPath.row == 0
-        
         
         let indexImage = findIndexImage(indexName: indexName)
         cell.addSubview(indexImage)
