@@ -28,6 +28,11 @@ enum ChartsAxisValue: Int {
     }
 }
 
+enum ChartType {
+    case precipitation
+    case temperature
+}
+
 final class CustomAxisValueFormatter: IndexAxisValueFormatter {
     override func stringForValue(_ value: Double, axis: AxisBase?) -> String {
         let intValue = Int(value)
@@ -48,6 +53,8 @@ class IndexChartView: UIView {
     let chartLabelText: BehaviorSubject<String> = BehaviorSubject(value: "")
     let chartUnitText: BehaviorSubject<String> = BehaviorSubject(value: "")
     let chartData = PublishSubject<[HourlyWeather]>()
+    let chartType = PublishSubject<ChartType>()
+    var isPrecipitationChart = true
 
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,7 +82,7 @@ class IndexChartView: UIView {
         chartData
             .subscribe(onNext: {
                 $0.forEach { hourlyData in
-                    self.data[hourlyData.hour] = hourlyData.precipitation
+                    self.data[hourlyData.hour] = self.isPrecipitationChart ? hourlyData.precipitation : hourlyData.temperature
                 }
                 for (key, value) in self.data {
                     let value = ChartDataEntry(x: Double(key), y: value)
@@ -83,6 +90,16 @@ class IndexChartView: UIView {
                 }
                 self.lineChartEntry = self.lineChartEntry.sorted(by: {$0.x < $1.x})
                 self.configureChart(chartEntry: self.lineChartEntry)
+            })
+            .disposed(by: disposeBag)
+        
+        chartType
+            .subscribe(onNext: {
+                if $0 == .precipitation {
+                    self.isPrecipitationChart = true
+                } else {
+                    self.isPrecipitationChart = false
+                }
             })
             .disposed(by: disposeBag)
     }

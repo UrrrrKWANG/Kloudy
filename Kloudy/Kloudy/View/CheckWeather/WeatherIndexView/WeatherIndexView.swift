@@ -11,6 +11,7 @@ import UIKit
 import RxCocoa
 import RxSwift
 import CoreData
+import CoreLocation
 
 enum InternalIndexType {
     case coldWave
@@ -53,10 +54,16 @@ class WeatherIndexView: UIView {
     let indexNameString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
     //
     var weathers: Weather?
+    var weatherIndex: Int?
     let sentWeather = PublishSubject<Weather>()
+    let sentWeatherIndex = PublishSubject<Int>()
+
     var locationList = [Location]()
     var indexArray = [IndexType]()
     var indexStrArray = [String]()
+    let isCurrentLocation = false
+    
+    let currentStatus = CLLocationManager().authorizationStatus
     
     //롱텝 핸들링
     @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
@@ -69,8 +76,12 @@ class WeatherIndexView: UIView {
         case .changed:
             indexCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: indexCollectionView))
         case .ended:
+            if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
+                print("🔗")
+            } else {
+                CoreDataManager.shared.changeLocationIndexData(code: self.weathers!.localWeather[0].localCode, indexArray: self.indexStrArray)
+            }
             indexCollectionView.endInteractiveMovement()
-            CoreDataManager.shared.changeLocationIndexData(code: self.weathers!.localWeather[0].localCode, indexArray: self.indexStrArray)
         default:
             indexCollectionView.cancelInteractiveMovement()
         }
@@ -109,6 +120,12 @@ class WeatherIndexView: UIView {
     }
     
     private func bind() {
+        sentWeatherIndex
+            .subscribe(onNext: {
+                self.weatherIndex = $0
+            })
+            .disposed(by: disposeBag)
+        
         sentWeather
             .subscribe(onNext: {
                 self.weathers = $0
@@ -120,6 +137,14 @@ class WeatherIndexView: UIView {
     
     private func fetchLocationIndexArray(sentWeather: Weather) {
         self.locationList = CoreDataManager.shared.fetchLocations()
+        
+        // 추후 UserDefaults 로 현재 위치에 대한 indexArray 를 저장하도록 구현
+        if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
+            self.indexStrArray =  ["unbrella", "car", "laundry", "mask" , "outer", "temperatureGap"]
+            self.indexArray = [.unbrella, .car, .laundry, .mask , .outer, .temperatureGap]
+            self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
+        }
+        
         self.locationList.forEach { location in
             if location.code == sentWeather.localWeather[0].localCode {
                 self.indexStrArray = location.indexArray ?? []
@@ -234,7 +259,6 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         }
         
         cell.isSelected = indexPath.row == 0
-        
         
         let indexImage = findIndexImage(indexName: indexName)
         cell.addSubview(indexImage)

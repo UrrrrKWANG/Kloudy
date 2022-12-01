@@ -36,12 +36,10 @@ class CheckWeatherView: UIViewController {
     var initialWeathers = [Weather]()
     var locations = [Location]()
     weak var delegate: LocationSelectionDelegate?
+    let currentStatus = CLLocationManager().authorizationStatus
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // 현재 위치가 동의되어 있는 경우
-//        fetchCurrentLocationWeatherData()
         
         // 지역이 변경될 시 사용할 코드
         for i in 0..<dataViewControllers.count {
@@ -99,7 +97,7 @@ class CheckWeatherView: UIViewController {
         
         locationSelectionView.deleteLocationCode
             .subscribe(onNext: {
-                for index in 0..<self.weathers.count {
+                for index in 1..<self.weathers.count {
                     if $0 == self.weathers[index].localWeather[0].localCode {
                         self.weathers.remove(at: index)
                         return
@@ -125,8 +123,9 @@ class CheckWeatherView: UIViewController {
     }
     
     private func serializeLocationSequence(locations: [Location], initialWeathers: [Weather]) -> [Weather] {
-        var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: locations.count + 1)
+        var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: initialWeathers.count)
         weatherData[0] = initialWeathers[0]
+        guard initialWeathers.count != 1 else { return weatherData }
         for weatherIndex in 1..<initialWeathers.count {
             for locationIndex in 0..<locations.count {
                 if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
@@ -142,8 +141,6 @@ class CheckWeatherView: UIViewController {
         let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
             
-            if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
-            
             let location = weathers[locationIndex]
             
             let localWeather = [LocalWeather](location.localWeather)
@@ -154,6 +151,7 @@ class CheckWeatherView: UIViewController {
                 let vc = UIViewController()
                 let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
                 let weatherIndexView = WeatherIndexView()
+                weatherIndexView.sentWeatherIndex.onNext(locationIndex)
                 weatherIndexView.sentWeather.onNext(location)
                 
                 let detailWeatherView: UIButton = {
