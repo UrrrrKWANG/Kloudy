@@ -32,6 +32,8 @@
 		8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE412909601C00F80ECB /* LocationTableCell.swift */; };
 		8B1F55CD293652C2009CE0D9 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55CC293652C2009CE0D9 /* NetworkReachability.swift */; };
 		8B1F55CF29366DB4009CE0D9 /* NetworkUnreachableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55CE29366DB4009CE0D9 /* NetworkUnreachableView.swift */; };
+		8B1F55D12939B2DB009CE0D9 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D02939B2DB009CE0D9 /* OnboardingView.swift */; };
+		8B1F55D42939B7EC009CE0D9 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D32939B7EC009CE0D9 /* Storage.swift */; };
 		8B22A3BD291A3B820079FA48 /* LocationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */; };
 		8B22A3BF291F59730079FA48 /* IndexChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BE291F59730079FA48 /* IndexChartView.swift */; };
 		8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */; };
@@ -225,6 +227,8 @@
 		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
 		8B1F55CC293652C2009CE0D9 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
 		8B1F55CE29366DB4009CE0D9 /* NetworkUnreachableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUnreachableView.swift; sourceTree = "<group>"; };
+		8B1F55D02939B2DB009CE0D9 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		8B1F55D32939B7EC009CE0D9 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchBar.swift; sourceTree = "<group>"; };
 		8B22A3BE291F59730079FA48 /* IndexChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartView.swift; sourceTree = "<group>"; };
 		8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartViewModel.swift; sourceTree = "<group>"; };
@@ -406,6 +410,14 @@
 			path = Pods;
 			sourceTree = "<group>";
 		};
+		8B1F55D22939B7C4009CE0D9 /* UserDefaults */ = {
+			isa = PBXGroup;
+			children = (
+				8B1F55D32939B7EC009CE0D9 /* Storage.swift */,
+			);
+			path = UserDefaults;
+			sourceTree = "<group>";
+		};
 		8B22A3C2291F612C0079FA48 /* IndexChartView */ = {
 			isa = PBXGroup;
 			children = (
@@ -519,6 +531,7 @@
 				D592C997290B26E500C53F06 /* Protocol */,
 				8BC8F7C129011DB100EF83AE /* Resource */,
 				8BC8F77029011DB100EF83AE /* CoreData */,
+				8B1F55D22939B7C4009CE0D9 /* UserDefaults */,
 				8BC8F77529011DB100EF83AE /* Model */,
 				8BC8F77E29011DB100EF83AE /* View */,
 				8BC8F7BC29011DB100EF83AE /* Application */,
@@ -636,6 +649,7 @@
 				8BC8F7BF29011DB100EF83AE /* AppDelegate.swift */,
 				8BC8F7C029011DB100EF83AE /* SceneDelegate.swift */,
 				22092FDE292CBC44007B8913 /* ViewController.swift */,
+				8B1F55D02939B2DB009CE0D9 /* OnboardingView.swift */,
 				8B1F55CE29366DB4009CE0D9 /* NetworkUnreachableView.swift */,
 			);
 			path = Application;
@@ -1177,12 +1191,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8B1F55D12939B2DB009CE0D9 /* OnboardingView.swift in Sources */,
 				1131D4D1292D558E00D80547 /* CurrentLocationTableViewCell.swift in Sources */,
 				2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */,
 				8BC8F7D229011DB200EF83AE /* CoreDataStack.swift in Sources */,
 				11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */,
 				8BC8F7CC29011DB200EF83AE /* Font+.swift in Sources */,
 				E036F3342928FCA200003E8A /* CurrentWeatherView.swift in Sources */,
+				8B1F55D42939B7EC009CE0D9 /* Storage.swift in Sources */,
 				222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */,
 				8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */,
 				E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */,
