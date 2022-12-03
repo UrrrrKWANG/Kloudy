@@ -44,14 +44,12 @@ class CheckWeatherView: UIViewController {
         bind()
     }
     let currentStatus = CLLocationManager().authorizationStatus
-    
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        // 지역이 변경될 시 사용할 코드
+
         for i in 0..<dataViewControllers.count {
             dataViewControllers[i].viewDidDisappear(false)
         }
@@ -100,8 +98,6 @@ class CheckWeatherView: UIViewController {
     private func bind() {
         locationSelectionView.additionalLocation
             .subscribe(onNext: {
-//nternalCheckWeatherPageView에서 페이지 슬라이드시 해당 페이지의 인덱스를 받아오는 부분
-//              print($0) 
                 self.weathers.append($0)
             })
             .disposed(by: disposeBag)
@@ -150,7 +146,6 @@ class CheckWeatherView: UIViewController {
     func loadWeatherView() {
         let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
-            if locationIndex == 0 && (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) { return }
             let location = weathers[locationIndex]
             let internalCheckWeatherPageView = InternalCheckWeatherPageView()
             let weatherIndexView = WeatherIndexView()
@@ -166,114 +161,6 @@ class CheckWeatherView: UIViewController {
             .disposed(by: disposeBag)
             weatherIndexView.sentWeather.onNext(location)
             dataViewControllers.append(internalCheckWeatherPageView)
-
-            let localWeather = [LocalWeather](location.localWeather)
-            let main = [Main](localWeather[0].main)
-            let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
-            
-            lazy var num: UIViewController = {
-                let vc = UIViewController()
-                let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
-                let weatherIndexView = WeatherIndexView()
-                weatherIndexView.sentWeatherIndex.onNext(locationIndex)
-                weatherIndexView.sentWeather.onNext(location)
-                
-                let detailWeatherView: UIButton = {
-                    let detailWeatherView = UIButton()
-                    detailWeatherView.backgroundColor = UIColor.KColor.white
-                    detailWeatherView.layer.cornerRadius = 10
-                    detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
-                    return detailWeatherView
-                }()
-                
-                let currentWeatherImage: UIImageView = {
-                    let currentWeatherImage = UIImageView()
-                    currentWeatherImage.contentMode = .scaleAspectFit
-                    currentWeatherImage.image = UIImage(named: "detailWeather-\(main[0].currentWeather)")
-                    return currentWeatherImage
-                }()
-                let detailWeatherViewLabel: UILabel = {
-                    let detailWeatherViewLabel = UILabel()
-                    detailWeatherViewLabel.configureLabel(text: "상세 날씨".localized, font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
-                    return detailWeatherViewLabel
-                }()
-                let rightIcon: UIImageView = {
-                    let rightIcon = UIImageView()
-                    rightIcon.image = UIImage(named: "right")
-                    rightIcon.contentMode = .scaleAspectFit
-                    return rightIcon
-                }()
-                
-                vc.view.backgroundColor = UIColor.KColor.clear
-                [currentWeatherView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
-                
-                currentWeatherView.snp.makeConstraints {
-                    $0.top.equalToSuperview().inset(24)
-                    $0.leading.trailing.equalToSuperview().inset(20)
-                    $0.height.equalTo(108)
-                }
-                currentWeatherImage.snp.makeConstraints {
-                    $0.top.equalToSuperview().inset(-6)
-                    $0.leading.equalToSuperview().inset(36)
-                    $0.width.equalTo(150)
-                    $0.height.equalTo(130)
-                }
-                weatherIndexView.snp.makeConstraints {
-                    $0.top.equalTo(currentWeatherView.snp.bottom).offset(32)
-                    $0.leading.trailing.equalToSuperview().inset(20)
-                    $0.height.equalTo(385)
-                }
-                
-                // CheckWeatherView 의 Lottie 선택 시 WeatherDetailIndexView 로 city 와 indexType 전달
-                weatherIndexView.locationWeatherIndexView.indexViewTapped
-                    .subscribe(onNext: {
-                        if $0 {
-                            let weatherIndexDetailView = WeatherIndexDetailView()
-                            weatherIndexView.indexNameString
-                                .subscribe(onNext: {
-                                    weatherIndexDetailView.indexType = $0
-                                })
-                                .disposed(by: self.disposeBag)
-                            
-                            weatherIndexDetailView.weatherData = location
-                            weatherIndexDetailView.city = localWeather[0].localName
-                            weatherIndexDetailView.modalPresentationStyle = .overCurrentContext
-                            weatherIndexDetailView.modalTransitionStyle = .crossDissolve
-                            self.present(weatherIndexDetailView, animated: true)
-                        }
-                    })
-                    .disposed(by: disposeBag)
-                
-                detailWeatherView.rx.tap
-                    .bind {
-                        let detailWeatherView = DetailWeatherView(weatherDatas: location)
-                        detailWeatherView.modalPresentationStyle = .pageSheet
-                        detailWeatherView.modalTransitionStyle = .coverVertical
-                        self.present(detailWeatherView, animated: true)
-                    }
-                    .disposed(by: disposeBag)
-                
-                detailWeatherView.snp.makeConstraints {
-                    $0.top.equalTo(weatherIndexView.snp.bottom).offset(32)
-                    $0.leading.trailing.equalToSuperview().inset(20)
-                    $0.height.equalTo(58)
-                }
-                
-                [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
-
-                detailWeatherViewLabel.snp.makeConstraints {
-                    $0.centerY.equalToSuperview()
-                    $0.leading.equalToSuperview().inset(16)
-                }
-                rightIcon.snp.makeConstraints {
-                    $0.centerY.equalToSuperview()
-                    $0.trailing.equalToSuperview().inset(16)
-                    $0.width.equalTo(8)
-                    $0.height.equalTo(14)
-                }
-                return vc
-            }()
-            dataViewControllers.append(num)
         }
     }
     
