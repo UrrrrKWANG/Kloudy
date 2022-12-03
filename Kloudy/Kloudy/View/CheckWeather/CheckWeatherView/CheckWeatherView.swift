@@ -23,21 +23,16 @@ class CheckWeatherView: UIViewController {
     var pageIndex = 0
     var indexArray = [IndexType]()
     var indexStrArray = [String]()
-    
     let pageControl = UIPageControl()
     let initialPage = 0
-    
     let cityInformationModel = FetchWeatherInformation()
     lazy var cityData = self.cityInformationModel.loadCityListFromCSV()
     var locationList = CoreDataManager.shared.fetchLocations()
-
     lazy var pageViewController = UIPageViewController()
     let checkWeatherViewModel = CheckWeatherViewModel()
     var dataViewControllers = [UIViewController]()
-    
     var weathers = [Weather]()
     var initialWeathers = [Weather]()
-    
     var locations = [Location]()
     weak var delegate: LocationSelectionDelegate?
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
@@ -146,12 +141,16 @@ class CheckWeatherView: UIViewController {
     
     func loadWeatherView() {
         self.weathers.indices.forEach { locationIndex in
+            
+            let location = weathers[locationIndex]
             self.indexArray = []
             self.indexStrArray = []
-            let location = weathers[locationIndex]
+            fetchLocationIndexArray(sentWeather: location)
+           
             let internalCheckWeatherPageView = InternalCheckWeatherPageView()
-            let weatherIndexView = WeatherIndexView()
             internalCheckWeatherPageView.weathers = self.weathers[locationIndex]
+            internalCheckWeatherPageView.sentIndexArray.onNext(indexArray)
+            internalCheckWeatherPageView.sentIndexStrArray.onNext(indexStrArray)
             internalCheckWeatherPageView.sentWeather.onNext(location)
             internalCheckWeatherPageView.currentPageIndex.onNext(self.pageIndex)
             internalCheckWeatherPageView.currentPageIndex
@@ -161,7 +160,6 @@ class CheckWeatherView: UIViewController {
                     self.pageIndex = $0
                 })
             .disposed(by: disposeBag)
-            weatherIndexView.sentWeather.onNext(location)
             dataViewControllers.append(internalCheckWeatherPageView)
         }
     }

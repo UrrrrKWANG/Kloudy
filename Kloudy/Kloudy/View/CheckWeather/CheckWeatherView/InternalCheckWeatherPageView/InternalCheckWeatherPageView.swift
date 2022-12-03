@@ -17,7 +17,10 @@ class InternalCheckWeatherPageView: UIViewController {
     var dataViewControllers = [UIViewController]()
     var pageIndex = 0
     var currentPageIndex =  PublishSubject<Int>()
-    
+    var indexArray = [IndexType]()
+    var indexStrArray = [String]()
+    let sentIndexArray = PublishSubject<[IndexType]>()
+    let sentIndexStrArray = PublishSubject<[String]>()
     let pageControl = UIPageControl()
     var weathers: Weather?
     lazy var sentWeather = PublishSubject<Weather>()
@@ -70,6 +73,17 @@ class InternalCheckWeatherPageView: UIViewController {
                     self.weathers = $0
                 })
             .disposed(by: disposeBag)
+        sentIndexArray
+            .subscribe(onNext: {
+                self.indexArray = $0
+//                self.indexName.onNext($0[0])
+            })
+            .disposed(by: disposeBag)
+        sentIndexStrArray
+            .subscribe(onNext: {
+                self.indexStrArray = $0
+            })
+            .disposed(by: disposeBag)
     }
     
     func loadWeatherView() {
@@ -83,6 +97,11 @@ class InternalCheckWeatherPageView: UIViewController {
             let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
             let weatherIndexView = WeatherIndexView()
             weatherIndexView.sentWeather.onNext(weathers!)
+            weatherIndexView.sentIndexArray.onNext(indexArray)
+            weatherIndexView.sentIndexStrArray.onNext(indexStrArray)
+            
+            
+            
             let currentWeatherImage: UIImageView = {
                 let currentWeatherImage = UIImageView()
                 currentWeatherImage.contentMode = .scaleAspectFit
