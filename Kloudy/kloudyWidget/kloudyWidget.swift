@@ -14,11 +14,11 @@ struct KloudyProvider: IntentTimelineProvider {
     typealias Intent = ConfigurationIntent
     
     func placeholder(in context: Context) -> KloudyEntry {
-        KloudyEntry(date: Date(), configuration: ConfigurationIntent(), weatherInfo: FetchWeatherInformation.shared.dummyData, locationAuth: true)
+        KloudyEntry(date: Date(), configuration: ConfigurationIntent(), weatherInfo: FetchWeatherInformation.shared.dummyData, locationAuth: true, currentCity: "종로구")
     }
     
     func getSnapshot(for configuration: ConfigurationIntent, in context: Context, completion: @escaping (KloudyEntry) -> Void) {
-        let entry = KloudyEntry(date: Date(), configuration: ConfigurationIntent(), weatherInfo: FetchWeatherInformation.shared.dummyData, locationAuth: true)
+        let entry = KloudyEntry(date: Date(), configuration: ConfigurationIntent(), weatherInfo: FetchWeatherInformation.shared.dummyData, locationAuth: true, currentCity: "종로구")
         completion(entry)
     }
     
@@ -35,7 +35,7 @@ struct KloudyProvider: IntentTimelineProvider {
                 weather = response
                 let currentDate = Date()
                 let entryDate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
-                let entry = KloudyEntry(date: Date(), configuration: configuration, weatherInfo: response, locationAuth: true)
+                let entry = KloudyEntry(date: Date(), configuration: configuration, weatherInfo: response, locationAuth: true, currentCity: nowLocation.city)
                 entries.append(entry)
                 let timeline = Timeline(entries: [entry], policy: .after(entryDate))
                 completion(timeline)
@@ -43,7 +43,7 @@ struct KloudyProvider: IntentTimelineProvider {
         } else {
             let currentDate = Date()
             let entryDate = Calendar.current.date(byAdding: .minute, value: 1, to: currentDate)!
-            let entry = KloudyEntry(date: Date(), configuration: configuration, weatherInfo: FetchWeatherInformation.shared.dummyData, locationAuth: false)
+            let entry = KloudyEntry(date: Date(), configuration: configuration, weatherInfo: FetchWeatherInformation.shared.dummyData, locationAuth: false, currentCity: "종로구")
             entries.append(entry)
             let timeline = Timeline(entries: [entry], policy: .after(entryDate))
             completion(timeline)
@@ -56,6 +56,7 @@ struct KloudyEntry: TimelineEntry {
     let configuration: ConfigurationIntent
     let weatherInfo: Weather
     let locationAuth: Bool
+    let currentCity: String
 }
 
 @main

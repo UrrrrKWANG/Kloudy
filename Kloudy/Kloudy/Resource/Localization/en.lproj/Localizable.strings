@@ -312,6 +312,7 @@ Seogwipo-si="Seogwipo-si";
 "일교차" = "Daily Temp Range";
 "최저 기온" = "Min Temp";
 "최고 온도" = "Max Temp";
+"현재 온도" = "Temp";
 
 
 "비가 오지 않습니다." = "No rain expected";

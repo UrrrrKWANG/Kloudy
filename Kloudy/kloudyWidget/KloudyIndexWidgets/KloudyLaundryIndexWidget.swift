@@ -53,28 +53,18 @@ struct KloudyLaundrySystemSmallWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].laundryIndex[0].status {
                 case 0:
-                    Image("laundry_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "laundry", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 1:
-                    Image("laundry_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "laundry", index: "2", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 2:
-                    Image("laundry_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "laundry", index: "3", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 case 3:
-                    Image("laundry_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "laundry", index: "4", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 default:
-                    Image("laundry_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexWidget(name: "laundry", index: "1", temperature: Int(entry.weatherInfo.localWeather[0].main[0].currentTemperature), city: entry.currentCity)
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningWidget()
             }
         }
     }
@@ -88,28 +78,18 @@ struct KloudyLaundryAccessoryCircularWidgetView: View {
             if entry.locationAuth {
                 switch entry.weatherInfo.localWeather[0].weatherIndex[0].laundryIndex[0].status {
                 case 0:
-                    Image("laundry_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexAccessoryCircularWidget(name: "laundry", index: "1")
                 case 1:
-                    Image("laundry_2")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexAccessoryCircularWidget(name: "laundry", index: "2")
                 case 2:
-                    Image("laundry_3")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexAccessoryCircularWidget(name: "laundry", index: "3")
                 case 3:
-                    Image("laundry_4")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexAccessoryCircularWidget(name: "laundry", index: "4")
                 default:
-                    Image("laundry_1")
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                    KloudyIndexAccessoryCircularWidget(name: "laundry", index: "1")
                 }
             } else {
-                Text("앱의 위치 사용을 허용해주세요!")
+                KloudyWarningAccessoryCircularWidget()
             }
         }
     }

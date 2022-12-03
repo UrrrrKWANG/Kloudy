@@ -314,7 +314,11 @@ extension LocationSelectionView: UITableViewDataSource {
         case .search:
             return filteredSearchTableTypeData.count
         case .check:
-            return weatherData.count
+            if currentStatus == .notDetermined || currentStatus == .restricted || currentStatus == .denied {
+                return weatherData.count + 1
+            } else {
+                return weatherData.count
+            }
         }
     }
 
@@ -356,11 +360,19 @@ extension LocationSelectionView: UITableViewDataSource {
                 guard let cell = tableView.dequeueReusableCell(withIdentifier: "locationCell", for: indexPath) as? LocationTableViewCell else {
                     return UITableViewCell()
                 }
-                cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
-                cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
-                cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                 cell.backgroundColor = UIColor.KColor.clear
                 cell.selectionStyle = .none
+                
+                if (currentStatus == .denied || currentStatus == .notDetermined || currentStatus == .restricted) {
+                    cell.locationNameLabel.text = weatherData[indexPath.row - 1].localWeather[0].localName
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row - 1].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[1]))°"
+                } else {
+                    cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[1]))°"
+                }
+                
                 return cell
             }
         }
