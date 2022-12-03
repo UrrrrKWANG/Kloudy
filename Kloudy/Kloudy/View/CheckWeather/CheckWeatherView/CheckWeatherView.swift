@@ -19,9 +19,10 @@ class CheckWeatherView: UIViewController {
     let checkWeatherBasicNavigationView = CheckWeatherBasicNavigationView()
     let locationSelectionView = LocationSelectionView()
     let settingView = SettingView()
-    
     var currentPageIndex = PublishSubject<Int>()
     var pageIndex = 0
+    var indexArray = [IndexType]()
+    var indexStrArray = [String]()
     
     let pageControl = UIPageControl()
     let initialPage = 0
@@ -144,8 +145,9 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
+            self.indexArray = []
+            self.indexStrArray = []
             let location = weathers[locationIndex]
             let internalCheckWeatherPageView = InternalCheckWeatherPageView()
             let weatherIndexView = WeatherIndexView()
@@ -163,7 +165,33 @@ class CheckWeatherView: UIViewController {
             dataViewControllers.append(internalCheckWeatherPageView)
         }
     }
-    
+    func fetchLocationIndexArray(sentWeather: Weather) {
+        self.locationList = CoreDataManager.shared.fetchLocations()
+        self.locationList.forEach { location in
+            if location.code == sentWeather.localWeather[0].localCode {
+                self.indexStrArray = location.indexArray ?? []
+                self.indexStrArray.forEach { index in
+                    switch index {
+                    case "rain":
+                        self.indexArray.append(.unbrella)
+                    case "mask":
+                        self.indexArray.append(.mask)
+                    case "laundry":
+                        self.indexArray.append(.laundry)
+                    case "car":
+                        self.indexArray.append(.car)
+                    case "outer":
+                        self.indexArray.append(.outer)
+                    case "temperatureGap":
+                        self.indexArray.append(.temperatureGap)
+                    default:
+                        break
+                    }
+                }
+                return
+            }
+        }
+    }
     func configureCheckWeatherNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)

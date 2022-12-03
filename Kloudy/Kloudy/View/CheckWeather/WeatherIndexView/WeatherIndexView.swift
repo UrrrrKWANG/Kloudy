@@ -56,8 +56,9 @@ class WeatherIndexView: UIView {
     var weathers: Weather?
     var weatherIndex: Int?
     let sentWeather = PublishSubject<Weather>()
+    let sentIndexArray = PublishSubject<[IndexType]>()
+    let sentIndexStrArray = PublishSubject<[String]>()
     let sentWeatherIndex = PublishSubject<Int>()
-
     var locationList = [Location]()
     var indexArray = [IndexType]()
     var indexStrArray = [String]()
@@ -130,46 +131,19 @@ class WeatherIndexView: UIView {
             .subscribe(onNext: {
                 self.weathers = $0
                 self.locationWeatherIndexView.sentWeather.onNext($0)
-                self.fetchLocationIndexArray(sentWeather: $0)
             })
             .disposed(by: disposeBag)
-    }
-    
-    private func fetchLocationIndexArray(sentWeather: Weather) {
-        self.locationList = CoreDataManager.shared.fetchLocations()
-        
-        // 추후 UserDefaults 로 현재 위치에 대한 indexArray 를 저장하도록 구현
-        if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
-            self.indexStrArray =  ["unbrella", "car", "laundry", "mask" , "outer", "temperatureGap"]
-            self.indexArray = [.unbrella, .car, .laundry, .mask , .outer, .temperatureGap]
-            self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
-        }
-        
-        self.locationList.forEach { location in
-            if location.code == sentWeather.localWeather[0].localCode {
-                self.indexStrArray = location.indexArray ?? []
-                self.indexStrArray.forEach { index in
-                    switch index {
-                    case "rain":
-                        self.indexArray.append(.unbrella)
-                    case "mask":
-                        self.indexArray.append(.mask)
-                    case "laundry":
-                        self.indexArray.append(.laundry)
-                    case "car":
-                        self.indexArray.append(.car)
-                    case "outer":
-                        self.indexArray.append(.outer)
-                    case "temperatureGap":
-                        self.indexArray.append(.temperatureGap)
-                    default:
-                        break
-                    }
-                }
-                self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
-                return
-            }
-        }
+        sentIndexArray
+            .subscribe(onNext: {
+                self.indexArray = $0
+                self.locationWeatherIndexView.sentIndexArray.onNext($0)
+            })
+            .disposed(by: disposeBag)
+        sentIndexStrArray
+            .subscribe(onNext: {
+                self.indexStrArray = $0
+            })
+            .disposed(by: disposeBag)
     }
     
     private func addLayout() {
