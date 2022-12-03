@@ -97,7 +97,8 @@ class CheckWeatherView: UIViewController {
     private func bind() {
         locationSelectionView.additionalLocation
             .subscribe(onNext: {
-                print($0)
+//nternalCheckWeatherPageView에서 페이지 슬라이드시 해당 페이지의 인덱스를 받아오는 부분
+//              print($0) 
                 self.weathers.append($0)
             })
             .disposed(by: disposeBag)
@@ -157,8 +158,6 @@ class CheckWeatherView: UIViewController {
                 .subscribe(
                 onNext: {
                     self.pageIndex = $0
-//                    print(self.pageIndex)
-//                    internalCheckWeatherPageView.currentPageIndex.onNext($0)
                 })
             .disposed(by: disposeBag)
             weatherIndexView.sentWeather.onNext(location)
@@ -202,7 +201,6 @@ class CheckWeatherView: UIViewController {
 
 extension CheckWeatherView: UIPageViewControllerDataSource, UIPageViewControllerDelegate {
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerBefore viewController: UIViewController) -> UIViewController? {
-        print("checkWeather 이전페이지")
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let previousIndex = index - 1
         if previousIndex < 0 {

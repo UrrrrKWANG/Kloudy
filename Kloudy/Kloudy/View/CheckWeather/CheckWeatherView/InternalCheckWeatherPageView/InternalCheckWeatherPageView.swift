@@ -12,7 +12,7 @@ import RxCocoa
 import CoreLocation
 
 class InternalCheckWeatherPageView: UIViewController {
-    let locationIndex = Int()
+    var locationIndex = Int()
     let localWeather =  [LocalWeather]?.self
     var dataViewControllers = [UIViewController]()
     var pageIndex = 0
@@ -49,7 +49,7 @@ class InternalCheckWeatherPageView: UIViewController {
         for i in 0..<dataViewControllers.count {
             dataViewControllers[i].viewDidDisappear(false)
         }
-        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
+        pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .vertical)
         dataViewControllers = [UIViewController]()
 //        addChild(pageViewController)
         loadWeatherView()
@@ -143,9 +143,7 @@ class InternalCheckWeatherPageView: UIViewController {
         dataViewControllers.append(num)
         let detailWeatherView = DetailWeatherView(weatherDatas: location!)
         detailWeatherView.scrollView.clipsToBounds = false
-//        detailWeatherView.scrollView.isScrollEnabled = falseㅌㄱ
         dataViewControllers.append(detailWeatherView)
-        
     }
     private func configurePageViewController() {
         pageViewController.view.snp.makeConstraints {
@@ -159,15 +157,12 @@ extension InternalCheckWeatherPageView: UIPageViewControllerDataSource, UIPageVi
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let previousIndex = index - 1
         if previousIndex < 0 {
-            print("💦")
             return nil
         }
         return dataViewControllers[previousIndex]
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, viewControllerAfter viewController: UIViewController) -> UIViewController? {
-//        print("다음페이지")
-        print("👋")
         guard let index = dataViewControllers.firstIndex(of: viewController) else { return nil }
         let nextIndex = index + 1
         if nextIndex == dataViewControllers.count {
@@ -177,13 +172,11 @@ extension InternalCheckWeatherPageView: UIPageViewControllerDataSource, UIPageVi
     }
     
     func pageViewController(_ pageViewController: UIPageViewController, didFinishAnimating finished: Bool, previousViewControllers: [UIViewController], transitionCompleted completed: Bool) {
+        self.locationIndex = self.dataViewControllers.firstIndex(of: pageViewController.viewControllers![0])!
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = self.dataViewControllers.firstIndex(of: viewControllers[0]) {
-                
-                print("🔥")
                 self.pageControl.currentPage = viewControllerIndex
-                print("\(self.pageControl.currentPage)🍎")
-                currentPageIndex.onNext(viewControllerIndex)
+                currentPageIndex.onNext(locationIndex)
             }
         }
     }
@@ -191,9 +184,8 @@ extension InternalCheckWeatherPageView: UIPageViewControllerDataSource, UIPageVi
     func pageViewController(_ pageViewController: UIPageViewController, willTransitionTo pendingViewControllers: [UIViewController]) {
         if let viewControllers = pageViewController.viewControllers {
             if let viewControllerIndex = self.dataViewControllers.firstIndex(of: viewControllers[0]) {
-                print("🍏")
+            
                 self.pageControl.currentPage = viewControllerIndex
-                print("\(self.pageControl.currentPage)🥦")
                 currentPageIndex.onNext(viewControllerIndex)
             }
         }
