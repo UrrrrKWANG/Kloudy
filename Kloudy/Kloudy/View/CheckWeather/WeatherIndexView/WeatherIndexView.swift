@@ -134,8 +134,7 @@ class WeatherIndexView: UIView {
         // 현재 위치 정보 권한 동의 및 현재 위치 지역의 지수 순서
         if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
             self.indexStrArray = Storage.fetchCurrentLocationIndexArray()
-            print(self.indexStrArray)
-            self.indexArray = typeConvertStringToIndex(indexStrArray: self.indexStrArray)
+            self.indexArray = Storage.convertStringToIndexType(indexStrArray: self.indexStrArray)
             self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
         }
         
@@ -232,29 +231,6 @@ class WeatherIndexView: UIView {
         }
         return uiImageView
     }
-    
-    private func typeConvertStringToIndex(indexStrArray: [String]) -> [IndexType] {
-        var indexArray = [IndexType]()
-        indexStrArray.forEach { index in
-            switch index {
-            case "rain":
-                indexArray.append(.umbrella)
-            case "mask":
-                indexArray.append(.mask)
-            case "laundry":
-                indexArray.append(.laundry)
-            case "car":
-                indexArray.append(.car)
-            case "outer":
-                indexArray.append(.outer)
-            case "temperatureGap":
-                indexArray.append(.temperatureGap)
-            default:
-                break
-            }
-        }
-        return indexArray
-    }
 }
 
 extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
@@ -274,6 +250,7 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let indexName = self.indexArray[indexPath.row]
         if(indexPath.row == 0){
             collectionView.selectItem(at: indexPath, animated: false, scrollPosition: .init())
+            indexNameString.onNext(indexName)
         }
         
         cell.isSelected = indexPath.row == 0

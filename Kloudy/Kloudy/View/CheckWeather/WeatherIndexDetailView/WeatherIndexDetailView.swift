@@ -25,7 +25,7 @@ enum IndexType {
         case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "습도".localized, "%", "", ""]
         case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "현재 온도".localized, ""]
         case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "", ""]
-        case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "", ""]
+        case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "현재 온도".localized, ""]
         }
     }
     
@@ -69,7 +69,7 @@ enum IndexType {
         case .laundry: return false
         case .outer: return true
         case .car: return false
-        case .temperatureGap: return false
+        case .temperatureGap: return true
         }
     }
 }
@@ -90,12 +90,20 @@ class WeatherIndexDetailView: UIViewController {
     var indexType: IndexType = .umbrella
     var weatherData: Weather?
     
-    // API 데이터 받을 시 전달 (_24h)
-    var chartValue: Double = 0
+    let firstIndexType: BehaviorSubject<IndexType> = BehaviorSubject(value: .umbrella)
     
-    var dismissStepView: BehaviorSubject<Bool> = BehaviorSubject(value: false)
+    init() {
+        super.init(nibName: nil, bundle: nil)
+        firstIndexType
+            .subscribe(onNext: {
+                self.indexType = $0
+            })
+            .disposed(by: disposeBag)
+    }
     
-    var sendButtonIndex: BehaviorSubject<Int> = BehaviorSubject(value: 0)
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -168,6 +176,16 @@ class WeatherIndexDetailView: UIViewController {
             firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature ?? 0)))
             secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature ?? 0)))
             
+            if weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1 > 4 {
+                presentButtonView.indexStatus.onNext(4)
+            } else {
+                presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
+            }
+            
+            chartView.chartType.onNext(.temperature)
+            chartView.chartLabelText.onNext(indexType.detailIndexString[7])
+            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
         }
         
         firstIconView.iconImage.onNext(indexType.detailIndexString[1])
@@ -266,6 +284,13 @@ class WeatherIndexDetailView: UIViewController {
             $0.leading.trailing.equalToSuperview().inset(16)
             $0.top.equalTo(presentButtonView.snp.bottom).offset(7)
             $0.bottom.equalToSuperview().inset(13)
+        }
+        
+        if indexType == .temperatureGap {
+            [presentButtonView, indexStepView].forEach {
+                $0.removeFromSuperview()
+            }
+            baseIndexView.layoutIfNeeded()
         }
     }
     
