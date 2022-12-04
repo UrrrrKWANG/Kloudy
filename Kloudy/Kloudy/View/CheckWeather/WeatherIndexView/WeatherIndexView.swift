@@ -51,7 +51,7 @@ class WeatherIndexView: UIView {
         return uiCollectionView
     }()
     
-    let indexNameString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
+    let indexNameString: BehaviorSubject<IndexType> = BehaviorSubject(value: .umbrella)
     //
     var weathers: Weather?
     var weatherIndex: Int?
@@ -61,8 +61,6 @@ class WeatherIndexView: UIView {
     var locationList = [Location]()
     var indexArray = [IndexType]()
     var indexStrArray = [String]()
-    let isCurrentLocation = false
-    
     let currentStatus = CLLocationManager().authorizationStatus
     
     //롱텝 핸들링
@@ -76,11 +74,6 @@ class WeatherIndexView: UIView {
         case .changed:
             indexCollectionView.updateInteractiveMovementTargetPosition(gesture.location(in: indexCollectionView))
         case .ended:
-            if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
-                print("🔗")
-            } else {
-                CoreDataManager.shared.changeLocationIndexData(code: self.weathers!.localWeather[0].localCode, indexArray: self.indexStrArray)
-            }
             indexCollectionView.endInteractiveMovement()
         default:
             indexCollectionView.cancelInteractiveMovement()
@@ -138,20 +131,22 @@ class WeatherIndexView: UIView {
     private func fetchLocationIndexArray(sentWeather: Weather) {
         self.locationList = CoreDataManager.shared.fetchLocations()
         
-        // 추후 UserDefaults 로 현재 위치에 대한 indexArray 를 저장하도록 구현
+        // 현재 위치 정보 권한 동의 및 현재 위치 지역의 지수 순서
         if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
-            self.indexStrArray =  ["unbrella", "car", "laundry", "mask" , "outer", "temperatureGap"]
-            self.indexArray = [.unbrella, .car, .laundry, .mask , .outer, .temperatureGap]
+            self.indexStrArray = Storage.fetchCurrentLocationIndexArray()
+            print(self.indexStrArray)
+            self.indexArray = typeConvertStringToIndex(indexStrArray: self.indexStrArray)
             self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
         }
         
+        // 이외 지역
         self.locationList.forEach { location in
             if location.code == sentWeather.localWeather[0].localCode {
                 self.indexStrArray = location.indexArray ?? []
                 self.indexStrArray.forEach { index in
                     switch index {
                     case "rain":
-                        self.indexArray.append(.unbrella)
+                        self.indexArray.append(.umbrella)
                     case "mask":
                         self.indexArray.append(.mask)
                     case "laundry":
@@ -205,7 +200,7 @@ class WeatherIndexView: UIView {
     }
     
     func findStatus(indexName: IndexType) -> Int {
-        if indexName == .unbrella {
+        if indexName == .umbrella {
             return weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 0
         } else if indexName == .mask {
             return weathers?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 0
@@ -232,10 +227,33 @@ class WeatherIndexView: UIView {
             uiImageView.image = UIImage(named: "outer")
         case .temperatureGap:
             uiImageView.image = UIImage(named: "updown")
-        case .unbrella:
+        case .umbrella:
             uiImageView.image = UIImage(named: "umbrella")
         }
         return uiImageView
+    }
+    
+    private func typeConvertStringToIndex(indexStrArray: [String]) -> [IndexType] {
+        var indexArray = [IndexType]()
+        indexStrArray.forEach { index in
+            switch index {
+            case "rain":
+                indexArray.append(.umbrella)
+            case "mask":
+                indexArray.append(.mask)
+            case "laundry":
+                indexArray.append(.laundry)
+            case "car":
+                indexArray.append(.car)
+            case "outer":
+                indexArray.append(.outer)
+            case "temperatureGap":
+                indexArray.append(.temperatureGap)
+            default:
+                break
+            }
+        }
+        return indexArray
     }
 }
 
@@ -279,6 +297,14 @@ extension WeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSourc
         let strItem =  self.indexStrArray.remove(at: sourceIndexPath.row)
         self.indexArray.insert(item, at: destinationIndexPath.row)
         self.indexStrArray.insert(strItem, at: destinationIndexPath.row)
-        locationWeatherIndexView.indexArray = self.indexArray
+        
+        // Long Tab 시 UserDefaults / CoreData 에 저장
+        if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && self.weatherIndex == 0 {
+            Storage.saveCurrentLocationIndexArray(arrayString: self.indexStrArray)
+            locationWeatherIndexView.indexArray = self.indexArray
+        } else {
+            CoreDataManager.shared.changeLocationIndexData(code: self.weathers!.localWeather[0].localCode, indexArray: self.indexStrArray)
+            locationWeatherIndexView.indexArray = self.indexArray
+        }
     }
 }

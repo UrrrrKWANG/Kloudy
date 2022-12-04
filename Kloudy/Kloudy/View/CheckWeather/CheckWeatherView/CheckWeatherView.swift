@@ -151,7 +151,6 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
-        let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
             
             let location = weathers[locationIndex]
@@ -165,6 +164,9 @@ class CheckWeatherView: UIViewController {
                 let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
                 let weatherIndexView = WeatherIndexView()
                 weatherIndexView.sentWeatherIndex.onNext(locationIndex)
+                if !(currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) && locationIndex == 0 {
+                    
+                }
                 weatherIndexView.sentWeather.onNext(location)
                 
                 let detailWeatherView: UIButton = {
