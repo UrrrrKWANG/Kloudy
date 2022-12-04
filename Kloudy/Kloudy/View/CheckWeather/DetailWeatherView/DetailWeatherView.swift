@@ -11,27 +11,33 @@ import RxCocoa
 import RxSwift
 
 class DetailWeatherView: UIViewController {
-    
+    private let disposeBag = DisposeBag()
+    var weekWeatehrDatasCount = Int()
     var todayWeatherDatas = Observable.of([HourlyWeather]())
     var weekWeatherDatas = Observable.of([WeeklyWeather]())
-    
     var temperatureList: [Int] = []
+    var cityName = String()
     
     init(weatherDatas: Weather) {
+      
         super.init(nibName: nil, bundle: nil)
+        self.view.frame = CGRect(x: 0, y: 0, width: 1298, height: 4123)
+      
         let todayWeatherDatas = Observable.of(weatherDatas.localWeather[0].hourlyWeather
             .filter({$0.hour >= 2}))
         let weekWeatherDatas = Observable.of(weatherDatas.localWeather[0].weeklyWeather)
         self.todayWeatherDatas = todayWeatherDatas
         self.weekWeatherDatas = weekWeatherDatas
-        
+        self.weekWeatehrDatasCount = weatherDatas.localWeather[0].weeklyWeather.count
+        self.cityName = weatherDatas.localWeather[0].localName
         temperatureList = weatherDatas.localWeather[0].minMaxTemperature()
+        bind()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    private let disposeBag = DisposeBag()
+    
     lazy var labelInTodayCollectionView: UILabel = {
         let uiLabel = UILabel()
         uiLabel.configureLabel(text: "시간대별 날씨".localized, font: UIFont.KFont.appleSDNeoBold20, textColor: UIColor.KColor.black)
@@ -59,18 +65,13 @@ class DetailWeatherView: UIViewController {
     lazy var titleWeatherCondition: UIImageView = {
         let uiImageView = UIImageView()
         uiImageView.contentMode = .scaleAspectFit
-        let numbersObservable = todayWeatherDatas
-        numbersObservable.subscribe(
-            onNext: {[unowned self] testData in
-                uiImageView.image = UIImage(named:findWeatehrCondition(weatherCondition: testData[0].status)[0])
-            }
-        ).disposed(by: disposeBag)
+        uiImageView.image = UIImage(named: "location_mark")
         return uiImageView
     }()
     
-    let currentTemperature: UILabel = {
+    let currentLocationName: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.lexendLight30, textColor: UIColor.KColor.white)
+        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoBold18, textColor: UIColor.KColor.white)
         return uiLabel
     }()
     
@@ -88,18 +89,18 @@ class DetailWeatherView: UIViewController {
         let uiView = UIView()
         uiView.backgroundColor = UIColor.KColor.primaryBlue01
         uiView.layer.cornerRadius = 15
-        [titleWeatherCondition, currentTemperature, minMaxTemperatureLabel].forEach() {
+        [titleWeatherCondition, currentLocationName, minMaxTemperatureLabel].forEach() {
             uiView.addSubview($0)
         }
         self.titleWeatherCondition.snp.makeConstraints{
-            $0.leading.equalToSuperview().inset(16)
-            $0.top.bottom.equalToSuperview().inset(10)
-            $0.width.equalTo(42)
+            $0.leading.equalToSuperview().inset(18)
+            $0.top.bottom.equalToSuperview().inset(21)
+            $0.width.equalTo(13)
         }
-        self.currentTemperature.snp.makeConstraints{
-            $0.leading.equalTo(titleWeatherCondition.snp.trailing).offset(10)
-            $0.top.bottom.equalToSuperview().inset(12)
-            $0.width.equalTo(47)
+        self.currentLocationName.snp.makeConstraints{
+            $0.leading.equalTo(titleWeatherCondition.snp.trailing).offset(8)
+            $0.top.equalToSuperview().inset(21)
+            $0.bottom.equalToSuperview().inset(19)
         }
         self.minMaxTemperatureLabel.snp.makeConstraints{
             $0.trailing.top.bottom.equalToSuperview().inset(12)
@@ -113,12 +114,17 @@ class DetailWeatherView: UIViewController {
         uiView.backgroundColor = UIColor.KColor.primaryBlue06
         return uiView
     }()
-    
-    override func viewDidLoad() {
-        self.view.backgroundColor = UIColor.KColor.white
+    override func viewWillAppear(_ animated: Bool) {
         addLayout()
         setUplayout()
-        bind()
+    
+    }
+    override func viewDidLoad() {
+        let gesture = UITapGestureRecognizer()
+        self.weekCollectionView.addGestureRecognizer(gesture)
+        gesture.rx.event.bind {_ in
+            print("터치")
+        }.disposed(by: disposeBag)
     }
     
     func makeCollectionView(direction: UICollectionView.ScrollDirection, itemSizeWith: Int, itemSizeheight: Int, cell: AnyClass, identifier: String, contentInsetLeft: Int, contentInsetRight: Int, isScroll: Bool, minimumLineSpacing: CGFloat) -> UICollectionView {
@@ -138,16 +144,17 @@ class DetailWeatherView: UIViewController {
     }
     
     private func addLayout() {
-        self.view.addSubview(scrollView)
-        [titleWeatherView, labelInWeekCollectionView, labelInTodayCollectionView, todayCollectionView, dividingLineView,weekCollectionView].forEach() {
+        [titleWeatherView, labelInWeekCollectionView, labelInTodayCollectionView, todayCollectionView, dividingLineView,weekCollectionView].forEach {
             scrollView.addSubview($0)
         }
+        self.view.addSubview(scrollView)
     }
     
     private func setUplayout() {
         scrollView.snp.makeConstraints{
             $0.top.equalToSuperview()
-            $0.size.equalToSuperview()
+            $0.bottom.equalToSuperview()
+            $0.width.equalToSuperview()
             $0.centerX.equalToSuperview()
         }
         
@@ -186,11 +193,15 @@ class DetailWeatherView: UIViewController {
             $0.top.equalTo(labelInWeekCollectionView.snp.bottom).offset(12)
             $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview().inset(20)
-            $0.height.equalTo(440)
+            $0.height.equalTo(600)
         }
     }
     
     private func bind() {
+        todayCollectionView.delegate = nil
+        todayCollectionView.dataSource = nil
+        weekCollectionView.delegate = nil
+        weekCollectionView.dataSource = nil
         self.todayBind()
         self.weekBind()
     }
@@ -207,16 +218,17 @@ class DetailWeatherView: UIViewController {
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
             cell.weatherCondition.image = UIImage(named: weatherCondition[0])
             if index == 0 {
-                self.currentTemperature.text = String(Int(datas.temperature)) + "°"
+                self.currentLocationName.text = self.cityName
             }
             cell.temperature.text = String(Int(datas.temperature)) + "°"
         }
         .disposed(by: disposeBag)
     }
+    
     private func weekBind() {
         weekWeatherDatas.bind(to:
                                 self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
-        { index, datas, cell in
+        { [self] index, datas, cell in
             if index == 0 {
                 cell.dayLabel.text = "지금".localized
             } else {
@@ -226,6 +238,19 @@ class DetailWeatherView: UIViewController {
             
             if index == 0 {
                 self.minMaxTemperatureLabel.text = String(self.temperatureList[2]) + "°" + " |  " + String(self.temperatureList[1]) + "°"
+                
+                let attribtuedMaxTemperature = NSMutableAttributedString(string: minMaxTemperatureLabel.text ?? "")
+                let maxStringRange = (minMaxTemperatureLabel.text! as NSString).range(of: String(self.temperatureList[1]) + "°")
+                attribtuedMaxTemperature.addAttribute(.foregroundColor, value: UIColor.KColor.orange01, range: maxStringRange)
+                minMaxTemperatureLabel.attributedText = attribtuedMaxTemperature
+                
+                let attribtuedDividingString = NSMutableAttributedString(string: minMaxTemperatureLabel.text ?? "")
+                let dividingStringRange = (minMaxTemperatureLabel.text! as NSString).range(of: " |  ")
+                attribtuedMaxTemperature.addAttribute(.foregroundColor, value: UIColor.KColor.primaryBlue05, range: dividingStringRange)
+                minMaxTemperatureLabel.attributedText = attribtuedMaxTemperature
+                
+                
+                
                 cell.minTemperature.text = String(self.temperatureList[2]) + "°"
                 cell.maxTemperature.text = String(self.temperatureList[1]) + "°"
             } else {
@@ -233,9 +258,10 @@ class DetailWeatherView: UIViewController {
                 cell.maxTemperature.text = String(Int(datas.maxTemperature)) + "°"
             }
             cell.weatherCondition.image = UIImage(named: weatherCondition[1])
-            
-            
-            
+            // 마지막은 구분선 삭제
+            if index == self.weekWeatehrDatasCount-1 {
+                cell.dividingLineView.removeFromSuperview()
+            }
         }
         .disposed(by: disposeBag)
     }

@@ -414,12 +414,9 @@ extension LocationSelectionView: UITableViewDataSource {
     
     private func deleteLocation(indexPath: IndexPath) -> UIContextualAction {
         let deleteAction = UIContextualAction(style: .destructive, title: nil) { _, _, completionHandler in
-            
             CoreDataManager.shared.deleteLocation(location: self.locationFromCoreData[indexPath.row - 1])
             self.locationFromCoreData = CoreDataManager.shared.fetchLocations()
-            
             self.locationList.remove(at: indexPath.row - 1)
-            
             self.deleteLocationCode.onNext(self.weatherData[indexPath.row].localWeather[0].localCode)
             self.weatherData.remove(at: indexPath.row)
             self.tableView.deleteRows(at: [indexPath], with: .fade)

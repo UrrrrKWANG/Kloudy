@@ -38,7 +38,6 @@ class LocationWeatherIndexView: UIView {
     let sentIndexArray = PublishSubject<[IndexType]>()
     let sentWeather = PublishSubject<Weather>()
     
-    //    var indexName: IndexType?
     var sentIndexName: IndexType?
     var indexName = PublishSubject<IndexType>()
     var transedIndexName: String = ""
@@ -80,7 +79,7 @@ class LocationWeatherIndexView: UIView {
             .disposed(by: disposeBag)
         
         indexName
-            .subscribe(onNext: {
+            .subscribe(onNext: { [self] in
                 self.transedIndexName = self.transIndexName(indexName: $0)
                 self.sentIndexName = $0
                 self.changeTextView(indexType: $0)
@@ -452,6 +451,8 @@ class LocationWeatherIndexView: UIView {
         case let(indexName, status) where indexName == .outer && status == 3 :
             return "outer_step4"
         case let(indexName, status) where indexName == .outer && status == 4 :
+            return "outer_step5"
+        case let(indexName, status) where indexName == .outer && status == 5 :
             return "outer_step5"
         default:
             return ""
