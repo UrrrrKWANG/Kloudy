@@ -35,7 +35,6 @@ class LocationWeatherIndexView: UIView {
     var indexArray = [IndexType]()
     var weathers: Weather?
     
-    let sentIndexArray = PublishSubject<[IndexType]>()
     let sentWeather = PublishSubject<Weather>()
     
     //    var indexName: IndexType?
@@ -48,6 +47,9 @@ class LocationWeatherIndexView: UIView {
     var umbrellaIndexText = ""
     
     let temperatureGapView = TemperatureGapView()
+    
+    // 내부 지수 배열을 받을 변수
+    let sentIndexArray = PublishSubject<[IndexType]>()
     
     //TODO: 페이지 개수 받아오는 부분 (임시)
     init() {
@@ -561,25 +563,25 @@ class LocationWeatherIndexView: UIView {
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        let indexName = self.indexArray[self.internalIndex]
-//        let cellCount = calculateInternalIndexCount(indexName: indexName).count
-        return 0
+        let indexName = self.indexArray[self.internalIndex]
+        let cellCount = calculateInternalIndexCount(indexName: indexName).count
+        return cellCount
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
-//        let indexName = self.indexArray[self.internalIndex]
-//        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
-//        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName,isIndexOn: isIndexOn ,pathIndex: indexPath.row)
-//        cell.addSubview(internalIndexView)
-//        internalIndexView.snp.makeConstraints{
-//            $0.top.equalToSuperview()
-//            $0.width.height.equalTo(30)
-//        }
+        let indexName = self.indexArray[self.internalIndex]
+        let isIndexOn = calculateInternalIndexCount(indexName: indexName)
+        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, isIndexOn: isIndexOn, pathIndex: indexPath.row)
+        cell.addSubview(internalIndexView)
+        internalIndexView.snp.makeConstraints{
+            $0.top.equalToSuperview()
+            $0.width.height.equalTo(30)
+        }
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return  CGSize(width: 30 , height: 30)
+        return CGSize(width: 30, height: 30)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
