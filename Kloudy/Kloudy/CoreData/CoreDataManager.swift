@@ -75,6 +75,20 @@ class CoreDataManager {
         }
     }
     
+    func changeLocationSequence(changedLocations: [Location]) {
+        let request = NSFetchRequest<Location>(entityName: "Location")
+        do {
+            var locations = try coreDataStack.managedContext.fetch(request)
+            locations = changedLocations
+            for i in locations.indices {
+                locations[i] = changedLocations[i]
+            }
+            coreDataStack.saveContext()
+        } catch {
+            print("------changeLocationSequenceError------")
+        }
+    }
+    
     func countLocations() -> Int {
         let request = NSFetchRequest<Location>(entityName: "Location")
         do {
