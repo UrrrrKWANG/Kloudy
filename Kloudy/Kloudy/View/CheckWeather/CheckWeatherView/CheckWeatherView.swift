@@ -20,9 +20,6 @@ class CheckWeatherView: UIViewController {
     let locationSelectionView = LocationSelectionView()
     let settingView = SettingView()
     
-    var indexArray = [IndexType]()
-    var indexStrArray = [String]()
-    
     let pageControl = UIPageControl()
     let initialPage = 0
     
@@ -141,12 +138,14 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
+        let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
-            self.indexArray = []
-            self.indexStrArray = []
+            
             let location = weathers[locationIndex]
+            
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
+            let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
             
             lazy var num: UIViewController = {
                 let vc = UIViewController()
@@ -154,10 +153,6 @@ class CheckWeatherView: UIViewController {
                 let weatherIndexView = WeatherIndexView()
                 weatherIndexView.sentWeatherIndex.onNext(locationIndex)
                 weatherIndexView.sentWeather.onNext(location)
-                fetchLocationIndexArray(sentWeather: location)
-                
-                weatherIndexView.sentIndexArray.onNext(indexArray)
-                weatherIndexView.sentIndexStrArray.onNext(indexStrArray)
                 
                 let detailWeatherView: UIButton = {
                     let detailWeatherView = UIButton()
@@ -257,33 +252,7 @@ class CheckWeatherView: UIViewController {
             dataViewControllers.append(num)
         }
     }
-    func fetchLocationIndexArray(sentWeather: Weather) {
-        self.locationList = CoreDataManager.shared.fetchLocations()
-        self.locationList.forEach { location in
-            if location.code == sentWeather.localWeather[0].localCode {
-                self.indexStrArray = location.indexArray ?? []
-                self.indexStrArray.forEach { index in
-                    switch index {
-                    case "rain":
-                        self.indexArray.append(.unbrella)
-                    case "mask":
-                        self.indexArray.append(.mask)
-                    case "laundry":
-                        self.indexArray.append(.laundry)
-                    case "car":
-                        self.indexArray.append(.car)
-                    case "outer":
-                        self.indexArray.append(.outer)
-                    case "temperatureGap":
-                        self.indexArray.append(.temperatureGap)
-                    default:
-                        break
-                    }
-                }
-                return
-            }
-        }
-    }
+    
     func configureCheckWeatherNavigationView() {
         checkWeatherBasicNavigationView.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).inset(9)
