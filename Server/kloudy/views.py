@@ -101,11 +101,11 @@ def time_interval_weather():
                     
                 umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind = umbrella_info
                 # 갱신
-                umbrella_index.status               = umbrella_status
+                umbrella_index.status                = umbrella_status
                 umbrella_index.precipitation_24h     = precipitation_24h
                 umbrella_index.precipitation_1h_max  = precipitation_1h_max
-                umbrella_index.precipitation_3h_max = precipitation_3h_max
-                umbrella_index.wind                 = wind
+                umbrella_index.precipitation_3h_max  = precipitation_3h_max
+                umbrella_index.wind                  = wind
                 umbrella_index.save()
 
                 UmbrellaIndex.save_umbrella_hourly(umbrella_index, rains, location.code)
@@ -119,7 +119,7 @@ def time_interval_weather():
                     mask_index = MaskIndexOdd.objects.filter(code = location.code).first()
                 mask_status, pm25value, pm10value, pollen_index = mask_info
                 # mask_index 갱신
-                mask_index.status  = mask_status
+                mask_index.status       = mask_status
                 mask_index.pm25value    = pm25value
                 mask_index.pm10value    = pm10value
                 mask_index.pollen_index = pollen_index

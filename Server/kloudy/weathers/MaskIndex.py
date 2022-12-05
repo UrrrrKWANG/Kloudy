@@ -1,5 +1,6 @@
 def get_mask_index(air_jsonObject, flower_jsonObject):
-    if air_jsonObject.get('response').get('header').get('resultCode') != "00":
+    # 제대로 값이 들어오지 않는 경우가 많음
+    if air_jsonObject.get('response').get('header').get('resultCode') != "00" or air_jsonObject.get('response').get('body').get('totalCount') == 0:
         return [0, 0, 0, 0]
     if flower_jsonObject.get('response').get('header').get('resultCode') != "00" and flower_jsonObject.get('response').get('header').get('resultCode') != "99" :
         return [0, 0, 0, 0]

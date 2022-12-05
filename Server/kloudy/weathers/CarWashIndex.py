@@ -3,7 +3,7 @@ def get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonO
         return [0, 0, 0, 0, 0, 0, "", 0, 0]
     if middle_state_jsonObject.get('response').get('header').get('resultCode') != "00":
         return [0, 0, 0, 0, 0, 0, "", 0, 0]
-    if air_jsonObject.get('response').get('header').get('resultCode') != "00":
+    if air_jsonObject.get('response').get('header').get('resultCode') != "00" or air_jsonObject.get('response').get('body').get('totalCount') == 0:
         return [0, 0, 0, 0, 0, 0, "", 0, 0]
     if flower_jsonObject.get('response').get('header').get('resultCode') != "00" and flower_jsonObject.get('response').get('header').get('resultCode') != "99":
         return [0, 0, 0, 0, 0, 0, "", 0, 0]

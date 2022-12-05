@@ -45,7 +45,6 @@ def save_umbrella_hourly(umbrella_index, rains, code):
     time = int(datetime.datetime.now().strftime("%H"))
     # 지금 처음이 아니면
     if UmbrellaHourlyEven.objects.filter(code = code):
-        print(time)
         if time % 2 != 0:
             umbrella_hourly_queries = UmbrellaHourlyEven.objects.filter(code = code).all()
         else:
