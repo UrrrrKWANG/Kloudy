@@ -84,10 +84,11 @@ class TemperatureGapView: UIView {
     
     private func addData() {
         guard let weathers = weathers else { return }
+        
         let yesterdayMaxTemperature: Int = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].yesterdayMaxTemperature)
-        let todayMaxTemperature: Int = Int(weathers.localWeather[0].minMaxTemperature()[1])
+        let todayMaxTemperature: Int = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature)
         let yesterdayMinTemperature: Int = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].yesterdayMinTemperature)
-        let todayMinTemperature: Int = Int(weathers.localWeather[0].minMaxTemperature()[2])
+        let todayMinTemperature: Int = Int(weathers.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature)
         let maxTemp: Int = max(todayMaxTemperature, yesterdayMaxTemperature)
         let minTemp: Int = min(todayMinTemperature, yesterdayMinTemperature)
         let total: Int = minTemp > 0 ? maxTemp - minTemp : maxTemp + abs(minTemp)
@@ -95,15 +96,15 @@ class TemperatureGapView: UIView {
         let compareMin: Int = todayMinTemperature - yesterdayMinTemperature
 
         if minTemp < 0 {
-            yesterdayMaxHeight = (Int(144 * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
-            todayMaxHeight = (Int(144 * (todayMaxTemperature + abs(minTemp)) / total)) + 36
-            yesterdayMinHeight = (Int(144 * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
-            todayMinHeight = (Int(144 * (todayMinTemperature + abs(minTemp)) / total)) + 36
+            yesterdayMaxHeight = (Int(192 * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
+            todayMaxHeight = (Int(192 * (todayMaxTemperature + abs(minTemp)) / total)) + 36
+            yesterdayMinHeight = (Int(192 * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
+            todayMinHeight = (Int(192 * (todayMinTemperature + abs(minTemp)) / total)) + 36
         } else {
-            yesterdayMaxHeight = Int(144 * (yesterdayMaxTemperature - minTemp) / total) + 36
-            todayMaxHeight = Int(144 * (todayMaxTemperature - minTemp) / total) + 36
-            yesterdayMinHeight = Int(144 * (yesterdayMinTemperature - minTemp) / total) + 36
-            todayMinHeight = Int(144 * (todayMinTemperature - minTemp) / total) + 36
+            yesterdayMaxHeight = Int(192 * (yesterdayMaxTemperature - minTemp) / total) + 36
+            todayMaxHeight = Int(192 * (todayMaxTemperature - minTemp) / total) + 36
+            yesterdayMinHeight = Int(192 * (yesterdayMinTemperature - minTemp) / total) + 36
+            todayMinHeight = Int(192 * (todayMinTemperature - minTemp) / total) + 36
         }
         
         maxTemperatureLabel.configureLabel(text: "\(abs(compareMax))°", font: UIFont.KFont.lexendRegular24, textColor: UIColor.KColor.black)
@@ -145,16 +146,6 @@ class TemperatureGapView: UIView {
             $0.layer.cornerRadius = 8
         }
         
-        [maxTemperatureStackView, minTemperatureStackView, maxTemperatureTextStackView, minTemperatureTextStackView].forEach { self.addSubview($0) }
-        [yesterdayMaxTemperatureView, todayMaxTemperatureView].forEach { maxTemperatureStackView.addArrangedSubview($0) }
-        [yesterdayMinTemperatureView, todayMinTemperatureView].forEach { minTemperatureStackView.addArrangedSubview($0) }
-        [maxTemperatureTextLabel, maxTemperatureView].forEach { maxTemperatureTextStackView.addArrangedSubview($0) }
-        [minTemperatureTextLabel, minTemperatureView].forEach { minTemperatureTextStackView.addArrangedSubview($0) }
-        yesterdayMaxTemperatureView.addSubview(yesterdayMaxTemperatureLabel)
-        todayMaxTemperatureView.addSubview(todayMaxTemperatureLabel)
-        yesterdayMinTemperatureView.addSubview(yesterdayMinTemperatureLabel)
-        todayMinTemperatureView.addSubview(todayMinTemperatureLabel)
-        
         [maxTemperatureStackView, minTemperatureStackView].forEach {
             $0.axis = .horizontal
             $0.spacing = 8
@@ -184,20 +175,6 @@ class TemperatureGapView: UIView {
                 $0.top.leading.equalToSuperview()
                 $0.bottom.equalToSuperview().inset(1.5)
             }
-        }
-        maxTemperatureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(6.25)
-            $0.leading.equalTo(maxTemperatureLabel.snp.trailing).offset(4)
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(13)
-            $0.height.equalTo(17.5)
-        }
-        minTemperatureImage.snp.makeConstraints {
-            $0.top.equalToSuperview().inset(6.25)
-            $0.leading.equalTo(minTemperatureLabel.snp.trailing).offset(4)
-            $0.trailing.equalToSuperview()
-            $0.width.equalTo(13)
-            $0.height.equalTo(17.5)
         }
         
         // 차트 스택뷰
@@ -236,6 +213,41 @@ class TemperatureGapView: UIView {
     private func configureUIImageView(view: UIImageView, named: String) {
         view.image = UIImage(named: named)
         view.contentMode = .scaleAspectFit
+        if view == maxTemperatureImage {
+            if named == "max_same" {
+                view.snp.makeConstraints {
+                    $0.centerY.trailing.equalToSuperview()
+                    $0.leading.equalTo(maxTemperatureLabel.snp.trailing).offset(5.5)
+                    $0.width.equalTo(12)
+                    $0.height.equalTo(3)
+                }
+            } else {
+                view.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(6.25)
+                    $0.trailing.equalToSuperview()
+                    $0.leading.equalTo(maxTemperatureLabel.snp.trailing).offset(5.5)
+                    $0.width.equalTo(13)
+                    $0.height.equalTo(17.5)
+                }
+            }
+        } else if view == minTemperatureImage {
+            if named == "min_same" {
+                minTemperatureImage.snp.makeConstraints {
+                    $0.centerY.trailing.equalToSuperview()
+                    $0.leading.equalTo(minTemperatureLabel.snp.trailing).offset(5.5)
+                    $0.width.equalTo(12)
+                    $0.height.equalTo(3)
+                }
+            } else {
+                minTemperatureImage.snp.makeConstraints {
+                    $0.top.equalToSuperview().inset(6.25)
+                    $0.trailing.equalToSuperview()
+                    $0.leading.equalTo(minTemperatureLabel.snp.trailing).offset(5.5)
+                    $0.width.equalTo(13)
+                    $0.height.equalTo(17.5)
+                }
+            }
+        }
     }
 }
 
