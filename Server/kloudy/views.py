@@ -10,7 +10,7 @@ import datetime
 from pathlib import Path
 import environ
 from .networkAPI import *
-from .weathers import *
+from .weathers import MainWeather, UmbrellaIndex
 
 CSV_PATH = './kloudy/csv/Locations.csv'
 
@@ -92,7 +92,7 @@ def time_interval_weather():
                 weather_index = WeatherIndexOdd.objects.filter(code = location.code).first()
             
             # 우산지수
-            umbrella_info = get_umbrella_index(weather_24h_jsonObject)
+            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_24h_jsonObject)
             if umbrella_info != [0, 0, 0, 0, 0]:
                 if time % 2 != 0:
                     umbrella_index = UmbrellaIndexEven.objects.filter(code = location.code).first()
@@ -108,7 +108,7 @@ def time_interval_weather():
                 umbrella_index.wind                 = wind
                 umbrella_index.save()
 
-                save_umbrella_hourly(umbrella_index, rains, location.code)
+                UmbrellaIndex.save_umbrella_hourly(umbrella_index, rains, location.code)
                 
             # 마스크 지수
             mask_info = get_mask_index(air_jsonObject, flower_jsonObject)
@@ -217,7 +217,6 @@ def time_interval_weather():
             local_weather_even = LocalWeatherEven.objects.create(weather = weather_even, local_code = location.code, local_name = location.city)
             local_weather_odd.save()
             local_weather_even.save()
-            print("Main 시작")
             main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
             current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
             print(f'메인 지수: {current_weather}, {current_temperature}, {day_max_temperature}, {day_min_temperature}')
@@ -231,14 +230,14 @@ def time_interval_weather():
             weather_index_odd.save()
             weather_index_even.save()
 
-            umbrella_info = get_umbrella_index(weather_24h_jsonObject)
+            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_24h_jsonObject)
             umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains = umbrella_info
             print(f'우산 지수: {umbrella_status}, {precipitation_24h}, {precipitation_1h_max}, {precipitation_3h_max}, {wind}')
             umbrella_index_odd = UmbrellaIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
             umbrella_index_even = UmbrellaIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
             umbrella_index_odd.save()
             umbrella_index_even.save()
-            save_umbrella_hourly(umbrella_index_odd, rains, location.code)
+            UmbrellaIndex.save_umbrella_hourly(umbrella_index_odd, rains, location.code)
 
             mask_info = get_mask_index(air_jsonObject, flower_jsonObject)
             mask_status, pm25value, pm10value, pollen_index = mask_info
@@ -294,7 +293,6 @@ def calculate_time():
     time = cal_time([now.strftime("%H"), now.strftime("%M")])
     
     return [today, time]
-
 
 def get_mask_index(air_jsonObject, flower_jsonObject):
     if air_jsonObject.get('response').get('header').get('resultCode') != "00":

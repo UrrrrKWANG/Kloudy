@@ -1,3 +1,6 @@
+from apis.models import UmbrellaIndexEven, UmbrellaIndexOdd, UmbrellaHourlyEven, UmbrellaHourlyOdd
+import json
+import datetime
 
 def get_umbrella_index(weather_24h_jsonObject):
     temp_rains = [0.0] * 24
@@ -39,10 +42,10 @@ def get_umbrella_index(weather_24h_jsonObject):
     return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
 
 def save_umbrella_hourly(umbrella_index, rains, code):
-    print("Save Umbrella Hourly")
     time = int(datetime.datetime.now().strftime("%H"))
     # 지금 처음이 아니면
     if UmbrellaHourlyEven.objects.filter(code = code):
+        print(time)
         if time % 2 != 0:
             umbrella_hourly_queries = UmbrellaHourlyEven.objects.filter(code = code).all()
         else:
@@ -63,6 +66,8 @@ def save_umbrella_hourly(umbrella_index, rains, code):
             umbrella_hourly_even = UmbrellaHourlyEven.objects.create(umbrella_index = umbrella_index_even, code = code, time = i, precipitation = rains[i])
             umbrella_hourly_odd.save()
             umbrella_hourly_even.save()
+            
+    return
 
 # 30~ : 경보 특보 급(4) / ~30 : 많이(3) / ~15 : 적당히(2) / ~3 : 조금(1) / 0 : 안 써도 된다.(0)
 def cal_umbrella_status(umbrella_index):

@@ -1,5 +1,4 @@
 def get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject):
-    print("main weather 들어옴")
     if main_state_jsonObject.get('response').get('header').get('resultCode') != "00":
         return [0, 0, 0, 0]
     elif main_state_short_jsonObject.get('response').get('header').get('resultCode') != "00":
