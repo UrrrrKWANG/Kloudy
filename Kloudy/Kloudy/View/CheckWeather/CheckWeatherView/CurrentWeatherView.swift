@@ -50,7 +50,7 @@ class CurrentWeatherView: UIView {
         configureUIImageView(view: minTemperatureIcon, named: "arrow_down")
         
         let temperatureList = localWeather[0].minMaxTemperature()
-        locationLabel.configureLabel(text: localWeather[0].localName, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
+        locationLabel.configureLabel(text: localWeather[0].localName.localized, font: UIFont.KFont.appleSDNeoBold16, textColor: UIColor.KColor.white)
         currentTemperatureLabel.configureLabel(text: "\(temperatureList[0])°", font: UIFont.KFont.lexendRegular50, textColor: UIColor.KColor.white)
         maxTemperatureLabel.configureLabel(text: "\(temperatureList[1])°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
         minTemperatureLabel.configureLabel(text: "\(temperatureList[2])°", font: UIFont.KFont.lexendRegular16, textColor: UIColor.KColor.white)
