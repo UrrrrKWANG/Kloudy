@@ -154,14 +154,14 @@ class LocationWeatherIndexView: UIView {
         var rainText = ""
         if now == 0 {
             if rainArray.reduce(0, +) >= 16 {
-                rainText = "하루종일 내림"
+                rainText = "하루종일 내림".localized
             } else if raining.count >= 3 {
-                rainText = "하루종일 내림"
+                rainText = "하루종일 내림".localized
             } else if rainArray.reduce(0, +) == 0 {
-                rainText = "비 안옴"
+                rainText = "비 안옴".localized
             } else {
                 if capricious.count >= 3 {
-                    rainText = "변덕스럽게 내림"
+                    rainText = "변덕스럽게 내림".localized
                 } else if !raining.isEmpty {
                     rainText = fetchRainText(rainType: "raining", indexArray: raining)
                 } else {
@@ -170,13 +170,13 @@ class LocationWeatherIndexView: UIView {
             }
         } else if now == 1 {
             if rainArray[1] + rainArray[2] + rainArray[3] >= 12 {
-                rainText = "하루종일 내림"
+                rainText = "하루종일 내림".localized
             } else if raining.count == 3 {
-                rainText = "하루종일 내림"
+                rainText = "하루종일 내림".localized
             } else if rainArray[1] + rainArray[2] + rainArray[3] == 0 {
-                rainText = "비 안옴"
+                rainText = "비 안옴".localized
             } else if capricious.count == 3 {
-                rainText = "변덕스럽게 내림"
+                rainText = "변덕스럽게 내림".localized
             } else if !raining.isEmpty {
                 rainText = fetchRainText(rainType: "raining", indexArray: raining)
             } else {
@@ -184,11 +184,11 @@ class LocationWeatherIndexView: UIView {
             }
         } else if now == 2 {
             if rainArray[1] + rainArray[2] + rainArray[3] >= 9 {
-                rainText = "하루종일 내림"
+                rainText = "하루종일 내림".localized
             } else if raining.count == 2 {
-                rainText = "하루종일 내림"
+                rainText = "하루종일 내림".localized
             } else if rainArray[1] + rainArray[2] == 0 {
-                rainText = "비 안옴"
+                rainText = "비 안옴".localized
             } else if !raining.isEmpty {
                 rainText = fetchRainText(rainType: "raining", indexArray: raining)
             } else {
@@ -197,11 +197,11 @@ class LocationWeatherIndexView: UIView {
         } else if now == 3 {
             switch rainArray[0] {
             case 4...6:
-                rainText = "남은 하루 계속 비"
+                rainText = "남은 하루 계속 비".localized
             case 2...3:
-                rainText = "밤 한때 비"
+                rainText = "밤 한때 비".localized
             default:
-                rainText = "비 안옴"
+                rainText = "비 안옴".localized
             }
         }
         umbrellaIndexText = rainText
@@ -237,7 +237,7 @@ class LocationWeatherIndexView: UIView {
                 rainText += "\(rain) "
             }
         }
-        return rainText
+        return rainText.localized
     }
     
     required init?(coder: NSCoder) {

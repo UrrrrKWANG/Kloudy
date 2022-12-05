@@ -516,11 +516,11 @@ Seogwipo-si="Seogwipo-si";
 
 "상세 날씨" = "Weather in Detail";
 
-"어제보다 최고 기온이 " = "Today's max temp is";
+"어제보다 최고 기온이 " = "Today's max temp is ";
 "°C 높고 \n " = "°C higher, \n ";
 "°C 낮고 \n " = "°C lower, \n ";
 "최고 기온은 어제와 비슷하며 \n " = "Today's max temp is the same, \n";
-"최저 기온은 " = "and min temp is";
+"최저 기온은 " = "and min temp is ";
 "°C 높습니다." = "°C higher than yesterday.";
 "°C 낮습니다." = "°C lower than yesterday.";
 "최저 기온은 비슷합니다." = "and min temp is the same as yesterday.";
@@ -585,6 +585,21 @@ Seogwipo-si="Seogwipo-si";
 "세차하셔도 괜찮습니다." = "Good day to wash your car.";
 "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요." = "Reconsider washing your car unless urgent.";
 "세차를 다음으로 미루는 것을 추천드려요." = "Wash your car some other day.";
+
+"하루종일 내림" = "Rain all day";
+"비 안옴" = "No rain";
+"변덕스럽게 내림" = "Rain Occasionally";
+"남은 하루 계속 비" = "Rain all day";
+"밤 한때 비" = "Rain at night";
+
+"새벽에 비" = "Rain at dawn";
+"아침에 비" = "Rain in the morning";
+"점심에 비" = "Rain in the afternoon";
+"저녁에 비" = "Rain in the evening";
+"새벽한때 비" = "Drizzle at dawn";
+"아침한때 비" = "Drizzle in the morning";
+"점심한때 비" = "Drizzle in the afternoon";
+"저녁한때 비" = "Drizzle in the evening";
 
 
 "맑음" = "Clear";
