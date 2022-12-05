@@ -539,8 +539,20 @@ Seogwipo-si="Seogwipo-si";
 "마스크 지수" = "Mask Index";
 
 "지역" = "Location";
-"예보없음" = "None";
 
+"예보없음" = "None";
+"1일 후" = "In 1 Day";
+"2일 후" = "In 2 Days";
+"3일 후" = "In 3 Days";
+"4일 후" = "In 4 Days";
+"5일 후" = "In 5 Days";
+"6일 후" = "In 6 Days";
+"7일 후" = "In 7 Days";
+"8일 후" = "In 8 Days";
+"9일 후" = "In 9 Days";
+"10일 후" = "In 10 Days";
+"1주일 후" = "In 1 Week";
+"일주일 후" = "In 1 Week";
 
 "우산" = "Umbrella";
 "하루 강수량" = "Daily Precip";
