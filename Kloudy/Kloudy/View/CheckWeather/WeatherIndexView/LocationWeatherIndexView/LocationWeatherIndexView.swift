@@ -572,7 +572,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
         let indexName = self.indexArray[self.internalIndex]
         let isIndexOn = calculateInternalIndexCount(indexName: indexName)
-        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, isIndexOn: isIndexOn , pathIndex: indexPath.row)
+        let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, isIndexOn: isIndexOn, pathIndex: indexPath.row)
         cell.addSubview(internalIndexView)
         internalIndexView.snp.makeConstraints{
             $0.top.equalToSuperview()
@@ -581,7 +581,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 30 , height: 30)
+        return CGSize(width: 30, height: 30)
     }
 
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
