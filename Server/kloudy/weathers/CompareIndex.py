@@ -1,5 +1,6 @@
-
 from apis.models import CompareIndexEven, CompareIndexOdd
+import datetime
+
 def get_compare_index(weather_24h_jsonObject, day_we_got, isFisrtTime, code):
     if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
         return ["", 0, 0, "", 0, 0]
