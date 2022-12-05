@@ -28,12 +28,12 @@ class TemperatureGapView: UIView {
     let yesterdayMinTemperatureLabel = UILabel()
     let maxTemperatureTextLabel: UILabel = {
         let maxTemperatureTextLabel = UILabel()
-        maxTemperatureTextLabel.configureLabel(text: "최고", font: UIFont.KFont.appleSDNeoBold15, textColor: UIColor.KColor.black)
+        maxTemperatureTextLabel.configureLabel(text: "최고".localized, font: UIFont.KFont.appleSDNeoBold15, textColor: UIColor.KColor.black)
         return maxTemperatureTextLabel
     }()
     let minTemperatureTextLabel: UILabel = {
         let minTemperatureTextLabel = UILabel()
-        minTemperatureTextLabel.configureLabel(text: "최저", font: UIFont.KFont.appleSDNeoBold15, textColor: UIColor.KColor.black)
+        minTemperatureTextLabel.configureLabel(text: "최저".localized, font: UIFont.KFont.appleSDNeoBold15, textColor: UIColor.KColor.black)
         return minTemperatureTextLabel
     }()
     let maxTemperatureView = UIView()

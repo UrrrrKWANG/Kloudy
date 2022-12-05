@@ -516,16 +516,19 @@ Seogwipo-si="Seogwipo-si";
 
 "상세 날씨" = "Weather in Detail";
 
-"어제보다 최고 기온이" = "Today's max temp is";
+"어제보다 최고 기온이 " = "Today's max temp is";
 "°C 높고 \n " = "°C higher, \n ";
 "°C 낮고 \n " = "°C lower, \n ";
 "최고 기온은 어제와 비슷하며 \n " = "Today's max temp is the same, \n";
-"최저 기온은" = "and min temp is";
+"최저 기온은 " = "and min temp is";
 "°C 높습니다." = "°C higher than yesterday.";
 "°C 낮습니다." = "°C lower than yesterday.";
 "최저 기온은 비슷합니다." = "and min temp is the same as yesterday.";
 "최고 기온은 어제와 비슷하며 \n 최저 기온은 비슷합니다." = "Today's max and min temp \n are the same as yesterday.";
 "어제와 기온이 비슷합니다" = "Today's temp is the same as yesterday.";
+
+"최고" = "Max";
+"최저" = "Min";
 
 "우산 지수" = "Umbrella Index";
 "하루종일 내림" = "Rain all day";
@@ -536,6 +539,7 @@ Seogwipo-si="Seogwipo-si";
 "마스크 지수" = "Mask Index";
 
 "지역" = "Location";
+"예보없음" = "None";
 
 
 "우산" = "Umbrella";
