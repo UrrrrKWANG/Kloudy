@@ -63,6 +63,9 @@ class WeatherIndexView: UIView {
     var indexStrArray = [String]()
     let currentStatus = CLLocationManager().authorizationStatus
     
+    // 내부지수 배열을 받을 변수
+    let sentIndexStrArray = PublishSubject<[String]>()
+    
     //롱텝 핸들링
     @objc func handleLongPressGesture(_ gesture: UILongPressGestureRecognizer) {
         switch gesture.state {
@@ -126,6 +129,15 @@ class WeatherIndexView: UIView {
                 self.fetchLocationIndexArray(sentWeather: $0)
             })
             .disposed(by: disposeBag)
+        
+        sentIndexStrArray
+            .subscribe(onNext: {
+                self.indexStrArray = $0
+                self.indexArray = CoreDataManager.shared.convertStringToIndexTypeArray(indexStrArray: $0)
+                self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
+            })
+            .disposed(by: disposeBag)
+            
     }
     
     private func fetchLocationIndexArray(sentWeather: Weather) {

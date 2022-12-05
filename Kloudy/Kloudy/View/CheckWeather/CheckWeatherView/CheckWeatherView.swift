@@ -35,6 +35,10 @@ class CheckWeatherView: UIViewController {
     var weathers = [Weather]()
     var initialWeathers = [Weather]()
     var locations = [Location]()
+    
+    // 코데에서 받아오는 지역별 지수 배열을 담을 변수
+    var indexStrArray = [String]()
+    
     weak var delegate: LocationSelectionDelegate?
     let currentStatus = CLLocationManager().authorizationStatus
     
@@ -151,20 +155,31 @@ class CheckWeatherView: UIViewController {
     }
     
     func loadWeatherView() {
+        let locations = CoreDataManager.shared.fetchLocations()
         self.weathers.indices.forEach { locationIndex in
+            
+            // 배열 fetch 받기 전 초기화
+            self.indexStrArray = []
             
             let location = weathers[locationIndex]
             
             let localWeather = [LocalWeather](location.localWeather)
             let main = [Main](localWeather[0].main)
-            let hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
             
-            lazy var num: UIViewController = {
+            lazy var locationVC: UIViewController = {
                 let vc = UIViewController()
                 let currentWeatherView = CurrentWeatherView(localWeather: localWeather)
                 let weatherIndexView = WeatherIndexView()
                 weatherIndexView.sentWeatherIndex.onNext(locationIndex)
                 weatherIndexView.sentWeather.onNext(location)
+                
+                if (self.currentStatus == .authorized || self.currentStatus == .authorizedWhenInUse) && locationIndex == 0 {
+                    self.indexStrArray = Storage.fetchCurrentLocationIndexArray()
+                } else {
+                    self.indexStrArray = locations[locationIndex].indexArray ?? Storage.defaultIndexArray
+                }
+
+                weatherIndexView.sentIndexStrArray.onNext(self.indexStrArray)
                 
                 let detailWeatherView: UIButton = {
                     let detailWeatherView = UIButton()
@@ -261,7 +276,7 @@ class CheckWeatherView: UIViewController {
                 }
                 return vc
             }()
-            dataViewControllers.append(num)
+            dataViewControllers.append(locationVC)
         }
     }
     
