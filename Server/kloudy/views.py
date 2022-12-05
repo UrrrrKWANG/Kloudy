@@ -10,6 +10,7 @@ import datetime
 from pathlib import Path
 import environ
 from .networkAPI import *
+from .weathers import *
 
 CSV_PATH = './kloudy/csv/Locations.csv'
 
@@ -71,7 +72,7 @@ def time_interval_weather():
             time = int(datetime.datetime.now().strftime("%H"))
 
             # 메인 지수
-            main_info = get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
+            main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
             if main_info != [0, 0, 0, 0]:
                 if time % 2 != 0:
                     main = MainEven.objects.filter(code = location.code).first()
@@ -216,8 +217,8 @@ def time_interval_weather():
             local_weather_even = LocalWeatherEven.objects.create(weather = weather_even, local_code = location.code, local_name = location.city)
             local_weather_odd.save()
             local_weather_even.save()
-
-            main_info = get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
+            print("Main 시작")
+            main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
             current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
             print(f'메인 지수: {current_weather}, {current_temperature}, {day_max_temperature}, {day_min_temperature}')
             main_odd = MainOdd.objects.create(local_weather = local_weather_odd, code = location.code, current_weather = current_weather, current_temperature = current_temperature, day_max_temperature = day_max_temperature, day_min_temperature = day_min_temperature)
@@ -294,134 +295,6 @@ def calculate_time():
     
     return [today, time]
 
-def get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject):
-    if main_state_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0]
-    elif main_state_short_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0]
-    elif main_current_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0]
-    elif main_max_min_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0]
-    else:
-        main_status = cal_main_status(main_state_jsonObject, main_state_short_jsonObject)
-        main_current_temerature = cal_current_temperature(main_current_jsonObject)
-        main_max_temperature, main_min_temperature = cal_min_max_temperature(main_max_min_jsonObject)
-
-    return [main_status, main_current_temerature, main_max_temperature, main_min_temperature]
-
-def cal_main_status(main_state_jsonObject, main_state_short_jsonObject):
-    nowStatus = main_state_jsonObject.get('response').get('body').get('items').get('item')[0].get('fcstValue')
-    if nowStatus == "0":
-        return 0
-    else:
-        nowRain = main_state_short_jsonObject.get('response').get('body').get('items').get('item')[0].get('obsrValue')
-        if nowRain == "0":
-            return int(nowStatus)
-        # 3번은 nowStatus랑 겹칠 수 있음
-        else:
-            return "5" if nowRain == 3 else int(nowRain)
-
-def cal_current_temperature(main_current_jsonObject):
-    for obj in main_current_jsonObject.get('response').get('body').get('items').get('item'):
-        if obj.get('category') == 'T1H':
-            currentTemperature = obj.get('obsrValue')
-
-    return float(currentTemperature)
-
-def cal_min_max_temperature(main_max_min_jsonObject):
-    for obj in main_max_min_jsonObject.get('response').get('body').get('items').get('item'):
-        if obj.get('category') == 'TMX':
-            max_temperature = obj.get('fcstValue')
-
-        if obj.get('category') == 'TMN':
-            min_temperature = obj.get('fcstValue')
-
-    return (float(max_temperature), float(min_temperature))
-
-
-def get_umbrella_index(weather_24h_jsonObject):
-    temp_rains = [0.0] * 24
-    if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
-        return [0, 0, 0, 0, 0, temp_rains]
-
-    rains = []
-    winds = []
-    for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
-        if obj.get('category') == 'PCP':
-            if obj.get('fcstValue') == '강수없음':
-                rains.append(0)
-            else:
-                rains.append(float(obj.get('fcstValue').replace('mm', '')))
-        if obj.get('category') == 'WSD':
-            winds.append(float(obj.get('fcstValue')))
-
-    P = sum(rains) / 24
-    PMAX1 = max(rains)
-    PMAX3 = 0
-    for i in range(22):
-        temp = 0
-        for j in range(3):
-            temp += rains[i+j]
-
-        temp = temp / 3
-        if temp > PMAX3:
-            PMAX3 = temp
-    V = sum(winds) / 24
-    
-    umbrella_index = (P + (PMAX1 * 1.2) + (PMAX3 * 1.1)) / 3 + (P * (V/4))
-    
-    status = cal_umbrella_status(umbrella_index)
-    precipitation_24h = P
-    precipitation_1h_max = PMAX1
-    precipitation_3h_max = PMAX3
-    wind = V
-
-    return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
-
-def save_umbrella_hourly(umbrella_index, rains, code):
-    print("Save Umbrella Hourly")
-    time = int(datetime.datetime.now().strftime("%H"))
-    # 지금 처음이 아니면
-    if UmbrellaHourlyEven.objects.filter(code = code):
-        if time % 2 != 0:
-            umbrella_hourly_queries = UmbrellaHourlyEven.objects.filter(code = code).all()
-        else:
-            umbrella_hourly_queries = UmbrellaHourlyOdd.objects.filter(code = code).all()
-        for umbrella_hour_query in umbrella_hourly_queries:
-            try:
-                now_time = umbrella_hour_query.time
-                umbrella_hour_query.precipitation = rains[now_time]
-                umbrella_hour_query.save()
-            except:
-                return
-
-    else:
-        umbrella_index_odd = UmbrellaIndexOdd.objects.filter(code = code).first()
-        umbrella_index_even = UmbrellaIndexEven.objects.filter(code = code).first()
-        for i in range(len(rains)):
-            umbrella_hourly_odd = UmbrellaHourlyOdd.objects.create(umbrella_index = umbrella_index_odd, code = code, time = i, precipitation = rains[i])
-            umbrella_hourly_even = UmbrellaHourlyEven.objects.create(umbrella_index = umbrella_index_even, code = code, time = i, precipitation = rains[i])
-            umbrella_hourly_odd.save()
-            umbrella_hourly_even.save()
-
-
-# 30~ : 경보 특보 급(4) / ~30 : 많이(3) / ~15 : 적당히(2) / ~3 : 조금(1) / 0 : 안 써도 된다.(0)
-def cal_umbrella_status(umbrella_index):
-    result = 0
-
-    if umbrella_index == 0:
-        result = 0
-    elif 1 <= umbrella_index < 3:
-        result = 1
-    elif 3 <= umbrella_index < 15:
-        result = 2
-    elif 15 <= umbrella_index < 30:
-        result = 3
-    elif 30 <= umbrella_index:
-        result = 4
-
-    return result
 
 def get_mask_index(air_jsonObject, flower_jsonObject):
     if air_jsonObject.get('response').get('header').get('resultCode') != "00":
