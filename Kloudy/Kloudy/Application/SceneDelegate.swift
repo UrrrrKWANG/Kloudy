@@ -13,17 +13,8 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
-        guard let windowScene = scene as? UIWindowScene else { return }
-        self.window = UIWindow(windowScene: windowScene)
-        window?.rootViewController = UIStoryboard(name: "LaunchScreen", bundle: nil).instantiateInitialViewController()
-        self.window?.makeKeyAndVisible()
-        
-        DispatchQueue.main.asyncAfter(deadline: DispatchTime.now() + 0.2) {
-            let viewController = ViewController()
-            let rootNavigationController = UINavigationController(rootViewController: viewController)
-            rootNavigationController.navigationBar.isHidden = true
-            self.window?.rootViewController = rootNavigationController
-        }
+        guard let _ = (scene as? UIWindowScene) else { return }
+        setRootViewController(scene)
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
@@ -63,3 +54,23 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
 }
 
+extension SceneDelegate {
+    private func setRootViewController(_ scene: UIScene) {
+        if Storage.isFirst() {
+            setRootViewController(scene, viewController: OnboardingView())
+        } else {
+            setRootViewController(scene, viewController: ViewController())
+        }
+    }
+    
+    private func setRootViewController(_ scene: UIScene, viewController: UIViewController) {
+        if let windowScene = scene as? UIWindowScene {
+            let window = UIWindow(windowScene: windowScene)
+            let rootNavigationController = UINavigationController(rootViewController: viewController)
+            rootNavigationController.navigationBar.isHidden = true
+            window.rootViewController = rootNavigationController
+            self.window = window
+            self.window?.makeKeyAndVisible()
+        }
+    }
+}

@@ -124,21 +124,33 @@ class CheckWeatherView: UIViewController {
     
     private func serializeLocationSequence(locations: [Location], initialWeathers: [Weather]) -> [Weather] {
         var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: initialWeathers.count)
-        weatherData[0] = initialWeathers[0]
-        guard initialWeathers.count != 1 else { return weatherData }
-        for weatherIndex in 1..<initialWeathers.count {
-            for locationIndex in 0..<locations.count {
-                if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
-                    weatherData[locationIndex + 1] = initialWeathers[weatherIndex]
-                    continue
+        
+        if self.currentStatus == .authorizedAlways || self.currentStatus == .authorizedWhenInUse {
+            weatherData[0] = initialWeathers[0]
+            guard initialWeathers.count != 1 else { return weatherData }
+            for weatherIndex in 1..<initialWeathers.count {
+                for locationIndex in 0..<locations.count {
+                    if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
+                        weatherData[locationIndex + 1] = initialWeathers[weatherIndex]
+                        continue
+                    }
                 }
             }
+            return weatherData
+        } else {
+            for weatherIndex in 0..<initialWeathers.count {
+                for locationIndex in 0..<locations.count {
+                    if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
+                        weatherData[locationIndex] = initialWeathers[weatherIndex]
+                        continue
+                    }
+                }
+            }
+            return weatherData
         }
-        return weatherData
     }
     
     func loadWeatherView() {
-        let currentStatus = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
             
             let location = weathers[locationIndex]

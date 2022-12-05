@@ -131,4 +131,27 @@ class CoreDataManager {
         }
         coreDataStack.saveContext()
     }
+    
+    func convertStringToIndexTypeArray(indexStrArray: [String]) -> [IndexType] {
+        var indexTypeArray = [IndexType]()
+        indexStrArray.forEach { index in
+            switch index {
+            case "rain":
+                indexTypeArray.append(.umbrella)
+            case "mask":
+                indexTypeArray.append(.mask)
+            case "laundry":
+                indexTypeArray.append(.laundry)
+            case "car":
+                indexTypeArray.append(.car)
+            case "outer":
+                indexTypeArray.append(.outer)
+            case "temperatureGap":
+                indexTypeArray.append(.temperatureGap)
+            default:
+                break
+            }
+        }
+        return indexTypeArray
+    }
 }

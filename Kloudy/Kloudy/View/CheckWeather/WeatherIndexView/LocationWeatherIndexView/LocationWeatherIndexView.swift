@@ -28,7 +28,7 @@ class LocationWeatherIndexView: UIView {
     
     let indexViewTapped: BehaviorSubject<Bool> = BehaviorSubject(value: false)
     var cityString: BehaviorSubject<String> = BehaviorSubject(value: "")
-    var indexString: BehaviorSubject<IndexType> = BehaviorSubject(value: .unbrella)
+    var indexString: BehaviorSubject<IndexType> = BehaviorSubject(value: .umbrella)
     let tapGesture = UITapGestureRecognizer()
     let disposeBag = DisposeBag()
     
@@ -92,7 +92,7 @@ class LocationWeatherIndexView: UIView {
                     self.temperatureGapView.sentWeather.onNext(weathers)
                     self.makeCompareIndexText(weather: weathers.localWeather[0], compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
-                } else if $0 == .unbrella {
+                } else if $0 == .umbrella {
                     self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
@@ -105,7 +105,7 @@ class LocationWeatherIndexView: UIView {
         
         indexStatus
             .subscribe(onNext: {
-                self.imageOrLottieName = self.findImageOrLottieName(indexName: self.sentIndexName ?? .unbrella, status: $0)
+                self.imageOrLottieName = self.findImageOrLottieName(indexName: self.sentIndexName ?? .umbrella, status: $0)
                 self.changeImageView(name: self.imageOrLottieName)
             })
             .disposed(by: disposeBag)
@@ -304,7 +304,7 @@ class LocationWeatherIndexView: UIView {
         if textContainerView.subviews.count != 0 {
             textContainerView.subviews[0].removeFromSuperview()
         }
-        if indexType == .unbrella || indexType == .temperatureGap {
+        if indexType == .umbrella || indexType == .temperatureGap {
             textContainerView.addSubview(weatherIndexStatusLabel)
             weatherIndexStatusLabel.snp.makeConstraints {
                 $0.edges.equalToSuperview()
@@ -413,15 +413,15 @@ class LocationWeatherIndexView: UIView {
             return "mask_step4"
         case let(indexName, status) where indexName == .mask && status == 4 :
             return "mask_step4"
-        case let(indexName, status) where indexName == .unbrella && status == 0 :
+        case let(indexName, status) where indexName == .umbrella && status == 0 :
             return "rain_step1"
-        case let(indexName, status) where indexName == .unbrella && status == 1 :
+        case let(indexName, status) where indexName == .umbrella && status == 1 :
             return "rain_step2"
-        case let(indexName, status) where indexName == .unbrella &&  status == 2 :
+        case let(indexName, status) where indexName == .umbrella &&  status == 2 :
             return "rain_step3"
-        case let(indexName, status) where indexName == .unbrella && status == 3 :
+        case let(indexName, status) where indexName == .umbrella && status == 3 :
             return "rain_step4"
-        case let(indexName, status) where indexName == .unbrella && status == 4 :
+        case let(indexName, status) where indexName == .umbrella && status == 4 :
             return "rain_step4"
         case let(indexName, status) where indexName == .laundry && status == 0 :
             return "laundry_1"
@@ -462,7 +462,7 @@ class LocationWeatherIndexView: UIView {
         switch indexName {
         case .mask :
             return "마스크 지수".localized
-        case .unbrella :
+        case .umbrella :
             return "우산 지수".localized
         case .outer :
             return "겉옷 지수".localized
@@ -483,9 +483,9 @@ class LocationWeatherIndexView: UIView {
             uiImageView.image = UIImage(named: "pollen")
         case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .yellowDust:
             uiImageView.image = UIImage(named: "yellowDust")
-        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == .typhoon:
+        case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .typhoon:
             uiImageView.image = UIImage(named: "typhoon")
-        case let(indexName, pathIndex) where indexName == .unbrella && isIndexOn[pathIndex] == .strongWind:
+        case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .strongWind:
             uiImageView.image = UIImage(named: "strongWind")
         case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == .coldWave:
             uiImageView.image = UIImage(named: "coldWave")
@@ -506,7 +506,7 @@ class LocationWeatherIndexView: UIView {
     func calculateInternalIndexCount(indexName: IndexType) -> [InternalIndexType] {
         var isIndexOn = [InternalIndexType]()
         switch indexName {
-        case .unbrella :
+        case .umbrella :
             if weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 >= 4 {
                 isIndexOn.append(.strongWind)
             }
@@ -543,7 +543,7 @@ class LocationWeatherIndexView: UIView {
         return isIndexOn
     }
     func findStatus(indexName: IndexType) -> Int {
-        if indexName == .unbrella {
+        if indexName == .umbrella {
             return weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 0
         } else if indexName == .mask {
             return weathers?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 0

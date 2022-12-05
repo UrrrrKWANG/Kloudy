@@ -149,7 +149,7 @@ class ViewController: UIViewController {
         
         if locations.count == 0 {
             if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-                CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: ["rain", "mask", "laundry", "car", "outer", "temperatureGap"])
+                CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: Storage.defaultIndexArray)
                 CityWeatherNetwork().fetchCityWeather(code: "1111000000")
                     .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
                     .subscribe { event in
@@ -164,6 +164,8 @@ class ViewController: UIViewController {
                     }
                     .disposed(by: disposeBag)
             } else {
+                // 앱 첫 실행 시 현재 위치에 대한 기본 지수 순서를 저장합니다.
+                Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
                 fetchCurrentLocationWeatherData()
             }
         }
