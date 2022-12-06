@@ -127,9 +127,18 @@ class CheckWeatherView: UIViewController {
             })
             .disposed(by: disposeBag)
         
-        settingView.changeAuthority
+        settingView.changeAuthorityTrue
             .subscribe(onNext: {
                 self.weathers.insert($0, at: 0)
+            })
+            .disposed(by: disposeBag)
+        
+        settingView.changeAuthorityFalse
+            .subscribe(onNext: {
+                if $0 {
+                    self.weathers.removeFirst()
+                    Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
+                }
             })
             .disposed(by: disposeBag)
     }

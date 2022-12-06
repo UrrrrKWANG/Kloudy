@@ -13,7 +13,8 @@ class SettingView: UIViewController {
     let settingNavigationView = SettingNavigationView()
     let tableView = UITableView()
     let disposeBag = DisposeBag()
-    let changeAuthority = PublishSubject<Weather>()
+    let changeAuthorityTrue = PublishSubject<Weather>()
+    let changeAuthorityFalse = PublishSubject<Bool>()
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor.KColor.white
@@ -90,10 +91,12 @@ extension SettingView: UITableViewDataSource {
             cell.locationAllowTextLabel.text = "위치 서비스 약관 동의".localized
             cell.selectionStyle = .none
             cell.layer.addBorder([.top], color: UIColor.KColor.gray04, width: 1.0)
-            cell.isAuthorityTrue
+            cell.changeAuthorityCell
                 .subscribe(onNext: {
                     if $0 {
                         self.fetchCurrentLocationWeatherData()
+                    } else {
+                        self.changeAuthorityFalse.onNext(true)
                     }
                 })
                 .disposed(by: disposeBag)
@@ -113,7 +116,7 @@ extension SettingView: UITableViewDataSource {
             .subscribe { event in
                 switch event {
                 case .success(let data):
-                    self.changeAuthority.onNext(data)
+                    self.changeAuthorityTrue.onNext(data)
                 case .failure(let error):
                     print("Error: ", error)
                 }
