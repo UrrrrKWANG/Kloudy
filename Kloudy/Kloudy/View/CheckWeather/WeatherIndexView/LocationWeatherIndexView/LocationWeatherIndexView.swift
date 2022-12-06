@@ -509,7 +509,7 @@ class LocationWeatherIndexView: UIView {
         var isIndexOn = [InternalIndexType]()
         switch indexName {
         case .umbrella :
-            if weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 >= 4 {
+            if weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 >= 0 {
                 isIndexOn.append(.strongWind)
             }
         case .mask :
@@ -558,6 +558,7 @@ class LocationWeatherIndexView: UIView {
         }
         return 0
     }
+    
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
@@ -569,7 +570,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath) as! InternalIndexCollectionViewCell
         let indexName = self.indexArray[self.internalIndex]
         let isIndexOn = calculateInternalIndexCount(indexName: indexName)
         let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, isIndexOn: isIndexOn, pathIndex: indexPath.row)
@@ -578,6 +579,12 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
             $0.top.equalToSuperview()
             $0.width.height.equalTo(30)
         }
+        let gesture = UITapGestureRecognizer()
+        cell.addGestureRecognizer(gesture)
+               gesture.rx.event.bind {_ in
+                cell.showToast(message: "ddd", cntCorrect: 10)
+               }.disposed(by: disposeBag)
+    
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
