@@ -92,7 +92,7 @@ class LocationWeatherIndexView: UIView {
                         self.containerView.subviews[0].removeFromSuperview()
                     }
                     self.temperatureGapView.sentWeather.onNext(weathers)
-                    self.makeCompareIndexText(weather: weathers.localWeather[0], compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
+                    self.makeCompareIndexText(compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
                 } else if $0 == .umbrella {
                     self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
@@ -246,9 +246,9 @@ class LocationWeatherIndexView: UIView {
         super.init(coder: coder)
     }
     
-    func makeCompareIndexText(weather: LocalWeather, compareIndex: CompareIndex) {
-        let compareMaxTemperature = Int(weather.minMaxTemperature()[1]) - Int(compareIndex.yesterdayMaxTemperature)
-        let compareMinTemperature = Int(weather.minMaxTemperature()[2]) - Int(compareIndex.yesterdayMinTemperature)
+    func makeCompareIndexText(compareIndex: CompareIndex) {
+        let compareMaxTemperature = Int(compareIndex.todayMaxtemperature) - Int(compareIndex.yesterdayMaxTemperature)
+        let compareMinTemperature = Int(compareIndex.todayMinTemperature) - Int(compareIndex.yesterdayMinTemperature)
         if compareMaxTemperature > 2 {
             compareIndexText = "어제보다 최고 기온이 ".localized + "\(compareMaxTemperature)" + "°C 높고 \n ".localized
         } else if compareMaxTemperature < -2 {
@@ -351,10 +351,10 @@ class LocationWeatherIndexView: UIView {
             $0.bottom.equalToSuperview().inset(74)
         }
         temperatureGapView.snp.makeConstraints {
-            $0.top.equalTo(weatherIndexNameLabel.snp.bottom).offset(30)
-            $0.leading.equalToSuperview().inset(43)
+            $0.top.equalTo(weatherIndexNameLabel.snp.bottom).offset(35)
+            $0.leading.equalToSuperview().inset(40)
             $0.width.equalTo(202)
-            $0.height.equalTo(223.5)
+            $0.height.equalTo(271.5)
         }
         intenalIndexListView.snp.makeConstraints{
             $0.top.equalToSuperview().inset(16)
@@ -375,7 +375,7 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.layer.cornerRadius = 10
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
-
+        
         if indexNameLabel == "우산 지수".localized {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
@@ -562,13 +562,13 @@ class LocationWeatherIndexView: UIView {
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let indexName = self.indexArray[self.internalIndex]
         let cellCount = calculateInternalIndexCount(indexName: indexName).count
         return cellCount
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath) as! InternalIndexCollectionViewCell
         let indexName = self.indexArray[self.internalIndex]
@@ -590,7 +590,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 30, height: 30)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
     }
