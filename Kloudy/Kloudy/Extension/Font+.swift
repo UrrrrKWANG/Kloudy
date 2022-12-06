@@ -50,7 +50,9 @@ extension UIFont {
         static var lexendRegular14: UIFont { UIFont(name: "Lexend-Regular", size: 14)! }
         static var lexendLight14: UIFont { UIFont(name: "Lexend-Light", size: 14)! }
         static var lexendLight12: UIFont { UIFont(name: "Lexend-Light", size: 12)! }
+        static var appleSDNeoBold24: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 24)! }
         static var appleSDNeoBold20: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 20)! }
+        static var appleSDNeoBold18: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 18)! }
         static var appleSDNeoBold16: UIFont { UIFont(name: "AppleSDGothicNeo-Bold", size: 16)! }
         static var appleSDNeoMedium18: UIFont { UIFont(name: "AppleSDGothicNeo-Medium", size: 18)! }
         static var appleSDNeoMedium20: UIFont { UIFont(name: "AppleSDGothicNeo-Medium", size: 20)! }
