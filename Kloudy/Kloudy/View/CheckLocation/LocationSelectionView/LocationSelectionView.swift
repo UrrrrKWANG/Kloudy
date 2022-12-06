@@ -538,7 +538,7 @@ extension LocationSelectionView: UITableViewDropDelegate {
         locationList.remove(at: sourceIndexPath.row - 1) // Remove the item from the array
         locationList.insert(itemMove, at: destinationIndexPath.row - 1) //Re-insert back into array
         CoreDataManager.shared.getLocationSequence(locationList: locationList)
-
+        
         if self.currentStatus == .authorizedAlways || self.currentStatus == .authorizedWhenInUse {
             let itemMove2 = weatherData[sourceIndexPath.row]
             weatherData.remove(at: sourceIndexPath.row)

@@ -92,6 +92,7 @@
 		BA0686A42926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
 		BA0686A52926502700AB3849 /* Lexend-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = BA0686A12926502700AB3849 /* Lexend-Light.ttf */; };
 		BA730CFA292CF5530012F702 /* indexCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA730CF9292CF5530012F702 /* indexCollectionViewCell.swift */; };
+		BADE2913293E49F1008C5CED /* InternalCheckWeatherPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADE2912293E49F1008C5CED /* InternalCheckWeatherPageView.swift */; };
 		BAFCEAF52920E65B0084F28E /* TodayWeatherDataCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEAF32920E65B0084F28E /* TodayWeatherDataCell.swift.swift */; };
 		BAFCEAF62920E65B0084F28E /* WeekWeatherDataCell.swift.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEAF42920E65B0084F28E /* WeekWeatherDataCell.swift.swift */; };
 		BAFCEB082923C0930084F28E /* LocationWeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFCEB072923C0930084F28E /* LocationWeatherIndexView.swift */; };
@@ -290,6 +291,7 @@
 		AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
 		BA0686A12926502700AB3849 /* Lexend-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Light.ttf"; sourceTree = "<group>"; };
 		BA730CF9292CF5530012F702 /* indexCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indexCollectionViewCell.swift; sourceTree = "<group>"; };
+		BADE2912293E49F1008C5CED /* InternalCheckWeatherPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalCheckWeatherPageView.swift; sourceTree = "<group>"; };
 		BAFCEAF32920E65B0084F28E /* TodayWeatherDataCell.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodayWeatherDataCell.swift.swift; sourceTree = "<group>"; };
 		BAFCEAF42920E65B0084F28E /* WeekWeatherDataCell.swift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WeekWeatherDataCell.swift.swift; sourceTree = "<group>"; };
 		BAFCEB072923C0930084F28E /* LocationWeatherIndexView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationWeatherIndexView.swift; sourceTree = "<group>"; };
@@ -612,6 +614,7 @@
 				8BC8F7A429011DB100EF83AE /* CheckWeatherViewModel.swift */,
 				8BC8F7A529011DB100EF83AE /* CheckWeatherView.swift */,
 				E036F3332928FCA200003E8A /* CurrentWeatherView.swift */,
+				BADE2911293E48EE008C5CED /* InternalCheckWeatherPageView */,
 			);
 			path = CheckWeatherView;
 			sourceTree = "<group>";
@@ -720,6 +723,14 @@
 				8BC8F81B29011E3400EF83AE /* Info.plist */,
 			);
 			path = kloudyWidget;
+			sourceTree = "<group>";
+		};
+		BADE2911293E48EE008C5CED /* InternalCheckWeatherPageView */ = {
+			isa = PBXGroup;
+			children = (
+				BADE2912293E49F1008C5CED /* InternalCheckWeatherPageView.swift */,
+			);
+			path = InternalCheckWeatherPageView;
 			sourceTree = "<group>";
 		};
 		BAFCEAF22920E65B0084F28E /* DetailWeatherViewCollectionViewCells */ = {
@@ -1234,6 +1245,7 @@
 				8BC8F7FC29011DB200EF83AE /* LocationSelectionViewModel.swift in Sources */,
 				2286B45329250AED003965F2 /* SettingLicenseCellView.swift in Sources */,
 				8B6409922918F02100DC2962 /* DetailWeatherView.swift in Sources */,
+				BADE2913293E49F1008C5CED /* InternalCheckWeatherPageView.swift in Sources */,
 				8B22A3BF291F59730079FA48 /* IndexChartView.swift in Sources */,
 				8B64099E2918F26800DC2962 /* WeatherIndexDetailViewModel.swift in Sources */,
 				8B64098F2918EFD000DC2962 /* WeatherIndexViewModel.swift in Sources */,
