@@ -129,12 +129,6 @@ class WeatherIndexView: UIView {
                 self.fetchLocationIndexArray(sentWeather: $0)
             })
             .disposed(by: disposeBag)
-        
-//        sentIndexStrArray
-//            .subscribe(onNext: {
-//                self.indexStrArray = $0
-//            })
-//            .disposed(by: disposeBag)
     }
     
     private func fetchLocationIndexArray(sentWeather: Weather) {

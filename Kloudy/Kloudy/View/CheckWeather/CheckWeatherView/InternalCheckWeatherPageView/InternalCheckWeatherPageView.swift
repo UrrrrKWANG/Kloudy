@@ -27,9 +27,6 @@ class InternalCheckWeatherPageView: UIViewController {
     var indexStrArray = [String]()
     let pageControl = UIPageControl()
     
-    let initialPage = 0
-    var pageIndex = 0
-    
     override func viewWillAppear(_ animated: Bool) {
         let firstVC = dataViewControllers[0]
         pageViewController.setViewControllers([firstVC], direction: .forward, animated: false)
@@ -67,14 +64,6 @@ class InternalCheckWeatherPageView: UIViewController {
             weatherIndexView.weatherIndex = self.locationWeatherIndex
             weatherIndexView.sentWeatherIndex.onNext(locationWeatherIndex)
             weatherIndexView.sentWeather.onNext(weather)
-            
-//            if (self.currentStatus == .authorized || self.currentStatus == .authorizedWhenInUse) && locationIndex == 0 {
-//                self.indexStrArray = Storage.fetchCurrentLocationIndexArray()
-//            } else {
-//                self.indexStrArray = locations[locationIndex].indexArray ?? Storage.defaultIndexArray
-//            }
-            
-//            weatherIndexView.sentIndexStrArray.onNext(self.indexStrArray)
             
             let detailWeatherView: UIButton = {
                 let detailWeatherView = UIButton()

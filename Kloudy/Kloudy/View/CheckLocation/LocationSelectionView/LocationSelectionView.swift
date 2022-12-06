@@ -77,7 +77,6 @@ class LocationSelectionView: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         locationFromCoreData = CoreDataManager.shared.fetchLocations()
-        print(locationFromCoreData, "data")
         inputLocationCellData()
     }
     
