@@ -10,7 +10,6 @@ import SnapKit
 
 class CurrentWeatherView: UIView {
     var localWeather:[LocalWeather] = []
-    var hourlyWeather:[HourlyWeather] = []
     
     let locationLabel = UILabel()
     let currentTemperatureLabel = UILabel()
@@ -32,7 +31,6 @@ class CurrentWeatherView: UIView {
     init(localWeather: [LocalWeather]) {
         super.init(frame: .zero)
         self.localWeather = localWeather
-        self.hourlyWeather = [HourlyWeather](localWeather[0].hourlyWeather)
         addLayout()
         addData()
         setLayout()
