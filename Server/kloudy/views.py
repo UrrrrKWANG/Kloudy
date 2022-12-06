@@ -14,7 +14,7 @@ from .weathers import MainWeather, UmbrellaIndex, MaskIndex, OuterIndex, Laundry
 
 CSV_PATH = './kloudy/csv/Locations.csv'
 
-def csv_reader():    
+def csv_reader():
     with open(CSV_PATH, newline='', encoding='utf8') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:

@@ -9,15 +9,22 @@ import ssl
 from socket import error as SocketError
 import errno
 
+
+
 ssl._create_default_https_context = ssl._create_unverified_context
 BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 pymysql.install_as_MySQLdb()
-key = env('METEOROGICAL_KEY')
-headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
+
+
+def getData():
+    
 
 def getDatas(today, time, location):
+    key = env('METEOROGICAL_KEY')
+    headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
+    
     print("It's Time to get Data")
     print(today, time, location.city)
     period = "DAILY"
