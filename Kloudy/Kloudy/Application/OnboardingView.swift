@@ -29,8 +29,8 @@ class OnboardingView: UIViewController {
     
     private func layout() {
         view.backgroundColor = UIColor.KColor.white
-        [OnboardingPageView(imageName: "onboarding1", mainLabelText: "순서를 변경하세요", subLabelText: "아이콘을 길게 눌러 변경하고자 하는 지수의 순서를 바꿔보세요"),
-         OnboardingPageView(imageName: "onboarding2", mainLabelText: "세부 날씨를 확인하세요", subLabelText: "아래로 화면을 밀어 세부 날씨를 확인할 수 있어요")].forEach { insideViewControllers.append($0) }
+        [OnboardingPageView(imageName: "onboarding1", mainLabelText: "순서를 변경하세요".localized, subLabelText: "아이콘을 길게 눌러 변경하고자 하는 지수의 순서를 바꿔보세요".localized),
+         OnboardingPageView(imageName: "onboarding2", mainLabelText: "세부 날씨를 확인하세요".localized, subLabelText: "아래로 화면을 밀어 세부 날씨를 확인할 수 있어요".localized)].forEach { insideViewControllers.append($0) }
         
         pageViewController = UIPageViewController(transitionStyle: .scroll, navigationOrientation: .horizontal)
         addChild(pageViewController)
