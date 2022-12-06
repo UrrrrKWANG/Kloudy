@@ -94,16 +94,17 @@ class TemperatureGapView: UIView {
         let total: Int = minTemp > 0 ? maxTemp - minTemp : maxTemp + abs(minTemp)
         let compareMax: Int = todayMaxTemperature - yesterdayMaxTemperature
         let compareMin: Int = todayMinTemperature - yesterdayMinTemperature
-
+        let viewHeightSize: Int = Int(self.frame.height) - Int(31.5 + 12 + 36)
+        
         if minTemp < 0 {
-            yesterdayMaxHeight = (Int(192 * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
-            todayMaxHeight = (Int(192 * (todayMaxTemperature + abs(minTemp)) / total)) + 36
-            yesterdayMinHeight = (Int(192 * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
-            todayMinHeight = (Int(192 * (todayMinTemperature + abs(minTemp)) / total)) + 36
+            yesterdayMaxHeight = (Int(viewHeightSize * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
+            todayMaxHeight = (Int(viewHeightSize * (todayMaxTemperature + abs(minTemp)) / total)) + 36
+            yesterdayMinHeight = (Int(viewHeightSize * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
+            todayMinHeight = (Int(viewHeightSize * (todayMinTemperature + abs(minTemp)) / total)) + 36
         } else {
-            yesterdayMaxHeight = Int(192 * (yesterdayMaxTemperature - minTemp) / total) + 36
-            todayMaxHeight = Int(192 * (todayMaxTemperature - minTemp) / total) + 36
-            yesterdayMinHeight = Int(192 * (yesterdayMinTemperature - minTemp) / total) + 36
+            yesterdayMaxHeight = Int(viewHeightSize * (yesterdayMaxTemperature - minTemp) / total) + 36
+            todayMaxHeight = Int(viewHeightSize * (todayMaxTemperature - minTemp) / total) + 36
+            yesterdayMinHeight = Int(viewHeightSize * (yesterdayMinTemperature - minTemp) / total) + 36
             todayMinHeight = Int(192 * (todayMinTemperature - minTemp) / total) + 36
         }
         
