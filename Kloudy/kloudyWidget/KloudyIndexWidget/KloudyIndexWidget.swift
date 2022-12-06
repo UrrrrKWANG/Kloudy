@@ -33,20 +33,20 @@ struct KloudyIndexWidget: View {
                         Text("\(String(temperature))°")
                             .foregroundColor(Color("Black"))
                             .font(.system(size: geo.size.width * 34/170))
-                            .fontWeight(.regular)
+                            .fontWeight(.medium)
                             .multilineTextAlignment(.leading)
                         Spacer()
                     }
                 }
-                .padding(.top, geo.size.width * 90/170)
-                .padding([.leading, .bottom], geo.size.width * 16/170)
+                .padding(.top, geo.size.width * 104/170)
+                .padding(.bottom, geo.size.width * 40/170)
+                .padding(.leading, geo.size.width * 16/170)
                 VStack {
-                    HStack {
+                    HStack(spacing: 3) {
                         Text("\(city)")
                             .foregroundColor(Color("Black"))
                             .font(.system(size: geo.size.width * 14/170))
-                            .fontWeight(.bold)
-                            .multilineTextAlignment(.leading)
+                            .fontWeight(.medium)
                         Image("locaition")
                             .resizable()
                             .aspectRatio(contentMode: .fill)
@@ -54,8 +54,8 @@ struct KloudyIndexWidget: View {
                         Spacer()
                     }
                 }
-                .padding(.top, geo.size.width * 140/170)
-                .padding(.bottom, geo.size.width * 19/170)
+                .padding(.top, geo.size.width * 137/170)
+                .padding(.bottom, geo.size.width * 18/170)
                 .padding(.leading, geo.size.width * 16/170)
                 VStack {
                     HStack {
@@ -72,3 +72,4 @@ struct KloudyIndexWidget: View {
         }
     }
 }
+
