@@ -54,6 +54,8 @@ def time_interval_weather():
         if time == "2330":
             today = str(int(today) - 1)
 
+        weather_info = getData(location)
+        
         weather_infos = getDatas(today, time, location)
         
         main_state_jsonObject         = weather_infos[0]
@@ -72,7 +74,7 @@ def time_interval_weather():
             time = int(datetime.datetime.now().strftime("%H"))
 
             # 메인 지수
-            main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
+            main_info = MainWeather.get_main_weather(weather_info)
             if main_info != [0, 0, 0, 0]:
                 if time % 2 != 0:
                     main = MainEven.objects.filter(code = location.code).first()
@@ -217,7 +219,8 @@ def time_interval_weather():
             local_weather_even = LocalWeatherEven.objects.create(weather = weather_even, local_code = location.code, local_name = location.city)
             local_weather_odd.save()
             local_weather_even.save()
-            main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
+            
+            main_info = MainWeather.get_main_weather(weather_info)
             current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
             print(f'메인 지수: {current_weather}, {current_temperature}, {day_max_temperature}, {day_min_temperature}')
             main_odd = MainOdd.objects.create(local_weather = local_weather_odd, code = location.code, current_weather = current_weather, current_temperature = current_temperature, day_max_temperature = day_max_temperature, day_min_temperature = day_min_temperature)

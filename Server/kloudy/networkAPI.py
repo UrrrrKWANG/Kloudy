@@ -60,9 +60,13 @@ def getData(location):
             "dataSets": ",".join(dataSets),
         }
 
-    res = requests.get(url, headers = headers, params= params)
+    try:
+        weather_response           = requests.get(url, headers = headers, params= params)
+        weather_jsonObject         = json.loads(weather_response.text)
+    except:
+        weather_jsonObject         = {'response': {'header': {'resultCode': '-1', 'resultMsg': '잘못된 응답이 들어왔습니다.'}}}
 
-    print(res.json())
+    return weather_jsonObject
 
 def getDatas(today, time, location):
     key = env('METEOROGICAL_KEY')
