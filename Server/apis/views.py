@@ -4,6 +4,7 @@ from rest_framework.response import Response
 from .api_calls import weatherAPI
 from .serializers import WeatherSerializerOdd, WeatherSerializerEven
 from .models import *
+from kloudy.networkAPI import *
 import datetime
 
 # 지역 코드를 기반으로 DB에서 받아옴.
@@ -16,6 +17,9 @@ def getWeathers(request):
     hour = int(now.strftime("%H"))
     if hour <= 1:
         today = str(int(today) - 1)
+
+    location = Locations.objects.filter(code = code).first()
+    getData(location)
 
     print(today, hour, code)
     # 홀수일 때는 짝수 시간 대를 업데이트함으로 짝수일 때 짝수 시간 대를 가져간다.

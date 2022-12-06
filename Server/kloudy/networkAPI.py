@@ -8,8 +8,8 @@ import environ
 import ssl
 from socket import error as SocketError
 import errno
-
-
+from time import time
+import jwt
 
 ssl._create_default_https_context = ssl._create_unverified_context
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -17,14 +17,57 @@ env = environ.Env(DEBUG=(bool, True))
 environ.Env.read_env(env_file=os.path.join(BASE_DIR, '.env'))
 pymysql.install_as_MySQLdb()
 
+def getData(location):
+    private_key = open("./kloudy/AuthKey_QUZPUV9HLS.p8", "r").read()
 
-def getData():
+    current_time = int(time())
+    expiry_time = current_time + 3600
+    key = private_key
+    algorithm = "ES256"
+    team_id = env("TEAM_ID")
+    Bundle_ID = env("BUNDLE_ID")
+    key_ID = env("KEY_ID")
+
+    payload={
+        "iss": team_id,
+        'iat': current_time,
+        'exp': expiry_time,
+        "sub": Bundle_ID,
+        }
     
+    headers= {
+        "kid": key_ID,
+        "id": f"{team_id}.{Bundle_ID}",
+    }
+
+    token = jwt.encode(payload, key, algorithm, headers)
+    headers = { 
+        "Authorization": f"Bearer {token}"
+        }
+
+    language = 'en'
+    latitude = location.latitude
+    longitude = location.longitude
+    
+    url = f"https://weatherkit.apple.com/api/v1/weather/{language}/{latitude}/{longitude}"
+    countryCode = "KR"
+    timezone = "Asia/Seoul"
+    dataSets = ["currentWeather", "forecastDaily", "forecastHourly", "forecastNextHour", "weatherAlerts"]
+
+    params = {
+            "countryCode": countryCode,
+            "timezone": timezone,
+            "dataSets": ",".join(dataSets),
+        }
+
+    res = requests.get(url, headers = headers, params= params)
+
+    print(res.json())
 
 def getDatas(today, time, location):
     key = env('METEOROGICAL_KEY')
     headers = {'Content-Type': 'application/json', 'charset': 'UTF-8', 'Accept': '*/*'}
-    
+
     print("It's Time to get Data")
     print(today, time, location.city)
     period = "DAILY"
