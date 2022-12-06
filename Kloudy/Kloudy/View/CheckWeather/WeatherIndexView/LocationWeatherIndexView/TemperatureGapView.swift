@@ -105,7 +105,7 @@ class TemperatureGapView: UIView {
             yesterdayMaxHeight = Int(viewHeightSize * (yesterdayMaxTemperature - minTemp) / total) + 36
             todayMaxHeight = Int(viewHeightSize * (todayMaxTemperature - minTemp) / total) + 36
             yesterdayMinHeight = Int(viewHeightSize * (yesterdayMinTemperature - minTemp) / total) + 36
-            todayMinHeight = Int(192 * (todayMinTemperature - minTemp) / total) + 36
+            todayMinHeight = Int(viewHeightSize * (todayMinTemperature - minTemp) / total) + 36
         }
         
         maxTemperatureLabel.configureLabel(text: "\(abs(compareMax))°", font: UIFont.KFont.lexendRegular24, textColor: UIColor.KColor.black)
