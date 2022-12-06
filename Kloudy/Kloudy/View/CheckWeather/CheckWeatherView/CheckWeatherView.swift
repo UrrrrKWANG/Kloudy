@@ -219,27 +219,6 @@ class CheckWeatherView: UIViewController {
         }
     }
     
-    private func fetchCurrentLocationWeatherData() {
-        let XY = LocationManager.shared.requestNowLocationInfo()
-        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-        guard let nowLocation = nowLocation else { return }
-        
-        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-            .subscribe { event in
-                switch event {
-                case .success(let data):
-                    DispatchQueue.main.async {
-                        self.weathers.insert(data, at: 0)
-                    }
-                case .failure(let error):
-                    print("Error: ", error)
-                }
-            }
-            .disposed(by: disposeBag)
-        Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
-    }
-    
     @objc func tapLocationButton() {
         self.navigationController?.pushViewController(locationSelectionView, animated: true)
         self.delegate?.sendWeatherData(weatherData: weathers)
