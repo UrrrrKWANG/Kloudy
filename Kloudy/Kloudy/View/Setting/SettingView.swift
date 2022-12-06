@@ -6,11 +6,14 @@
 //
 
 import UIKit
+import RxSwift
 import SnapKit
 
 class SettingView: UIViewController {
     let settingNavigationView = SettingNavigationView()
     let tableView = UITableView()
+    let disposeBag = DisposeBag()
+    let changeAuthority = PublishSubject<Weather>()
     
     override func viewDidLoad() {
         view.backgroundColor = UIColor.KColor.white
@@ -76,10 +79,9 @@ extension SettingView: UITableViewDataSource {
         else if indexPath.row == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingVersionCellView", for: indexPath) as? SettingVersionCellView else { return UITableViewCell() }
             cell.versionTextLabel.text = "버전정보".localized
-            cell.versionNumberLabel.text = "1.0.0"
+            cell.versionNumberLabel.text = "1.0.1"
             cell.versionCheckLabel.text = "최신 버전입니다".localized
             cell.selectionStyle = .none
-            
             resultCell = cell
         }
         
@@ -88,11 +90,35 @@ extension SettingView: UITableViewDataSource {
             cell.locationAllowTextLabel.text = "위치 서비스 약관 동의".localized
             cell.selectionStyle = .none
             cell.layer.addBorder([.top], color: UIColor.KColor.gray04, width: 1.0)
+            cell.isAuthorityTrue
+                .subscribe(onNext: {
+                    if $0 {
+                        self.fetchCurrentLocationWeatherData()
+                    }
+                })
+                .disposed(by: disposeBag)
             
             resultCell = cell
         }
         
         return resultCell
+    }
+    
+    private func fetchCurrentLocationWeatherData() {
+        let XY = LocationManager.shared.requestNowLocationInfo()
+        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+        guard let nowLocation = nowLocation else { return }
+        
+        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+            .subscribe { event in
+                switch event {
+                case .success(let data):
+                    self.changeAuthority.onNext(data)
+                case .failure(let error):
+                    print("Error: ", error)
+                }
+            }
+            .disposed(by: disposeBag)
     }
 }
 
