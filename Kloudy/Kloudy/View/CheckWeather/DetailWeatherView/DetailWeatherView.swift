@@ -25,7 +25,6 @@ class DetailWeatherView: UIViewController {
         self.todayWeatherDatas = todayWeatherDatas
         self.weekWeatherDatas = weekWeatherDatas
         self.currentLocationName = weatherDatas.localWeather[0].localName
-        
         temperatureList = weatherDatas.localWeather[0].minMaxTemperature()
     }
     
@@ -66,14 +65,13 @@ class DetailWeatherView: UIViewController {
     
     lazy var currentLocationLabel: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.appleSDNeoBold18, textColor: UIColor.KColor.white)
-        uiLabel.text = self.currentLocationName
+        uiLabel.configureLabel(text: self.currentLocationName, font: UIFont.KFont.appleSDNeoBold18, textColor: UIColor.KColor.white)
         return uiLabel
     }()
     
-    let currentTemperature: UILabel = {
+    lazy var currentTemperature: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: "", font: UIFont.KFont.lexendRegular26, textColor: UIColor.KColor.white)
+        uiLabel.configureLabel(text: String(self.temperatureList[0]) + "°", font: UIFont.KFont.lexendRegular26, textColor: UIColor.KColor.white)
         return uiLabel
     }()
     
@@ -108,7 +106,7 @@ class DetailWeatherView: UIViewController {
         }
         
         self.currentTemperature.snp.makeConstraints{
-            $0.trailing.equalTo(minMaxTemperatureLabel.snp.leading).inset(8)
+            $0.trailing.equalTo(minMaxTemperatureLabel.snp.leading).offset(8)
             $0.top.bottom.equalToSuperview().inset(12)
             $0.width.equalTo(47)
         }
@@ -217,13 +215,11 @@ class DetailWeatherView: UIViewController {
             }
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
             cell.weatherCondition.image = UIImage(named: weatherCondition[0])
-            if index == 0 {
-                self.currentTemperature.text = String(Int(datas.temperature)) + "°"
-            }
             cell.temperature.text = String(Int(datas.temperature)) + "°"
         }
         .disposed(by: disposeBag)
     }
+    
     private func weekBind() {
         weekWeatherDatas.bind(to:
                                 self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
@@ -238,12 +234,12 @@ class DetailWeatherView: UIViewController {
             if index == 0 {
                 self.minMaxTemperatureLabel.text = String(self.temperatureList[2]) + "°" + " |  " + String(self.temperatureList[1]) + "°"
                 let attribtuedMaxTemperature = NSMutableAttributedString(string: minMaxTemperatureLabel.text ?? "")
-                               let maxStringRange = (minMaxTemperatureLabel.text! as NSString).range(of: String(self.temperatureList[1]) + "°")
-                               attribtuedMaxTemperature.addAttribute(.foregroundColor, value: UIColor.KColor.orange01, range: maxStringRange)
-                               minMaxTemperatureLabel.attributedText = attribtuedMaxTemperature
-                               let dividingStringRange = (minMaxTemperatureLabel.text! as NSString).range(of: " |  ")
-                               attribtuedMaxTemperature.addAttribute(.foregroundColor, value: UIColor.KColor.primaryBlue05, range: dividingStringRange)
-                               minMaxTemperatureLabel.attributedText = attribtuedMaxTemperature
+                let maxStringRange = (minMaxTemperatureLabel.text! as NSString).range(of: String(self.temperatureList[1]) + "°")
+                attribtuedMaxTemperature.addAttribute(.foregroundColor, value: UIColor.KColor.orange01, range: maxStringRange)
+                minMaxTemperatureLabel.attributedText = attribtuedMaxTemperature
+                let dividingStringRange = (minMaxTemperatureLabel.text! as NSString).range(of: " |  ")
+                attribtuedMaxTemperature.addAttribute(.foregroundColor, value: UIColor.KColor.primaryBlue05, range: dividingStringRange)
+                minMaxTemperatureLabel.attributedText = attribtuedMaxTemperature
                 
                 cell.minTemperature.text = String(self.temperatureList[2]) + "°"
                 cell.maxTemperature.text = String(self.temperatureList[1]) + "°"
