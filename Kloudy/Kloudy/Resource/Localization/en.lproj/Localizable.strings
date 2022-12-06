@@ -609,10 +609,10 @@ Seogwipo-si="Seogwipo-si";
 "아침에 비" = "Rain in the morning";
 "점심에 비" = "Rain in the afternoon";
 "저녁에 비" = "Rain in the evening";
-"새벽한때 비" = "Drizzle at dawn";
-"아침한때 비" = "Drizzle in the morning";
-"점심한때 비" = "Drizzle in the afternoon";
-"저녁한때 비" = "Drizzle in the evening";
+"새벽한때 비" = "Rain shower at dawn";
+"아침한때 비" = "Rain shower in the morning";
+"점심한때 비" = "Rain shower in the afternoon";
+"저녁한때 비" = "Rain shower in the evening";
 
 
 "맑음" = "Clear";
