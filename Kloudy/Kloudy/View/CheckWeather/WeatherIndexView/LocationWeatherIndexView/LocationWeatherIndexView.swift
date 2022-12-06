@@ -375,7 +375,7 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.layer.cornerRadius = 10
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
-
+        
         if indexNameLabel == "우산 지수".localized {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
@@ -561,13 +561,13 @@ class LocationWeatherIndexView: UIView {
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
-
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let indexName = self.indexArray[self.internalIndex]
         let cellCount = calculateInternalIndexCount(indexName: indexName).count
         return cellCount
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
         let indexName = self.indexArray[self.internalIndex]
@@ -583,7 +583,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         return CGSize(width: 30, height: 30)
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
     }

@@ -65,34 +65,15 @@ class InternalCheckWeatherPageView: UIViewController {
             weatherIndexView.sentWeatherIndex.onNext(locationWeatherIndex)
             weatherIndexView.sentWeather.onNext(weather)
             
-            let detailWeatherView: UIButton = {
-                let detailWeatherView = UIButton()
-                detailWeatherView.backgroundColor = UIColor.KColor.white
-                detailWeatherView.layer.cornerRadius = 10
-                detailWeatherView.layer.applySketchShadow(color: UIColor.KColor.primaryBlue01, alpha: 0.1, x: 0, y: 0, blur: 40, spread: 0)
-                return detailWeatherView
-            }()
-            
             let currentWeatherImage: UIImageView = {
                 let currentWeatherImage = UIImageView()
                 currentWeatherImage.contentMode = .scaleAspectFit
                 currentWeatherImage.image = UIImage(named: "detailWeather-\(weather.localWeather[0].main[0].currentWeather)")
                 return currentWeatherImage
             }()
-            let detailWeatherViewLabel: UILabel = {
-                let detailWeatherViewLabel = UILabel()
-                detailWeatherViewLabel.configureLabel(text: "상세 날씨".localized, font: UIFont.KFont.appleSDNeoSemiBold17, textColor: UIColor.KColor.primaryBlue01)
-                return detailWeatherViewLabel
-            }()
-            let rightIcon: UIImageView = {
-                let rightIcon = UIImageView()
-                rightIcon.image = UIImage(named: "right")
-                rightIcon.contentMode = .scaleAspectFit
-                return rightIcon
-            }()
             
             vc.view.backgroundColor = UIColor.KColor.clear
-            [currentWeatherView, currentWeatherImage, weatherIndexView, detailWeatherView].forEach { vc.view.addSubview($0) }
+            [currentWeatherView, currentWeatherImage, weatherIndexView].forEach { vc.view.addSubview($0) }
             
             currentWeatherView.snp.makeConstraints {
                 $0.top.equalToSuperview().inset(24)
@@ -131,33 +112,6 @@ class InternalCheckWeatherPageView: UIViewController {
                 })
                 .disposed(by: disposeBag)
             
-            detailWeatherView.rx.tap
-                .bind {
-                    let detailWeatherView = DetailWeatherView(weatherDatas: weather)
-                    detailWeatherView.modalPresentationStyle = .pageSheet
-                    detailWeatherView.modalTransitionStyle = .coverVertical
-                    self.present(detailWeatherView, animated: true)
-                }
-                .disposed(by: disposeBag)
-            
-            detailWeatherView.snp.makeConstraints {
-                $0.top.equalTo(weatherIndexView.snp.bottom).offset(32)
-                $0.leading.trailing.equalToSuperview().inset(20)
-                $0.height.equalTo(58)
-            }
-            
-            [detailWeatherViewLabel, rightIcon].forEach { detailWeatherView.addSubview($0) }
-            
-            detailWeatherViewLabel.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.leading.equalToSuperview().inset(16)
-            }
-            rightIcon.snp.makeConstraints {
-                $0.centerY.equalToSuperview()
-                $0.trailing.equalToSuperview().inset(16)
-                $0.width.equalTo(8)
-                $0.height.equalTo(14)
-            }
             return vc
         }()
         dataViewControllers.append(locationVC)
