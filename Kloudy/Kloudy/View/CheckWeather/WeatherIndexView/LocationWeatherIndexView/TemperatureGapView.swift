@@ -94,7 +94,9 @@ class TemperatureGapView: UIView {
         let total: Int = minTemp > 0 ? maxTemp - minTemp : maxTemp + abs(minTemp)
         let compareMax: Int = todayMaxTemperature - yesterdayMaxTemperature
         let compareMin: Int = todayMinTemperature - yesterdayMinTemperature
-        let viewHeightSize: Int = Int(self.frame.height) - Int(31.5 + 12 + 36)
+//        let viewHeightSize: Int = Int(self.frame.height) - Int(31.5 + 12 + 36) 현재 0으로 받아지는 버그. 수정 할 것
+//         (31.5 + 12 + 36)  31.5: textlabel 길이, 12: textlabel offset, 36: 최소 높이
+        let viewHeightSize: Int = 192
         
         if minTemp < 0 {
             yesterdayMaxHeight = (Int(viewHeightSize * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
