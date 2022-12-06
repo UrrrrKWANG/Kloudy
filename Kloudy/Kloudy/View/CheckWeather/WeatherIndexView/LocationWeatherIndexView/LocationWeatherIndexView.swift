@@ -92,7 +92,7 @@ class LocationWeatherIndexView: UIView {
                         self.containerView.subviews[0].removeFromSuperview()
                     }
                     self.temperatureGapView.sentWeather.onNext(weathers)
-                    self.makeCompareIndexText(weather: weathers.localWeather[0], compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
+                    self.makeCompareIndexText(compareIndex: weathers.localWeather[0].weatherIndex[0].compareIndex[0])
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.compareIndexText)
                 } else if $0 == .umbrella {
                     self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
@@ -246,9 +246,9 @@ class LocationWeatherIndexView: UIView {
         super.init(coder: coder)
     }
     
-    func makeCompareIndexText(weather: LocalWeather, compareIndex: CompareIndex) {
-        let compareMaxTemperature = Int(weather.minMaxTemperature()[1]) - Int(compareIndex.yesterdayMaxTemperature)
-        let compareMinTemperature = Int(weather.minMaxTemperature()[2]) - Int(compareIndex.yesterdayMinTemperature)
+    func makeCompareIndexText(compareIndex: CompareIndex) {
+        let compareMaxTemperature = Int(compareIndex.todayMaxtemperature) - Int(compareIndex.yesterdayMaxTemperature)
+        let compareMinTemperature = Int(compareIndex.todayMinTemperature) - Int(compareIndex.yesterdayMinTemperature)
         if compareMaxTemperature > 2 {
             compareIndexText = "어제보다 최고 기온이 ".localized + "\(compareMaxTemperature)" + "°C 높고 \n ".localized
         } else if compareMaxTemperature < -2 {
