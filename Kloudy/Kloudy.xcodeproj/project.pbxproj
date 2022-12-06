@@ -35,6 +35,7 @@
 		8B1F55D12939B2DB009CE0D9 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D02939B2DB009CE0D9 /* OnboardingView.swift */; };
 		8B1F55D42939B7EC009CE0D9 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D32939B7EC009CE0D9 /* Storage.swift */; };
 		8B1F55D6293B5891009CE0D9 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D5293B5891009CE0D9 /* UserDefaults+.swift */; };
+		8B1F55D8293F4EB2009CE0D9 /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D7293F4EB2009CE0D9 /* OnboardingPageView.swift */; };
 		8B22A3BD291A3B820079FA48 /* LocationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */; };
 		8B22A3BF291F59730079FA48 /* IndexChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BE291F59730079FA48 /* IndexChartView.swift */; };
 		8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */; };
@@ -232,6 +233,7 @@
 		8B1F55D02939B2DB009CE0D9 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
 		8B1F55D32939B7EC009CE0D9 /* Storage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Storage.swift; sourceTree = "<group>"; };
 		8B1F55D5293B5891009CE0D9 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
+		8B1F55D7293F4EB2009CE0D9 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
 		8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchBar.swift; sourceTree = "<group>"; };
 		8B22A3BE291F59730079FA48 /* IndexChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartView.swift; sourceTree = "<group>"; };
 		8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartViewModel.swift; sourceTree = "<group>"; };
@@ -656,6 +658,7 @@
 				8BC8F7C029011DB100EF83AE /* SceneDelegate.swift */,
 				22092FDE292CBC44007B8913 /* ViewController.swift */,
 				8B1F55D02939B2DB009CE0D9 /* OnboardingView.swift */,
+				8B1F55D7293F4EB2009CE0D9 /* OnboardingPageView.swift */,
 				8B1F55CE29366DB4009CE0D9 /* NetworkUnreachableView.swift */,
 			);
 			path = Application;
@@ -1276,6 +1279,7 @@
 				8B6409942918F02C00DC2962 /* DetailWeatherViewModel.swift in Sources */,
 				8B64099C2918F25D00DC2962 /* WeatherIndexDetailView.swift in Sources */,
 				2286B457292512AE003965F2 /* SettingLocationAllowCellView.swift in Sources */,
+				8B1F55D8293F4EB2009CE0D9 /* OnboardingPageView.swift in Sources */,
 				2286B4512924BAB2003965F2 /* SettingNavigationView.swift in Sources */,
 				D558FECD29096B00002EEA22 /* LocationManager.swift in Sources */,
 				2286B459292522B5003965F2 /* SettingLicenseNavigationView.swift in Sources */,
