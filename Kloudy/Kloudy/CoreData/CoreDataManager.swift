@@ -68,6 +68,7 @@ class CoreDataManager {
                 locations[i].setValue(locationList[i].code, forKey: "code")
                 locations[i].setValue(locationList[i].city, forKey: "city")
                 locations[i].setValue(locationList[i].province, forKey: "province")
+                locations[i].setValue(locationList[i].indexArray, forKey: "indexArray")
             }
             coreDataStack.saveContext()
         } catch {
