@@ -10,13 +10,14 @@ def get_umbrella_index(weather_info):
         status = cal_umbrella_status(precipitation_intensity)
         precipitation_24h, precipitation_1h_max, precipitation_3h_max, rains = cal_hour_rains(forecast_hourly)
         wind = float(weather_info.get('currentWeather').get('windGust'))
-        print(status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains)
+
         return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
 
     except:
         print("Umbrella Index except 발생")
-        temp_rains = [0.0] * 24
-        return [0, 0, 0, 0, 0, temp_rains]
+
+        rains = [0.0] * 24
+        return [0, 0, 0, 0, 0, rains]
 
 def save_umbrella_hourly(umbrella_index, rains, code):
     time = int(datetime.datetime.now().strftime("%H"))

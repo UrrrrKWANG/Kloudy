@@ -128,7 +128,7 @@ def time_interval_weather():
                 mask_index.save()
             
             #  아우터 지수
-            outer_info = OuterIndex.get_outer_index(weather_24h_jsonObject)
+            outer_info = OuterIndex.get_outer_index(weather_info)
             if outer_info != [0, 0, 0]:
                 if time % 2 != 0:
                     outer_index = OuterIndexEven.objects.filter(code = location.code).first()
@@ -250,7 +250,7 @@ def time_interval_weather():
             mask_index_odd.save()
             mask_index_even.save()
 
-            outer_info = OuterIndex.get_outer_index(weather_24h_jsonObject)
+            outer_info = OuterIndex.get_outer_index(weather_info)
             outer_status, day_min_temperature, morning_temperature = outer_info
             print(f"아우터 지수: {outer_status}, {day_min_temperature}, {morning_temperature}")
             outer_index_odd = OuterIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status= outer_status, day_min_temperature = day_min_temperature, morning_temperature = morning_temperature)
