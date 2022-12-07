@@ -142,7 +142,7 @@ def time_interval_weather():
                 outer_index.save()
 
             # 빨래 지수
-            laundry_info = LaundryIndex.get_laundry_index(weather_24h_jsonObject)
+            laundry_info = LaundryIndex.get_laundry_index(weather_info)
             if laundry_info != [0, 0, 0, 0]:
                 if time % 2 != 0:
                     laundry_index = LaundryIndexEven.objects.filter(code = location.code).first()
@@ -258,7 +258,7 @@ def time_interval_weather():
             outer_index_odd.save()
             outer_index_even.save()
 
-            laundry_info = LaundryIndex.get_laundry_index(weather_24h_jsonObject)
+            laundry_info = LaundryIndex.get_laundry_index(weather_info)
             laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
             print(f"빨래 지수 : {laundry_status}, {humidity}, {day_max_temperature}, {daily_weather}")
             laundry_index_odd = LaundryIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = laundry_status, humidity = humidity, day_max_temperature = day_max_temperature, daily_weather = daily_weather)

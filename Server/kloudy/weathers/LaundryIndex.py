@@ -1,34 +1,52 @@
-def get_laundry_index(weather_24h_jsonObject):
-    if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
+def get_laundry_index(weather_info):
+    try:
+        humidities = []
+        sky_status = [0, 0, 0] # 0: 흐림, 구름많음, 1: 맑음, 2: 비, 눈, 눈비
+        forecast_hourly = weather_info.get('forecastHourly').get('hours')
+
+        for i in range(24):
+            forecast = forecast_hourly[i]
+            humidity_hour = float(forecast.get('humidity'))
+            humidities.append(humidity_hour)
+            sky_status_index = cal_weather_status_for_hour(forecast)
+            sky_status[sky_status_index] += 1
+        
+        humidity = cal_humidity(humidities)
+        day_max_temperature = weather_info.get('forecastDaily').get('days')[0].get('temperatureMax')
+        daily_weather = cal_daily_weather(sky_status[0], sky_status[1], sky_status[2])
+
+        status = cal_laundry_status(humidity, day_max_temperature, daily_weather)
+
+        return [status, humidity, day_max_temperature, daily_weather]
+
+    except:
+        print("Laundry Index exeption")
         return [0, 0, 0, 0]
 
-    max_temperature = 0.0
-    humidities = []
-    rainy = 0 
-    sky_status = [0, 0] # 0: 흐림, 구름많음, 1: 맑음
+def cal_weather_status_for_hour(forecast):
 
-    for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
-        if obj.get('category') == 'TMX':
-            max_temperature = float(obj.get('fcstValue'))
-        elif obj.get('category') == 'REH':
-            humidities.append(float(obj.get('fcstValue')))
-        
-        elif obj.get('category') == 'PTY':
-            if obj.get('fcstValue') == "1":
-                rainy += 1
-        elif obj.get('category') == 'SKY':
-            if obj.get('fcstValue') == "3" or obj.get('fcstValue') == "4":
-                sky_status[0] += 1
-            elif obj.get('fcstValue') == "1":
-                sky_status[1] += 1
-    
-    humidity = cal_humidity(humidities)
-    day_max_temperature = max_temperature
-    daily_weather = cal_daily_weather(rainy, sky_status[0], sky_status[1])
+    condition_code = forecast.get('conditionCode')
+    cloud_cover = float(forecast.get('cloudCover'))
+    precipitation_intensity = float(forecast.get('precipitationIntensity'))
+    precipitation_amount = float(forecast.get('precipitationAmount'))
+    snow_fall_amount = float(forecast.get('snowfallAmount'))
+    snow_rain_case = ["sleet", "freezingDrizzle"]
 
-    status = cal_laundry_status(humidity, day_max_temperature, daily_weather)
+    if cloud_cover <= 0.3 and precipitation_intensity == 0: # 맑음
+        return 1
+    elif 0.3 < cloud_cover <= 0.8 and precipitation_amount == 0: # 구름많음
+        return 0
+    elif 0.8 < cloud_cover and precipitation_amount == 0: # 흐림
+        return 0
+    elif precipitation_intensity > 0 and snow_fall_amount == 0: # 비
+        return 2
+    elif precipitation_intensity > 0 and snow_fall_amount > 0: # 눈
+        return 2
+    elif precipitation_intensity > 0 and condition_code in snow_rain_case: # 눈비
+        return 2
 
-    return [status, humidity, day_max_temperature, daily_weather]
+    # 혹시 위에서 다 안걸릴 수 있음
+    return 1
 
 def cal_humidity(humidities):
     avg_humidity = 100 - (sum(humidities) / len(humidities))
@@ -45,7 +63,7 @@ def cal_humidity(humidities):
 
     return result
 
-def cal_daily_weather(rainy, cloudy, sunny):
+def cal_daily_weather(cloudy, sunny, rainy):
     result = 0
 
     if rainy >= 3:
