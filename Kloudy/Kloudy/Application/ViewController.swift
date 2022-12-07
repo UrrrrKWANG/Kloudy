@@ -149,6 +149,7 @@ class ViewController: UIViewController {
         
         if locations.count == 0 {
             if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
+                Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
                 CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: Storage.defaultIndexArray)
                 CityWeatherNetwork().fetchCityWeather(code: "1111000000")
                     .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))

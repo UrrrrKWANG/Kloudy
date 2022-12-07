@@ -52,7 +52,7 @@ class LocationSelectionView: UIViewController {
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
     
-    let currentStatus = CLLocationManager().authorizationStatus
+    var currentStatus = CLLocationManager().authorizationStatus
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -78,6 +78,10 @@ class LocationSelectionView: UIViewController {
         super.viewWillAppear(animated)
         locationFromCoreData = CoreDataManager.shared.fetchLocations()
         inputLocationCellData()
+        
+        // 위치 서비스 Authorize 변경 시 currentStatus 갱신 및 Cell Reload
+        currentStatus = CLLocationManager().authorizationStatus
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {

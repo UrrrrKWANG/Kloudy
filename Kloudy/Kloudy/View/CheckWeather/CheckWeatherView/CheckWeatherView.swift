@@ -42,6 +42,8 @@ class CheckWeatherView: UIViewController {
     weak var delegate: LocationSelectionDelegate?
     let currentStatus = CLLocationManager().authorizationStatus
     
+    let changeAuthority = PublishSubject<Bool>()
+    
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         
@@ -124,6 +126,21 @@ class CheckWeatherView: UIViewController {
                 self.navigationController?.pushViewController(self.settingView, animated: true)
             })
             .disposed(by: disposeBag)
+        
+        settingView.changeAuthorityTrue
+            .subscribe(onNext: {
+                self.weathers.insert($0, at: 0)
+            })
+            .disposed(by: disposeBag)
+        
+        settingView.changeAuthorityFalse
+            .subscribe(onNext: {
+                if $0 {
+                    self.weathers.removeFirst()
+                    Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
+                }
+            })
+            .disposed(by: disposeBag)
     }
     
     private func serializeLocationSequence(locations: [Location], initialWeathers: [Weather]) -> [Weather] {
@@ -156,6 +173,7 @@ class CheckWeatherView: UIViewController {
     
     func loadWeatherView() {
         let CDlocations = CoreDataManager.shared.fetchLocations()
+        let status = CLLocationManager().authorizationStatus
         self.weathers.indices.forEach { locationIndex in
             
             // 배열 fetch 받기 전 초기화
@@ -165,11 +183,11 @@ class CheckWeatherView: UIViewController {
             let localWeather = [LocalWeather](locationWeather.localWeather)
             let main = [Main](localWeather[0].main)
             
-            if (self.currentStatus == .authorizedWhenInUse || self.currentStatus == .authorizedAlways) && locationIndex == 0 {
+            if (status == .authorizedWhenInUse || status == .authorizedAlways) && locationIndex == 0 {
                 self.indexStrArray = Storage.fetchCurrentLocationIndexArray()
-            } else if (self.currentStatus == .authorizedWhenInUse || self.currentStatus == .authorizedAlways) && locationIndex != 0 {
+            } else if (status == .authorizedWhenInUse || status == .authorizedAlways) && locationIndex != 0 {
                 self.indexStrArray = CDlocations[locationIndex - 1].indexArray ?? Storage.defaultIndexArray
-            } else if !(self.currentStatus == .authorizedWhenInUse || self.currentStatus == .authorizedAlways) {
+            } else if !(status == .authorizedWhenInUse || status == .authorizedAlways) {
                 self.indexStrArray = CDlocations[locationIndex].indexArray ?? Storage.defaultIndexArray
             }
             
