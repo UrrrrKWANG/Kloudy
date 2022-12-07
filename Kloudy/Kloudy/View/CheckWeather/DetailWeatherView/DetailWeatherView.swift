@@ -210,12 +210,15 @@ class DetailWeatherView: UIViewController {
             
             if index == 0 {
                 cell.time.text = "지금".localized
+                cell.temperature.text = String(self.temperatureList[0]) + "°"
+                
             } else {
                 cell.time.text =  Date().getTimeOfDay(hour: index)
+                cell.temperature.text = String(Int(datas.temperature)) + "°"
             }
             let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
             cell.weatherCondition.image = UIImage(named: weatherCondition[0])
-            cell.temperature.text = String(Int(datas.temperature)) + "°"
+           
         }
         .disposed(by: disposeBag)
     }
@@ -225,7 +228,7 @@ class DetailWeatherView: UIViewController {
                                 self.weekCollectionView.rx.items(cellIdentifier: WeekWeatherDataCell.identifier, cellType: WeekWeatherDataCell.self))
         { [self] index, datas, cell in
             if index == 0 {
-                cell.dayLabel.text = "지금".localized
+                cell.dayLabel.text = "오늘".localized
             } else {
                 cell.dayLabel.text = Date().getDayOfWeek(day: index)
             }
