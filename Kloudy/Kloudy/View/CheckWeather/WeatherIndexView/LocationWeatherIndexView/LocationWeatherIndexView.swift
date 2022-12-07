@@ -521,7 +521,7 @@ class LocationWeatherIndexView: UIView {
                 break
             }
             //꽃가루 기준치 2
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 2 {
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 0 {
                 isIndexOn.append(.pollen)
             }
         case .car :
@@ -530,7 +530,7 @@ class LocationWeatherIndexView: UIView {
                 isIndexOn.append(.freezeAndBurst)
             }
             // 꽃가루 기준치 2
-            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].pollenIndex ?? 0 >= 2 {
+            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].pollenIndex ?? 0 >= 0 {
                 isIndexOn.append(.pollen)
             }
             // 황사 기준치 400
@@ -576,19 +576,19 @@ class LocationWeatherIndexView: UIView {
         case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .yellowDust:
             return ["황사" ,UIColor.KColor.internalIndexYellow01, UIColor.KColor.internalIndexYellow02]
         case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .typhoon:
-            return ["태풍" ,UIColor.KColor.internalIndexGray01, UIColor.KColor.internalIndexGray02]
+            return ["태풍주의" ,UIColor.KColor.internalIndexGray01, UIColor.KColor.internalIndexGray02]
         case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .strongWind:
-            return ["강풍" ,UIColor.KColor.internalIndexGreen01, UIColor.KColor.internalIndexGreen02]
+            return ["강풍주의" ,UIColor.KColor.internalIndexGreen01, UIColor.KColor.internalIndexGreen02]
         case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == .coldWave:
             return ["한파" ,UIColor.KColor.internalIndexBlue01, UIColor.KColor.internalIndexBlue02]
         case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == .freezeAndBurst:
-            return ["동파" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
+            return ["동파주의" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
         case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .pollen:
             return ["꽃가루" ,UIColor.KColor.internalIndexRed01, UIColor.KColor.internalIndexRed02]
         case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .yellowDust:
             return ["황사" ,UIColor.KColor.internalIndexYellow01, UIColor.KColor.internalIndexYellow02]
         case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .freezeAndBurst:
-            return ["동파" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
+            return ["동파주의" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
         default:
             return ["황사" ,UIColor.KColor.internalIndexRed01, UIColor.KColor.internalIndexRed02]
         }

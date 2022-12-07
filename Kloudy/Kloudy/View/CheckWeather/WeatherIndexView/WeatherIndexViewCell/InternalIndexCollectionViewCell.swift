@@ -21,7 +21,7 @@ class InternalIndexCollectionViewCell: UICollectionViewCell {
     }
     func showToast(message: String, fontColor: UIColor, bgColor: UIColor) {
         let toastView = ToastView( viewColor: bgColor,
-                                   tipStartX: message.count == 2 ? 40.5 : 52.5,
+                                   tipStartX: message.count == 2 ? 21.5 : 52.5,
                                    tipWidth: 12.0,
                                    tipHeight: 8.0,
                                    fontColor: fontColor,
@@ -85,8 +85,8 @@ class ToastView: UIView {
         
         self.addSubview(toastLabel)
         toastLabel.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(6)
-            $0.left.right.equalToSuperview().inset(16)
+            $0.top.bottom.equalToSuperview().inset(4)
+            $0.left.right.equalToSuperview().inset(8)
         }
     }
 }
