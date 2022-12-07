@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="21225" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" launchScreen="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="01J-lp-oVM">
     <device id="retina6_0" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="21207"/>
         <capability name="Named colors" minToolsVersion="9.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
@@ -15,44 +16,9 @@
                     <view key="view" contentMode="scaleToFill" id="Ze5-6b-2t3">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="bQn-eA-CXD">
-                                <rect key="frame" x="161.33333333333334" y="479" width="67.666666666666657" height="12"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="cxX-JU-c8T">
-                                        <rect key="frame" x="0.0" y="0.99999999999999822" width="12" height="10.666666666666668"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="12" id="Gfd-Sd-dLx"/>
-                                            <constraint firstAttribute="height" constant="12" id="ZvY-V3-vAW"/>
-                                        </constraints>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="EB1-eh-5dX">
-                                        <rect key="frame" x="24" y="0.99999999999999822" width="19.666666666666671" height="10.666666666666668"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                    </imageView>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="circle.fill" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="0AT-Hi-AaC">
-                                        <rect key="frame" x="55.666666666666657" y="0.99999999999999822" width="12" height="10.666666666666668"/>
-                                        <color key="tintColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="12" id="FnM-yK-Hmn"/>
-                                        </constraints>
-                                    </imageView>
-                                </subviews>
-                            </stackView>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="WCF-t7-c1J">
-                                <rect key="frame" x="120" y="307" width="150" height="150"/>
-                                <color key="backgroundColor" name="PrimaryBlue01"/>
-                            </imageView>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
-                        <color key="backgroundColor" name="PrimaryBlue01"/>
-                        <constraints>
-                            <constraint firstItem="WCF-t7-c1J" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" constant="260" id="1CP-t8-lIX"/>
-                            <constraint firstItem="bQn-eA-CXD" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="fCi-u9-V6m"/>
-                            <constraint firstItem="WCF-t7-c1J" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="kAF-r4-tRE"/>
-                            <constraint firstItem="bQn-eA-CXD" firstAttribute="top" secondItem="WCF-t7-c1J" secondAttribute="bottom" constant="22" id="uKO-Ok-jlq"/>
-                        </constraints>
+                        <color key="backgroundColor" name="White"/>
+                        <color key="tintColor" name="White"/>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iYj-Kq-Ea1" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -62,10 +28,11 @@
     </scenes>
     <color key="tintColor" name="PrimaryBlue01"/>
     <resources>
-        <image name="circle.fill" catalog="system" width="128" height="123"/>
-        <image name="logo" width="150" height="150"/>
         <namedColor name="PrimaryBlue01">
-            <color red="0.30196078431372547" green="0.45098039215686275" blue="0.95686274509803926" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+            <color red="0.30199998617172241" green="0.45100000500679016" blue="0.9570000171661377" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="White">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </namedColor>
     </resources>
 </document>

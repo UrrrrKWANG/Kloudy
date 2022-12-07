@@ -11,4 +11,5 @@ struct LocationData {
     var code: String
     var city: String
     var province: String
+    var indexArray: [String]
 }

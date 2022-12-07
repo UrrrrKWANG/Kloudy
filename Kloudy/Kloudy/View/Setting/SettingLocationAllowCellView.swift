@@ -7,11 +7,13 @@
 
 import UIKit
 import SnapKit
+import RxSwift
 import CoreLocation
 
 class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
     static let identifier = "SettingLocationAllowCellView"
     var locationManager = CLLocationManager()
+    let changeAuthorityCell = PublishSubject<Bool>()
     
     let locationAllowTextLabel: UILabel = {
         let locationAllowTextLabel = UILabel()
@@ -23,7 +25,6 @@ class SettingLocationAllowCellView: UITableViewCell, CLLocationManagerDelegate {
     let locationAllowSwitch: UISwitch = {
         let locationAllowSwitch = UISwitch()
         locationAllowSwitch.onTintColor = UIColor.KColor.primaryBlue01
-        
         return locationAllowSwitch
     }()
     
@@ -101,8 +102,10 @@ extension SettingLocationAllowCellView {
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         if manager.authorizationStatus == .authorizedAlways || manager.authorizationStatus == .authorizedWhenInUse {
             self.locationAllowSwitch.setOn(true, animated: true)
+            self.changeAuthorityCell.onNext(true)
         } else {
             self.locationAllowSwitch.setOn(false, animated: true)
+            self.changeAuthorityCell.onNext(false)
         }
     }
 }

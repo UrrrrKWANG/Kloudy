@@ -52,7 +52,7 @@ class LocationSelectionView: UIViewController {
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
     
-    let currentStatus = CLLocationManager().authorizationStatus
+    var currentStatus = CLLocationManager().authorizationStatus
 
     override init(nibName nibNameOrNil: String?, bundle nibBundleOrNil: Bundle?) {
         super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
@@ -78,6 +78,10 @@ class LocationSelectionView: UIViewController {
         super.viewWillAppear(animated)
         locationFromCoreData = CoreDataManager.shared.fetchLocations()
         inputLocationCellData()
+        
+        // 위치 서비스 Authorize 변경 시 currentStatus 갱신 및 Cell Reload
+        currentStatus = CLLocationManager().authorizationStatus
+        tableView.reloadData()
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -93,7 +97,8 @@ class LocationSelectionView: UIViewController {
             let code = locationCellData.dataToString(forKey: "code")
             let city = locationCellData.dataToString(forKey: "city")
             let province = locationCellData.dataToString(forKey: "province")
-            let location = LocationData(code: code, city: city, province: province)
+            guard let indexArray = locationCellData.indexArray else { return }
+            let location = LocationData(code: code, city: city, province: province, indexArray: indexArray)
             locationList.append(location)
         }
     }
@@ -350,7 +355,7 @@ extension LocationSelectionView: UITableViewDataSource {
                         return UITableViewCell()
                     }
                     cell.locationNameLabel.text = "현재 위치".localized
-                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[0])) + "°"
                     cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[1]))°"
                     cell.backgroundColor = UIColor.KColor.clear
                     cell.selectionStyle = .none
@@ -365,11 +370,11 @@ extension LocationSelectionView: UITableViewDataSource {
                 
                 if (currentStatus == .denied || currentStatus == .notDetermined || currentStatus == .restricted) {
                     cell.locationNameLabel.text = weatherData[indexPath.row - 1].localWeather[0].localName.localized
-                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row - 1].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[0])) + "°"
                     cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[1]))°"
                 } else {
                     cell.locationNameLabel.text = weatherData[indexPath.row].localWeather[0].localName.localized
-                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].hourlyWeather[2].temperature)) + "°"
+                    cell.temperatureLabel.text = String(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[0])) + "°"
                     cell.diurnalTemperatureLabel.text = "\(Int(weatherData[indexPath.row].localWeather[0].minMaxTemperature()[2]))° | \(Int(weatherData[indexPath.row - 1].localWeather[0].minMaxTemperature()[1]))°"
                 }
                 
@@ -444,16 +449,14 @@ extension LocationSelectionView: UITableViewDataSource {
 
 extension LocationSelectionView: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        //TODO: 전날과 온도를 비교하는 지수 추가 이후 주석 사용
-        let defaultIndexArray =  ["rain", "mask", "laundry", "car", "outer", "temperatureGap"]
         switch tableType {
         case .search:
             let searchingLocation = filteredSearchTableTypeData[indexPath.row]
             self.cityData.forEach { information in
                 if information.code == searchingLocation.locationCode {
                     if CoreDataManager.shared.checkLocationIsSame(locationCode: searchingLocation.locationCode) {
-                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: defaultIndexArray)
-                        self.locationList.append(LocationData(code: information.code, city: information.city, province: information.province))
+                        CoreDataManager.shared.saveLocation(code: information.code, city: information.city, province: information.province, sequence: CoreDataManager.shared.countLocations(), indexArray: Storage.defaultIndexArray)
+                        self.locationList.append(LocationData(code: information.code, city: information.city, province: information.province, indexArray: Storage.defaultIndexArray))
                         
                         self.changeTableType(false)
                         self.weatherData.append(FetchWeatherInformation().dummyData)

@@ -513,6 +513,7 @@ Seogwipo-si="Seogwipo-si";
 
 
 // MARK: - 그외
+"시작하기" = "Start";
 
 "상세 날씨" = "Weather in Detail";
 
@@ -529,6 +530,7 @@ Seogwipo-si="Seogwipo-si";
 
 "최고" = "Max";
 "최저" = "Min";
+"오늘" = "Today";
 
 "우산 지수" = "Umbrella Index";
 "하루종일 내림" = "Rain all day";
@@ -696,3 +698,9 @@ Seogwipo-si="Seogwipo-si";
 "오후 10시" = "10PM";
 "오후 11시" = "11PM";
 "오후 12시" = "12PM";
+
+
+"순서를 변경하세요" = "Changing the Orders";
+"아이콘을 길게 눌러 변경하고자 하는 지수의 순서를 바꿔보세요" = "Long press the icon to change the order of the index";
+"세부 날씨를 확인하세요" = "Weather in Detail";
+"아래로 화면을 밀어 세부 날씨를 확인할 수 있어요" = "Swipe the screen down to check detailed weather information";
