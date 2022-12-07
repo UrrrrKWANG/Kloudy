@@ -9,10 +9,16 @@ import Foundation
 
 extension LocalWeather {
     func minMaxTemperature() -> [Int] {
-        let currentTemperature: Int = Int(self.main[0].currentTemperature)
-        let dayMaxTemperature: Int = Int(self.main[0].dayMaxTemperature)
-        let dayMinTemperature: Int = Int(self.main[0].dayMinTemperature)
+        var currentTemperature: Int = Int(self.main[0].currentTemperature)
+        var dayMaxTemperature: Int = Int(self.main[0].dayMaxTemperature)
+        var dayMinTemperature: Int = Int(self.main[0].dayMinTemperature)
         
+        if currentTemperature > dayMaxTemperature {
+            dayMaxTemperature = currentTemperature
+        }
+        if currentTemperature < dayMinTemperature {
+            dayMinTemperature = currentTemperature
+        }
         return [currentTemperature, dayMaxTemperature, dayMinTemperature]
     }
 }
