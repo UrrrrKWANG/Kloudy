@@ -10,10 +10,11 @@ def get_umbrella_index(weather_info):
         status = cal_umbrella_status(precipitation_intensity)
         precipitation_24h, precipitation_1h_max, precipitation_3h_max, rains = cal_hour_rains(forecast_hourly)
         wind = float(weather_info.get('currentWeather').get('windGust'))
-        
+        print(status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains)
         return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
 
     except:
+        print("Umbrella Index except 발생")
         temp_rains = [0.0] * 24
         return [0, 0, 0, 0, 0, temp_rains]
 
@@ -63,8 +64,11 @@ def cal_umbrella_status(umbrella_index):
 
 def cal_hour_rains(forecast_hourly):
     rains = []
-    for forecast in forecast_hourly:
+    # 24개보다 많이 들어옴
+    for i in range(24):
+        forecast = forecast_hourly[i]
         rain_for_hour = float(forecast.get('precipitationIntensity'))
+        rains.append(rain_for_hour)
 
     P = sum(rains) / 24
     PMAX1 = max(rains)
@@ -81,5 +85,4 @@ def cal_hour_rains(forecast_hourly):
     precipitation_24h = P
     precipitation_1h_max = PMAX1
     precipitation_3h_max = PMAX3
-
     return [precipitation_24h, precipitation_1h_max, precipitation_3h_max, rains]
