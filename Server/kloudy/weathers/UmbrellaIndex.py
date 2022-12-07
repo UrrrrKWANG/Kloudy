@@ -2,44 +2,20 @@ from apis.models import UmbrellaIndexEven, UmbrellaIndexOdd, UmbrellaHourlyEven,
 import json
 import datetime
 
-def get_umbrella_index(weather_24h_jsonObject):
-    temp_rains = [0.0] * 24
-    if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
+def get_umbrella_index(weather_info):
+    try:
+        precipitation_intensity = float(weather_info.get('currentWeather').get('precipitationIntensity'))
+        forecast_hourly = weather_info.get('forecastHourly').get('hours')
+
+        status = cal_umbrella_status(precipitation_intensity)
+        precipitation_24h, precipitation_1h_max, precipitation_3h_max, rains = cal_hour_rains(forecast_hourly)
+        wind = float(weather_info.get('currentWeather').get('windGust'))
+        
+        return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
+
+    except:
+        temp_rains = [0.0] * 24
         return [0, 0, 0, 0, 0, temp_rains]
-
-    rains = []
-    winds = []
-    for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
-        if obj.get('category') == 'PCP':
-            if obj.get('fcstValue') == '강수없음':
-                rains.append(0)
-            else:
-                rains.append(float(obj.get('fcstValue').replace('mm', '')))
-        if obj.get('category') == 'WSD':
-            winds.append(float(obj.get('fcstValue')))
-
-    P = sum(rains) / 24
-    PMAX1 = max(rains)
-    PMAX3 = 0
-    for i in range(22):
-        temp = 0
-        for j in range(3):
-            temp += rains[i+j]
-
-        temp = temp / 3
-        if temp > PMAX3:
-            PMAX3 = temp
-    V = sum(winds) / 24
-    
-    umbrella_index = (P + (PMAX1 * 1.2) + (PMAX3 * 1.1)) / 3 + (P * (V/4))
-    
-    status = cal_umbrella_status(umbrella_index)
-    precipitation_24h = P
-    precipitation_1h_max = PMAX1
-    precipitation_3h_max = PMAX3
-    wind = V
-
-    return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
 
 def save_umbrella_hourly(umbrella_index, rains, code):
     time = int(datetime.datetime.now().strftime("%H"))
@@ -84,3 +60,26 @@ def cal_umbrella_status(umbrella_index):
         result = 4
 
     return result
+
+def cal_hour_rains(forecast_hourly):
+    rains = []
+    for forecast in forecast_hourly:
+        rain_for_hour = float(forecast.get('precipitationIntensity'))
+
+    P = sum(rains) / 24
+    PMAX1 = max(rains)
+    PMAX3 = 0
+    for i in range(22):
+        temp = 0
+        for j in range(3):
+            temp += rains[i+j]
+
+        temp = temp / 3
+        if temp > PMAX3:
+            PMAX3 = temp
+    
+    precipitation_24h = P
+    precipitation_1h_max = PMAX1
+    precipitation_3h_max = PMAX3
+
+    return [precipitation_24h, precipitation_1h_max, precipitation_3h_max, rains]

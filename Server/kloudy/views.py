@@ -94,7 +94,7 @@ def time_interval_weather():
                 weather_index = WeatherIndexOdd.objects.filter(code = location.code).first()
             
             # 우산지수
-            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_24h_jsonObject)
+            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_info)
             if umbrella_info != [0, 0, 0, 0, 0]:
                 if time % 2 != 0:
                     umbrella_index = UmbrellaIndexEven.objects.filter(code = location.code).first()
@@ -233,7 +233,7 @@ def time_interval_weather():
             weather_index_odd.save()
             weather_index_even.save()
 
-            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_24h_jsonObject)
+            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_info)
             umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains = umbrella_info
             print(f'우산 지수: {umbrella_status}, {precipitation_24h}, {precipitation_1h_max}, {precipitation_3h_max}, {wind}')
             umbrella_index_odd = UmbrellaIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
