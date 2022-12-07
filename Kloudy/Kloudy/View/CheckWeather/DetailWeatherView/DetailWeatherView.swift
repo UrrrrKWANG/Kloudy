@@ -106,9 +106,8 @@ class DetailWeatherView: UIViewController {
         }
         
         self.currentTemperature.snp.makeConstraints{
-            $0.trailing.equalTo(minMaxTemperatureLabel.snp.leading).offset(8)
+            $0.trailing.equalTo(minMaxTemperatureLabel.snp.leading).offset(-8)
             $0.top.bottom.equalToSuperview().inset(12)
-            $0.width.equalTo(47)
         }
         self.minMaxTemperatureLabel.snp.makeConstraints{
             $0.trailing.top.bottom.equalToSuperview().inset(12)
