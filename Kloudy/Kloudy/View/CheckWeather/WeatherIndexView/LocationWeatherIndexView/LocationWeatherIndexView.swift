@@ -21,6 +21,7 @@ class LocationWeatherIndexView: UIView {
     var textContainerView = UIView()
     var city = String()
     let weatherIndexStatusLabel = WeatherIndexStatusLabel()
+    
     private var layout : UICollectionViewFlowLayout {
         let layout = CollectionViewRightAlignFlowLayout(cellItemSize: 30)
         return layout
@@ -316,10 +317,10 @@ class LocationWeatherIndexView: UIView {
     
     func changeCollectionView(internalIndex: Int) {
         self.internalIndex = internalIndex
-        intenalIndexListView.backgroundColor = UIColor.KColor.black
         lazy var internalIndexCollectionView: UICollectionView = {
             let uiCollectionView = UICollectionView(frame: .zero, collectionViewLayout: self.layout)
             uiCollectionView.register(InternalIndexCollectionViewCell.self, forCellWithReuseIdentifier: InternalIndexCollectionViewCell.identifier)
+            uiCollectionView.clipsToBounds = false
             return uiCollectionView
         }()
         internalIndexCollectionView.delegate = self
@@ -508,35 +509,43 @@ class LocationWeatherIndexView: UIView {
     func calculateInternalIndexCount(indexName: IndexType) -> [InternalIndexType] {
         var isIndexOn = [InternalIndexType]()
         switch indexName {
+            // 강풍 기준치 4
         case .umbrella :
             if weathers?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 >= 4 {
                 isIndexOn.append(.strongWind)
             }
+            //황사 기준치 400
         case .mask :
             if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
                 isIndexOn.append(.yellowDust)
                 break
             }
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 2 {
+            //꽃가루 기준치 2
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 0 {
                 isIndexOn.append(.pollen)
             }
         case .car :
-            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].dayMaxTemperature ?? 0 <= 2 {
+            // 동파 기준치 2
+            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].dayMaxTemperature ?? 2 <= 10 {
                 isIndexOn.append(.freezeAndBurst)
             }
-            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].pollenIndex ?? 0 >= 2 {
+            // 꽃가루 기준치 2
+            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].pollenIndex ?? 0 >= 0 {
                 isIndexOn.append(.pollen)
             }
+            // 황사 기준치 400
             if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
                 isIndexOn.append(.yellowDust)
                 break
             }
         case .outer :
-            if weathers?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0 <= -12 {
+            // 한파 기준치 -12
+            if weathers?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? -12 <= 10 {
                 isIndexOn.append(.coldWave)
             }
         case .laundry :
-            if weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].dayMaxTemperature ?? 0 <= 2{
+            // 동파 기준치 2
+            if weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].dayMaxTemperature ?? 2 <= 10{
                 isIndexOn.append(.freezeAndBurst)
             }
         default :
@@ -558,6 +567,32 @@ class LocationWeatherIndexView: UIView {
         }
         return 0
     }
+    
+    func searchInternalIndexStrAndColor(indexName: IndexType, isIndexOn: [InternalIndexType], pathIndex: Int) -> [Any] {
+        let foundElement = (indexName, pathIndex)
+        switch foundElement {
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .pollen:
+            return ["꽃가루" ,UIColor.KColor.internalIndexRed01, UIColor.KColor.internalIndexRed02]
+        case let(indexName, pathIndex) where indexName == .mask && isIndexOn[pathIndex] == .yellowDust:
+            return ["황사" ,UIColor.KColor.internalIndexYellow01, UIColor.KColor.internalIndexYellow02]
+        case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .typhoon:
+            return ["태풍주의" ,UIColor.KColor.internalIndexGray01, UIColor.KColor.internalIndexGray02]
+        case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .strongWind:
+            return ["강풍주의" ,UIColor.KColor.internalIndexGreen01, UIColor.KColor.internalIndexGreen02]
+        case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == .coldWave:
+            return ["한파주의" ,UIColor.KColor.internalIndexBlue01, UIColor.KColor.internalIndexBlue02]
+        case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == .freezeAndBurst:
+            return ["동파주의" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .pollen:
+            return ["꽃가루" ,UIColor.KColor.internalIndexRed01, UIColor.KColor.internalIndexRed02]
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .yellowDust:
+            return ["황사" ,UIColor.KColor.internalIndexYellow01, UIColor.KColor.internalIndexYellow02]
+        case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .freezeAndBurst:
+            return ["동파주의" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
+        default:
+            return ["황사" ,UIColor.KColor.internalIndexRed01, UIColor.KColor.internalIndexRed02]
+        }
+    }
 }
 
 extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewDataSource,  UICollectionViewDelegateFlowLayout {
@@ -569,7 +604,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath)
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: InternalIndexCollectionViewCell.identifier, for: indexPath) as! InternalIndexCollectionViewCell
         let indexName = self.indexArray[self.internalIndex]
         let isIndexOn = calculateInternalIndexCount(indexName: indexName)
         let internalIndexView = findInternalIndexColorAndImage(indexName: indexName, isIndexOn: isIndexOn, pathIndex: indexPath.row)
@@ -578,6 +613,14 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
             $0.top.equalToSuperview()
             $0.width.height.equalTo(30)
         }
+        let toastContents = searchInternalIndexStrAndColor(indexName: indexName, isIndexOn: isIndexOn, pathIndex: indexPath.row)
+        let gesture = UITapGestureRecognizer()
+        cell.addGestureRecognizer(gesture)
+        gesture.rx.event.bind {_ in
+            cell.showToast(message: toastContents[0] as! String, fontColor: toastContents[1] as! UIColor, bgColor: toastContents[2] as! UIColor)
+        }.disposed(by: disposeBag)
+        
+        self.bringSubviewToFront(cell)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -585,7 +628,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        //TODO: 셀에 이미지 클릭하고 호출할 이벤트 넣을 메서드
+        collectionView.bringSubviewToFront(collectionView.cellForItem(at: indexPath)!)
     }
 }
 
