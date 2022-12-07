@@ -580,7 +580,7 @@ class LocationWeatherIndexView: UIView {
         case let(indexName, pathIndex) where indexName == .umbrella && isIndexOn[pathIndex] == .strongWind:
             return ["강풍주의" ,UIColor.KColor.internalIndexGreen01, UIColor.KColor.internalIndexGreen02]
         case let(indexName, pathIndex) where indexName == .outer && isIndexOn[pathIndex] == .coldWave:
-            return ["한파" ,UIColor.KColor.internalIndexBlue01, UIColor.KColor.internalIndexBlue02]
+            return ["한파주의" ,UIColor.KColor.internalIndexBlue01, UIColor.KColor.internalIndexBlue02]
         case let(indexName, pathIndex) where indexName == .laundry && isIndexOn[pathIndex] == .freezeAndBurst:
             return ["동파주의" ,UIColor.KColor.internalIndexCyan01, UIColor.KColor.internalIndexCyan02]
         case let(indexName, pathIndex) where indexName == .car && isIndexOn[pathIndex] == .pollen:

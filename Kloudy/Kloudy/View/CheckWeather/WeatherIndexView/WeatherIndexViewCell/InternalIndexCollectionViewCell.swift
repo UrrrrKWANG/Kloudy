@@ -20,8 +20,20 @@ class InternalIndexCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     func showToast(message: String, fontColor: UIColor, bgColor: UIColor) {
+        var tipStartX = Double()
+        switch message.count {
+        case 2:
+            tipStartX = 20.5
+        case 3:
+            tipStartX = 33.5
+        case 4:
+            tipStartX = 46.5
+        default:
+            tipStartX = 21.5
+        }
+        
         let toastView = ToastView( viewColor: bgColor,
-                                   tipStartX: message.count == 2 ? 21.5 : 52.5,
+                                   tipStartX: tipStartX,
                                    tipWidth: 12.0,
                                    tipHeight: 8.0,
                                    fontColor: fontColor,
