@@ -309,6 +309,7 @@ class LocationSelectionView: UIViewController {
     }
     
     @objc func tapBackButton() {
+        changeTableType(false)
         self.navigationController?.popViewController(animated: true)
     }
 }
