@@ -55,12 +55,11 @@ def time_interval_weather():
             today = str(int(today) - 1)
 
         weather_info = getDataFromWeatherKit(location)
-        
         weather_infos = getDataFromKorea(today, time, location)
         
         air_jsonObject                = weather_infos[0]
         flower_jsonObject             = weather_infos[1]
-        
+
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")

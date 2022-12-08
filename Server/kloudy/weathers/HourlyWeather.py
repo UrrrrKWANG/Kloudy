@@ -22,7 +22,7 @@ def get_hour_weather(weather_info, code, time):
             hour_weather_infos[i][2] = temperature # temperature
             hour_weather_infos[i][3] = precipitation # precipitation
             
-            return hour_weather_infos
+        return hour_weather_infos
             
     except:
         print("Hour Weather Exception")
