@@ -199,7 +199,7 @@ def time_interval_weather():
             local_weather_odd = LocalWeatherOdd.objects.filter(weather = weather_odd).first()
             local_weather_even = LocalWeatherEven.objects.filter(weather = weather_even).first()
 
-            hour_weather_infos = HourlyWeather.get_hour_weather(weather_24h_jsonObject, location.code, time)
+            hour_weather_infos = HourlyWeather.get_hour_weather(weather_info, location.code, time)
             if hour_weather_infos != [[0] * 4 for _ in range(24)]:
                 HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even)
 
@@ -282,7 +282,7 @@ def time_interval_weather():
             compare_index_odd.save()
             compare_index_even.save()
 
-            hour_weather_infos = HourlyWeather.get_hour_weather(weather_24h_jsonObject, location.code, time)
+            hour_weather_infos = HourlyWeather.get_hour_weather(weather_info, location.code, time)
             HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even)
 
             weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject, today)
