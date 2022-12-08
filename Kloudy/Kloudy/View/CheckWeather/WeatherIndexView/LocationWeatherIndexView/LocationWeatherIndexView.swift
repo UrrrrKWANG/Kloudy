@@ -618,9 +618,8 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
         cell.addGestureRecognizer(gesture)
         gesture.rx.event.bind {_ in
             cell.showToast(message: toastContents[0] as! String, fontColor: toastContents[1] as! UIColor, bgColor: toastContents[2] as! UIColor)
+            collectionView.bringSubviewToFront(collectionView.cellForItem(at: indexPath)!)
         }.disposed(by: disposeBag)
-        
-        self.bringSubviewToFront(cell)
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -628,7 +627,8 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionView.bringSubviewToFront(collectionView.cellForItem(at: indexPath)!)
+        print("???")
+      
     }
 }
 
