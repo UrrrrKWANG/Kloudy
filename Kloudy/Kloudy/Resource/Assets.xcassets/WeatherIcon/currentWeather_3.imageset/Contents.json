@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "cloudySun.png",
+      "filename" : "rainy.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "cloudySun@2x.png",
+      "filename" : "rainy@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "cloudySun@3x.png",
+      "filename" : "rainy@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

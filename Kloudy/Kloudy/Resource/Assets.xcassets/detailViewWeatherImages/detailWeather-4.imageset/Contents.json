@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "detailWeather-4.png",
+      "filename" : "detailWeather-5.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "detailWeather-4x2.png",
+      "filename" : "detailWeather-5x2.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "detailWeather-4x3.png",
+      "filename" : "detailWeather-5x3.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
