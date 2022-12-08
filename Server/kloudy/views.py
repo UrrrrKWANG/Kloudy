@@ -14,7 +14,7 @@ from .weathers import MainWeather, UmbrellaIndex, MaskIndex, OuterIndex, Laundry
 
 CSV_PATH = './kloudy/csv/Locations.csv'
 
-def csv_reader():    
+def csv_reader():
     with open(CSV_PATH, newline='', encoding='utf8') as csvfile:
         data_reader = csv.DictReader(csvfile)
         for row in data_reader:
@@ -54,25 +54,20 @@ def time_interval_weather():
         if time == "2330":
             today = str(int(today) - 1)
 
-        weather_infos = getDatas(today, time, location)
+        weather_info = getDataFromWeatherKit(location)
         
-        main_state_jsonObject         = weather_infos[0]
-        main_state_short_jsonObject   = weather_infos[1]
-        main_current_jsonObject       = weather_infos[2]
-        weather_24h_jsonObject        = weather_infos[3]
-        air_jsonObject                = weather_infos[4]
-        weather_48h_jsonObject        = weather_infos[5]
-        main_max_min_jsonObject       = weather_infos[6]
-        flower_jsonObject             = weather_infos[7]
-        middle_state_jsonObject       = weather_infos[8]
-        middle_temperature_jsonObject = weather_infos[9]
+        weather_infos = getDataFromKorea(today, time, location)
+        
+        air_jsonObject                = weather_infos[0]
+        flower_jsonObject             = weather_infos[1]
+        
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")
             time = int(datetime.datetime.now().strftime("%H"))
 
             # 메인 지수
-            main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
+            main_info = MainWeather.get_main_weather(weather_info)
             if main_info != [0, 0, 0, 0]:
                 if time % 2 != 0:
                     main = MainEven.objects.filter(code = location.code).first()
@@ -92,7 +87,7 @@ def time_interval_weather():
                 weather_index = WeatherIndexOdd.objects.filter(code = location.code).first()
             
             # 우산지수
-            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_24h_jsonObject)
+            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_info)
             if umbrella_info != [0, 0, 0, 0, 0]:
                 if time % 2 != 0:
                     umbrella_index = UmbrellaIndexEven.objects.filter(code = location.code).first()
@@ -126,7 +121,7 @@ def time_interval_weather():
                 mask_index.save()
             
             #  아우터 지수
-            outer_info = OuterIndex.get_outer_index(weather_24h_jsonObject)
+            outer_info = OuterIndex.get_outer_index(weather_info)
             if outer_info != [0, 0, 0]:
                 if time % 2 != 0:
                     outer_index = OuterIndexEven.objects.filter(code = location.code).first()
@@ -140,7 +135,7 @@ def time_interval_weather():
                 outer_index.save()
 
             # 빨래 지수
-            laundry_info = LaundryIndex.get_laundry_index(weather_24h_jsonObject)
+            laundry_info = LaundryIndex.get_laundry_index(weather_info)
             if laundry_info != [0, 0, 0, 0]:
                 if time % 2 != 0:
                     laundry_index = LaundryIndexEven.objects.filter(code = location.code).first()
@@ -155,7 +150,7 @@ def time_interval_weather():
                 laundry_index.save()
 
             # 세차 지수
-            carwash_info = CarWashIndex.get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
+            carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
             if carwash_info != [0, 0, 0, 0, 0, 0, "", 0, 0]:
                 if time % 2 != 0:
                     carwash_index = CarwashIndexEven.objects.filter(code = location.code).first()
@@ -175,7 +170,7 @@ def time_interval_weather():
                 carwash_index.save()
 
             # 날씨 비교
-            compare_info = CompareIndex.get_compare_index(weather_24h_jsonObject, today, False, location.code)
+            compare_info = CompareIndex.get_compare_index(weather_info, today, False, location.code)
             if compare_info != ["", 0, 0, "", 0, 0]:
                 if time % 2 != 0:
                     compare_index = CompareIndexEven.objects.filter(code = location.code).first()
@@ -197,11 +192,11 @@ def time_interval_weather():
             local_weather_odd = LocalWeatherOdd.objects.filter(weather = weather_odd).first()
             local_weather_even = LocalWeatherEven.objects.filter(weather = weather_even).first()
 
-            hour_weather_infos = HourlyWeather.get_hour_weather(weather_24h_jsonObject, location.code, time)
+            hour_weather_infos = HourlyWeather.get_hour_weather(weather_info, location.code, time)
             if hour_weather_infos != [[0] * 4 for _ in range(24)]:
                 HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even)
 
-            weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject, today)
+            weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_info, today)
             if weekly_weather_infos != [[0] * 4 for _ in range(10)]:
                 WeeklyWeather.save_weekly_weather(weekly_weather_infos, location.code, local_weather_odd, local_weather_even)
 
@@ -217,7 +212,8 @@ def time_interval_weather():
             local_weather_even = LocalWeatherEven.objects.create(weather = weather_even, local_code = location.code, local_name = location.city)
             local_weather_odd.save()
             local_weather_even.save()
-            main_info = MainWeather.get_main_weather(main_state_jsonObject, main_state_short_jsonObject, main_current_jsonObject, main_max_min_jsonObject)
+            
+            main_info = MainWeather.get_main_weather(weather_info)
             current_weather, current_temperature, day_max_temperature, day_min_temperature = main_info
             print(f'메인 지수: {current_weather}, {current_temperature}, {day_max_temperature}, {day_min_temperature}')
             main_odd = MainOdd.objects.create(local_weather = local_weather_odd, code = location.code, current_weather = current_weather, current_temperature = current_temperature, day_max_temperature = day_max_temperature, day_min_temperature = day_min_temperature)
@@ -230,7 +226,7 @@ def time_interval_weather():
             weather_index_odd.save()
             weather_index_even.save()
 
-            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_24h_jsonObject)
+            umbrella_info = UmbrellaIndex.get_umbrella_index(weather_info)
             umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains = umbrella_info
             print(f'우산 지수: {umbrella_status}, {precipitation_24h}, {precipitation_1h_max}, {precipitation_3h_max}, {wind}')
             umbrella_index_odd = UmbrellaIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
@@ -247,7 +243,7 @@ def time_interval_weather():
             mask_index_odd.save()
             mask_index_even.save()
 
-            outer_info = OuterIndex.get_outer_index(weather_24h_jsonObject)
+            outer_info = OuterIndex.get_outer_index(weather_info)
             outer_status, day_min_temperature, morning_temperature = outer_info
             print(f"아우터 지수: {outer_status}, {day_min_temperature}, {morning_temperature}")
             outer_index_odd = OuterIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status= outer_status, day_min_temperature = day_min_temperature, morning_temperature = morning_temperature)
@@ -255,7 +251,7 @@ def time_interval_weather():
             outer_index_odd.save()
             outer_index_even.save()
 
-            laundry_info = LaundryIndex.get_laundry_index(weather_24h_jsonObject)
+            laundry_info = LaundryIndex.get_laundry_index(weather_info)
             laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
             print(f"빨래 지수 : {laundry_status}, {humidity}, {day_max_temperature}, {daily_weather}")
             laundry_index_odd = LaundryIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = laundry_status, humidity = humidity, day_max_temperature = day_max_temperature, daily_weather = daily_weather)
@@ -263,7 +259,7 @@ def time_interval_weather():
             laundry_index_odd.save()
             laundry_index_even.save()
 
-            carwash_info = CarWashIndex.get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
+            carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
             carwash_status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
             print(f"세차 지수: {carwash_status}, {daily_weather}, {day_max_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
             carwash_index_odd = CarwashIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
@@ -271,7 +267,7 @@ def time_interval_weather():
             carwash_index_odd.save()
             carwash_index_even.save()
 
-            compare_info = CompareIndex.get_compare_index(weather_24h_jsonObject, today, True, location.code)
+            compare_info = CompareIndex.get_compare_index(weather_info, today, True, location.code)
             weather_yesterday, yesterday_max_temperature, yesterday_min_temperature, weather_today, today_max_temperature, today_min_temperature = compare_info
             print(f"날씨 비교: {weather_yesterday}, {yesterday_max_temperature}, {yesterday_min_temperature}, {weather_today}, {today_max_temperature}, {today_min_temperature}")
             compare_index_odd = CompareIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, yesterday = weather_yesterday, yesterday_max_temperature = yesterday_max_temperature, yesterday_min_temperature = yesterday_min_temperature, today = weather_today, today_max_temperature = today_max_temperature, today_min_temperature = today_min_temperature)
@@ -279,10 +275,10 @@ def time_interval_weather():
             compare_index_odd.save()
             compare_index_even.save()
 
-            hour_weather_infos = HourlyWeather.get_hour_weather(weather_24h_jsonObject, location.code, time)
+            hour_weather_infos = HourlyWeather.get_hour_weather(weather_info, location.code, time)
             HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even)
 
-            weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_48h_jsonObject, middle_state_jsonObject, middle_temperature_jsonObject, today)
+            weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_info, today)
             WeeklyWeather.save_weekly_weather(weekly_weather_infos, location.code, local_weather_odd, local_weather_even)
 
 def calculate_time():

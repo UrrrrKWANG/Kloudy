@@ -1,49 +1,58 @@
 from apis.models import HourlyWeatherEven, HourlyWeatherOdd
 import datetime
 
-def get_hour_weather(weather_24h_jsonObject, code, time):
+def get_hour_weather(weather_info, code, time):
     # 시간대별 날씨를 담아둠
-    hour_weather_infos = [[0] * 4 for _ in range(24)] # 0 : hour | 1 : status | 2 : temperature | 3 : precipitation
-    if weather_24h_jsonObject.get('response').get('header').get('resultCode') != "00":
+    try:
+        hour_weather_infos = [[0] * 4 for _ in range(24)] # 0 : hour | 1 : status | 2 : temperature | 3 : precipitation
+        # 24시간의 날씨 정보
+        forecast_hourly = weather_info.get('forecastHourly').get('hours')
+        for i in range(24):
+            forecast = forecast_hourly[i]
+
+            cloud_cover = forecast.get('cloudCover')
+            precipitation_intensity = forecast.get('precipitationIntensity')
+            condition_code = forecast.get('conditionCode')
+            status = cal_weather_status(cloud_cover, precipitation_intensity, condition_code)
+            temperature = forecast.get('temperature')
+            precipitation = forecast.get('precipitationAmount')
+
+            hour_weather_infos[i][0] = i # hour
+            hour_weather_infos[i][1] = status # status
+            hour_weather_infos[i][2] = temperature # temperature
+            hour_weather_infos[i][3] = precipitation # precipitation
+            
+            return hour_weather_infos
+            
+    except:
+        print("Hour Weather Exception")
+        hour_weather_infos = [[0] * 4 for _ in range(24)]
         return hour_weather_infos
-    # 24시간 후의 날씨를 받아올 수 있음
-    for obj in weather_24h_jsonObject.get('response').get('body').get('items').get('item'):
 
-        base_time = int(obj.get('baseTime'))
-        fcst_time = int(obj.get('fcstTime')) if int(obj.get('fcstTime')) > base_time else int(obj.get('fcstTime')) + 2400
-        now_index = ((fcst_time - base_time) // 100) - 1
+def cal_weather_status(cloud_cover, precipitation_intensity, condition_code):
+    cloud_cover = float(cloud_cover)
+    precipitation_intensity = float(precipitation_intensity)
+    snow_case = ["snow", "frigid", "flurries", "sunFlurries", "blowingSnow", "intryMix", "blizzard", "blowingSnow", "freezingRain", "heavySnow"]
+    snow_rain_case = ["sleet", "freezingDrizzle"]
+    if cloud_cover <= 0.3 and precipitation_intensity == 0:
+        return 0
+    elif 0.3 < cloud_cover <= 0.8 and precipitation_intensity == 0:
+        return 1
+    elif 0.8 < cloud_cover and precipitation_intensity == 0:
+        return 2
+    elif precipitation_intensity > 0 and condition_code not in snow_case:
+        return 3
+    elif precipitation_intensity > 0 and condition_code in snow_case:
+        return 4
+    elif precipitation_intensity > 0 and condition_code in snow_rain_case:
+        return 5
 
-        hour_weather_infos[now_index][0] = now_index
-        if obj.get('category') == 'SKY':
-            if obj.get('fcstValue') == "1":
-                hour_weather_infos[now_index][1] = 0 
-            else:
-                hour_weather_infos[now_index][1] = int(obj.get('fcstValue'))
-        # 오늘 강수 상태
-        elif obj.get('category') == 'PTY':
-            if obj.get('fcstValue') == "0":
-                continue
-            elif obj.get('fcstValue') == "3":
-                hour_weather_infos[now_index][1] = 5
-            else:
-                hour_weather_infos[now_index][1] = int(obj.get('fcstValue'))
-        # 이 시간 온도
-        elif obj.get('category') == 'TMP':
-            hour_weather_infos[now_index][2] = float(obj.get('fcstValue'))
-        # 이 시간 강수량
-        elif obj.get('category') == 'PCP':
-            if obj.get('fcstValue') == "강수없음":
-                hour_weather_infos[now_index][3] = 0.0
-            else:
-                hour_weather_infos[now_index][3] = float(obj.get('fcstValue').replace('mm', ''))
-
-    return hour_weather_infos
+    return 0
 
 def save_hour_weather(hour_weather_infos, code, local_weather_odd, local_weather_even):
     time = int(datetime.datetime.now().strftime("%H"))
     # 만약 location code를 가진 시간대별 날씨가 있으면 갱신 없으면, 만들어줌.
     if HourlyWeatherOdd.objects.filter(code = code):
-        print("시간 정보 갱신 시작 !!!!!!!!!")
         if time % 2 != 0:
             every_hour_queries = HourlyWeatherEven.objects.filter(code = code).all()
         else:
@@ -59,7 +68,6 @@ def save_hour_weather(hour_weather_infos, code, local_weather_odd, local_weather
                 return
 
     else:
-        print("시간 정보 생성 시작 !!!!!!!!!")
         for i in range(len(hour_weather_infos)):
             hour_weather_info = hour_weather_infos[i]
             hourly_weather_odd = HourlyWeatherOdd.objects.create(local_weather = local_weather_odd, code = code, hour = i, status = hour_weather_info[1], temperature = hour_weather_info[2], precipitation = hour_weather_info[3])
