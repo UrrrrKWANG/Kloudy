@@ -54,20 +54,13 @@ def time_interval_weather():
         if time == "2330":
             today = str(int(today) - 1)
 
-        weather_info = getData(location)
+        weather_info = getDataFromWeatherKit(location)
         
-        weather_infos = getDatas(today, time, location)
+        weather_infos = getDataFromKorea(today, time, location)
         
-        main_state_jsonObject         = weather_infos[0]
-        main_state_short_jsonObject   = weather_infos[1]
-        main_current_jsonObject       = weather_infos[2]
-        weather_24h_jsonObject        = weather_infos[3]
-        air_jsonObject                = weather_infos[4]
-        weather_48h_jsonObject        = weather_infos[5]
-        main_max_min_jsonObject       = weather_infos[6]
-        flower_jsonObject             = weather_infos[7]
-        middle_state_jsonObject       = weather_infos[8]
-        middle_temperature_jsonObject = weather_infos[9]
+        air_jsonObject                = weather_infos[0]
+        flower_jsonObject             = weather_infos[1]
+        
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")
