@@ -55,12 +55,11 @@ def time_interval_weather():
             today = str(int(today) - 1)
 
         weather_info = getDataFromWeatherKit(location)
-        
         weather_infos = getDataFromKorea(today, time, location)
         
         air_jsonObject                = weather_infos[0]
         flower_jsonObject             = weather_infos[1]
-        
+
         # 처음이 아니면 업데이트해줌.
         if LocalWeatherOdd.objects.filter(local_code = location.code):
             print("업데이트해줌 !!!!!!")
@@ -194,7 +193,7 @@ def time_interval_weather():
 
             hour_weather_infos = HourlyWeather.get_hour_weather(weather_info, location.code, time)
             if hour_weather_infos != [[0] * 4 for _ in range(24)]:
-                HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even)
+                HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even, False)
 
             weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_info, today)
             if weekly_weather_infos != [[0] * 4 for _ in range(10)]:
@@ -276,7 +275,7 @@ def time_interval_weather():
             compare_index_even.save()
 
             hour_weather_infos = HourlyWeather.get_hour_weather(weather_info, location.code, time)
-            HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even)
+            HourlyWeather.save_hour_weather(hour_weather_infos, location.code, local_weather_odd, local_weather_even, True)
 
             weekly_weather_infos = WeeklyWeather.get_weekly_weather(weather_info, today)
             WeeklyWeather.save_weekly_weather(weekly_weather_infos, location.code, local_weather_odd, local_weather_even)

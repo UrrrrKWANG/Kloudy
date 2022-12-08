@@ -9,7 +9,7 @@ def get_umbrella_index(weather_info):
 
         status = cal_umbrella_status(precipitation_intensity)
         precipitation_24h, precipitation_1h_max, precipitation_3h_max, rains = cal_hour_rains(forecast_hourly)
-        wind = float(weather_info.get('currentWeather').get('windGust'))
+        wind = (float(weather_info.get('currentWeather').get('windSpeed')) * 1000) / 3600
 
         return [status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains]
 
