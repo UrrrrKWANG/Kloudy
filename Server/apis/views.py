@@ -19,7 +19,6 @@ def getWeathers(request):
         today = str(int(today) - 1)
 
     location = Locations.objects.filter(code = code).first()
-    getData(location)
 
     print(today, hour, code)
     # 홀수일 때는 짝수 시간 대를 업데이트함으로 짝수일 때 짝수 시간 대를 가져간다.

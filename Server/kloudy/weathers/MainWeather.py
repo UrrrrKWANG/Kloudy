@@ -1,6 +1,4 @@
 def get_main_weather(weather_info):
-    print("Main Weather 계산 잘 들어옴")
-    
     try:
         cloud_cover = weather_info.get('currentWeather').get('cloudCover')
         precipitation_intensity = weather_info.get('currentWeather').get('precipitationIntensity')
