@@ -7,7 +7,15 @@ def get_hour_weather(weather_info, code, time):
         hour_weather_infos = [[0] * 4 for _ in range(24)] # 0 : hour | 1 : status | 2 : temperature | 3 : precipitation
         # 24시간의 날씨 정보
         forecast_hourly = weather_info.get('forecastHourly').get('hours')
-        for i in range(24):
+        reported_time = weather_info.get('forecastHourly').get('metadata').get('reportedTime')
+        hour_index = 0
+        for i in range(len(forecast_hourly)):
+            forecast = forecast_hourly[i]
+            if reported_time == forecast.get('forecastStart'):
+                hour_index = i
+
+
+        for i in range(hour_index, hour_index+24):
             forecast = forecast_hourly[i]
 
             cloud_cover = forecast.get('cloudCover')
@@ -17,10 +25,10 @@ def get_hour_weather(weather_info, code, time):
             temperature = forecast.get('temperature')
             precipitation = forecast.get('precipitationAmount')
 
-            hour_weather_infos[i][0] = i # hour
-            hour_weather_infos[i][1] = status # status
-            hour_weather_infos[i][2] = temperature # temperature
-            hour_weather_infos[i][3] = precipitation # precipitation
+            hour_weather_infos[i-hour_index][0] = i # hour
+            hour_weather_infos[i-hour_index][1] = status # status
+            hour_weather_infos[i-hour_index][2] = temperature # temperature
+            hour_weather_infos[i-hour_index][3] = precipitation # precipitation
             
         return hour_weather_infos
             
