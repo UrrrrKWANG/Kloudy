@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "weekDetailWeather-1.png",
+      "filename" : "weekDetailWeather-3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "weekDetailWeather-12x.png",
+      "filename" : "weekDetailWeather-32x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "weekDetailWeather-13x.png",
+      "filename" : "weekDetailWeather-33x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

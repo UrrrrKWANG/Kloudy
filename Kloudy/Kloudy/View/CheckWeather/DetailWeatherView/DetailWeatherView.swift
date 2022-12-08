@@ -16,9 +16,11 @@ class DetailWeatherView: UIViewController {
     var weekWeatherDatas = Observable.of([WeeklyWeather]())
     var currentLocationName = String()
     var temperatureList: [Int] = []
+    var weather: Weather?
     
     init(weatherDatas: Weather) {
         super.init(nibName: nil, bundle: nil)
+        self.weather = weatherDatas
         let todayWeatherDatas = Observable.of(weatherDatas.localWeather[0].hourlyWeather
             .filter({$0.hour >= 2}))
         let weekWeatherDatas = Observable.of(weatherDatas.localWeather[0].weeklyWeather)
@@ -210,13 +212,15 @@ class DetailWeatherView: UIViewController {
             if index == 0 {
                 cell.time.text = "지금".localized
                 cell.temperature.text = String(self.temperatureList[0]) + "°"
-                
+                guard let weather = self.weather else { return }
+                cell.weatherCondition.image = UIImage(named: "hourWeather-\(weather.localWeather[0].main[0].currentWeather)")
             } else {
                 cell.time.text =  Date().getTimeOfDay(hour: index)
                 cell.temperature.text = String(Int(datas.temperature)) + "°"
+                let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
+                cell.weatherCondition.image = UIImage(named: weatherCondition[0])
             }
-            let weatherCondition = self.findWeatehrCondition(weatherCondition: datas.status)
-            cell.weatherCondition.image = UIImage(named: weatherCondition[0])
+            
            
         }
         .disposed(by: disposeBag)

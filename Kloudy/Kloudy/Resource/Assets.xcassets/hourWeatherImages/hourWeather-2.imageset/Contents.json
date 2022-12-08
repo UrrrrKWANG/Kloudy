@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "hourWeather-2.png",
+      "filename" : "hourWeather-3.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "hourWeather-22x.png",
+      "filename" : "hourWeather-32x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "hourWeather-23x.png",
+      "filename" : "hourWeather-33x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
