@@ -98,16 +98,24 @@ class TemperatureGapView: UIView {
 //         (31.5 + 12 + 36)  31.5: textlabel 길이, 12: textlabel offset, 36: 최소 높이
         let viewHeightSize: Int = 192
         
-        if minTemp < 0 {
-            yesterdayMaxHeight = (Int(viewHeightSize * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
-            todayMaxHeight = (Int(viewHeightSize * (todayMaxTemperature + abs(minTemp)) / total)) + 36
-            yesterdayMinHeight = (Int(viewHeightSize * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
-            todayMinHeight = (Int(viewHeightSize * (todayMinTemperature + abs(minTemp)) / total)) + 36
+        // 최고온도와 최저온도가 같으면 모두 최대 높이로 보이게 함
+        if total == 0 {
+            yesterdayMaxHeight = viewHeightSize
+            todayMaxHeight = viewHeightSize
+            yesterdayMinHeight = viewHeightSize
+            todayMinHeight = viewHeightSize
         } else {
-            yesterdayMaxHeight = Int(viewHeightSize * (yesterdayMaxTemperature - minTemp) / total) + 36
-            todayMaxHeight = Int(viewHeightSize * (todayMaxTemperature - minTemp) / total) + 36
-            yesterdayMinHeight = Int(viewHeightSize * (yesterdayMinTemperature - minTemp) / total) + 36
-            todayMinHeight = Int(viewHeightSize * (todayMinTemperature - minTemp) / total) + 36
+            if minTemp < 0 {
+                yesterdayMaxHeight = (Int(viewHeightSize * (yesterdayMaxTemperature + abs(minTemp)) / total)) + 36
+                todayMaxHeight = (Int(viewHeightSize * (todayMaxTemperature + abs(minTemp)) / total)) + 36
+                yesterdayMinHeight = (Int(viewHeightSize * (yesterdayMinTemperature + abs(minTemp)) / total)) + 36
+                todayMinHeight = (Int(viewHeightSize * (todayMinTemperature + abs(minTemp)) / total)) + 36
+            } else {
+                yesterdayMaxHeight = Int(viewHeightSize * (yesterdayMaxTemperature - minTemp) / total) + 36
+                todayMaxHeight = Int(viewHeightSize * (todayMaxTemperature - minTemp) / total) + 36
+                yesterdayMinHeight = Int(viewHeightSize * (yesterdayMinTemperature - minTemp) / total) + 36
+                todayMinHeight = Int(viewHeightSize * (todayMinTemperature - minTemp) / total) + 36
+            }
         }
         
         maxTemperatureLabel.configureLabel(text: "\(abs(compareMax))°", font: UIFont.KFont.lexendRegular24, textColor: UIColor.KColor.black)
