@@ -521,16 +521,16 @@ class LocationWeatherIndexView: UIView {
                 break
             }
             //꽃가루 기준치 2
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 0 {
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pollenIndex ?? 0 >= 2 {
                 isIndexOn.append(.pollen)
             }
         case .car :
             // 동파 기준치 2
-            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].dayMaxTemperature ?? 2 <= 10 {
+            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].dayMaxTemperature ?? 0 <= 2 {
                 isIndexOn.append(.freezeAndBurst)
             }
             // 꽃가루 기준치 2
-            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].pollenIndex ?? 0 >= 0 {
+            if weathers?.localWeather[0].weatherIndex[0].carwashIndex[0].pollenIndex ?? 0 >= 2 {
                 isIndexOn.append(.pollen)
             }
             // 황사 기준치 400
@@ -540,12 +540,12 @@ class LocationWeatherIndexView: UIView {
             }
         case .outer :
             // 한파 기준치 -12
-            if weathers?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? -12 <= 10 {
+            if weathers?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0 <= -12 {
                 isIndexOn.append(.coldWave)
             }
         case .laundry :
             // 동파 기준치 2
-            if weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].dayMaxTemperature ?? 2 <= 10{
+            if weathers?.localWeather[0].weatherIndex[0].laundryIndex[0].dayMaxTemperature ?? 0 <= 2 {
                 isIndexOn.append(.freezeAndBurst)
             }
         default :
