@@ -157,7 +157,7 @@ def time_interval_weather():
                 laundry_index.save()
 
             # 세차 지수
-            carwash_info = CarWashIndex.get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
+            carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
             if carwash_info != [0, 0, 0, 0, 0, 0, "", 0, 0]:
                 if time % 2 != 0:
                     carwash_index = CarwashIndexEven.objects.filter(code = location.code).first()
@@ -266,7 +266,7 @@ def time_interval_weather():
             laundry_index_odd.save()
             laundry_index_even.save()
 
-            carwash_info = CarWashIndex.get_carwash_index(weather_48h_jsonObject, middle_state_jsonObject, air_jsonObject, flower_jsonObject, today)
+            carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
             carwash_status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
             print(f"세차 지수: {carwash_status}, {daily_weather}, {day_max_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
             carwash_index_odd = CarwashIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
