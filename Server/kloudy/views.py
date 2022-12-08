@@ -177,7 +177,7 @@ def time_interval_weather():
                 carwash_index.save()
 
             # 날씨 비교
-            compare_info = CompareIndex.get_compare_index(weather_24h_jsonObject, today, False, location.code)
+            compare_info = CompareIndex.get_compare_index(weather_info, today, False, location.code)
             if compare_info != ["", 0, 0, "", 0, 0]:
                 if time % 2 != 0:
                     compare_index = CompareIndexEven.objects.filter(code = location.code).first()
@@ -274,7 +274,7 @@ def time_interval_weather():
             carwash_index_odd.save()
             carwash_index_even.save()
 
-            compare_info = CompareIndex.get_compare_index(weather_24h_jsonObject, today, True, location.code)
+            compare_info = CompareIndex.get_compare_index(weather_info, today, True, location.code)
             weather_yesterday, yesterday_max_temperature, yesterday_min_temperature, weather_today, today_max_temperature, today_min_temperature = compare_info
             print(f"날씨 비교: {weather_yesterday}, {yesterday_max_temperature}, {yesterday_min_temperature}, {weather_today}, {today_max_temperature}, {today_min_temperature}")
             compare_index_odd = CompareIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, yesterday = weather_yesterday, yesterday_max_temperature = yesterday_max_temperature, yesterday_min_temperature = yesterday_min_temperature, today = weather_today, today_max_temperature = today_max_temperature, today_min_temperature = today_min_temperature)
