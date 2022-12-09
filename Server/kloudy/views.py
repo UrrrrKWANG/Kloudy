@@ -73,7 +73,7 @@ def time_interval_weather():
                 umbrella_index.wind                  = wind
                 umbrella_index.save()
 
-                UmbrellaIndex.save_umbrella_hourly(umbrella_index, rains, location.code)
+                UmbrellaIndex.save_umbrella_hourly(rains, location.code)
                 
             # 마스크 지수
             mask_info = MaskIndex.get_mask_index(air_jsonObject, flower_jsonObject)
@@ -111,13 +111,15 @@ def time_interval_weather():
                     laundry_index = LaundryIndexEven.objects.filter(code = location.code).first()
                 else:
                     laundry_index = LaundryIndexOdd.objects.filter(code = location.code).first()
-                laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
+                laundry_status, humidity, day_max_temperature, daily_weather, humidities = laundry_info
                 # laundry_index 갱신
                 laundry_index.status              = laundry_status
                 laundry_index.humidity            = humidity
                 laundry_index.day_max_temperature = day_max_temperature
                 laundry_index.daily_weather       = daily_weather
                 laundry_index.save()
+
+                LaundryIndex.save_humidity_hourly(humidities, location.code)
 
             # 세차 지수
             carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
@@ -203,7 +205,7 @@ def time_interval_weather():
             umbrella_index_even = UmbrellaIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = umbrella_status, precipitation_24h = precipitation_24h, precipitation_1h_max = precipitation_1h_max, precipitation_3h_max = precipitation_3h_max, wind = wind)
             umbrella_index_odd.save()
             umbrella_index_even.save()
-            UmbrellaIndex.save_umbrella_hourly(umbrella_index_odd, rains, location.code)
+            UmbrellaIndex.save_umbrella_hourly(rains, location.code)
 
             mask_info = MaskIndex.get_mask_index(air_jsonObject, flower_jsonObject)
             mask_status, pm25value, pm10value, pollen_index = mask_info
@@ -222,12 +224,13 @@ def time_interval_weather():
             outer_index_even.save()
 
             laundry_info = LaundryIndex.get_laundry_index(weather_info)
-            laundry_status, humidity, day_max_temperature, daily_weather = laundry_info
+            laundry_status, humidity, day_max_temperature, daily_weather, humidities = laundry_info
             print(f"빨래 지수 : {laundry_status}, {humidity}, {day_max_temperature}, {daily_weather}")
             laundry_index_odd = LaundryIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = laundry_status, humidity = humidity, day_max_temperature = day_max_temperature, daily_weather = daily_weather)
             laundry_index_even = LaundryIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = laundry_status, humidity = humidity, day_max_temperature = day_max_temperature, daily_weather = daily_weather)
             laundry_index_odd.save()
             laundry_index_even.save()
+            LaundryIndex.save_humidity_hourly(humidities, location.code)
 
             carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
             carwash_status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info

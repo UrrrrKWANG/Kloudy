@@ -290,7 +290,7 @@ class HumidityHourlySerializerEven(serializers.ModelSerializer):
         ]
 
 class LaundryIndexSerializerEven(serializers.ModelSerializer):
-    humidity_hourly = HumidityHourlySerializerOdd(many=True, read_only=True)
+    humidity_hourly = HumidityHourlySerializerEven(many=True, read_only=True)
     class Meta:
         model = LaundryIndexEven
         fields = [
