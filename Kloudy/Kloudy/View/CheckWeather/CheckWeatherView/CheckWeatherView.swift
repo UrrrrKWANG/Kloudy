@@ -28,7 +28,6 @@ class CheckWeatherView: UIViewController {
     var locationList = CoreDataManager.shared.fetchLocations()
     
     lazy var pageViewController = UIPageViewController()
-    let checkWeatherViewModel = CheckWeatherViewModel()
     
     var dataViewControllers = [UIViewController]()
     
@@ -89,7 +88,7 @@ class CheckWeatherView: UIViewController {
         self.weathers = serializeLocationSequence(locations: locations, initialWeathers: initialWeathers)
         self.delegate = self.locationSelectionView
         // 스와이프로 pop되어서 런치스크린으로 가는 것을 막아줍니다.
-//        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
+        self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         view.backgroundColor = UIColor.KColor.white
     }
