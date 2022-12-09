@@ -1,3 +1,6 @@
+from apis.models import CarwashIndexOdd, CarwashIndexEven, PrecipitationDailyOdd, PrecipitationDailyEven
+from datetime import datetime
+
 def get_carwash_index(weather_info, air_jsonObject, flower_jsonObject):
     try:
         today_weather_info = weather_info.get('forecastDaily').get('days')[0]
@@ -106,3 +109,29 @@ def cal_carwash_status(when_is_rainy, max_temperature, pm10grade, pollen_index):
         return result
     
     return result
+
+def save_precipitation_daily(precipitation_for_days, code):
+    time = int(datetime.now().strftime("%H"))
+    # 지금 처음이 아니면
+    if PrecipitationDailyEven.objects.filter(code = code):
+        if time % 2 != 0:
+            precipitation_daily_queries = PrecipitationDailyEven.objects.filter(code = code).all()
+        else:
+            precipitation_daily_queries = PrecipitationDailyOdd.objects.filter(code = code).all()
+        for precipitation_daily_query in precipitation_daily_queries:
+            try:
+                now_day = precipitation_daily_query.day
+                precipitation_daily_query.precipitation = precipitation_for_days[now_day]
+                precipitation_daily_query.save()
+            except:
+                return
+
+    else:
+        carwash_index_odd = CarwashIndexOdd.objects.filter(code = code).first()
+        carwash_index_even = CarwashIndexEven.objects.filter(code = code).first()
+        for i in range(len(precipitation_for_days)):
+            precipitation_daily_odd = PrecipitationDailyOdd.objects.create(carwash_index = carwash_index_odd, code = code, day = i, precipitation = precipitation_for_days[i])
+            precipitation_daily_even = PrecipitationDailyEven.objects.create(carwash_index = carwash_index_even, code = code, day = i, precipitation = precipitation_for_days[i])
+            precipitation_daily_odd.save()
+            precipitation_daily_even.save()
+    return

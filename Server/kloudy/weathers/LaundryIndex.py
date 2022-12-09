@@ -109,7 +109,7 @@ def save_humidity_hourly(humidities, code):
         for humidity_hour_query in humidity_hourly_queries:
             try:
                 now_time = humidity_hour_query.time
-                humidity_hour_query.precipitation = humidities[now_time]
+                humidity_hour_query.humidity = humidities[now_time]
                 humidity_hour_query.save()
             except:
                 return
@@ -122,5 +122,4 @@ def save_humidity_hourly(humidities, code):
             humidity_hourly_even = HumidityHourlyEven.objects.create(laundry_index = laundry_index_even, code = code, time = i, humidity = humidities[i])
             humidity_hourly_odd.save()
             humidity_hourly_even.save()
-        print("humidity 저장완료 !!!!")
     return
