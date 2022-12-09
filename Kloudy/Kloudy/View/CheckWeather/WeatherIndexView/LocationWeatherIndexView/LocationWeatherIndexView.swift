@@ -427,15 +427,15 @@ class LocationWeatherIndexView: UIView {
         case let(indexName, status) where indexName == .umbrella && status == 4 :
             return "rain_step4"
         case let(indexName, status) where indexName == .laundry && status == 0 :
-            return "laundry_1"
-        case let(indexName, status) where indexName == .laundry && status == 1 :
-            return "laundry_1"
-        case let(indexName, status) where indexName == .laundry &&  status == 2 :
-            return "laundry_2"
-        case let(indexName, status) where indexName == .laundry && status == 3 :
-            return "laundry_3"
-        case let(indexName, status) where indexName == .laundry && status == 4 :
             return "laundry_4"
+        case let(indexName, status) where indexName == .laundry && status == 1 :
+            return "laundry_4"
+        case let(indexName, status) where indexName == .laundry &&  status == 2 :
+            return "laundry_3"
+        case let(indexName, status) where indexName == .laundry && status == 3 :
+            return "laundry_2"
+        case let(indexName, status) where indexName == .laundry && status == 4 :
+            return "laundry_1"
         case let(indexName, status) where indexName == .car && status == 0 :
             return "carwash_step4"
         case let(indexName, status) where indexName == .car && status == 1 :
