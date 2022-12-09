@@ -99,7 +99,12 @@ class CarwashIndexOdd(models.Model):
     pm10grade = models.IntegerField()
     pollen_index = models.IntegerField()
 
-# TODO: 날짜 별 강수 Odd
+class PrecipitationDailyOdd(models.Model):
+    carwash_index = models.ForeignKey(CarwashIndexOdd, related_name="precipitation_daily", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    day = models.IntegerField()
+    precipitation = models.FloatField()
+
 class CompareIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="compare_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -212,7 +217,12 @@ class CarwashIndexEven(models.Model):
     pm10grade = models.IntegerField()
     pollen_index = models.IntegerField()
 
-# TODO: 강수 날짜 Even
+class PrecipitationDailyEven(models.Model):
+    carwash_index = models.ForeignKey(CarwashIndexEven, related_name="precipitation_daily", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    day = models.IntegerField()
+    precipitation = models.FloatField()
+
 class CompareIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="compare_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)

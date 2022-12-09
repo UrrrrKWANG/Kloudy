@@ -133,7 +133,7 @@ def time_interval_weather():
                     carwash_index = CarwashIndexEven.objects.filter(code = location.code).first()
                 else:
                     carwash_index = CarwashIndexOdd.objects.filter(code = location.code).first()
-                carwash_status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
+                carwash_status, daily_weather, day_min_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index, precipitation_for_days = carwash_info
                 # carwash_index 갱신
                 carwash_index.status                 = carwash_status
                 carwash_index.daily_weather          = daily_weather
@@ -238,7 +238,7 @@ def time_interval_weather():
             LaundryIndex.save_humidity_hourly(humidities, location.code)
 
             carwash_info = CarWashIndex.get_carwash_index(weather_info, air_jsonObject, flower_jsonObject)
-            carwash_status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index = carwash_info
+            carwash_status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index, precipitation_for_days = carwash_info
             print(f"세차 지수: {carwash_status}, {daily_weather}, {day_max_temperature}, {daily_precipitation}, {tomorrow_weather}, {tomorrow_precipitation}, {weather_3Am7pm}, {pm10grade}, {pollen_index}")
             carwash_index_odd = CarwashIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
             carwash_index_even = CarwashIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
