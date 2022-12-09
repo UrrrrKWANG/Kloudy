@@ -53,14 +53,17 @@ class UmbrellaHourlyOdd(models.Model):
     time = models.IntegerField()
     precipitation = models.FloatField()
 
-# TODO: 미세먼지 Odd에 전날 pm10 Value
 class MaskIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
-    pm25value = models.FloatField()
-    pm10value = models.FloatField()
     pollen_index = models.IntegerField()
+    yesterday = models.CharField(max_length=20)
+    yesterday_pm25value = models.FloatField()
+    yesterday_pm10value = models.FloatField()
+    today = models.CharField(max_length=20)
+    today_pm25value = models.FloatField()
+    today_pm10value = models.FloatField()
 
 class OuterIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="outer_index", on_delete=models.CASCADE)
@@ -97,7 +100,6 @@ class CarwashIndexOdd(models.Model):
     pollen_index = models.IntegerField()
 
 # TODO: 날짜 별 강수 Odd
-
 class CompareIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="compare_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -164,14 +166,17 @@ class UmbrellaHourlyEven(models.Model):
     time = models.IntegerField()
     precipitation = models.FloatField()
 
-# TODO: 미세먼지 Even에 전날 pm10 Value
 class MaskIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
-    pm25value = models.FloatField()
-    pm10value = models.FloatField()
     pollen_index = models.IntegerField()
+    yesterday = models.CharField(max_length=20)
+    yesterday_pm25value = models.FloatField()
+    yesterday_pm10value = models.FloatField()
+    today = models.CharField(max_length=20)
+    today_pm25value = models.FloatField()
+    today_pm10value = models.FloatField()
 
 class OuterIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="outer_index", on_delete=models.CASCADE)
