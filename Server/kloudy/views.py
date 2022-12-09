@@ -12,36 +12,7 @@ import environ
 from .networkAPI import *
 from .weathers import MainWeather, UmbrellaIndex, MaskIndex, OuterIndex, LaundryIndex, CarWashIndex, CompareIndex, HourlyWeather, WeeklyWeather
 
-CSV_PATH = './kloudy/csv/Locations.csv'
-
-def csv_reader():
-    with open(CSV_PATH, newline='', encoding='utf8') as csvfile:
-        data_reader = csv.DictReader(csvfile)
-        for row in data_reader:
-            if not Locations.objects.filter(code=row['code']).exists():
-                Locations.objects.create(
-                    code = row['code'],
-                    daily_status_code = row['daily_status_code'],
-                    daily_temperature_code = row['daily_temperature_code'],
-                    engProvince = row['engProvince'],
-                    province = row['province'],
-                    engCity = row['engCity'],
-                    city = row['city'],
-                    airCoditionMeasuring = row['airCoditionMeasuring'],
-                    xCoordination = row['xCoordination'],
-                    yCoordination = row['yCoordination'],
-                    longitude = row['longitude'],
-                    latitude = row['latitude']
-                    )
-
-    print('LOCATION DATA UPLOADED SUCCESSFULY!')
-
-    # Weather에 아무것도 없으면 DB 처음 킨 것임으로 일단 한번 실행함.
-    if WeatherEven.objects.count() == 0:
-        time_interval_weather()
-
-    return
-
+cache_memory = []
 # 30분 혹은 00분 마다 DB에 저장.
 def time_interval_weather():
     print("HI. It's Update Time")
@@ -93,7 +64,7 @@ def time_interval_weather():
                 else:
                     umbrella_index = UmbrellaIndexOdd.objects.filter(code = location.code).first()
                     
-                umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind = umbrella_info
+                umbrella_status, precipitation_24h, precipitation_1h_max, precipitation_3h_max, wind, rains = umbrella_info
                 # 갱신
                 umbrella_index.status                = umbrella_status
                 umbrella_index.precipitation_24h     = precipitation_24h
@@ -306,3 +277,33 @@ def cal_time(time_string):
     result += "00"
     
     return result
+
+CSV_PATH = './kloudy/csv/Locations.csv'
+
+def csv_reader():
+    with open(CSV_PATH, newline='', encoding='utf8') as csvfile:
+        data_reader = csv.DictReader(csvfile)
+        for row in data_reader:
+            if not Locations.objects.filter(code=row['code']).exists():
+                Locations.objects.create(
+                    code = row['code'],
+                    daily_status_code = row['daily_status_code'],
+                    daily_temperature_code = row['daily_temperature_code'],
+                    engProvince = row['engProvince'],
+                    province = row['province'],
+                    engCity = row['engCity'],
+                    city = row['city'],
+                    airCoditionMeasuring = row['airCoditionMeasuring'],
+                    xCoordination = row['xCoordination'],
+                    yCoordination = row['yCoordination'],
+                    longitude = row['longitude'],
+                    latitude = row['latitude']
+                    )
+
+    print('LOCATION DATA UPLOADED SUCCESSFULY!')
+
+    # Weather에 아무것도 없으면 DB 처음 킨 것임으로 일단 한번 실행함.
+    if WeatherEven.objects.count() == 0:
+        time_interval_weather()
+
+    return

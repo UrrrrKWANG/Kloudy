@@ -53,6 +53,7 @@ class UmbrellaHourlyOdd(models.Model):
     time = models.IntegerField()
     precipitation = models.FloatField()
 
+# TODO: 미세먼지 Odd에 전날 pm10 Value
 class MaskIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -76,6 +77,12 @@ class LaundryIndexOdd(models.Model):
     day_max_temperature = models.FloatField()
     daily_weather = models.IntegerField()
 
+class HumidityHourlyOdd(models.Model):
+    laundry_index = models.ForeignKey(LaundryIndexOdd, related_name="humidity_hourly", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    time = models.IntegerField()
+    humidity = models.FloatField()
+
 class CarwashIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="carwash_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -88,6 +95,8 @@ class CarwashIndexOdd(models.Model):
     weather_3Am7pm = models.CharField(max_length=20)
     pm10grade = models.IntegerField()
     pollen_index = models.IntegerField()
+
+# TODO: 날짜 별 강수 Odd
 
 class CompareIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="compare_index", on_delete=models.CASCADE)
@@ -155,6 +164,7 @@ class UmbrellaHourlyEven(models.Model):
     time = models.IntegerField()
     precipitation = models.FloatField()
 
+# TODO: 미세먼지 Even에 전날 pm10 Value
 class MaskIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -178,6 +188,12 @@ class LaundryIndexEven(models.Model):
     day_max_temperature = models.FloatField()
     daily_weather = models.IntegerField()
 
+class HumidityHourlyEven(models.Model):
+    laundry_index = models.ForeignKey(LaundryIndexEven, related_name="humidity_hourly", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    time = models.IntegerField()
+    humidity = models.FloatField()
+
 class CarwashIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="carwash_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -191,6 +207,7 @@ class CarwashIndexEven(models.Model):
     pm10grade = models.IntegerField()
     pollen_index = models.IntegerField()
 
+# TODO: 강수 날짜 Even
 class CompareIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="compare_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
