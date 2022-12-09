@@ -76,18 +76,23 @@ def time_interval_weather():
                 UmbrellaIndex.save_umbrella_hourly(rains, location.code)
                 
             # 마스크 지수
-            mask_info = MaskIndex.get_mask_index(air_jsonObject, flower_jsonObject)
+            mask_info = MaskIndex.get_mask_index(air_jsonObject, flower_jsonObject, today, False)
             if mask_info != [0, 0, 0, 0]:
                 if time % 2 != 0:
                     mask_index = MaskIndexEven.objects.filter(code = location.code).first()
                 else:
                     mask_index = MaskIndexOdd.objects.filter(code = location.code).first()
-                mask_status, pm25value, pm10value, pollen_index = mask_info
+                mask_status, pollen_index, yesterday, yesterday_pm25value, yesterday_pm10value, mask_today, today_pm25value, today_pm10value = mask_info
                 # mask_index 갱신
-                mask_index.status       = mask_status
-                mask_index.pm25value    = pm25value
-                mask_index.pm10value    = pm10value
-                mask_index.pollen_index = pollen_index
+                mask_index.status               = mask_status
+                mask_index.pollen_index         = pollen_index
+                mask_index.yesterday            = yesterday
+                mask_index.yesterday_pm25value  = yesterday_pm25value
+                mask_index.yesterday_pm10value  = yesterday_pm10value
+                mask_index.today                = mask_today
+                mask_index.today_pm25value      = today_pm25value
+                mask_index.today_pm10value      = today_pm10value
+
                 mask_index.save()
             
             #  아우터 지수
@@ -207,11 +212,11 @@ def time_interval_weather():
             umbrella_index_even.save()
             UmbrellaIndex.save_umbrella_hourly(rains, location.code)
 
-            mask_info = MaskIndex.get_mask_index(air_jsonObject, flower_jsonObject)
-            mask_status, pm25value, pm10value, pollen_index = mask_info
-            print(f'마스크 지수: {mask_status}, {pm25value}, {pm10value}, {pollen_index}')
-            mask_index_odd = MaskIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = mask_status, pm25value = pm25value, pm10value = pm10value, pollen_index = pollen_index)
-            mask_index_even = MaskIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = mask_status, pm25value = pm25value, pm10value = pm10value, pollen_index = pollen_index)
+            mask_info = MaskIndex.get_mask_index(air_jsonObject, flower_jsonObject, today, True)
+            mask_status, pollen_index, yesterday, yesterday_pm25value, yesterday_pm10value, mask_today, today_pm25value, today_pm10value = mask_info
+            print(f'마스크 지수: {mask_status}, {pollen_index}, {yesterday}, {yesterday_pm25value}, {yesterday_pm10value}, {mask_today}, {today_pm25value}, {today_pm10value}')
+            mask_index_odd = MaskIndexOdd.objects.create(weather_index = weather_index_odd, code = location.code, status = mask_status, pollen_index = pollen_index, yesterday = yesterday, yesterday_pm25value = yesterday_pm25value, yesterday_pm10value = yesterday_pm10value, today = mask_today, today_pm25value = today_pm25value, today_pm10value = today_pm10value)
+            mask_index_even = MaskIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = mask_status, pollen_index = pollen_index, yesterday = yesterday, yesterday_pm25value = yesterday_pm25value, yesterday_pm10value = yesterday_pm10value, today = mask_today, today_pm25value = today_pm25value, today_pm10value = today_pm10value)
             mask_index_odd.save()
             mask_index_even.save()
 

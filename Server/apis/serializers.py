@@ -33,12 +33,12 @@ class MaskIndexSerializerOdd(serializers.ModelSerializer):
         fields = [
             "status",
             "pollen_index",
-            "yesterday"
-            "yesterday_pm25value"
-            "yesterday_pm10value"
-            "today"
-            "today_pm25value"
-            "today_pm10value"
+            "yesterday",
+            "yesterday_pm25value",
+            "yesterday_pm10value",
+            "today",
+            "today_pm25value",
+            "today_pm10value",
         ]
     def create(self):
         return
@@ -262,12 +262,12 @@ class MaskIndexSerializerEven(serializers.ModelSerializer):
         fields = [
             "status",
             "pollen_index",
-            "yesterday"
-            "yesterday_pm25value"
-            "yesterday_pm10value"
-            "today"
-            "today_pm25value"
-            "today_pm10value"
+            "yesterday",
+            "yesterday_pm25value",
+            "yesterday_pm10value",
+            "today",
+            "today_pm25value",
+            "today_pm10value",
         ]
     def create(self):
         return
