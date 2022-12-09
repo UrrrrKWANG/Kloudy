@@ -130,8 +130,8 @@ def save_precipitation_daily(precipitation_for_days, code):
         carwash_index_odd = CarwashIndexOdd.objects.filter(code = code).first()
         carwash_index_even = CarwashIndexEven.objects.filter(code = code).first()
         for i in range(len(precipitation_for_days)):
-            precipitation_daily_odd = PrecipitationDailyOdd.objects.create(carwash_index = carwash_index_odd, code = code, day = i, precipitation = precipitation_for_days[i])
-            precipitation_daily_even = PrecipitationDailyEven.objects.create(carwash_index = carwash_index_even, code = code, day = i, precipitation = precipitation_for_days[i])
+            precipitation_daily_odd = PrecipitationDailyOdd.objects.create(carwash_index = carwash_index_odd, code = code, day = i+1, precipitation = precipitation_for_days[i])
+            precipitation_daily_even = PrecipitationDailyEven.objects.create(carwash_index = carwash_index_even, code = code, day = i+1, precipitation = precipitation_for_days[i])
             precipitation_daily_odd.save()
             precipitation_daily_even.save()
     return
