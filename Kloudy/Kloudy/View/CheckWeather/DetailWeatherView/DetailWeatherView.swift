@@ -299,4 +299,12 @@ extension Date {
         let convertStr = formatter.string(from:  Date())
         return convertStr
     }
+    
+    public func getHourOfDay() -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH"
+        formatter.locale = Locale(identifier: "ko_KR")
+        let convertStr = formatter.string(from: Date())
+        return convertStr
+    }
 }

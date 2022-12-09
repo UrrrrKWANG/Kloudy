@@ -15,15 +15,26 @@ enum ChartsAxisValue: Int {
     case six = 5
     case noon = 11
     case eighteen = 17
-    case midNight = 23
     
     var label: String {
         switch self {
-        case .zero: return "오전 0시".localized
-        case .six: return "오전 6시".localized
-        case .noon: return "오후 12시".localized
-        case .eighteen: return "오후 6시".localized
-        case .midNight: return ""
+        case .zero: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 0))"
+        case .six: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 6))"
+        case .noon: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 12))"
+        case .eighteen: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 18))"
+        }
+    }
+    
+    private func getHourLabel(hourString: String, plus: Int) -> String {
+        let hourInt = (Int(hourString) ?? 0) + plus
+        if hourInt > 12 {
+            if hourInt > 23 {
+                return "오전 \(hourInt - 24)시"
+            } else {
+                return "오후 \(hourInt - 12)시"
+            }
+        } else {
+            return "오전 \(hourInt)시"
         }
     }
 }
