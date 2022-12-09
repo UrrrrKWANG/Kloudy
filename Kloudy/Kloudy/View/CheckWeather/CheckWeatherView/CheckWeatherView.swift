@@ -28,8 +28,6 @@ class CheckWeatherView: UIViewController {
     var locationList = CoreDataManager.shared.fetchLocations()
     
     lazy var pageViewController = UIPageViewController()
-    let checkWeatherViewModel = CheckWeatherViewModel()
-    
     var dataViewControllers = [UIViewController]()
     
     var weathers = [Weather]()
@@ -225,11 +223,6 @@ class CheckWeatherView: UIViewController {
     }
     @objc func tapSettingButton() {
         self.navigationController?.pushViewController(settingView, animated: true)
-    }
-    
-    @objc func tapDetailWeatherViewButton() {
-        let detailWeatherView = LocationSelectionView()
-        self.present(detailWeatherView, animated: true)
     }
 }
 
