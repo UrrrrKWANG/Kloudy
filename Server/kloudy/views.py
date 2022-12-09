@@ -145,6 +145,8 @@ def time_interval_weather():
                 carwash_index.pm10grade              = pm10grade
                 carwash_index.pollen_index           = pollen_index
                 carwash_index.save()
+                
+                CarWashIndex.save_precipitation_daily(precipitation_for_days, location.code)
 
             # 날씨 비교
             compare_info = CompareIndex.get_compare_index(weather_info, today, False, location.code)
@@ -244,6 +246,7 @@ def time_interval_weather():
             carwash_index_even = CarwashIndexEven.objects.create(weather_index = weather_index_even, code = location.code, status = carwash_status, daily_weather = daily_weather, day_max_temperature = day_max_temperature, daily_precipitation = daily_precipitation, tomorrow_weather = tomorrow_weather, tomorrow_precipitation = tomorrow_precipitation, weather_3Am7pm = weather_3Am7pm, pm10grade = pm10grade, pollen_index = pollen_index)
             carwash_index_odd.save()
             carwash_index_even.save()
+            CarWashIndex.save_precipitation_daily(precipitation_for_days, location.code)
 
             compare_info = CompareIndex.get_compare_index(weather_info, today, True, location.code)
             weather_yesterday, yesterday_max_temperature, yesterday_min_temperature, weather_today, today_max_temperature, today_min_temperature = compare_info

@@ -85,9 +85,18 @@ class LaundryIndexSerializerOdd(serializers.ModelSerializer):
     def update(self):
         return
 
-class CarwashIndexSerializerOdd(serializers.ModelSerializer):
+class PrecipitationDailySerializerOdd(serializers.ModelSerializer):
     class Meta:
-        model = CarwashIndexOdd
+        model = PrecipitationDailyOdd
+        fields = [
+            "day",
+            "precipitation"
+        ]
+
+class CarwashIndexSerializerOdd(serializers.ModelSerializer):
+    precipitation_daily = PrecipitationDailySerializerOdd(many=True, read_only=True)
+    class Meta:
+        model = CarwashIndexEven
         fields = [
             "status",
             "daily_weather",
@@ -97,7 +106,8 @@ class CarwashIndexSerializerOdd(serializers.ModelSerializer):
             "tomorrow_precipitation",
             "weather_3Am7pm",
             "pm10grade",
-            "pollen_index"
+            "pollen_index",
+            "precipitation_daily"
         ]
     def create(self):
         return
@@ -314,7 +324,16 @@ class LaundryIndexSerializerEven(serializers.ModelSerializer):
     def update(self):
         return
 
+class PrecipitationDailySerializerEven(serializers.ModelSerializer):
+    class Meta:
+        model = PrecipitationDailyEven
+        fields = [
+            "day",
+            "precipitation"
+        ]
+
 class CarwashIndexSerializerEven(serializers.ModelSerializer):
+    precipitation_daily = PrecipitationDailySerializerEven(many=True, read_only=True)
     class Meta:
         model = CarwashIndexEven
         fields = [
@@ -326,7 +345,8 @@ class CarwashIndexSerializerEven(serializers.ModelSerializer):
             "tomorrow_precipitation",
             "weather_3Am7pm",
             "pm10grade",
-            "pollen_index"
+            "pollen_index",
+            "precipitation_daily"
         ]
     def create(self):
         return
