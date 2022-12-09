@@ -29,12 +29,12 @@ enum ChartsAxisValue: Int {
         let hourInt = (Int(hourString) ?? 0) + plus
         if hourInt > 12 {
             if hourInt > 23 {
-                return "오전 \(hourInt - 24)시"
+                return "\(hourInt - 24)AM"
             } else {
-                return "오후 \(hourInt - 12)시"
+                return "\(hourInt - 12)PM"
             }
         } else {
-            return "오전 \(hourInt)시"
+            return "\(hourInt)AM"
         }
     }
 }

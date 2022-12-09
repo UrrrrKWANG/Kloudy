@@ -350,6 +350,7 @@ class WeatherIndexDetailView: UIViewController {
             self.indexStepView.isPresentStepView.onNext(true)
             self.presentButtonView.presentButton.isHidden = true
             self.presentButtonView.dismissButton.isHidden = false
+            self.presentButtonView.clearButton.isHidden = true
             self.presentButtonView.collectionView.allowsSelection = true
         }
     }
@@ -372,6 +373,7 @@ class WeatherIndexDetailView: UIViewController {
         } completion: { _ in
             self.presentButtonView.presentButton.isHidden = false
             self.presentButtonView.dismissButton.isHidden = true
+            self.presentButtonView.clearButton.isHidden = false
             self.presentButtonView.collectionView.allowsSelection = false
             self.presentButtonView.firstTap = false
         }
