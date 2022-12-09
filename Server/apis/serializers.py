@@ -56,14 +56,24 @@ class OuterIndexSerializerOdd(serializers.ModelSerializer):
     def update(self):
         return
 
+class HumidityHourlySerializerOdd(serializers.ModelSerializer):
+    class Meta:
+        model = HumidityHourlyOdd
+        fields = [
+            "time",
+            "humidity"
+        ]
+
 class LaundryIndexSerializerOdd(serializers.ModelSerializer):
+    humidity_hourly = HumidityHourlySerializerOdd(many=True, read_only=True)
     class Meta:
         model = LaundryIndexOdd
         fields = [
             "status",
             "humidity",
             "day_max_temperature",
-            "daily_weather"
+            "daily_weather",
+            "humidity_hourly"
         ]
     def create(self):
         return
@@ -271,14 +281,24 @@ class OuterIndexSerializerEven(serializers.ModelSerializer):
     def update(self):
         return
 
+class HumidityHourlySerializerEven(serializers.ModelSerializer):
+    class Meta:
+        model = HumidityHourlyEven
+        fields = [
+            "time",
+            "humidity"
+        ]
+
 class LaundryIndexSerializerEven(serializers.ModelSerializer):
+    humidity_hourly = HumidityHourlySerializerOdd(many=True, read_only=True)
     class Meta:
         model = LaundryIndexEven
         fields = [
             "status",
             "humidity",
             "day_max_temperature",
-            "daily_weather"
+            "daily_weather",
+            "humidity_hourly"
         ]
     def create(self):
         return
