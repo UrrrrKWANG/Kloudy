@@ -99,6 +99,10 @@ class LocationWeatherIndexView: UIView {
                     self.makeUmbrellaIndexText(umbrellaHourly: weathers.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
+                } else if $0 == .outer {
+                    let outerTextArray: [String] = ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: outerTextArray[weathers.localWeather[0].weatherIndex[0].outerIndex[0].status])
+                    self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else {
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: "")
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
@@ -307,7 +311,7 @@ class LocationWeatherIndexView: UIView {
         if textContainerView.subviews.count != 0 {
             textContainerView.subviews[0].removeFromSuperview()
         }
-        if indexType == .umbrella || indexType == .temperatureGap {
+        if indexType == .umbrella || indexType == .temperatureGap || indexType == .outer {
             textContainerView.addSubview(weatherIndexStatusLabel)
             weatherIndexStatusLabel.snp.makeConstraints {
                 $0.edges.equalToSuperview()
@@ -377,7 +381,8 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         
-        if indexNameLabel == "우산 지수".localized {
+        if indexNameLabel == "우산 지수".localized || indexNameLabel == "겉옷 지수".localized {
+            print(indexStatusLabel)
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
