@@ -1,33 +1,68 @@
-def get_mask_index(air_jsonObject, flower_jsonObject):
-    # 제대로 값이 들어오지 않는 경우가 많음
-    if air_jsonObject.get('response').get('header').get('resultCode') != "00" or air_jsonObject.get('response').get('body').get('totalCount') == 0:
-        return [0, 0, 0, 0]
-    if flower_jsonObject.get('response').get('header').get('resultCode') != "00" and flower_jsonObject.get('response').get('header').get('resultCode') != "99" :
-        return [0, 0, 0, 0]
+from apis.models import MaskIndexEven, MaskIndexOdd
+import datetime
 
-    pm25_str = air_jsonObject.get('response').get('body').get('items')[0].get('pm25Value')
-    if pm25_str != "-":
-        pm25 = float(pm25_str)
-    else:
-        pm25 = 0
+def get_mask_index(air_jsonObject, flower_jsonObject, day_we_got, is_first_time):
+    try:
+        
+        pm25_str = air_jsonObject.get('response').get('body').get('items')[0].get('pm25Value')
+        if pm25_str != "-":
+            pm25 = float(pm25_str)
+        else:
+            pm25 = 0
 
-    pm10_str = air_jsonObject.get('response').get('body').get('items')[0].get('pm10Value')
-    if pm10_str != "-":
-        pm10 = float(pm10_str)
-    else:
-        pm10 = 0
+        pm10_str = air_jsonObject.get('response').get('body').get('items')[0].get('pm10Value')
+        if pm10_str != "-":
+            pm10 = float(pm10_str)
+        else:
+            pm10 = 0
 
-    flower_quality = 0
-    if flower_jsonObject.get('response').get('header').get('resultCode') == '0':
-        flower_quality = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('today'))
+        flower_quality = 0
+        if flower_jsonObject.get('response').get('header').get('resultCode') == '0':
+            flower_quality = int(flower_jsonObject.get('response').get('body').get('items').get('item').get('today'))
+        
+        if is_first_time:
+            status = cal_mask_status(pm25)
+            pollen_index = flower_quality
+            yesterday = day_we_got
+            yesterday_pm25value = pm25
+            yesterday_pm10value = pm10
+            today = day_we_got
+            today_pm25value = pm25
+            today_pm10value = pm10
 
-    status = cal_mask_status(pm25)
-    pm25value = pm25
-    pm10value = pm10
-    pollen_index = flower_quality
+            return [status, pollen_index, yesterday, yesterday_pm25value, yesterday_pm10value, today, today_pm25value, today_pm10value]
+        
+        else:
+            time = int(datetime.datetime.now().strftime("%H"))
+            if time % 2 != 0:
+                mask_index = MaskIndexEven.objects.filter(code = code).first()
+            else:
+                mask_index = MaskIndexOdd.objects.filter(code = code).first()
 
-    return [status, pm25value, pm10value, pollen_index]
+            if mask_index.today == day_we_got:
+                status              = mask_index.status
+                pollen_index        = mask_index.pollen_index
+                yesterday           = mask_index.yesterday
+                yesterday_pm25value = mask_index.yesterday_pm25value
+                yesterday_pm10value = mask_index.yesterday_pm10value
+                today               = mask_index.today
+                today_pm25value     = mask_index.today_pm25value
+                today_pm10value     = mask_index.today_pm10value
 
+            else:
+                status              = cal_mask_status(pm25)
+                pollen_index        = flower_quality
+                yesterday           = mask_index.today
+                yesterday_pm25value = mask_index.today_pm25value
+                yesterday_pm10value = mask_index.today_pm10value
+                today               = day_we_got
+                today_pm25value     = pm25
+                today_pm10value     = pm10
+
+            return [status, pollen_index, yesterday, yesterday_pm25value, yesterday_pm10value, today, today_pm25value, today_pm10value]
+
+    except:
+        return [0, 0, "", 0, 0, "", 0, 0]
 # 0~15 : 좋음 0 / 16~35 : 보통 1 / 36~75 : 나쁨 2 / 76 : 매우나쁨 3
 def cal_mask_status(pm25):
     result = 0

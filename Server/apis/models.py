@@ -57,9 +57,13 @@ class MaskIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
-    pm25value = models.FloatField()
-    pm10value = models.FloatField()
     pollen_index = models.IntegerField()
+    yesterday = models.CharField(max_length=20)
+    yesterday_pm25value = models.FloatField()
+    yesterday_pm10value = models.FloatField()
+    today = models.CharField(max_length=20)
+    today_pm25value = models.FloatField()
+    today_pm10value = models.FloatField()
 
 class OuterIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="outer_index", on_delete=models.CASCADE)
@@ -76,6 +80,12 @@ class LaundryIndexOdd(models.Model):
     day_max_temperature = models.FloatField()
     daily_weather = models.IntegerField()
 
+class HumidityHourlyOdd(models.Model):
+    laundry_index = models.ForeignKey(LaundryIndexOdd, related_name="humidity_hourly", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    time = models.IntegerField()
+    humidity = models.FloatField()
+
 class CarwashIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="carwash_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -88,6 +98,12 @@ class CarwashIndexOdd(models.Model):
     weather_3Am7pm = models.CharField(max_length=20)
     pm10grade = models.IntegerField()
     pollen_index = models.IntegerField()
+
+class PrecipitationDailyOdd(models.Model):
+    carwash_index = models.ForeignKey(CarwashIndexOdd, related_name="precipitation_daily", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    day = models.IntegerField()
+    precipitation = models.FloatField()
 
 class CompareIndexOdd(models.Model):
     weather_index = models.ForeignKey(WeatherIndexOdd, related_name="compare_index", on_delete=models.CASCADE)
@@ -159,9 +175,13 @@ class MaskIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="mask_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
     status = models.IntegerField()
-    pm25value = models.FloatField()
-    pm10value = models.FloatField()
     pollen_index = models.IntegerField()
+    yesterday = models.CharField(max_length=20)
+    yesterday_pm25value = models.FloatField()
+    yesterday_pm10value = models.FloatField()
+    today = models.CharField(max_length=20)
+    today_pm25value = models.FloatField()
+    today_pm10value = models.FloatField()
 
 class OuterIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="outer_index", on_delete=models.CASCADE)
@@ -178,6 +198,12 @@ class LaundryIndexEven(models.Model):
     day_max_temperature = models.FloatField()
     daily_weather = models.IntegerField()
 
+class HumidityHourlyEven(models.Model):
+    laundry_index = models.ForeignKey(LaundryIndexEven, related_name="humidity_hourly", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    time = models.IntegerField()
+    humidity = models.FloatField()
+
 class CarwashIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="carwash_index", on_delete=models.CASCADE)
     code = models.CharField(max_length=10)
@@ -190,6 +216,12 @@ class CarwashIndexEven(models.Model):
     weather_3Am7pm = models.CharField(max_length=20)
     pm10grade = models.IntegerField()
     pollen_index = models.IntegerField()
+
+class PrecipitationDailyEven(models.Model):
+    carwash_index = models.ForeignKey(CarwashIndexEven, related_name="precipitation_daily", on_delete=models.CASCADE)
+    code = models.CharField(max_length=10)
+    day = models.IntegerField()
+    precipitation = models.FloatField()
 
 class CompareIndexEven(models.Model):
     weather_index = models.ForeignKey(WeatherIndexEven, related_name="compare_index", on_delete=models.CASCADE)

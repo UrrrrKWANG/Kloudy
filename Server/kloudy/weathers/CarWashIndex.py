@@ -1,3 +1,6 @@
+from apis.models import CarwashIndexOdd, CarwashIndexEven, PrecipitationDailyOdd, PrecipitationDailyEven
+from datetime import datetime
+
 def get_carwash_index(weather_info, air_jsonObject, flower_jsonObject):
     try:
         today_weather_info = weather_info.get('forecastDaily').get('days')[0]
@@ -35,12 +38,12 @@ def get_carwash_index(weather_info, air_jsonObject, flower_jsonObject):
         day_max_temperature = weather_info.get('forecastDaily').get('days')[0].get('temperatureMax')
         pollen_index = max(flower_qualities)
 
-        when_is_rainy, daily_precipitation, tomorrow_precipitation = cal_precipitation(weather_info)
+        when_is_rainy, daily_precipitation, tomorrow_precipitation, precipitation_for_days = cal_precipitation(weather_info)
         weather_3Am7pm = "예보없음" if when_is_rainy == 9 else f"{when_is_rainy}일 후"
         # 0 : 세차하기 좋음, 1: 세차 괜찮음, 2: 세차 미루기, 3: 세차 하지마
         status = cal_carwash_status(when_is_rainy, day_max_temperature, pm10grade, pollen_index)
         
-        return [status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index]
+        return [status, daily_weather, day_max_temperature, daily_precipitation, tomorrow_weather, tomorrow_precipitation, weather_3Am7pm, pm10grade, pollen_index, precipitation_for_days]
 
     except:
         print("CarWash Index Exception")
@@ -51,13 +54,14 @@ def cal_precipitation(weather_info):
     daily_precipitation = 0
     tomorrow_precipitation = weather_info.get('forecastDaily').get('days')[1].get('precipitationAmount')
 
+    precipitation_for_days = []
     forecast_daily = weather_info.get('forecastDaily').get('days')
     for i in range(7):
         forecast = forecast_daily[i]
         precipitation_amount = float(forecast.get('precipitationAmount'))
         if precipitation_amount > 0:
-            when_is_rainy = i + 1
-            break
+            when_is_rainy = min(i + 1, when_is_rainy)
+        precipitation_for_days.append(precipitation_amount)
     
     forecast_hourly = weather_info.get('forecastHourly').get('hours')
     for i in range(24):
@@ -69,7 +73,7 @@ def cal_precipitation(weather_info):
 
     daily_precipitation = 0 if daily_precipitation == 0 else daily_precipitation / 24
 
-    return [when_is_rainy, daily_precipitation, tomorrow_precipitation]
+    return [when_is_rainy, daily_precipitation, tomorrow_precipitation, precipitation_for_days]
 
 def cal_weather_status(cloud_cover, precipitation_intensity, condition_code):
     cloud_cover = float(cloud_cover)
@@ -105,3 +109,29 @@ def cal_carwash_status(when_is_rainy, max_temperature, pm10grade, pollen_index):
         return result
     
     return result
+
+def save_precipitation_daily(precipitation_for_days, code):
+    time = int(datetime.now().strftime("%H"))
+    # 지금 처음이 아니면
+    if PrecipitationDailyEven.objects.filter(code = code):
+        if time % 2 != 0:
+            precipitation_daily_queries = PrecipitationDailyEven.objects.filter(code = code).all()
+        else:
+            precipitation_daily_queries = PrecipitationDailyOdd.objects.filter(code = code).all()
+        for precipitation_daily_query in precipitation_daily_queries:
+            try:
+                now_day = precipitation_daily_query.day
+                precipitation_daily_query.precipitation = precipitation_for_days[now_day]
+                precipitation_daily_query.save()
+            except:
+                return
+
+    else:
+        carwash_index_odd = CarwashIndexOdd.objects.filter(code = code).first()
+        carwash_index_even = CarwashIndexEven.objects.filter(code = code).first()
+        for i in range(len(precipitation_for_days)):
+            precipitation_daily_odd = PrecipitationDailyOdd.objects.create(carwash_index = carwash_index_odd, code = code, day = i+1, precipitation = precipitation_for_days[i])
+            precipitation_daily_even = PrecipitationDailyEven.objects.create(carwash_index = carwash_index_even, code = code, day = i+1, precipitation = precipitation_for_days[i])
+            precipitation_daily_odd.save()
+            precipitation_daily_even.save()
+    return
