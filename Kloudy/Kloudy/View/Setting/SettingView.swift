@@ -7,6 +7,7 @@
 
 import UIKit
 import RxSwift
+import SafariServices
 import SnapKit
 
 class SettingView: UIViewController {
@@ -15,6 +16,8 @@ class SettingView: UIViewController {
     let disposeBag = DisposeBag()
     let changeAuthorityTrue = PublishSubject<Weather>()
     let changeAuthorityFalse = PublishSubject<Bool>()
+    let blogUrl = NSURL(string: "https://spiffy-mum-6af.notion.site/Klody-open-source-license-c0c62e1198974fad995fed9fcd6f7504")
+    lazy var blogSafariView: SFSafariViewController = SFSafariViewController(url: blogUrl! as URL)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -60,8 +63,8 @@ class SettingView: UIViewController {
     }
     
     @objc func tapBackButton() {
-       self.navigationController?.popViewController(animated: true)
-   }
+        self.navigationController?.popViewController(animated: true)
+    }
 }
 
 extension SettingView: UITableViewDataSource {
@@ -74,8 +77,13 @@ extension SettingView: UITableViewDataSource {
         if indexPath.row == 0 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingLicenseCellView", for: indexPath) as? SettingLicenseCellView else { return UITableViewCell() }
             cell.licenseLabel.text = "라이센스".localized
-            
             resultCell = cell
+            
+            let gesture = UITapGestureRecognizer()
+            cell.addGestureRecognizer(gesture)
+            gesture.rx.event.bind {_ in
+                self.present(self.blogSafariView, animated: true, completion: nil)
+            }.disposed(by: disposeBag)
         }
         
         else if indexPath.row == 1 {
