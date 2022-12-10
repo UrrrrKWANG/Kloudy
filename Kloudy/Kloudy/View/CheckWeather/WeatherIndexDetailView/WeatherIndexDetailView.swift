@@ -20,12 +20,12 @@ enum IndexType {
     
     var detailIndexString: [String] {
         switch self {
-        case .umbrella: return ["우산".localized, "precipitation_png", "하루 강수량".localized, "mm", "wind_png", "최대 풍속".localized, "m/s", "강수량".localized, "mm"]
-        case .mask: return ["마스크".localized, "dust_png", "미세먼지".localized, "㎍/㎥", "fineDust_png", "초미세먼지".localized, "㎍/㎥", "", ""]
-        case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "습도".localized, "%", "", ""]
-        case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "현재 온도".localized, ""]
-        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "", ""]
-        case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "현재 온도".localized, ""]
+        case .umbrella: return ["우산".localized, "precipitation_png", "하루 강수량".localized, "mm", "wind_png", "최대 풍속".localized, "m/s", "강수량".localized]
+        case .mask: return ["마스크".localized, "dust_png", "미세먼지".localized, "㎍/㎥", "fineDust_png", "초미세먼지".localized, "㎍/㎥", ""]
+        case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "평균 습도".localized, "%", "현재 습도".localized]
+        case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "현재 온도".localized]
+        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", ""]
+        case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "현재 온도".localized]
         }
     }
     
@@ -47,7 +47,7 @@ enum IndexType {
         case .laundry: return ["laundry_4", "laundry_3", "laundry_2", "laundry_1"]
         case .outer: return ["outer_step1", "outer_step2", "outer_step3", "outer_step4", "outer_step5"]
         case .car: return ["carwash_step4", "carwash_step3", "carwash_step2", "carwash_step1"]
-        case .temperatureGap: return ["", "", "", "", ""]
+        case .temperatureGap: return []
         }
     }
     
@@ -58,18 +58,18 @@ enum IndexType {
         case .laundry: return ["빨래하기 좋은 날입니다.".localized, "빨래하셔도 괜찮습니다.".localized, "실내 건조하세요.".localized, "빨래를 다음으로 미루는 것을 추천드려요.".localized]
         case .outer: return ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
         case .car: return ["세차하기 좋은 날입니다.".localized, "세차하셔도 괜찮습니다.".localized, "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요.".localized, "세차를 다음으로 미루는 것을 추천드려요.".localized]
-        case .temperatureGap: return ["", "", "", "", ""]
+        case .temperatureGap: return []
         }
     }
     
-    var isChartViewIncluded: Bool {
+    var chartType: Int {
         switch self {
-        case .umbrella: return true
-        case .mask: return false
-        case .laundry: return false
-        case .outer: return true
-        case .car: return false
-        case .temperatureGap: return true
+        case .umbrella: return 0
+        case .mask: return 2
+        case .laundry: return 0
+        case .outer: return 0
+        case .car: return 1
+        case .temperatureGap: return 0
         }
     }
 }
@@ -118,44 +118,39 @@ class WeatherIndexDetailView: UIViewController {
             firstIconView.iconValue.onNext(String(
                 round(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0 * 10)/10
             ))
-            
             secondIconView.iconValue.onNext(String(
                 round(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 * 100)/100
             ))
-            
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 1)
             
-            chartView.chartType.onNext(.precipitation)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartPrecipitationHourlyData.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly ?? [])
             chartView.chartUnitText.onNext(String(round((weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) * 100)/100) + "mm")
             
         } else if indexType == .mask {
             firstIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0)
+                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0)
             ))
-            
             secondIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].pm25value ?? 0)
+                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM25value ?? 0)
             ))
-            
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
-
+            
         } else if indexType == .car {
             firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
-            
             secondIconView.iconValue.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm.localized ?? "")
-            
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 1)
             
         } else if indexType == .laundry {
             firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather ?? 0))
-            
             secondIconView.iconValue.onNext(String(
                 Int(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidity ?? 0)
             ))
-            
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 1)
+            
+            chartView.chartLabelText.onNext(indexType.detailIndexString[7])
+            chartView.chartHumidityData.onNext(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidityHourly ?? [])
+            chartView.chartUnitText.onNext(String(Int((weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidityHourly[0].humidity ?? 0) * 100)) + "%")
             
         } else if indexType == .outer {
             firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0)))
@@ -167,9 +162,8 @@ class WeatherIndexDetailView: UIViewController {
                 presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
             }
             
-            chartView.chartType.onNext(.temperature)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartTemperatureData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
             chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
             
         } else if indexType == .temperatureGap {
@@ -182,9 +176,8 @@ class WeatherIndexDetailView: UIViewController {
                 presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
             }
             
-            chartView.chartType.onNext(.temperature)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartTemperatureData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
             chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
         }
         
@@ -276,7 +269,10 @@ class WeatherIndexDetailView: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        if indexType.isChartViewIncluded { layoutChartView() }
+        // 추후 마스크, 세차 지수 차트 추가 예정
+        if indexType.chartType == 0 { layoutChartView(chart: chartView) }
+        else if indexType.chartType == 1 {  }
+        else if indexType.chartType == 2 {  }
         
         baseIndexView.addSubview(indexStepView)
         
@@ -294,10 +290,10 @@ class WeatherIndexDetailView: UIViewController {
         }
     }
     
-    private func layoutChartView() {
-        baseIndexView.addSubview(chartView)
+    private func layoutChartView(chart: UIView) {
+        baseIndexView.addSubview(chart)
         
-        chartView.snp.makeConstraints {
+        chart.snp.makeConstraints {
             $0.top.equalTo(firstIconView.snp.bottom).offset(42)
             $0.leading.equalTo(6)
             $0.trailing.equalToSuperview().inset(16)
@@ -350,6 +346,7 @@ class WeatherIndexDetailView: UIViewController {
             self.indexStepView.isPresentStepView.onNext(true)
             self.presentButtonView.presentButton.isHidden = true
             self.presentButtonView.dismissButton.isHidden = false
+            self.presentButtonView.clearButton.isHidden = true
             self.presentButtonView.collectionView.allowsSelection = true
         }
     }
@@ -372,6 +369,7 @@ class WeatherIndexDetailView: UIViewController {
         } completion: { _ in
             self.presentButtonView.presentButton.isHidden = false
             self.presentButtonView.dismissButton.isHidden = true
+            self.presentButtonView.clearButton.isHidden = false
             self.presentButtonView.collectionView.allowsSelection = false
             self.presentButtonView.firstTap = false
         }

@@ -46,9 +46,6 @@ class LocationSelectionView: UIViewController {
     let deleteLocationCode = PublishSubject<String>()
     let exchangeLocationIndex = PublishSubject<[Int]>()
     
-    // 지역 동의 버튼
-    let authorizeButtonTapped = PublishRelay<Void>()
-    
     // delegate 로 전달 받는 Weather Data
     var weatherData = [Weather]()
     
@@ -312,6 +309,11 @@ class LocationSelectionView: UIViewController {
         changeTableType(false)
         self.navigationController?.popViewController(animated: true)
     }
+    
+    @objc func tapAuthorizeButton() {
+        self.navigationController?.popViewController(animated: true)
+        NotificationCenter.default.post(name: NSNotification.Name("authorizeButtonTap"), object: nil)
+    }
 }
 
 extension LocationSelectionView: UITableViewDataSource {
@@ -344,10 +346,7 @@ extension LocationSelectionView: UITableViewDataSource {
                     guard let cell = tableView.dequeueReusableCell(withIdentifier: "currentCell", for: indexPath) as? CurrentLocationTableViewCell else {
                         return UITableViewCell() }
                     cell.locationNameLabel.text = "현재 위치".localized
-                    cell.agreeButton.rx.tap
-                        .asObservable()
-                        .bind(to: authorizeButtonTapped)
-                        .disposed(by: disposeBag)
+                    cell.agreeButton.addTarget(self, action: #selector(tapAuthorizeButton), for: .touchUpInside)
                     cell.backgroundColor = UIColor.KColor.clear
                     cell.selectionStyle = .none
                     return cell

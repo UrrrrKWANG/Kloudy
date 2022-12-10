@@ -48,6 +48,7 @@ class IndexButtonView: UIView {
     let disposeBag = DisposeBag()
     let dismissButton = UIButton()
     let presentButton = UIButton()
+    let clearButton = UIButton()
     var collectionView: UICollectionView = {
         var layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .horizontal
@@ -111,26 +112,30 @@ class IndexButtonView: UIView {
     }
     
     private func layout() {
-        [presentButton, dismissButton, collectionView].forEach { self.addSubview($0) }
+        [presentButton, dismissButton, collectionView, clearButton].forEach { self.addSubview($0) }
         
         presentButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(26)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(21)
         }
         
         dismissButton.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.centerX.equalToSuperview()
-            $0.width.equalTo(26)
+            $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(21)
         }
         
         collectionView.snp.makeConstraints {
-            $0.top.equalTo(presentButton.snp.bottom).offset(4)
+            $0.bottom.equalToSuperview()
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(32)
+        }
+        
+        clearButton.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
     
@@ -146,6 +151,9 @@ class IndexButtonView: UIView {
         dismissButton.setImage(UIImage(named: "chevron_down"), for: .normal)
         dismissButton.isHidden = true
         dismissButton.addTarget(self, action: #selector(dismissStepView), for: .touchUpInside)
+        clearButton.isHidden = false
+        clearButton.addTarget(self, action: #selector(presentStepView), for: .touchUpInside)
+        clearButton.backgroundColor = UIColor.KColor.clear
     }
     
     @objc private func dismissStepView() {

@@ -382,7 +382,6 @@ class LocationWeatherIndexView: UIView {
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         
         if indexNameLabel == "우산 지수".localized || indexNameLabel == "겉옷 지수".localized {
-            print(indexStatusLabel)
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
@@ -521,7 +520,7 @@ class LocationWeatherIndexView: UIView {
             }
             //황사 기준치 400
         case .mask :
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0 >= 400 {
                 isIndexOn.append(.yellowDust)
                 break
             }
@@ -539,7 +538,7 @@ class LocationWeatherIndexView: UIView {
                 isIndexOn.append(.pollen)
             }
             // 황사 기준치 400
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0 >= 400 {
                 isIndexOn.append(.yellowDust)
                 break
             }
@@ -632,8 +631,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("???")
-      
+        
     }
 }
 

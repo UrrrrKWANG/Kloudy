@@ -15,15 +15,26 @@ enum ChartsAxisValue: Int {
     case six = 5
     case noon = 11
     case eighteen = 17
-    case midNight = 23
     
     var label: String {
         switch self {
-        case .zero: return "오전 0시".localized
-        case .six: return "오전 6시".localized
-        case .noon: return "오후 12시".localized
-        case .eighteen: return "오후 6시".localized
-        case .midNight: return ""
+        case .zero: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 0))"
+        case .six: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 6))"
+        case .noon: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 12))"
+        case .eighteen: return "\(getHourLabel(hourString: Date().getHourOfDay(), plus: 18))"
+        }
+    }
+    
+    private func getHourLabel(hourString: String, plus: Int) -> String {
+        let hourInt = (Int(hourString) ?? 0) + plus
+        if hourInt > 12 {
+            if hourInt > 23 {
+                return "\(hourInt - 24)AM"
+            } else {
+                return "\(hourInt - 12)PM"
+            }
+        } else {
+            return "\(hourInt)AM"
         }
     }
 }
@@ -52,10 +63,14 @@ class IndexChartView: UIView {
     
     let chartLabelText: BehaviorSubject<String> = BehaviorSubject(value: "")
     let chartUnitText: BehaviorSubject<String> = BehaviorSubject(value: "")
-    let chartData = PublishSubject<[HourlyWeather]>()
-    let chartType = PublishSubject<ChartType>()
-    var isPrecipitationChart = true
-
+    
+    lazy var chartPrecipitationHourlyData = PublishSubject<[UmbrellaHourly]>()
+    lazy var chartHumidityData = PublishSubject<[HumidityHourly]>()
+    lazy var chartPrecipitationDailyData = PublishSubject<[PrecipitationDaily]>()
+    lazy var chartTemperatureData = PublishSubject<[HourlyWeather]>()
+    
+    var isTemperatureData: Bool = false
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         bind()
@@ -79,29 +94,44 @@ class IndexChartView: UIView {
             })
             .disposed(by: disposeBag)
         
-        chartData
+        chartPrecipitationHourlyData
             .subscribe(onNext: {
                 $0.forEach { hourlyData in
-                    self.data[hourlyData.hour] = self.isPrecipitationChart ? hourlyData.precipitation : hourlyData.temperature
+                    self.data[hourlyData.time] = hourlyData.precipitation
                 }
-                for (key, value) in self.data {
-                    let value = ChartDataEntry(x: Double(key), y: value)
-                    self.lineChartEntry.append(value)
-                }
-                self.lineChartEntry = self.lineChartEntry.sorted(by: {$0.x < $1.x})
-                self.configureChart(chartEntry: self.lineChartEntry)
+                self.isTemperatureData = false
+                self.deliverChartData()
             })
             .disposed(by: disposeBag)
         
-        chartType
+        chartHumidityData
             .subscribe(onNext: {
-                if $0 == .precipitation {
-                    self.isPrecipitationChart = true
-                } else {
-                    self.isPrecipitationChart = false
+                $0.forEach { hourlyData in
+                    self.data[hourlyData.time] = hourlyData.humidity
                 }
+                self.isTemperatureData = false
+                self.deliverChartData()
             })
             .disposed(by: disposeBag)
+        
+        chartTemperatureData
+            .subscribe(onNext: {
+                $0.forEach { hourlyData in
+                    self.data[hourlyData.hour] = hourlyData.temperature
+                }
+                self.isTemperatureData = true
+                self.deliverChartData()
+            })
+            .disposed(by: disposeBag)
+    }
+    
+    private func deliverChartData() {
+        for (key, value) in data {
+            let value = ChartDataEntry(x: Double(key), y: value)
+            lineChartEntry.append(value)
+        }
+        lineChartEntry = lineChartEntry.sorted(by: {$0.x < $1.x})
+        configureChart(chartEntry: lineChartEntry)
     }
     
     private func layout() {
@@ -136,9 +166,9 @@ class IndexChartView: UIView {
     
     private func configureChart(chartEntry: [ChartDataEntry]) {
         let lineChartDataSet = LineChartDataSet(entries: chartEntry)
-        lineChartDataSet.colors = [UIColor.KColor.chartBlue]
+        lineChartDataSet.colors = isTemperatureData ? [UIColor.KColor.orange01.withAlphaComponent(0.6)] : [UIColor.KColor.chartBlue]
         lineChartDataSet.drawCirclesEnabled = false
-        lineChartDataSet.highlightColor = UIColor.KColor.chartBlue
+        lineChartDataSet.highlightColor = isTemperatureData ? UIColor.KColor.orange01.withAlphaComponent(0.4) : UIColor.KColor.chartBlue
         lineChartDataSet.highlightLineWidth = 2
         lineChartDataSet.highlightLineDashLengths = [5]
         lineChartDataSet.drawHorizontalHighlightIndicatorEnabled = false
@@ -146,7 +176,7 @@ class IndexChartView: UIView {
         lineChartDataSet.lineWidth = 2
         
         // Chart Fill
-        lineChartDataSet.fill = ColorFill(color: NSUIColor.KColor.chartBlue)
+        lineChartDataSet.fill = isTemperatureData ? ColorFill(color: NSUIColor.KColor.orange01.withAlphaComponent(0.4)) : ColorFill(color: NSUIColor.KColor.chartBlue)
         lineChartDataSet.fillAlpha = 0.2
         lineChartDataSet.drawFilledEnabled = true
         
