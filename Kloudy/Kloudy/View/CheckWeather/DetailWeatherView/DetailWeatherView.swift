@@ -67,7 +67,7 @@ class DetailWeatherView: UIViewController {
     
     lazy var currentLocationLabel: UILabel = {
         let uiLabel = UILabel()
-        uiLabel.configureLabel(text: self.currentLocationName, font: UIFont.KFont.appleSDNeoBold18, textColor: UIColor.KColor.white)
+        uiLabel.configureLabel(text: self.currentLocationName.localized, font: UIFont.KFont.appleSDNeoBold18, textColor: UIColor.KColor.white)
         return uiLabel
     }()
     

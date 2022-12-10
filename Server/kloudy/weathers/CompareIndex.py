@@ -20,7 +20,7 @@ def get_compare_index(weather_info, day_we_got, isFisrtTime, code):
             today_info = weather_info.get('forecastDaily').get('days')[0]
             today_max_temperature = float(today_info.get('temperatureMax'))
             yesterday_max_temperature = today_max_temperature
-            today_min_temperature = float(today_info.get('temperatureMax'))
+            today_min_temperature = float(today_info.get('temperatureMin'))
             yesterday_min_temperature = today_min_temperature
             
         else:
@@ -49,7 +49,7 @@ def get_compare_index(weather_info, day_we_got, isFisrtTime, code):
                 today_info = weather_info.get('forecastDaily').get('days')[0]
                 today_max_temperature = float(today_info.get('temperatureMax'))
                 yesterday_max_temperature = compare_index.today_max_temperature
-                today_min_temperature = float(today_info.get('temperatureMax'))
+                today_min_temperature = float(today_info.get('temperatureMin'))
                 yesterday_min_temperature = compare_index.today_min_temperature
 
         return [yesterday, yesterday_max_temperature, yesterday_min_temperature, today, today_max_temperature, today_min_temperature]

@@ -1,3 +1,5 @@
+from apis.models import LaundryIndexOdd, LaundryIndexEven, HumidityHourlyOdd, HumidityHourlyEven
+from datetime import datetime
 def get_laundry_index(weather_info):
     try:
         humidities = []
@@ -17,7 +19,7 @@ def get_laundry_index(weather_info):
 
         status = cal_laundry_status(humidity, day_max_temperature, daily_weather)
 
-        return [status, humidity, day_max_temperature, daily_weather]
+        return [status, humidity, day_max_temperature, daily_weather, humidities]
 
     except:
         print("Laundry Index exeption")
@@ -95,3 +97,29 @@ def cal_laundry_status(humidity, day_max_temperature, daily_weather):
         result = 3
         
     return result
+
+def save_humidity_hourly(humidities, code):
+    time = int(datetime.now().strftime("%H"))
+    # 지금 처음이 아니면
+    if HumidityHourlyEven.objects.filter(code = code):
+        if time % 2 != 0:
+            humidity_hourly_queries = HumidityHourlyEven.objects.filter(code = code).all()
+        else:
+            humidity_hourly_queries = HumidityHourlyOdd.objects.filter(code = code).all()
+        for humidity_hour_query in humidity_hourly_queries:
+            try:
+                now_time = humidity_hour_query.time
+                humidity_hour_query.humidity = humidities[now_time]
+                humidity_hour_query.save()
+            except:
+                return
+
+    else:
+        laundry_index_odd = LaundryIndexOdd.objects.filter(code = code).first()
+        laundry_index_even = LaundryIndexEven.objects.filter(code = code).first()
+        for i in range(len(humidities)):
+            humidity_hourly_odd = HumidityHourlyOdd.objects.create(laundry_index = laundry_index_odd, code = code, time = i, humidity = humidities[i])
+            humidity_hourly_even = HumidityHourlyEven.objects.create(laundry_index = laundry_index_even, code = code, time = i, humidity = humidities[i])
+            humidity_hourly_odd.save()
+            humidity_hourly_even.save()
+    return

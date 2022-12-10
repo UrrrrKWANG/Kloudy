@@ -19,7 +19,7 @@ def get_umbrella_index(weather_info):
         rains = [0.0] * 24
         return [0, 0, 0, 0, 0, rains]
 
-def save_umbrella_hourly(umbrella_index, rains, code):
+def save_umbrella_hourly(rains, code):
     time = int(datetime.datetime.now().strftime("%H"))
     # 지금 처음이 아니면
     if UmbrellaHourlyEven.objects.filter(code = code):
