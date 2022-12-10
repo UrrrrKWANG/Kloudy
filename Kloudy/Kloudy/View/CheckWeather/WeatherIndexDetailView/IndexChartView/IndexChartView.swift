@@ -65,6 +65,12 @@ class IndexChartView: UIView {
     let chartUnitText: BehaviorSubject<String> = BehaviorSubject(value: "")
     let chartData = PublishSubject<[HourlyWeather]>()
     let chartType = PublishSubject<ChartType>()
+    
+    lazy var chartPrecipitationHourlyData = PublishSubject<[UmbrellaHourly]>()
+    lazy var chartHumidityData = PublishSubject<[HumidityHourly]>()
+    lazy var chartPrecipitationDailyData = PublishSubject<[PrecipitationDaily]>()
+    lazy var chartTemperatureData = PublishSubject<[HourlyWeather]>()
+    
     var isPrecipitationChart = true
 
     override init(frame: CGRect) {
@@ -90,29 +96,46 @@ class IndexChartView: UIView {
             })
             .disposed(by: disposeBag)
         
-        chartData
+//        chartData
+//            .subscribe(onNext: {
+//                $0.forEach { hourlyData in
+//                    self.data[hourlyData.hour] = self.isPrecipitationChart ? hourlyData.precipitation : hourlyData.temperature
+//                }
+//                for (key, value) in self.data {
+//                    let value = ChartDataEntry(x: Double(key), y: value)
+//                    self.lineChartEntry.append(value)
+//                }
+//                self.lineChartEntry = self.lineChartEntry.sorted(by: {$0.x < $1.x})
+//                self.configureChart(chartEntry: self.lineChartEntry)
+//            })
+//            .disposed(by: disposeBag)
+        
+        chartPrecipitationHourlyData
             .subscribe(onNext: {
                 $0.forEach { hourlyData in
-                    self.data[hourlyData.hour] = self.isPrecipitationChart ? hourlyData.precipitation : hourlyData.temperature
+                    self.data[hourlyData.time] = hourlyData.precipitation
                 }
-                for (key, value) in self.data {
-                    let value = ChartDataEntry(x: Double(key), y: value)
-                    self.lineChartEntry.append(value)
-                }
-                self.lineChartEntry = self.lineChartEntry.sorted(by: {$0.x < $1.x})
-                self.configureChart(chartEntry: self.lineChartEntry)
+                self.deliverChartData()
             })
             .disposed(by: disposeBag)
         
-        chartType
+        chartHumidityData
             .subscribe(onNext: {
-                if $0 == .precipitation {
-                    self.isPrecipitationChart = true
-                } else {
-                    self.isPrecipitationChart = false
+                $0.forEach { hourlyData in
+                    self.data[hourlyData.time] = hourlyData.humidity
                 }
+                self.deliverChartData()
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func deliverChartData() {
+        for (key, value) in data {
+            let value = ChartDataEntry(x: Double(key), y: value)
+            lineChartEntry.append(value)
+        }
+        lineChartEntry = lineChartEntry.sorted(by: {$0.x < $1.x})
+        configureChart(chartEntry: lineChartEntry)
     }
     
     private func layout() {
