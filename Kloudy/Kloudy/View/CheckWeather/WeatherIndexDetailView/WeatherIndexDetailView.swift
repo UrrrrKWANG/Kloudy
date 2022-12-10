@@ -47,7 +47,7 @@ enum IndexType {
         case .laundry: return ["laundry_4", "laundry_3", "laundry_2", "laundry_1"]
         case .outer: return ["outer_step1", "outer_step2", "outer_step3", "outer_step4", "outer_step5"]
         case .car: return ["carwash_step4", "carwash_step3", "carwash_step2", "carwash_step1"]
-        case .temperatureGap: return ["", "", "", "", ""]
+        case .temperatureGap: return []
         }
     }
     
@@ -58,18 +58,18 @@ enum IndexType {
         case .laundry: return ["빨래하기 좋은 날입니다.".localized, "빨래하셔도 괜찮습니다.".localized, "실내 건조하세요.".localized, "빨래를 다음으로 미루는 것을 추천드려요.".localized]
         case .outer: return ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
         case .car: return ["세차하기 좋은 날입니다.".localized, "세차하셔도 괜찮습니다.".localized, "꼭 필요한 게 아니라면 세차를 미루는 것을 추천드려요.".localized, "세차를 다음으로 미루는 것을 추천드려요.".localized]
-        case .temperatureGap: return ["", "", "", "", ""]
+        case .temperatureGap: return []
         }
     }
     
-    var isChartViewIncluded: Bool {
+    var chartType: Int {
         switch self {
-        case .umbrella: return true
-        case .mask: return true
-        case .laundry: return true
-        case .outer: return true
-        case .car: return true
-        case .temperatureGap: return true
+        case .umbrella: return 0
+        case .mask: return 2
+        case .laundry: return 0
+        case .outer: return 0
+        case .car: return 1
+        case .temperatureGap: return 0
         }
     }
 }
@@ -135,8 +135,6 @@ class WeatherIndexDetailView: UIViewController {
                 round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM25value ?? 0)
             ))
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
-
-            
             
         } else if indexType == .car {
             firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
@@ -271,7 +269,10 @@ class WeatherIndexDetailView: UIViewController {
             $0.centerX.equalToSuperview()
         }
         
-        if indexType.isChartViewIncluded { layoutChartView() }
+        // 추후 마스크, 세차 지수 차트 추가 예정
+        if indexType.chartType == 0 { layoutChartView(chart: chartView) }
+        else if indexType.chartType == 1 {  }
+        else if indexType.chartType == 2 {  }
         
         baseIndexView.addSubview(indexStepView)
         
@@ -289,10 +290,10 @@ class WeatherIndexDetailView: UIViewController {
         }
     }
     
-    private func layoutChartView() {
-        baseIndexView.addSubview(chartView)
+    private func layoutChartView(chart: UIView) {
+        baseIndexView.addSubview(chart)
         
-        chartView.snp.makeConstraints {
+        chart.snp.makeConstraints {
             $0.top.equalTo(firstIconView.snp.bottom).offset(42)
             $0.leading.equalTo(6)
             $0.trailing.equalToSuperview().inset(16)
