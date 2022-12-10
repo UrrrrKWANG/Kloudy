@@ -23,14 +23,13 @@ def getWeathers(request):
     print(today, hour, code)
     # 홀수일 때는 짝수 시간 대를 업데이트함으로 짝수일 때 짝수 시간 대를 가져간다.
     if hour % 2 == 0:
-        print("짝수시간대")
+        print("짝수시간")
         weather = WeatherEven.objects.filter(code = code).first()
-        print(weather)
         serializer = WeatherSerializerEven(weather)
         return Response(serializer.data)
 
     else:
-        print("홀수시간대")
+        print("홀수시간")
         weather = WeatherOdd.objects.filter(code = code).first()
         serializer = WeatherSerializerOdd(weather)
         return Response(serializer.data)
