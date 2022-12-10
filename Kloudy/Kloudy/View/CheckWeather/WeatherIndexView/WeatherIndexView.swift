@@ -184,7 +184,7 @@ class WeatherIndexView: UIView {
         indexCollectionView.addGestureRecognizer(gesture)
         
         weatherIndexListView.snp.makeConstraints {
-            $0.top.bottom.equalToSuperview().inset(16)
+            $0.top.bottom.equalToSuperview().inset(14)
             $0.leading.equalToSuperview().inset(283)
             $0.trailing.equalToSuperview().inset(12)
         }
