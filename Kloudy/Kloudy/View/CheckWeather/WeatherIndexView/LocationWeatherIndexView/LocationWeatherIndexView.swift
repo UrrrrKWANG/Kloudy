@@ -382,7 +382,6 @@ class LocationWeatherIndexView: UIView {
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         
         if indexNameLabel == "우산 지수".localized || indexNameLabel == "겉옷 지수".localized {
-            print(indexStatusLabel)
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
@@ -632,8 +631,7 @@ extension LocationWeatherIndexView:  UICollectionViewDelegate, UICollectionViewD
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        print("???")
-      
+        
     }
 }
 
