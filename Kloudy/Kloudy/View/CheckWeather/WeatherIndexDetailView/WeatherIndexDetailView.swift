@@ -132,11 +132,11 @@ class WeatherIndexDetailView: UIViewController {
             
         } else if indexType == .mask {
             firstIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0)
+                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0)
             ))
             
             secondIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].pm25value ?? 0)
+                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM25value ?? 0)
             ))
             
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)

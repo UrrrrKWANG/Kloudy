@@ -516,7 +516,7 @@ class LocationWeatherIndexView: UIView {
             }
             //황사 기준치 400
         case .mask :
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0 >= 400 {
                 isIndexOn.append(.yellowDust)
                 break
             }
@@ -534,7 +534,7 @@ class LocationWeatherIndexView: UIView {
                 isIndexOn.append(.pollen)
             }
             // 황사 기준치 400
-            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].pm10value ?? 0 >= 400 {
+            if weathers?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0 >= 400 {
                 isIndexOn.append(.yellowDust)
                 break
             }

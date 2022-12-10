@@ -9,7 +9,7 @@ import Foundation
 
 struct CityWeatherAPI {
     func requestCityWeather(code: String) -> URLComponents {
-        var components = URLComponents(string: "http://3.35.230.34:8080/apis/weather/?")
+        var components = URLComponents(string: "http://3.35.230.34:9090/apis/weather/?")
         components?.queryItems = [
             URLQueryItem(name: "code", value: code)
         ]

@@ -98,13 +98,21 @@ struct UmbrellaHourly: Codable {
 
 struct MaskIndex: Codable {
     let status: Int
-    let pm25value: Double
-    let pm10value: Double
     let pollenIndex: Int
+    let todayPM25value: Double
+    let todayPM10value: Double
+    let yesterdayPM25value: Double
+    let yesterdayPM10value: Double
+    let yesterday: String
+    let today: String
     
     enum CodingKeys: String, CodingKey {
-        case status, pm25value, pm10value
+        case status, yesterday, today
         case pollenIndex = "pollen_index"
+        case todayPM25value = "today_pm25value"
+        case todayPM10value = "today_pm10value"
+        case yesterdayPM25value = "yesterday_pm25value"
+        case yesterdayPM10value = "yesterday_pm10value"
     }
 }
 
@@ -125,11 +133,22 @@ struct LaundryIndex: Codable {
     let humidity: Double
     let dayMaxTemperature: Double
     let dailyWeather: Int
+    let humidityHourly: [HumidityHourly]
     
     enum CodingKeys: String, CodingKey {
         case status, humidity
         case dayMaxTemperature = "day_max_temperature"
         case dailyWeather = "daily_weather"
+        case humidityHourly = "humidity_hourly"
+    }
+}
+
+struct HumidityHourly: Codable {
+    let time: Int
+    let humidity: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case time, humidity
     }
 }
 
@@ -156,6 +175,7 @@ struct CarwashIndex: Codable {
     let weather3Am7pm: String
     let pm10grade: Int
     let pollenIndex: Int
+    let precipitationDaily: [PrecipitationDaily]
 
     enum CodingKeys: String, CodingKey {
         case status, pm10grade
@@ -166,6 +186,16 @@ struct CarwashIndex: Codable {
         case tomorrowPrecipication = "tomorrow_precipitation"
         case weather3Am7pm = "weather_3Am7pm"
         case pollenIndex = "pollen_index"
+        case precipitationDaily = "precipitation_daily"
+    }
+}
+
+struct PrecipitationDaily: Codable {
+    let day: Int
+    let precipitation: Double
+    
+    enum CodingKeys: String, CodingKey {
+        case day, precipitation
     }
 }
 
