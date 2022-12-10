@@ -92,6 +92,9 @@ class CheckWeatherView: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = false
         
         view.backgroundColor = UIColor.KColor.white
+        if !(currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways) {
+            NotificationCenter.default.addObserver(self, selector: #selector(tapSettingButton), name: NSNotification.Name("authorizeButtonTap"), object: nil)
+        }
     }
     
     private func bind() {
@@ -117,13 +120,6 @@ class CheckWeatherView: UIViewController {
                 let itemMove = self.weathers[$0[0]]
                 self.weathers.remove(at: $0[0])
                 self.weathers.insert(itemMove, at: $0[1])
-            })
-            .disposed(by: disposeBag)
-        
-        locationSelectionView.authorizeButtonTapped
-            .subscribe(onNext: {
-                self.locationSelectionView.navigationController?.popViewController(animated: true)
-                self.navigationController?.pushViewController(self.settingView, animated: true)
             })
             .disposed(by: disposeBag)
         
