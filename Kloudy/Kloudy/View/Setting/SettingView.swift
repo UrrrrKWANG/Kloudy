@@ -17,6 +17,7 @@ class SettingView: UIViewController {
     let changeAuthorityFalse = PublishSubject<Bool>()
     
     override func viewDidLoad() {
+        super.viewDidLoad()
         view.backgroundColor = UIColor.KColor.white
         layout()
         attribute()

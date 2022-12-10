@@ -77,18 +77,18 @@ class ViewController: UIViewController {
                 if self.locationCount == 0 {
                     if !$0.isEmpty {
                         self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
-                        self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                        self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
                     }
                 } else {
                     if (self.currentStatus == .restricted || self.currentStatus == .notDetermined || self.currentStatus == .denied) {
                         if $0.count == self.locationCount {
                             self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
-                            self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                            self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
                         }
                     } else {
                         if $0.count == self.locationCount + 1 {
                             self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
-                            self.navigationController?.pushViewController(self.checkWeatherView, animated: false)
+                            self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
                         }
                     }
                 }
