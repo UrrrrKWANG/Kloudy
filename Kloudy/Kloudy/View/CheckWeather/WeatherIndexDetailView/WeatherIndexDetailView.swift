@@ -136,20 +136,18 @@ class WeatherIndexDetailView: UIViewController {
             ))
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
 
+            
+            
         } else if indexType == .car {
             firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
-            
             secondIconView.iconValue.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm.localized ?? "")
-            
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 1)
             
         } else if indexType == .laundry {
             firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather ?? 0))
-            
             secondIconView.iconValue.onNext(String(
                 Int(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidity ?? 0)
             ))
-            
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 1)
             
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
@@ -166,9 +164,8 @@ class WeatherIndexDetailView: UIViewController {
                 presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
             }
             
-            chartView.chartType.onNext(.temperature)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartTemperatureData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
             chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
             
         } else if indexType == .temperatureGap {
@@ -181,9 +178,8 @@ class WeatherIndexDetailView: UIViewController {
                 presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
             }
             
-            chartView.chartType.onNext(.temperature)
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
+            chartView.chartTemperatureData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
             chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
         }
         
