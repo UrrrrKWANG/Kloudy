@@ -139,32 +139,32 @@ class WeatherIndexView: UIView {
             self.indexStrArray = Storage.fetchCurrentLocationIndexArray()
             self.indexArray = Storage.convertStringToIndexType(indexStrArray: self.indexStrArray)
             self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
-        }
-        
-        // 이외 지역
-        self.locationList.forEach { location in
-            if location.code == sentWeather.localWeather[0].localCode {
-                self.indexStrArray = location.indexArray ?? []
-                self.indexStrArray.forEach { index in
-                    switch index {
-                    case "rain":
-                        self.indexArray.append(.umbrella)
-                    case "mask":
-                        self.indexArray.append(.mask)
-                    case "laundry":
-                        self.indexArray.append(.laundry)
-                    case "car":
-                        self.indexArray.append(.car)
-                    case "outer":
-                        self.indexArray.append(.outer)
-                    case "temperatureGap":
-                        self.indexArray.append(.temperatureGap)
-                    default:
-                        break
+        } else {
+            // 이외 지역
+            self.locationList.forEach { location in
+                if location.code == sentWeather.localWeather[0].localCode {
+                    self.indexStrArray = location.indexArray ?? []
+                    self.indexStrArray.forEach { index in
+                        switch index {
+                        case "rain":
+                            self.indexArray.append(.umbrella)
+                        case "mask":
+                            self.indexArray.append(.mask)
+                        case "laundry":
+                            self.indexArray.append(.laundry)
+                        case "car":
+                            self.indexArray.append(.car)
+                        case "outer":
+                            self.indexArray.append(.outer)
+                        case "temperatureGap":
+                            self.indexArray.append(.temperatureGap)
+                        default:
+                            break
+                        }
                     }
+                    self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
+                    return
                 }
-                self.locationWeatherIndexView.sentIndexArray.onNext(self.indexArray)
-                return
             }
         }
     }
