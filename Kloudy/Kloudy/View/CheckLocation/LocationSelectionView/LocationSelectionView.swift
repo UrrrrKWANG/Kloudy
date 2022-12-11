@@ -438,8 +438,8 @@ extension LocationSelectionView: UITableViewDataSource {
             completionHandler(true)
         }
         
-        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 93)).image { _ in
-            UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 3.8, width: 50, height: 86))
+        deleteAction.image = UIGraphicsImageRenderer(size: CGSize(width: 50, height: 96)).image { _ in
+            UIImage(named: "deleteButton")?.draw(in: CGRect(x: 0, y: 0, width: 50, height: 96))
         }
 
         deleteAction.backgroundColor = .systemBackground
@@ -492,7 +492,7 @@ extension LocationSelectionView: UITableViewDelegate {
         case .search:
             return 50
         case .check:
-            return 100
+            return 112
         }
     }
     

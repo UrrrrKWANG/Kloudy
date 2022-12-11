@@ -157,6 +157,7 @@
 		E033613C290998470098CF76 /* Weather.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77C29011DB100EF83AE /* Weather.swift */; };
 		E033613D290998490098CF76 /* WeatherCell+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8BC8F77D29011DB100EF83AE /* WeatherCell+CoreDataProperties.swift */; };
 		E036F3342928FCA200003E8A /* CurrentWeatherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E036F3332928FCA200003E8A /* CurrentWeatherView.swift */; };
+		E049D72D294570CE00CFC886 /* MaskChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E049D72C294570CE00CFC886 /* MaskChartView.swift */; };
 		E08E3C02294315D70089B1D1 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08E3C01294315D70089B1D1 /* UINavigationController+.swift */; };
 		E0BEFB51292CFD7A00D16B69 /* LocalWeather+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */; };
 		E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE1273292231A1000AC3FC /* CALayer+.swift */; };
@@ -341,6 +342,7 @@
 		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E02A628B2933B2670008A33B /* TemperatureGapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureGapView.swift; sourceTree = "<group>"; };
 		E036F3332928FCA200003E8A /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
+		E049D72C294570CE00CFC886 /* MaskChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskChartView.swift; sourceTree = "<group>"; };
 		E08E3C01294315D70089B1D1 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalWeather+.swift"; sourceTree = "<group>"; };
 		E0FE1273292231A1000AC3FC /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
@@ -433,6 +435,7 @@
 			children = (
 				8B22A3BE291F59730079FA48 /* IndexChartView.swift */,
 				8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */,
+				E049D72C294570CE00CFC886 /* MaskChartView.swift */,
 			);
 			path = IndexChartView;
 			sourceTree = "<group>";
@@ -1242,6 +1245,7 @@
 				8B22A3CC29221CBD0079FA48 /* IndexStepView.swift in Sources */,
 				8BC8F7F729011DB200EF83AE /* CheckWeatherBasicNavigationView.swift in Sources */,
 				E0BEFB51292CFD7A00D16B69 /* LocalWeather+.swift in Sources */,
+				E049D72D294570CE00CFC886 /* MaskChartView.swift in Sources */,
 				8B6409A12918F29500DC2962 /* SearchLocationViewModel.swift in Sources */,
 				BAFCEAF52920E65B0084F28E /* TodayWeatherDataCell.swift.swift in Sources */,
 				8BC8F7D729011DB200EF83AE /* Weather.swift in Sources */,

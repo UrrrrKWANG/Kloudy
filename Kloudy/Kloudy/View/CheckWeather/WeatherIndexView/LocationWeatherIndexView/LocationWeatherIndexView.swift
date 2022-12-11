@@ -88,6 +88,7 @@ class LocationWeatherIndexView: UIView {
                 self.sentIndexName = $0
                 self.changeTextView(indexType: $0)
                 guard let weathers = self.weathers else { return }
+                let weatherIndex = weathers.localWeather[0].weatherIndex[0]
                 if $0 == .temperatureGap {
                     if self.containerView.subviews.count != 0 {
                         self.containerView.subviews[0].removeFromSuperview()
@@ -102,6 +103,10 @@ class LocationWeatherIndexView: UIView {
                 } else if $0 == .outer {
                     let outerTextArray: [String] = ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: outerTextArray[weathers.localWeather[0].weatherIndex[0].outerIndex[0].status])
+                    self.indexStatus.onNext(self.findStatus(indexName: $0))
+                } else if $0 == .mask {
+                    let maskTextArray: [String] = ["좋음".localized, "보통".localized, "나쁨".localized, "매우나쁨".localized]
+                    self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: maskTextArray[weatherIndex.maskIndex[0].status])
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else {
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: "")
@@ -311,7 +316,7 @@ class LocationWeatherIndexView: UIView {
         if textContainerView.subviews.count != 0 {
             textContainerView.subviews[0].removeFromSuperview()
         }
-        if indexType == .umbrella || indexType == .temperatureGap || indexType == .outer {
+        if indexType == .umbrella || indexType == .temperatureGap || indexType == .outer || indexType == .mask {
             textContainerView.addSubview(weatherIndexStatusLabel)
             weatherIndexStatusLabel.snp.makeConstraints {
                 $0.edges.equalToSuperview()
@@ -381,7 +386,7 @@ class LocationWeatherIndexView: UIView {
         weatherIndexStatusLabel.numberOfLines = 2
         weatherIndexNameLabel.configureLabel(text: indexNameLabel, font: UIFont.KFont.appleSDNeoBoldSmallLarge, textColor: UIColor.KColor.black)
         
-        if indexNameLabel == "우산 지수".localized || indexNameLabel == "겉옷 지수".localized {
+        if indexNameLabel == "우산 지수".localized || indexNameLabel == "겉옷 지수".localized || indexNameLabel == "마스크 지수".localized {
             weatherIndexStatusLabel.layer.backgroundColor = UIColor.KColor.primaryBlue07.cgColor
             weatherIndexStatusLabel.configureLabel(text: indexStatusLabel.localized, font: UIFont.KFont.appleSDNeoSemiBoldMedium, textColor: UIColor.KColor.primaryBlue01)
             
