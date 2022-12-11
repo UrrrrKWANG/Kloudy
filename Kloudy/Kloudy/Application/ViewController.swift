@@ -166,7 +166,6 @@ class ViewController: UIViewController {
                     .disposed(by: disposeBag)
             } else {
                 // 앱 첫 실행 시 현재 위치에 대한 기본 지수 순서를 저장합니다.
-                Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
                 fetchCurrentLocationWeatherData()
             }
         }
