@@ -45,8 +45,8 @@ class MaskChartView: UIView {
     private func setLayout() {
         
         pmStackView.axis = .horizontal
-        pmStackView.spacing = 10
-        pmStackView.distribution = .fillProportionally
+        pmStackView.spacing = 8
+        pmStackView.distribution = .fillEqually
         pmStackView.alignment = .bottom
         
         pmStackView.snp.makeConstraints {
@@ -65,28 +65,26 @@ class PM10View: BarChartView {
     
     var pmDatas = PublishSubject<[Double]>()
     let disposeBag = DisposeBag()
-    
-    var yesterdayPM10: Double = 0
-    var todayPM10: Double = 0
-    let days: [String] = ["어제", "오늘"]
+ 
+    var pm10Array: [Double] = []
+    let days: [String] = ["어제".localized, "오늘".localized]
     
     init() {
         super.init(frame: .zero)
         bind()
-
-        self.noDataText = "데이터가 없습니다."
-        self.noDataFont = .systemFont(ofSize: 20)
-        self.noDataTextColor = .lightGray
+        self.noDataText = "데이터가 없습니다.".localized
+        self.noDataFont = UIFont.KFont.lexendLight14
+        self.noDataTextColor = UIColor.KColor.gray05
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
     private func bind() {
         pmDatas
             .subscribe(onNext: {
-                self.yesterdayPM10 = $0[0]
-                self.todayPM10 = $0[1]
+                self.pm10Array = $0
                 self.setChart(dataPoints: self.days, values: $0)
             })
             .disposed(by: disposeBag)
@@ -99,38 +97,66 @@ class PM10View: BarChartView {
             dataEntries.append(dataEntry)
         }
 
-        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "미세먼지")
+        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "미세먼지".localized)
 
         // 차트 컬러
-        chartDataSet.colors = [UIColor.KColor.gray04, UIColor.KColor.orange01]
+        chartDataSet.colors = [UIColor.KColor.chartBlue.withAlphaComponent(0.5), UIColor.KColor.orange01]
 
         // 데이터 삽입
         let chartData = BarChartData(dataSet: chartDataSet)
         self.data = chartData
         
-        // 축 커스텀
-        self.xAxis.labelPosition = .bottom
-        self.rightAxis.enabled = false
-        self.xAxis.valueFormatter = IndexAxisValueFormatter(values: days)
+        self.xAxis.labelPosition = .top
         
-        // X축 레이블 갯수 최대로 설정 (이 코드 안쓸 시 Jan Mar May 이런식으로 띄엄띄엄 조금만 나옴)
-        self.xAxis.setLabelCount(dataPoints.count, force: false)
-        
-        // 줌 안되게
+        self.legend.enabled = false
+        self.leftAxis.enabled = false
+        self.rightAxis.enabled = true
+        self.rightAxis.gridColor = UIColor.KColor.gray03
+        self.rightAxis.axisLineColor = UIColor.KColor.clear
+        self.rightAxis.labelFont = UIFont.KFont.lexendLight14
+        self.rightAxis.setLabelCount(5, force: false)
+
         chartDataSet.highlightEnabled = false
         self.doubleTapToZoomEnabled = false
         
-        // 미세먼지 최대 최소
-        self.leftAxis.axisMinimum = 0
+        self.animate(yAxisDuration: 1.0)
+        self.backgroundColor = UIColor.KColor.clear
+        self.borderColor = UIColor.KColor.clear
+        self.drawBordersEnabled = true
+
+        self.xAxis.labelPosition = .bottom
+        self.xAxis.labelFont = UIFont.KFont.lexendLight12
+        self.xAxis.labelTextColor = UIColor.KColor.black
+        self.xAxis.setLabelCount(dataPoints.count, force: false)
+
+        self.xAxis.drawAxisLineEnabled = false
+        self.drawGridBackgroundEnabled = true
+
+        self.xAxis.valueFormatter = IndexAxisValueFormatter(values: days)
+        self.xAxis.granularity = 1
+
+        self.xAxis.gridLineWidth = 1.0
+        self.xAxis.gridLineDashPhase = 1.0
+        self.xAxis.gridLineDashLengths = [5]
+        self.xAxis.gridColor = UIColor.KColor.primaryBlue05
+        self.gridBackgroundColor = UIColor.KColor.gray05
         
-        let compareMax = max(yesterdayPM10, todayPM10)
+        // 미세먼지 최대 최소
+        let compareMax = pm10Array.max() ?? 0
+        
+        self.leftAxis.axisMinimum = 0
         if compareMax > 150 {
             self.leftAxis.axisMaximum = compareMax
         } else {
             self.leftAxis.axisMaximum = 150
         }
         
-        self.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        self.rightAxis.axisMinimum = 0
+        if compareMax > 150 {
+            self.rightAxis.axisMaximum = compareMax
+        } else {
+            self.rightAxis.axisMaximum = 150
+        }
     }
 }
 
@@ -139,28 +165,25 @@ class PM25View: BarChartView {
     var pmDatas = PublishSubject<[Double]>()
     let disposeBag = DisposeBag()
     
-    var yesterdayPM25: Double = 0
-    var todayPM25: Double = 0
-    let days: [String] = ["어제", "오늘"]
+    var pm25Array: [Double] = []
+    let days: [String] = ["어제".localized, "오늘".localized]
     
     init() {
         super.init(frame: .zero)
         bind()
-
-        self.noDataText = "데이터가 없습니다."
-        self.noDataFont = .systemFont(ofSize: 20)
-        self.noDataTextColor = .lightGray
-        
+        self.noDataText = "데이터가 없습니다.".localized
+        self.noDataFont = UIFont.KFont.lexendLight14
+        self.noDataTextColor = UIColor.KColor.gray05
     }
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
     }
+    
     private func bind() {
         pmDatas
             .subscribe(onNext: {
-                self.yesterdayPM25 = $0[0]
-                self.todayPM25 = $0[1]
+                self.pm25Array = $0
                 self.setChart(dataPoints: self.days, values: $0)
             })
             .disposed(by: disposeBag)
@@ -173,37 +196,64 @@ class PM25View: BarChartView {
             dataEntries.append(dataEntry)
         }
 
-        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "초미세먼지")
+        let chartDataSet = BarChartDataSet(entries: dataEntries, label: "초미세먼지".localized)
 
         // 차트 컬러
-        chartDataSet.colors = [UIColor.KColor.gray04, UIColor.KColor.orange01]
+        chartDataSet.colors = [UIColor.KColor.chartBlue.withAlphaComponent(0.5), UIColor.KColor.orange01]
 
         // 데이터 삽입
         let chartData = BarChartData(dataSet: chartDataSet)
         self.data = chartData
         
-        // 축 커스텀
-        self.xAxis.labelPosition = .bottom
-        self.rightAxis.enabled = false
-        self.xAxis.valueFormatter = IndexAxisValueFormatter(values: days)
-        
-        // X축 레이블 갯수 최대로 설정 (이 코드 안쓸 시 Jan Mar May 이런식으로 띄엄띄엄 조금만 나옴)
-        self.xAxis.setLabelCount(dataPoints.count, force: false)
-        
-        // 줌 안되게
+        self.legend.enabled = false
+        self.leftAxis.enabled = false
+        self.rightAxis.enabled = true
+        self.rightAxis.gridColor = UIColor.KColor.gray03
+        self.rightAxis.axisLineColor = UIColor.KColor.clear
+        self.rightAxis.labelFont = UIFont.KFont.lexendLight14
+        self.rightAxis.setLabelCount(5, force: false)
+
         chartDataSet.highlightEnabled = false
         self.doubleTapToZoomEnabled = false
         
-        // 미세먼지 최대 최소
-        self.leftAxis.axisMinimum = 0
+        self.animate(yAxisDuration: 1.0)
+        self.backgroundColor = UIColor.KColor.clear
+        self.borderColor = UIColor.KColor.clear
+        self.drawBordersEnabled = true
+
+        self.xAxis.labelPosition = .bottom
+        self.xAxis.labelFont = UIFont.KFont.lexendLight12
+        self.xAxis.labelTextColor = UIColor.KColor.black
+        self.xAxis.setLabelCount(dataPoints.count, force: false)
+
+        self.xAxis.drawAxisLineEnabled = false
+        self.drawGridBackgroundEnabled = true
+
+        self.xAxis.valueFormatter = IndexAxisValueFormatter(values: days)
+        self.xAxis.granularity = 1
+
+        self.xAxis.gridLineWidth = 1.0
+        self.xAxis.gridLineDashPhase = 1.0
+        self.xAxis.gridLineDashLengths = [5]
+        self.xAxis.gridColor = UIColor.KColor.primaryBlue05
+        self.gridBackgroundColor = UIColor.KColor.gray05
         
-        let compareMax = max(yesterdayPM25, todayPM25)
-        if compareMax > 80 {
+        // 미세먼지 최대 최소
+        let compareMax = pm25Array.max() ?? 0
+        
+        self.leftAxis.axisMinimum = 0
+        if compareMax > 100 {
             self.leftAxis.axisMaximum = compareMax
         } else {
-            self.leftAxis.axisMaximum = 80
+            self.leftAxis.axisMaximum = 100
         }
         
-        self.animate(xAxisDuration: 2.0, yAxisDuration: 2.0)
+        self.rightAxis.axisMinimum = 0
+        if compareMax > 100 {
+            self.rightAxis.axisMaximum = compareMax
+        } else {
+            self.rightAxis.axisMaximum = 100
+        }
     }
+    
 }
