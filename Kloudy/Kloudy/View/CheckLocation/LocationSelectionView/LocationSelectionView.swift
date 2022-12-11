@@ -199,7 +199,8 @@ class LocationSelectionView: UIViewController {
                     $0.trailing.equalTo(self.cancelSearchButton.snp.leading).offset(-12)
                 }
                 self.searchBar.snp.remakeConstraints {
-                    $0.leading.trailing.equalTo(self.searchBarBackgroundView)
+                    $0.leading.equalToSuperview().inset(16)
+                    $0.trailing.equalTo(self.searchBarBackgroundView)
                     $0.top.equalTo(self.searchBarBackgroundView.snp.top).offset(-4)
                 }
                 self.searchBar.superview?.layoutIfNeeded()
@@ -215,7 +216,7 @@ class LocationSelectionView: UIViewController {
                         $0.height.equalTo(47)
                     }
                     self.searchBar.snp.remakeConstraints {
-                        $0.leading.trailing.equalToSuperview().inset(20)
+                        $0.leading.trailing.equalToSuperview().inset(16)
                         $0.top.equalTo(self.searchBarBackgroundView.snp.top).offset(-4)
                     }
                 }
