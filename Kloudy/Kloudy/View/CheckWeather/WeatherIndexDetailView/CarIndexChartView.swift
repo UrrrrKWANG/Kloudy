@@ -122,10 +122,7 @@ class CarChartView: UIView {
         chartView.xAxis.labelFont = UIFont.KFont.lexendLight12
         chartView.xAxis.labelTextColor = UIColor.KColor.black
         chartView.xAxis.setLabelCount(xAxis.count, force: false)
-        
         chartView.xAxis.drawAxisLineEnabled = false
-        chartView.drawGridBackgroundEnabled = true
-        chartView.gridBackgroundColor = UIColor.KColor.gray05
         
         chartView.xAxis.valueFormatter = IndexAxisValueFormatter(values: xAxis)
         chartView.xAxis.granularity = 1
@@ -134,6 +131,7 @@ class CarChartView: UIView {
         chartView.xAxis.gridLineDashPhase = 1.0
         chartView.xAxis.gridLineDashLengths = [5]
         chartView.xAxis.gridColor = UIColor.KColor.primaryBlue05
+        chartView.drawGridBackgroundEnabled = true
         chartView.gridBackgroundColor = UIColor.KColor.gray05
     }
 }
