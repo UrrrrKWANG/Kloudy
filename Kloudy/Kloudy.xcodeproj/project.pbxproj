@@ -37,6 +37,7 @@
 		8B1F55D6293B5891009CE0D9 /* UserDefaults+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D5293B5891009CE0D9 /* UserDefaults+.swift */; };
 		8B1F55D8293F4EB2009CE0D9 /* OnboardingPageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55D7293F4EB2009CE0D9 /* OnboardingPageView.swift */; };
 		8B1F55DC29410D40009CE0D9 /* rain_step1.json in Resources */ = {isa = PBXBuildFile; fileRef = 8B1F55DB29410D40009CE0D9 /* rain_step1.json */; };
+		8B1F55DE2944DB39009CE0D9 /* CarIndexChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55DD2944DB39009CE0D9 /* CarIndexChartView.swift */; };
 		8B22A3BD291A3B820079FA48 /* LocationSearchBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */; };
 		8B22A3BF291F59730079FA48 /* IndexChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3BE291F59730079FA48 /* IndexChartView.swift */; };
 		8B22A3C1291F597A0079FA48 /* IndexChartViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */; };
@@ -236,6 +237,7 @@
 		8B1F55D5293B5891009CE0D9 /* UserDefaults+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+.swift"; sourceTree = "<group>"; };
 		8B1F55D7293F4EB2009CE0D9 /* OnboardingPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPageView.swift; sourceTree = "<group>"; };
 		8B1F55DB29410D40009CE0D9 /* rain_step1.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = rain_step1.json; sourceTree = "<group>"; };
+		8B1F55DD2944DB39009CE0D9 /* CarIndexChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarIndexChartView.swift; sourceTree = "<group>"; };
 		8B22A3BC291A3B820079FA48 /* LocationSearchBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearchBar.swift; sourceTree = "<group>"; };
 		8B22A3BE291F59730079FA48 /* IndexChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartView.swift; sourceTree = "<group>"; };
 		8B22A3C0291F597A0079FA48 /* IndexChartViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IndexChartViewModel.swift; sourceTree = "<group>"; };
@@ -491,6 +493,7 @@
 				8B22A3C92920FED30079FA48 /* IndexIconView.swift */,
 				8B22A3C3291F63C10079FA48 /* IndexButtonView.swift */,
 				8B22A3CB29221CBD0079FA48 /* IndexStepView.swift */,
+				8B1F55DD2944DB39009CE0D9 /* CarIndexChartView.swift */,
 				8B22A3C2291F612C0079FA48 /* IndexChartView */,
 			);
 			path = WeatherIndexDetailView;
@@ -1214,6 +1217,7 @@
 				8B1F55D12939B2DB009CE0D9 /* OnboardingView.swift in Sources */,
 				1131D4D1292D558E00D80547 /* CurrentLocationTableViewCell.swift in Sources */,
 				2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */,
+				8B1F55DE2944DB39009CE0D9 /* CarIndexChartView.swift in Sources */,
 				8BC8F7D229011DB200EF83AE /* CoreDataStack.swift in Sources */,
 				11E3488B2929BD8B006EA966 /* LocationData.swift in Sources */,
 				8BC8F7CC29011DB200EF83AE /* Font+.swift in Sources */,

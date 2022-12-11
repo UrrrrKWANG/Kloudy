@@ -24,7 +24,7 @@ enum IndexType {
         case .mask: return ["마스크".localized, "dust_png", "미세먼지".localized, "㎍/㎥", "fineDust_png", "초미세먼지".localized, "㎍/㎥", ""]
         case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "평균 습도".localized, "%", "현재 습도".localized]
         case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "현재 온도".localized]
-        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", ""]
+        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "주간 강수량".localized]
         case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "현재 온도".localized]
         }
     }
@@ -83,6 +83,7 @@ class WeatherIndexDetailView: UIViewController {
     let firstIconView = IndexIconView(frame: CGRect(origin: .zero, size: CGSize(width: 159, height: 50)))
     let secondIconView = IndexIconView(frame: CGRect(origin: .zero, size: CGSize(width: 159, height: 50)))
     lazy var chartView = IndexChartView()
+    lazy var carChartView = CarChartView()
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
@@ -140,6 +141,9 @@ class WeatherIndexDetailView: UIViewController {
             firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
             secondIconView.iconValue.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm.localized ?? "")
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 1)
+            
+            carChartView.chartLabelText.onNext(indexType.detailIndexString[7])
+            carChartView.chartWeeklyPrecipitationData.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].precipitationDaily ?? [])
             
         } else if indexType == .laundry {
             firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather ?? 0))
@@ -271,7 +275,7 @@ class WeatherIndexDetailView: UIViewController {
         
         // 추후 마스크, 세차 지수 차트 추가 예정
         if indexType.chartType == 0 { layoutChartView(chart: chartView) }
-        else if indexType.chartType == 1 {  }
+        else if indexType.chartType == 1 { layoutChartView(chart: carChartView) }
         else if indexType.chartType == 2 {  }
         
         baseIndexView.addSubview(indexStepView)
