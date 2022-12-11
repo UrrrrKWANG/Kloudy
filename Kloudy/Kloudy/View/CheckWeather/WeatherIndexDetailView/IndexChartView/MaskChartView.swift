@@ -100,10 +100,12 @@ class PM10View: BarChartView {
         let chartDataSet = BarChartDataSet(entries: dataEntries, label: "미세먼지".localized)
 
         // 차트 컬러
-        chartDataSet.colors = [UIColor.KColor.chartBlue.withAlphaComponent(0.5), UIColor.KColor.orange01]
+        chartDataSet.colors = [UIColor.KColor.gray03, UIColor.KColor.chartGreen01]
 
         // 데이터 삽입
         let chartData = BarChartData(dataSet: chartDataSet)
+        chartData.setDrawValues(true)
+        chartData.setValueFont(UIFont.KFont.lexendLight10)
         self.data = chartData
         
         self.xAxis.labelPosition = .top
@@ -197,12 +199,14 @@ class PM25View: BarChartView {
         }
 
         let chartDataSet = BarChartDataSet(entries: dataEntries, label: "초미세먼지".localized)
-
+        
         // 차트 컬러
-        chartDataSet.colors = [UIColor.KColor.chartBlue.withAlphaComponent(0.5), UIColor.KColor.orange01]
+        chartDataSet.colors = [UIColor.KColor.gray03, UIColor.KColor.chartGreen02]
 
         // 데이터 삽입
         let chartData = BarChartData(dataSet: chartDataSet)
+        chartData.setDrawValues(true)
+        chartData.setValueFont(UIFont.KFont.lexendLight10)
         self.data = chartData
         
         self.legend.enabled = false

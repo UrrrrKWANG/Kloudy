@@ -12,7 +12,7 @@ import RxSwift
 
 class CarChartView: UIView {
     var data = [Double]()
-    let xAxis = ["1일 후", "2일 후", "3일 후", "4일 후", "5일 후", "6일 후", "7일 후"]
+    let xAxis = ["1일 후".localized, "2일 후".localized, "3일 후".localized, "4일 후".localized, "5일 후".localized, "6일 후".localized, "7일 후".localized]
     var barChartEntry = [BarChartDataEntry]()
     
     let disposeBag = DisposeBag()

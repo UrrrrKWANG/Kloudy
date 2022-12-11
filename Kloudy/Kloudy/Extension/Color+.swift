@@ -42,6 +42,9 @@ extension UIColor {
         static var internalIndexYellow02: UIColor { UIColor(named: "InternalIndexYellow02")! }
         static var orange01: UIColor { UIColor(named: "Orange01")! }
         static var orange02: UIColor { UIColor(named: "Orange02")! }
+        static var chartGreen01: UIColor { UIColor(named: "ChartGreen01")! }
+        static var chartGreen02: UIColor { UIColor(named: "ChartGreen02")! }
+        
         static var clear: UIColor { UIColor.clear }
     }
 }
