@@ -86,7 +86,7 @@ class IndexIconView: UIView {
     }
     
     private func configureIconNumberLabel(iconValueText: String) {
-        iconNumberLabel.text = iconValueText
+        iconNumberLabel.text = iconValueText.localized
         iconNumberLabel.textColor = UIColor.KColor.black
         iconNumberLabel.font = UIFont.KFont.appleSDNeoBold20
         iconNumberLabel.sizeToFit()

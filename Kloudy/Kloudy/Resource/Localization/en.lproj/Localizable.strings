@@ -568,7 +568,7 @@ Seogwipo-si="Seogwipo-si";
 "초미세먼지" = "Ultrafine Dust";
 "빨래" = "Laundry";
 "현재 습도" = "Current Humidity";
-"평균 습도" = "Average Humidity";
+"평균 습도" = "Humidity Avg";
 "겉옷" = "Coat";
 "일 최저 기온" = "Daily Min Temp";
 "출근시간대 온도" = "Commute Temp";
@@ -627,8 +627,8 @@ Seogwipo-si="Seogwipo-si";
 
 "맑음" = "Clear";
 "비" = "Rainy";
-"비/눈" = "Rain or Snow";
-"구름 많음" = "Partly cloudy";
+"비/눈" = "Rain/Snow";
+"구름 많음" = "Overcast";
 "흐림" = "Cloudy";
 "눈" = "Snowy";
 "적당함" = "Moderate";
@@ -642,6 +642,15 @@ Seogwipo-si="Seogwipo-si";
 "오후 12시" = "12PM";
 "오후 6시" = "6PM";
 
+"0일 후" = "Today";
+"1일 후" = "1 day";
+"2일 후" = "2 day";
+"3일 후" = "3 day";
+"4일 후" = "4 day";
+"5일 후" = "5 day";
+"6일 후" = "6 day";
+"7일 후" = "7 day";
+"예보없음" = "No forecast";
 
 "시간대별 날씨" = "Hourly Weather";
 "주간 날씨" = "Weekly Weather";
@@ -659,7 +668,6 @@ Seogwipo-si="Seogwipo-si";
 
 "지역을 검색해 보세요" = "Search";
 
-
 "라이센스" = "License";
 "버전정보" = "Version";
 "최신 버전입니다" = "Newest Version";
@@ -667,12 +675,9 @@ Seogwipo-si="Seogwipo-si";
 
 "설정" = "Settings";
 
-"출처 : 기상청 / 에어코리아" = "Source of Weather Data: Korea Meteorological Administration / Air Korea";
-"데이터는 실시간 관측된 자료이며 측정소 현지 사정이나 데이터의 수신상태에 따라 미수신될 수 있음" = "Real-time observed data: May not be received depending on the local circumstances of the measuring station or the reception status of the data.";
-
 "CityInformation" = "CityInformation";
 
-"위치 동의 " = "Authorize GPS ";
+"위치 동의 " = "Authorize GPS";
 
 "월" = "Mon";
 "화" = "Tue";
@@ -707,7 +712,6 @@ Seogwipo-si="Seogwipo-si";
 "오후 10시" = "10PM";
 "오후 11시" = "11PM";
 "오후 12시" = "12PM";
-
 
 "순서를 변경하세요" = "Changing the Orders";
 "아이콘을 길게 눌러 변경하고자 하는 지수의 순서를 바꿔보세요" = "Long press the icon to change the order of the index";
