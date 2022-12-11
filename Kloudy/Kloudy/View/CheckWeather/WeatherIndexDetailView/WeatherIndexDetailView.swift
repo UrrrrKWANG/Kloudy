@@ -24,7 +24,7 @@ enum IndexType {
         case .mask: return ["마스크".localized, "dust_png", "미세먼지".localized, "㎍/㎥", "fineDust_png", "초미세먼지".localized, "㎍/㎥", ""]
         case .laundry: return ["빨래".localized, "todayWeather_png", "오늘의 날씨".localized, "", "humidity_png", "평균 습도".localized, "%", "현재 습도".localized]
         case .outer: return ["겉옷".localized, "lowestTemperature_png", "일 최저 기온".localized, "℃", "goWorkingTemperature_png", "출근시간대 온도".localized, "℃", "현재 온도".localized]
-        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "주간 강수량".localized]
+        case .car: return ["세차".localized, "todayWeather_png", "오늘의 날씨".localized, "", "precipitation_png", "강수 예정".localized, "", "주간 평균 강수량".localized]
         case .temperatureGap: return ["일교차".localized, "lowestTemperature_png", "최저 기온".localized, "℃", "highestTemperature_png", "최고 온도".localized, "℃", "현재 온도".localized]
         }
     }
@@ -114,75 +114,84 @@ class WeatherIndexDetailView: UIViewController {
     }
     
     private func bind() {
-        // API 데이터 받을 시 전달
+        
+        guard let weatherData = weatherData else { return }
+        
         if indexType == .umbrella {
             firstIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0 * 10)/10
+                round(weatherData.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H * 10)/10
             ))
             secondIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind ?? 0 * 100)/100
+                round(weatherData.localWeather[0].weatherIndex[0].umbrellaIndex[0].wind * 100)/100
             ))
-            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].status ?? 1)
+            presentButtonView.indexStatus.onNext(weatherData.localWeather[0].weatherIndex[0].umbrellaIndex[0].status)
             
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartPrecipitationHourlyData.onNext(weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly ?? [])
-            chartView.chartUnitText.onNext(String(round((weatherData?.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H ?? 0) * 100)/100) + "mm")
+            chartView.chartPrecipitationHourlyData.onNext(weatherData.localWeather[0].weatherIndex[0].umbrellaIndex[0].umbrellaHourly)
+            chartView.chartUnitText.onNext(String(round((weatherData.localWeather[0].weatherIndex[0].umbrellaIndex[0].precipitation24H) * 100)/100) + "mm")
             
         } else if indexType == .mask {
             firstIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value ?? 0)
+                round(weatherData.localWeather[0].weatherIndex[0].maskIndex[0].todayPM10value)
             ))
             secondIconView.iconValue.onNext(String(
-                round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM25value ?? 0)
+                round(weatherData.localWeather[0].weatherIndex[0].maskIndex[0].todayPM25value)
             ))
-            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
+            presentButtonView.indexStatus.onNext(weatherData.localWeather[0].weatherIndex[0].maskIndex[0].status)
             
         } else if indexType == .car {
-            firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
-            secondIconView.iconValue.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm.localized ?? "")
-            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].status ?? 1)
+            firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather))
+            secondIconView.iconValue.onNext(weatherData.localWeather[0].weatherIndex[0].carwashIndex[0].weather3Am7pm.localized)
+            presentButtonView.indexStatus.onNext(weatherData.localWeather[0].weatherIndex[0].carwashIndex[0].status)
+            
+            // 주간 평균 강수량 계산
+            var averageWeeklyPrecipitation: Double = 0
+            weatherData.localWeather[0].weatherIndex[0].carwashIndex[0].precipitationDaily.forEach { data in
+                averageWeeklyPrecipitation += data.precipitation
+            }
             
             carChartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            carChartView.chartWeeklyPrecipitationData.onNext(weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].precipitationDaily ?? [])
+            carChartView.chartUnitText.onNext(String(round(averageWeeklyPrecipitation / 7.0 * 100) / 100) + "mm")
+            carChartView.chartWeeklyPrecipitationData.onNext(weatherData.localWeather[0].weatherIndex[0].carwashIndex[0].precipitationDaily)
             
         } else if indexType == .laundry {
-            firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather ?? 0))
+            firstIconView.iconValue.onNext(self.changeLaundryToString(step: weatherData.localWeather[0].weatherIndex[0].laundryIndex[0].dailyWeather))
             secondIconView.iconValue.onNext(String(
-                Int(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidity ?? 0)
+                Int(weatherData.localWeather[0].weatherIndex[0].laundryIndex[0].humidity)
             ))
-            presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].status ?? 1)
+            presentButtonView.indexStatus.onNext(weatherData.localWeather[0].weatherIndex[0].laundryIndex[0].status)
             
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartHumidityData.onNext(weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidityHourly ?? [])
-            chartView.chartUnitText.onNext(String(Int((weatherData?.localWeather[0].weatherIndex[0].laundryIndex[0].humidityHourly[0].humidity ?? 0) * 100)) + "%")
+            chartView.chartHumidityData.onNext(weatherData.localWeather[0].weatherIndex[0].laundryIndex[0].humidityHourly)
+            chartView.chartUnitText.onNext(String(Int((weatherData.localWeather[0].weatherIndex[0].laundryIndex[0].humidityHourly[0].humidity) * 100)) + "%")
             
         } else if indexType == .outer {
-            firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature ?? 0)))
-            secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].morningTemperature ?? 0)))
+            firstIconView.iconValue.onNext(String(Int(weatherData.localWeather[0].weatherIndex[0].outerIndex[0].dayMinTemperature)))
+            secondIconView.iconValue.onNext(String(Int(weatherData.localWeather[0].weatherIndex[0].outerIndex[0].morningTemperature)))
             
-            if weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1 > 4 {
+            if weatherData.localWeather[0].weatherIndex[0].outerIndex[0].status > 4 {
                 presentButtonView.indexStatus.onNext(4)
             } else {
-                presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
+                presentButtonView.indexStatus.onNext(weatherData.localWeather[0].weatherIndex[0].outerIndex[0].status)
             }
             
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartTemperatureData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
-            chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
+            chartView.chartTemperatureData.onNext(weatherData.localWeather[0].hourlyWeather)
+            chartView.chartUnitText.onNext(String((weatherData.localWeather[0].minMaxTemperature()[0])) + "℃")
             
         } else if indexType == .temperatureGap {
-            firstIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature ?? 0)))
-            secondIconView.iconValue.onNext(String(Int(weatherData?.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature ?? 0)))
+            firstIconView.iconValue.onNext(String(Int(weatherData.localWeather[0].weatherIndex[0].compareIndex[0].todayMinTemperature)))
+            secondIconView.iconValue.onNext(String(Int(weatherData.localWeather[0].weatherIndex[0].compareIndex[0].todayMaxtemperature)))
             
-            if weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1 > 4 {
+            if weatherData.localWeather[0].weatherIndex[0].outerIndex[0].status > 4 {
                 presentButtonView.indexStatus.onNext(4)
             } else {
-                presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].outerIndex[0].status ?? 1)
+                presentButtonView.indexStatus.onNext(weatherData.localWeather[0].weatherIndex[0].outerIndex[0].status)
             }
             
             chartView.chartLabelText.onNext(indexType.detailIndexString[7])
-            chartView.chartTemperatureData.onNext(weatherData?.localWeather[0].hourlyWeather ?? [])
-            chartView.chartUnitText.onNext(String((weatherData?.localWeather[0].minMaxTemperature()[0] ?? 0)) + "℃")
+            chartView.chartTemperatureData.onNext(weatherData.localWeather[0].hourlyWeather)
+            chartView.chartUnitText.onNext(String((weatherData.localWeather[0].minMaxTemperature()[0])) + "℃")
         }
         
         firstIconView.iconImage.onNext(indexType.detailIndexString[1])

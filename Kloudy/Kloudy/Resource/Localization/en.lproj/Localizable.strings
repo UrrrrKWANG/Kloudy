@@ -558,7 +558,7 @@ Seogwipo-si="Seogwipo-si";
 
 "우산" = "Umbrella";
 "하루 강수량" = "Daily Precip";
-"주간 강수량" = "Weekly Precip";
+"주간 평균 강수량" = "Weekly Average Precip";
 "최대 풍속" = "Max Wind Speed";
 "강수량" = "Precip";
 "마스크" = "Mask";

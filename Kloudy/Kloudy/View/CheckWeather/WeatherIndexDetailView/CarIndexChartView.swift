@@ -18,8 +18,10 @@ class CarChartView: UIView {
     let disposeBag = DisposeBag()
     let chartView = BarChartView()
     let chartLabel = UILabel()
+    let chartUnit = UILabel()
     
     let chartLabelText: BehaviorSubject<String> = BehaviorSubject(value: "")
+    let chartUnitText: BehaviorSubject<String> = BehaviorSubject(value: "")
     let chartWeeklyPrecipitationData = PublishSubject<[PrecipitationDaily]>()
     
     override init(frame: CGRect) {
@@ -39,12 +41,17 @@ class CarChartView: UIView {
             })
             .disposed(by: disposeBag)
         
+        chartUnitText
+            .subscribe(onNext: {
+                self.configureChartUnit(text: $0)
+            })
+            .disposed(by: disposeBag)
+        
         chartWeeklyPrecipitationData
             .subscribe(onNext: {
                 $0.forEach { weeklyData in
                     self.data.append(weeklyData.precipitation)
                 }
-                print(self.data)
                 self.deliverChartData()
             })
             .disposed(by: disposeBag)
@@ -59,7 +66,7 @@ class CarChartView: UIView {
     }
     
     private func layout() {
-        [chartLabel, chartView].forEach{ self.addSubview($0) }
+        [chartLabel, chartUnit, chartView].forEach{ self.addSubview($0) }
         
         chartLabel.snp.makeConstraints {
             $0.top.equalToSuperview().inset(5)
@@ -67,8 +74,14 @@ class CarChartView: UIView {
             $0.height.equalTo(17)
         }
         
+        chartUnit.snp.makeConstraints {
+            $0.top.equalToSuperview()
+            $0.leading.equalTo(chartLabel.snp.trailing).offset(4)
+            $0.height.equalTo(25)
+        }
+        
         chartView.snp.makeConstraints {
-            $0.top.equalTo(chartLabel.snp.top).offset(17)
+            $0.top.equalTo(chartUnit.snp.top).offset(17)
             $0.leading.trailing.equalToSuperview()
             $0.height.equalTo(190)
         }
@@ -76,6 +89,10 @@ class CarChartView: UIView {
 
     private func configureChartLabel(text: String) {
         chartLabel.configureLabel(text: text, font: UIFont.KFont.appleSDNeoMedium14, textColor: UIColor.KColor.gray01)
+    }
+    
+    private func configureChartUnit(text: String) {
+        chartUnit.configureLabel(text: text, font: UIFont.KFont.appleSDNeoSemiBold20, textColor: UIColor.KColor.black)
     }
     
     private func configureChart(chartEntry: [ChartDataEntry]) {
