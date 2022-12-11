@@ -67,12 +67,12 @@ class WeekWeatherDataCell: UICollectionViewCell{
         dayLabel.snp.makeConstraints {
             $0.centerY.equalToSuperview()
             $0.leading.equalToSuperview().inset(20)
-            $0.width.equalTo(35)
+            $0.width.equalTo(121)
         }
 
         weatherCondition.snp.makeConstraints {
             $0.centerY.equalToSuperview()
-            $0.leading.equalTo(dayLabel.snp.trailing).offset(86)
+            $0.leading.equalTo(dayLabel.snp.trailing)
             $0.width.equalTo(37)
             $0.height.equalTo(37)
         }
