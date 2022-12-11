@@ -491,7 +491,7 @@ extension LocationSelectionView: UITableViewDelegate {
         case .search:
             return 50
         case .check:
-            return 100
+            return 112
         }
     }
     
