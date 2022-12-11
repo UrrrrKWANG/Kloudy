@@ -14,6 +14,7 @@ public class Storage {
     class func isFirst() -> Bool {
         let defaults = UserDefaults.standard
         if defaults.object(forKey: "isFirst") == nil {
+            Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
             defaults.set("No", forKey: "isFirst")
             return true
         } else {
