@@ -100,9 +100,8 @@ class TemperatureGapView: UIView {
         
         let window = UIApplication.shared.windows[0]
         let safeFrame = window.safeAreaLayoutGuide.layoutFrame.size.height
-
-        let viewHeightSize: Int = Int(safeFrame - 535)
-
+        let viewHeightSize: Int = Int(safeFrame - 571)
+        
         // 최고온도와 최저온도가 같으면 모두 최대 높이로 보이게 함
         if total == 0 {
             yesterdayMaxHeight = viewHeightSize
