@@ -83,6 +83,7 @@ class WeatherIndexDetailView: UIViewController {
     let firstIconView = IndexIconView(frame: CGRect(origin: .zero, size: CGSize(width: 159, height: 50)))
     let secondIconView = IndexIconView(frame: CGRect(origin: .zero, size: CGSize(width: 159, height: 50)))
     lazy var chartView = IndexChartView()
+    lazy var maskChartView = MaskChartView()
     let presentButtonView = IndexButtonView()
     let indexStepView = IndexStepView()
     
@@ -135,6 +136,8 @@ class WeatherIndexDetailView: UIViewController {
                 round(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].todayPM25value ?? 0)
             ))
             presentButtonView.indexStatus.onNext(weatherData?.localWeather[0].weatherIndex[0].maskIndex[0].status ?? 1)
+            guard let weatherData = weatherData else { return }
+            maskChartView.chartPMData.onNext(weatherData.localWeather[0].weatherIndex[0].maskIndex[0])
             
         } else if indexType == .car {
             firstIconView.iconValue.onNext(self.changeCarWashToString(step: weatherData?.localWeather[0].weatherIndex[0].carwashIndex[0].dailyWeather ?? 0))
@@ -272,7 +275,7 @@ class WeatherIndexDetailView: UIViewController {
         // 추후 마스크, 세차 지수 차트 추가 예정
         if indexType.chartType == 0 { layoutChartView(chart: chartView) }
         else if indexType.chartType == 1 {  }
-        else if indexType.chartType == 2 {  }
+        else if indexType.chartType == 2 { layoutChartView(chart: maskChartView) }
         
         baseIndexView.addSubview(indexStepView)
         
