@@ -556,6 +556,8 @@ Seogwipo-si="Seogwipo-si";
 "1주일 후" = "In 1 Week";
 "일주일 후" = "In 1 Week";
 
+"어제" = "Yesterday";
+
 "우산" = "Umbrella";
 "하루 강수량" = "Daily Precip";
 "주간 평균 강수량" = "Weekly Average Precip";
@@ -617,6 +619,11 @@ Seogwipo-si="Seogwipo-si";
 "점심한때 비" = "Rain shower in the afternoon";
 "저녁한때 비" = "Rain shower in the evening";
 
+"좋음" = "Good";
+"보통" = "Moderate";
+"나쁨" = "Unhealthy";
+"매우나쁨" = "Very Unhealthy";
+"데이터가 없습니다." = "No data";
 
 "맑음" = "Clear";
 "비" = "Rainy";
