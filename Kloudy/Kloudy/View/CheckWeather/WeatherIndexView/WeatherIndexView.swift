@@ -185,14 +185,15 @@ class WeatherIndexView: UIView {
         
         weatherIndexListView.snp.makeConstraints {
             $0.top.bottom.equalToSuperview().inset(14)
-            $0.leading.equalToSuperview().inset(283)
+//            $0.leading.equalToSuperview().inset(283)
             $0.trailing.equalToSuperview().inset(12)
+            $0.width.equalTo(55)
         }
         
         locationWeatherIndexView.snp.makeConstraints{
             $0.top.bottom.equalToSuperview()
             $0.leading.equalToSuperview()
-            $0.trailing.equalTo(weatherIndexListView.snp.leading)
+            $0.width.equalTo(UIScreen.main.bounds.width - 107)
         }
         
         indexCollectionView.snp.makeConstraints {

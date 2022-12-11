@@ -89,7 +89,8 @@ class InternalCheckWeatherPageView: UIViewController {
             weatherIndexView.snp.makeConstraints {
                 $0.top.equalTo(currentWeatherView.snp.bottom).offset(32)
                 $0.leading.trailing.equalToSuperview().inset(20)
-                $0.bottom.equalToSuperview().inset(94)
+//                $0.bottom.equalToSuperview().inset(94)
+                $0.height.equalTo(UIScreen.main.bounds.height * 456 / 844)
             }
             
             // CheckWeatherView 의 Lottie 선택 시 WeatherDetailIndexView 로 city 와 indexType 전달
