@@ -59,12 +59,13 @@ def save_weekly_weather(weekly_weather_infos, code, local_weather_odd, local_wea
 
         for weekly_query in every_weekly_queries:
             try:
-                now_day = hour_query.day
+                now_day = weekly_query.day
                 weekly_query.status          = weekly_weather_infos[now_day][1]
                 weekly_query.max_temperature = weekly_weather_infos[now_day][2]
                 weekly_query.min_temperature = weekly_weather_infos[now_day][3]
                 weekly_query.save()
             except:
+                print("업데이트 실패")
                 return
                 
     else:

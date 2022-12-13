@@ -23,7 +23,8 @@ def get_laundry_index(weather_info):
 
     except:
         print("Laundry Index exeption")
-        return [0, 0, 0, 0]
+        humidities = [0.0] * 24
+        return [0, 0, 0, 0, humidities]
 
 def cal_weather_status_for_hour(forecast):
 

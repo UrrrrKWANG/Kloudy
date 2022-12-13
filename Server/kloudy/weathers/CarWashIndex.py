@@ -99,7 +99,7 @@ def cal_carwash_status(when_is_rainy, max_temperature, pm10grade, pollen_index):
     result = 0
 
     if 150 < pm10grade or pollen_index == 3 or max_temperature <= -2 or when_is_rainy <= 2:
-        reulst = 3
+        result = 3
         return result
     elif 80 < pm10grade < 151 or pollen_index == 2 or when_is_rainy <= 4:
         result = 2
