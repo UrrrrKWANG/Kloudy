@@ -89,9 +89,7 @@ class CheckWeatherView: UIViewController {
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
         view.backgroundColor = UIColor.KColor.white
-        if !(currentStatus == .authorizedWhenInUse || currentStatus == .authorizedAlways) {
-            NotificationCenter.default.addObserver(self, selector: #selector(tapSettingButton), name: NSNotification.Name("authorizeButtonTap"), object: nil)
-        }
+        NotificationCenter.default.addObserver(self, selector: #selector(tapSettingButton), name: NSNotification.Name("authorizeButtonTap"), object: nil)
     }
     
     private func bind() {

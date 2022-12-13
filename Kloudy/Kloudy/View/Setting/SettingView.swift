@@ -89,7 +89,7 @@ extension SettingView: UITableViewDataSource {
         else if indexPath.row == 1 {
             guard let cell = tableView.dequeueReusableCell(withIdentifier: "SettingVersionCellView", for: indexPath) as? SettingVersionCellView else { return UITableViewCell() }
             cell.versionTextLabel.text = "버전정보".localized
-            cell.versionNumberLabel.text = "1.0.3"
+            cell.versionNumberLabel.text = "1.0.4"
             cell.versionCheckLabel.text = "".localized
             cell.selectionStyle = .none
             resultCell = cell
