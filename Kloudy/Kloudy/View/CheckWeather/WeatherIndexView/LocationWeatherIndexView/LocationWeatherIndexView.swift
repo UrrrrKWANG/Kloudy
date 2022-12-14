@@ -101,7 +101,7 @@ class LocationWeatherIndexView: UIView {
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else if $0 == .outer {
-                    let outerTextArray: [String] = ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
+                    let outerTextArray: [String] = ["캐주얼 재킷, 가디건".localized, "캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: outerTextArray[weathers.localWeather[0].weatherIndex[0].outerIndex[0].status])
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else if $0 == .mask {
@@ -455,15 +455,17 @@ class LocationWeatherIndexView: UIView {
             return "carwash_step1"
         case let(indexName, status) where indexName == .car && status == 4 :
             return "carwash_step1"
-        case let(indexName, status) where indexName == .outer && status == 0 :
+        case let(indexName, status) where indexName == .outer && status == 0:
             return "outer_step1"
-        case let(indexName, status) where indexName == .outer && status == 1 :
+        case let(indexName, status) where indexName == .outer && status == 1:
+            return "outer_step1"
+        case let(indexName, status) where indexName == .outer && status == 2:
             return "outer_step2"
-        case let(indexName, status) where indexName == .outer &&  status == 2 :
+        case let(indexName, status) where indexName == .outer && status == 3:
             return "outer_step3"
-        case let(indexName, status) where indexName == .outer && status == 3 :
+        case let(indexName, status) where indexName == .outer && status == 4:
             return "outer_step4"
-        case let(indexName, status) where indexName == .outer && status == 4 :
+        case let(indexName, status) where indexName == .outer && status == 5:
             return "outer_step5"
         default:
             return ""
