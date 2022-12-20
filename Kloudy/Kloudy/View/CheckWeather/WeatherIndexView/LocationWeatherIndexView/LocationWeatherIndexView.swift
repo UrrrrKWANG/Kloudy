@@ -101,7 +101,7 @@ class LocationWeatherIndexView: UIView {
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: self.umbrellaIndexText)
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else if $0 == .outer {
-                    let outerTextArray: [String] = ["캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
+                    let outerTextArray: [String] = ["캐주얼 재킷, 가디건".localized, "캐주얼 재킷, 가디건".localized, "라이더 재킷, 트렌치 코트".localized, "코트, 무스탕, 항공점퍼".localized, "패딩, 두꺼운 코트".localized, "목도리나 장갑 등 방한용품 착용".localized]
                     self.configureView(indexNameLabel: self.transedIndexName, indexStatusLabel: outerTextArray[weathers.localWeather[0].weatherIndex[0].outerIndex[0].status])
                     self.indexStatus.onNext(self.findStatus(indexName: $0))
                 } else if $0 == .mask {
@@ -415,55 +415,57 @@ class LocationWeatherIndexView: UIView {
     func findImageOrLottieName(indexName: IndexType, status: Int) -> String {
         let foundElement =  (indexName, status)
         switch foundElement {
-        case let(indexName, status) where indexName == .mask && status == 0 :
+        case let(indexName, status) where indexName == .mask && status == 0:
             return "mask_step1"
-        case let(indexName, status) where indexName == .mask && status == 1 :
+        case let(indexName, status) where indexName == .mask && status == 1:
             return "mask_step2"
-        case let(indexName, status) where indexName == .mask && status == 2 :
+        case let(indexName, status) where indexName == .mask && status == 2:
             return "mask_step3"
-        case let(indexName, status) where indexName == .mask && status == 3 :
+        case let(indexName, status) where indexName == .mask && status == 3:
             return "mask_step4"
-        case let(indexName, status) where indexName == .mask && status == 4 :
+        case let(indexName, status) where indexName == .mask && status == 4:
             return "mask_step4"
-        case let(indexName, status) where indexName == .umbrella && status == 0 :
+        case let(indexName, status) where indexName == .umbrella && status == 0:
             return "rain_step1"
-        case let(indexName, status) where indexName == .umbrella && status == 1 :
+        case let(indexName, status) where indexName == .umbrella && status == 1:
             return "rain_step2"
-        case let(indexName, status) where indexName == .umbrella &&  status == 2 :
+        case let(indexName, status) where indexName == .umbrella &&  status == 2:
             return "rain_step3"
-        case let(indexName, status) where indexName == .umbrella && status == 3 :
+        case let(indexName, status) where indexName == .umbrella && status == 3:
             return "rain_step4"
-        case let(indexName, status) where indexName == .umbrella && status == 4 :
+        case let(indexName, status) where indexName == .umbrella && status == 4:
             return "rain_step4"
-        case let(indexName, status) where indexName == .laundry && status == 0 :
+        case let(indexName, status) where indexName == .laundry && status == 0:
             return "laundry_4"
-        case let(indexName, status) where indexName == .laundry && status == 1 :
+        case let(indexName, status) where indexName == .laundry && status == 1:
             return "laundry_4"
-        case let(indexName, status) where indexName == .laundry &&  status == 2 :
+        case let(indexName, status) where indexName == .laundry && status == 2:
             return "laundry_3"
-        case let(indexName, status) where indexName == .laundry && status == 3 :
+        case let(indexName, status) where indexName == .laundry && status == 3:
             return "laundry_2"
-        case let(indexName, status) where indexName == .laundry && status == 4 :
+        case let(indexName, status) where indexName == .laundry && status == 4:
             return "laundry_1"
-        case let(indexName, status) where indexName == .car && status == 0 :
+        case let(indexName, status) where indexName == .car && status == 0:
             return "carwash_step4"
-        case let(indexName, status) where indexName == .car && status == 1 :
+        case let(indexName, status) where indexName == .car && status == 1:
             return "carwash_step3"
-        case let(indexName, status) where indexName == .car &&  status == 2 :
+        case let(indexName, status) where indexName == .car && status == 2:
             return "carwash_step2"
-        case let(indexName, status) where indexName == .car && status == 3 :
+        case let(indexName, status) where indexName == .car && status == 3:
             return "carwash_step1"
-        case let(indexName, status) where indexName == .car && status == 4 :
+        case let(indexName, status) where indexName == .car && status == 4:
             return "carwash_step1"
-        case let(indexName, status) where indexName == .outer && status == 0 :
+        case let(indexName, status) where indexName == .outer && status == 0:
             return "outer_step1"
-        case let(indexName, status) where indexName == .outer && status == 1 :
+        case let(indexName, status) where indexName == .outer && status == 1:
+            return "outer_step1"
+        case let(indexName, status) where indexName == .outer && status == 2:
             return "outer_step2"
-        case let(indexName, status) where indexName == .outer &&  status == 2 :
+        case let(indexName, status) where indexName == .outer && status == 3:
             return "outer_step3"
-        case let(indexName, status) where indexName == .outer && status == 3 :
+        case let(indexName, status) where indexName == .outer && status == 4:
             return "outer_step4"
-        case let(indexName, status) where indexName == .outer && status == 4 :
+        case let(indexName, status) where indexName == .outer && status == 5:
             return "outer_step5"
         default:
             return ""
