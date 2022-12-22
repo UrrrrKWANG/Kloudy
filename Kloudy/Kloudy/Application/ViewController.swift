@@ -66,6 +66,7 @@ class ViewController: UIViewController {
             myAnimation()
             bind()
             fetchWeatherData()
+            didNotFetchedLocation()
         } else {
             navigationController?.pushViewController(NetworkUnreachableView(), animated: false)
         }
@@ -94,6 +95,14 @@ class ViewController: UIViewController {
                 }
             })
             .disposed(by: disposeBag)
+    }
+    
+    private func didNotFetchedLocation() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            self.checkWeatherView.isNoCurrentLocation = true
+            self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+            self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
+        }
     }
     
     private func configure() {
