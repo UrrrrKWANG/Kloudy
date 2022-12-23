@@ -103,8 +103,6 @@ class ViewController: UIViewController {
                 self.fetchIsFirstLocation()
             }
             self.checkWeatherView.isNoCurrentLocation = true
-            self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
-            self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
         }
     }
     
