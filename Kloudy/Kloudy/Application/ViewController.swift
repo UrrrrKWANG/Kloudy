@@ -102,7 +102,19 @@ class ViewController: UIViewController {
             if Storage.isFirstBuild() && self.fetchedWeathers.value.isEmpty {
                 self.fetchIsFirstLocation()
             }
-            self.checkWeatherView.isNoCurrentLocation = true
+            if self.locationCount == 0 {
+                if !self.fetchedWeathers.value.isEmpty {
+                    self.checkWeatherView.isNoCurrentLocation = true
+                    self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+                    self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
+                }
+            } else {
+                if self.fetchedWeathers.value.count == self.locationCount {
+                    self.checkWeatherView.isNoCurrentLocation = true
+                    self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
+                    self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
+                }
+            }
         }
     }
     
