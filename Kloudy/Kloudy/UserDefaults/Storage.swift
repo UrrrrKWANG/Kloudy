@@ -22,6 +22,16 @@ public class Storage {
         }
     }
     
+    class func isFirstBuild() -> Bool {
+        let defaults = UserDefaults.standard
+        if defaults.object(forKey: "isFirstBuild") == nil {
+            defaults.set("No", forKey: "isFirstBuild")
+            return true
+        } else {
+            return false
+        }
+    }
+    
     // 현재 위치의 지수 순서를 UserDefaults 에 저장
     class func saveCurrentLocationIndexArray(arrayString: [String]) {
         do {

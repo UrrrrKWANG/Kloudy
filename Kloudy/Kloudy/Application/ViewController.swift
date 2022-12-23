@@ -99,6 +99,9 @@ class ViewController: UIViewController {
     
     private func didNotFetchedLocation() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+            if Storage.isFirstBuild() && self.fetchedWeathers.value.isEmpty {
+                self.fetchIsFirstLocation()
+            }
             self.checkWeatherView.isNoCurrentLocation = true
             self.checkWeatherView.initialWeathers = self.fetchedWeathers.value
             self.navigationController?.setViewControllers([self.checkWeatherView], animated: false)
@@ -158,21 +161,7 @@ class ViewController: UIViewController {
         
         if locations.count == 0 {
             if (currentStatus == .restricted || currentStatus == .notDetermined || currentStatus == .denied) {
-                Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
-                CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: Storage.defaultIndexArray)
-                CityWeatherNetwork().fetchCityWeather(code: "1111000000")
-                    .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-                    .subscribe { event in
-                        switch event {
-                        case .success(let data):
-                            DispatchQueue.main.async {
-                                self.fetchedWeathers.accept(self.fetchedWeathers.value + [data])
-                            }
-                        case .failure(let error):
-                            print("Error: ", error)
-                        }
-                    }
-                    .disposed(by: disposeBag)
+                fetchIsFirstLocation()
             } else {
                 fetchCurrentLocationWeatherData()
             }
@@ -217,6 +206,24 @@ class ViewController: UIViewController {
                 case .success(let data):
                     DispatchQueue.main.async {
                         self.fetchedWeathers.accept([data] + self.fetchedWeathers.value)
+                    }
+                case .failure(let error):
+                    print("Error: ", error)
+                }
+            }
+            .disposed(by: disposeBag)
+    }
+    
+    private func fetchIsFirstLocation() {
+        Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
+        CoreDataManager.shared.saveLocation(code: "1111000000", city: "Jongno-gu", province: "Seoul", sequence: CoreDataManager.shared.countLocations(), indexArray: Storage.defaultIndexArray)
+        CityWeatherNetwork().fetchCityWeather(code: "1111000000")
+            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+            .subscribe { event in
+                switch event {
+                case .success(let data):
+                    DispatchQueue.main.async {
+                        self.fetchedWeathers.accept(self.fetchedWeathers.value + [data])
                     }
                 case .failure(let error):
                     print("Error: ", error)
