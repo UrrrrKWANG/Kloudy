@@ -4,7 +4,7 @@ from datetime import datetime
 def get_carwash_index(weather_info, air_jsonObject, flower_jsonObject):
     try:
         today_weather_info = weather_info.get('forecastDaily').get('days')[0]
-        tomorrow_weather_info = weather_info.get('forecastDaily').get('days')[0]
+        tomorrow_weather_info = weather_info.get('forecastDaily').get('days')[1]
 
         today_cloud_cover = today_weather_info.get('daytimeForecast').get('cloudCover')
         today_precipitation_amount = today_weather_info.get('daytimeForecast').get('precipitationAmount')
@@ -56,11 +56,11 @@ def cal_precipitation(weather_info):
 
     precipitation_for_days = []
     forecast_daily = weather_info.get('forecastDaily').get('days')
-    for i in range(7):
+    for i in range(1, 8):
         forecast = forecast_daily[i]
         precipitation_amount = float(forecast.get('precipitationAmount'))
         if precipitation_amount > 0:
-            when_is_rainy = min(i + 1, when_is_rainy)
+            when_is_rainy = min(i, when_is_rainy)
         precipitation_for_days.append(precipitation_amount)
     
     forecast_hourly = weather_info.get('forecastHourly').get('hours')
@@ -99,7 +99,7 @@ def cal_carwash_status(when_is_rainy, max_temperature, pm10grade, pollen_index):
     result = 0
 
     if 150 < pm10grade or pollen_index == 3 or max_temperature <= -2 or when_is_rainy <= 2:
-        reulst = 3
+        result = 3
         return result
     elif 80 < pm10grade < 151 or pollen_index == 2 or when_is_rainy <= 4:
         result = 2
