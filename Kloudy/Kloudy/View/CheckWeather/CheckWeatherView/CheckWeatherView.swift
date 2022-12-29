@@ -34,6 +34,8 @@ class CheckWeatherView: UIViewController {
     var initialWeathers = [Weather]()
     var locations = [Location]()
     
+    var isNoCurrentLocation = false
+    
     // 코데에서 받아오는 지역별 지수 배열을 담을 변수
     var indexStrArray = [String]()
     
@@ -84,7 +86,7 @@ class CheckWeatherView: UIViewController {
         super.viewDidLoad()
         bind()
         locations = CoreDataManager.shared.fetchLocations()
-        self.weathers = serializeLocationSequence(locations: locations, initialWeathers: initialWeathers)
+        self.weathers = isNoCurrentLocation ? noCurrentLocationSerialize(locations: locations, initialWeathers: initialWeathers) : serializeLocationSequence(locations: locations, initialWeathers: initialWeathers)
         self.delegate = self.locationSelectionView
         self.navigationController?.interactivePopGestureRecognizer?.isEnabled = true
         
@@ -160,6 +162,19 @@ class CheckWeatherView: UIViewController {
             }
             return weatherData
         }
+    }
+    
+    private func noCurrentLocationSerialize(locations: [Location], initialWeathers: [Weather]) -> [Weather] {
+        var weatherData = [Weather](repeating: FetchWeatherInformation().dummyData, count: initialWeathers.count)
+        for weatherIndex in 0..<initialWeathers.count {
+            for locationIndex in 0..<locations.count {
+                if initialWeathers[weatherIndex].localWeather[0].localCode == locations[locationIndex].code {
+                    weatherData[locationIndex] = initialWeathers[weatherIndex]
+                    continue
+                }
+            }
+        }
+        return weatherData
     }
     
     func loadWeatherView() {
