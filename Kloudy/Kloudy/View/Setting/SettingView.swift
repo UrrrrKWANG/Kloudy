@@ -117,21 +117,40 @@ extension SettingView: UITableViewDataSource {
     }
     
     private func fetchCurrentLocationWeatherData() {
-        let XY = LocationManager.shared.requestNowLocationInfo()
-        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-        guard let nowLocation = nowLocation else { return }
-        
-        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
-            .subscribe { event in
-                switch event {
-                case .success(let data):
-                    self.changeAuthorityTrue.onNext(data)
-                case .failure(let error):
-                    print("Error: ", error)
+        LocationManager.shared.requestNowLocationInfoCity(completion: { (cityInfo) in
+            guard let cityInfo = cityInfo else { return }
+            let (province, city) = (cityInfo[0], cityInfo[1])
+            let nowLocation = FetchWeatherInformation.shared.getLocationInfo(province: province, city: city)
+            guard let nowLocation = nowLocation else { return }
+            CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+                .subscribe { event in
+                    switch event {
+                    case .success(let data):
+                        self.changeAuthorityTrue.onNext(data)
+                    case .failure(let error):
+                        print("Error: ", error)
+                    }
                 }
-            }
-            .disposed(by: disposeBag)
+                .disposed(by: self.disposeBag)
+        })
     }
+    
+//    private func fetchCurrentLocationWeatherData() {
+//        let XY = LocationManager.shared.requestNowLocationInfo()
+//        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+//        guard let nowLocation = nowLocation else { return }
+//
+//        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+//            .subscribe { event in
+//                switch event {
+//                case .success(let data):
+//                    self.changeAuthorityTrue.onNext(data)
+//                case .failure(let error):
+//                    print("Error: ", error)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+//    }
 }
 
 extension SettingView: UITableViewDelegate {

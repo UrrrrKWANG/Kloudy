@@ -24,8 +24,6 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
         super.init()
         locationManager.delegate = self
         locationManager.desiredAccuracy = kCLLocationAccuracyHundredMeters
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.requestLocation()
     }
     
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
@@ -86,6 +84,33 @@ class LocationManager: NSObject, CLLocationManagerDelegate, ObservableObject {
         return [resultX, resultY]
     }
     
+    func requestNowLocationInfoCity(completion: @escaping (([String]?) -> ())) {
+        var resultProvince = "province"
+        var resultCity = "city"
+        var resultAddress: [String] = []
+        locationManager.startUpdatingLocation()
+        if let location = locationManager.location {
+            let longitude: CLLocationDegrees = location.coordinate.longitude
+            let latitude: CLLocationDegrees = location.coordinate.latitude
+            let findLocation: CLLocation = CLLocation(latitude: latitude, longitude: longitude)
+            let geoCoder: CLGeocoder = CLGeocoder()
+            let local: Locale = Locale(identifier: "Ko-kr")
+            geoCoder.reverseGeocodeLocation(findLocation, preferredLocale: local) { (place, error) in
+                if let address: [CLPlacemark] = place {
+                    if let lines = address.last?.addressDictionary?["FormattedAddressLines"] as? [String] {
+                        let placeString = lines.joined(separator: ", ")
+                        resultAddress = placeString.components(separatedBy: " ")
+                    }
+                    guard let country = address.last?.country else { return }
+                    guard let startIndex = resultAddress.firstIndex(of: country) else { return }
+                    resultProvince = resultAddress[startIndex + 1]
+                    resultCity = resultAddress[startIndex + 2]
+                    completion([resultProvince, resultCity])
+                    self.locationManager.stopUpdatingLocation()
+                }
+            }
+        }
+    }
 //    func requestLocationAuthorization() {
 //        self.locationManager.delegate = self
 //        let currentStatus = CLLocationManager().authorizationStatus

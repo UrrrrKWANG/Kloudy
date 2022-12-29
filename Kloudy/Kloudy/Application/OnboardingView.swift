@@ -90,7 +90,7 @@ class OnboardingView: UIViewController {
     }
     
     @objc private func tapNextButton() {
-        CLLocationManager().requestAlwaysAuthorization()
+        CLLocationManager().requestWhenInUseAuthorization()
     }
     
     @objc private func checkIsAlertDismissed() {
