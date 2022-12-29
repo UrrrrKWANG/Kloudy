@@ -41,6 +41,7 @@ class CheckWeatherView: UIViewController {
     
     weak var delegate: LocationSelectionDelegate?
     let currentStatus = CLLocationManager().authorizationStatus
+    var agreeCurrentLocation: Bool = false
     
     let changeAuthority = PublishSubject<Bool>()
     
@@ -122,7 +123,10 @@ class CheckWeatherView: UIViewController {
         
         settingView.changeAuthorityTrue
             .subscribe(onNext: {
-                self.weathers.insert($0, at: 0)
+                if !self.agreeCurrentLocation {
+                    self.weathers.insert($0, at: 0)
+                }
+                self.agreeCurrentLocation = true
             })
             .disposed(by: disposeBag)
         
@@ -132,6 +136,7 @@ class CheckWeatherView: UIViewController {
                     self.weathers.removeFirst()
                     Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
                 }
+                self.agreeCurrentLocation = false
             })
             .disposed(by: disposeBag)
     }
