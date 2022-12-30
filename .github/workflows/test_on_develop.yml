@@ -19,4 +19,4 @@ jobs:
     - name: Build
       run: | 
         pod install --repo-update --clean-install --project-directory=Kloudy/
-        xcodebuild build -project Kloudy.xcworkspace -scheme Kloudy -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest'
+        xcodebuild build -project Kloudy/Kloudy.xcworkspace -scheme Kloudy -destination 'platform=iOS Simulator,name=iPhone 12,OS=latest'
