@@ -5,6 +5,7 @@
 //  Created by Byeon jinha on 2022/11/08.
 //
 
+import UIKit
 import SnapKit
 
 class WeekWeatherDataCell: UICollectionViewCell{

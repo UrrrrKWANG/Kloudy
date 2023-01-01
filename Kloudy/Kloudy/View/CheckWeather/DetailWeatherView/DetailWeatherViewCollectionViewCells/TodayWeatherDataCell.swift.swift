@@ -5,6 +5,7 @@
 //  Created by Byeon jinha on 2022/11/09.
 //
 
+import UIKit
 import SnapKit
 
 class TodayWeatherDataCell: UICollectionViewCell{

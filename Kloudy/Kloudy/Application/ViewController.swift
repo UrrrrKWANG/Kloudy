@@ -205,24 +205,46 @@ class ViewController: UIViewController {
     }
     
     private func fetchCurrentLocationWeatherData() {
-        let XY = LocationManager.shared.requestNowLocationInfo()
-        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
-        guard let nowLocation = nowLocation else { return }
-        
-        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
-            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
-            .subscribe { event in
-                switch event {
-                case .success(let data):
-                    DispatchQueue.main.async {
-                        self.fetchedWeathers.accept([data] + self.fetchedWeathers.value)
+        LocationManager.shared.requestNowLocationInfoCity(completion: { (cityInfo) in
+            guard let cityInfo = cityInfo else { return }
+            let (province, city) = (cityInfo[0], cityInfo[1])
+            let nowLocation = FetchWeatherInformation.shared.getLocationInfo(province: province, city: city)
+            guard let nowLocation = nowLocation else { return }
+            CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+                .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+                .subscribe { event in
+                    switch event {
+                    case .success(let data):
+                        DispatchQueue.main.async {
+                            self.fetchedWeathers.accept([data] + self.fetchedWeathers.value)
+                        }
+                    case .failure(let error):
+                        print("Error: ", error)
                     }
-                case .failure(let error):
-                    print("Error: ", error)
                 }
-            }
-            .disposed(by: disposeBag)
+                .disposed(by: self.disposeBag)
+        })
     }
+    
+//    private func fetchCurrentLocationWeatherData() {
+//        let XY = LocationManager.shared.requestNowLocationInfo()
+//        let nowLocation = FetchWeatherInformation.shared.getLocationInfoByXY(x: XY[0], y: XY[1])
+//        guard let nowLocation = nowLocation else { return }
+//        
+//        CityWeatherNetwork().fetchCityWeather(code: nowLocation.code)
+//            .subscribe(on: ConcurrentDispatchQueueScheduler(qos: .default))
+//            .subscribe { event in
+//                switch event {
+//                case .success(let data):
+//                    DispatchQueue.main.async {
+//                        self.fetchedWeathers.accept([data] + self.fetchedWeathers.value)
+//                    }
+//                case .failure(let error):
+//                    print("Error: ", error)
+//                }
+//            }
+//            .disposed(by: disposeBag)
+//    }
     
     private func fetchIsFirstLocation() {
         Storage.saveCurrentLocationIndexArray(arrayString: Storage.defaultIndexArray)
