@@ -16,7 +16,6 @@
 		11EAFF7B292D41210091F8C7 /* CityInformation_KOR.csv in Resources */ = {isa = PBXBuildFile; fileRef = 11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */; };
 		11EAFF7D292D419D0091F8C7 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EAFF7C292D419D0091F8C7 /* String+.swift */; };
 		11EAFF7E292D419D0091F8C7 /* String+.swift in Sources */ = {isa = PBXBuildFile; fileRef = 11EAFF7C292D419D0091F8C7 /* String+.swift */; };
-		14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */; };
 		2207250B291A31DB00E01508 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 2207250D291A31DB00E01508 /* Localizable.strings */; };
 		22092FDF292CBC44007B8913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 22092FDE292CBC44007B8913 /* ViewController.swift */; };
 		222C693A2927DA4D005FC7ED /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222C69392927DA4D005FC7ED /* LocationConverter.swift */; };
@@ -28,7 +27,6 @@
 		2286B459292522B5003965F2 /* SettingLicenseNavigationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B458292522B5003965F2 /* SettingLicenseNavigationView.swift */; };
 		2286B45B2925325C003965F2 /* LicenseCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2286B45A2925325C003965F2 /* LicenseCellView.swift */; };
 		22E36BDE2928AD25000ACD33 /* CityInformation.csv in Resources */ = {isa = PBXBuildFile; fileRef = 22E36BDD2928AD25000ACD33 /* CityInformation.csv */; };
-		26832CF4213CDDECD581CA7C /* Pods_KloudyTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */; };
 		8B1BCE422909601C00F80ECB /* LocationTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1BCE412909601C00F80ECB /* LocationTableCell.swift */; };
 		8B1F55CD293652C2009CE0D9 /* NetworkReachability.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55CC293652C2009CE0D9 /* NetworkReachability.swift */; };
 		8B1F55CF29366DB4009CE0D9 /* NetworkUnreachableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B1F55CE29366DB4009CE0D9 /* NetworkUnreachableView.swift */; };
@@ -46,7 +44,6 @@
 		8B22A3CC29221CBD0079FA48 /* IndexStepView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3CB29221CBD0079FA48 /* IndexStepView.swift */; };
 		8B22A3D4292646270079FA48 /* CityWeatherAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D3292646270079FA48 /* CityWeatherAPI.swift */; };
 		8B22A3D6292646480079FA48 /* CityWeatherNetwork.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B22A3D5292646480079FA48 /* CityWeatherNetwork.swift */; };
-		8B614128292D80260039AC6B /* Pods_kloudyWidgetExtension.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */; };
 		8B6409832918DA5A00DC2962 /* SearchLocationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409822918DA5A00DC2962 /* SearchLocationView.swift */; };
 		8B6409852918DB9700DC2962 /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B6409842918DB9700DC2962 /* CoreDataManager.swift */; };
 		8B64098D2918EFC900DC2962 /* WeatherIndexView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8B64098C2918EFC900DC2962 /* WeatherIndexView.swift */; };
@@ -161,7 +158,13 @@
 		E08E3C02294315D70089B1D1 /* UINavigationController+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E08E3C01294315D70089B1D1 /* UINavigationController+.swift */; };
 		E0BEFB51292CFD7A00D16B69 /* LocalWeather+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */; };
 		E0FE1274292231A1000AC3FC /* CALayer+.swift in Sources */ = {isa = PBXBuildFile; fileRef = E0FE1273292231A1000AC3FC /* CALayer+.swift */; };
-		FAD9CEBADF8415C4EB78D146 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */; };
+		E0FEB48C29628B5F006F1714 /* Charts in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB48B29628B5F006F1714 /* Charts */; };
+		E0FEB48F29628B6F006F1714 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB48E29628B6F006F1714 /* Lottie */; };
+		E0FEB49229628B82006F1714 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB49129628B82006F1714 /* RxCocoa */; };
+		E0FEB49429628B82006F1714 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB49329628B82006F1714 /* RxRelay */; };
+		E0FEB49629628B82006F1714 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB49529628B82006F1714 /* RxSwift */; };
+		E0FEB49929628B8F006F1714 /* SnapKit in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB49829628B8F006F1714 /* SnapKit */; };
+		E0FEB49C29628BA5006F1714 /* CHIPageControl in Frameworks */ = {isa = PBXBuildFile; productRef = E0FEB49B29628BA5006F1714 /* CHIPageControl */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -203,11 +206,6 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		0218FF489808FE48FFEA57A9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.debug.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.debug.xcconfig"; sourceTree = "<group>"; };
-		0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_KloudyTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.debug.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.debug.xcconfig"; sourceTree = "<group>"; };
 		1131D4D0292D558E00D80547 /* CurrentLocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentLocationTableViewCell.swift; sourceTree = "<group>"; };
 		113D3E302909817800A72594 /* LocationSelectionNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSelectionNavigationView.swift; sourceTree = "<group>"; };
 		11E34888291CF179006EA966 /* LocationTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableViewCell.swift; sourceTree = "<group>"; };
@@ -215,7 +213,6 @@
 		11E3488C2929BDDF006EA966 /* NSManagedObject+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSManagedObject+.swift"; sourceTree = "<group>"; };
 		11EAFF79292D41210091F8C7 /* CityInformation_KOR.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation_KOR.csv; sourceTree = "<group>"; };
 		11EAFF7C292D419D0091F8C7 /* String+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+.swift"; sourceTree = "<group>"; };
-		184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-KloudyTests.release.xcconfig"; path = "Target Support Files/Pods-KloudyTests/Pods-KloudyTests.release.xcconfig"; sourceTree = "<group>"; };
 		2207250C291A31DB00E01508 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		2207250E291A322A00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		2207250F291A322B00E01508 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -229,7 +226,6 @@
 		2286B458292522B5003965F2 /* SettingLicenseNavigationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingLicenseNavigationView.swift; sourceTree = "<group>"; };
 		2286B45A2925325C003965F2 /* LicenseCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LicenseCellView.swift; sourceTree = "<group>"; };
 		22E36BDD2928AD25000ACD33 /* CityInformation.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = CityInformation.csv; sourceTree = "<group>"; };
-		5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Kloudy_KloudyUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8B1BCE412909601C00F80ECB /* LocationTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationTableCell.swift; sourceTree = "<group>"; };
 		8B1F55CC293652C2009CE0D9 /* NetworkReachability.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkReachability.swift; sourceTree = "<group>"; };
 		8B1F55CE29366DB4009CE0D9 /* NetworkUnreachableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUnreachableView.swift; sourceTree = "<group>"; };
@@ -294,8 +290,6 @@
 		8BC8F81829011E3300EF83AE /* kloudyWidget.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = kloudyWidget.intentdefinition; sourceTree = "<group>"; };
 		8BC8F81929011E3400EF83AE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8BC8F81B29011E3400EF83AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.debug.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.debug.xcconfig"; sourceTree = "<group>"; };
-		AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy.release.xcconfig"; path = "Target Support Files/Pods-Kloudy/Pods-Kloudy.release.xcconfig"; sourceTree = "<group>"; };
 		BA0686A12926502700AB3849 /* Lexend-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Lexend-Light.ttf"; sourceTree = "<group>"; };
 		BA730CF9292CF5530012F702 /* indexCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = indexCollectionViewCell.swift; sourceTree = "<group>"; };
 		BADE2912293E49F1008C5CED /* InternalCheckWeatherPageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InternalCheckWeatherPageView.swift; sourceTree = "<group>"; };
@@ -339,15 +333,12 @@
 		D59C95FE292D457500A1FEE5 /* carwash_step2.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = carwash_step2.json; sourceTree = "<group>"; };
 		D59C9605292F988D00A1FEE5 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		D59C9607292F989000A1FEE5 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Kloudy-KloudyUITests.release.xcconfig"; path = "Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests.release.xcconfig"; sourceTree = "<group>"; };
 		E02A628B2933B2670008A33B /* TemperatureGapView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureGapView.swift; sourceTree = "<group>"; };
 		E036F3332928FCA200003E8A /* CurrentWeatherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentWeatherView.swift; sourceTree = "<group>"; };
 		E049D72C294570CE00CFC886 /* MaskChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MaskChartView.swift; sourceTree = "<group>"; };
 		E08E3C01294315D70089B1D1 /* UINavigationController+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UINavigationController+.swift"; sourceTree = "<group>"; };
 		E0BEFB50292CFD7A00D16B69 /* LocalWeather+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "LocalWeather+.swift"; sourceTree = "<group>"; };
 		E0FE1273292231A1000AC3FC /* CALayer+.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CALayer+.swift"; sourceTree = "<group>"; };
-		F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-kloudyWidgetExtension.release.xcconfig"; path = "Target Support Files/Pods-kloudyWidgetExtension/Pods-kloudyWidgetExtension.release.xcconfig"; sourceTree = "<group>"; };
-		FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_kloudyWidgetExtension.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -355,7 +346,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				14F326CC48DBECB70053C858 /* Pods_Kloudy.framework in Frameworks */,
+				E0FEB49229628B82006F1714 /* RxCocoa in Frameworks */,
+				E0FEB48C29628B5F006F1714 /* Charts in Frameworks */,
+				E0FEB49629628B82006F1714 /* RxSwift in Frameworks */,
+				E0FEB49929628B8F006F1714 /* SnapKit in Frameworks */,
+				E0FEB49C29628BA5006F1714 /* CHIPageControl in Frameworks */,
+				E0FEB49429628B82006F1714 /* RxRelay in Frameworks */,
+				E0FEB48F29628B6F006F1714 /* Lottie in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -363,7 +360,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				26832CF4213CDDECD581CA7C /* Pods_KloudyTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -371,7 +367,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				FAD9CEBADF8415C4EB78D146 /* Pods_Kloudy_KloudyUITests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -379,7 +374,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				8B614128292D80260039AC6B /* Pods_kloudyWidgetExtension.framework in Frameworks */,
 				8BC8F81429011E3300EF83AE /* SwiftUI.framework in Frameworks */,
 				8BC8F82529011E4400EF83AE /* WidgetKit.framework in Frameworks */,
 			);
@@ -410,14 +404,6 @@
 		713F97B30F6109B08631D880 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */,
-				AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */,
-				0218FF489808FE48FFEA57A9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */,
-				DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */,
-				08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */,
-				184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */,
-				10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */,
-				F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -715,10 +701,6 @@
 			children = (
 				8BC8F81129011E3300EF83AE /* WidgetKit.framework */,
 				8BC8F81329011E3300EF83AE /* SwiftUI.framework */,
-				0581AF375A9B7A0C3D46B2B6 /* Pods_Kloudy.framework */,
-				5F562FA62A4450948C031571 /* Pods_Kloudy_KloudyUITests.framework */,
-				0F79FF924295D51CF7B36E17 /* Pods_KloudyTests.framework */,
-				FEB55CE4D987FD5F7532FB32 /* Pods_kloudyWidgetExtension.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -895,12 +877,10 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F76129011D0800EF83AE /* Build configuration list for PBXNativeTarget "Kloudy" */;
 			buildPhases = (
-				1224E4DC613C7963D5F54F87 /* [CP] Check Pods Manifest.lock */,
 				8BC8F73029011D0700EF83AE /* Sources */,
 				8BC8F73129011D0700EF83AE /* Frameworks */,
 				8BC8F73229011D0700EF83AE /* Resources */,
 				8BC8F82429011E3400EF83AE /* Embed Foundation Extensions */,
-				5E5E4841313882CDEA55E7E4 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -908,6 +888,15 @@
 				8BC8F81F29011E3400EF83AE /* PBXTargetDependency */,
 			);
 			name = Kloudy;
+			packageProductDependencies = (
+				E0FEB48B29628B5F006F1714 /* Charts */,
+				E0FEB48E29628B6F006F1714 /* Lottie */,
+				E0FEB49129628B82006F1714 /* RxCocoa */,
+				E0FEB49329628B82006F1714 /* RxRelay */,
+				E0FEB49529628B82006F1714 /* RxSwift */,
+				E0FEB49829628B8F006F1714 /* SnapKit */,
+				E0FEB49B29628BA5006F1714 /* CHIPageControl */,
+			);
 			productName = Kloudy;
 			productReference = 8BC8F73429011D0700EF83AE /* Kloudy.app */;
 			productType = "com.apple.product-type.application";
@@ -916,7 +905,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F76429011D0800EF83AE /* Build configuration list for PBXNativeTarget "KloudyTests" */;
 			buildPhases = (
-				D7CDE852B028B515A05D1F05 /* [CP] Check Pods Manifest.lock */,
 				8BC8F74929011D0800EF83AE /* Sources */,
 				8BC8F74A29011D0800EF83AE /* Frameworks */,
 				8BC8F74B29011D0800EF83AE /* Resources */,
@@ -935,11 +923,9 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F76729011D0800EF83AE /* Build configuration list for PBXNativeTarget "KloudyUITests" */;
 			buildPhases = (
-				05B8DB0D1AF398524B286AAE /* [CP] Check Pods Manifest.lock */,
 				8BC8F75329011D0800EF83AE /* Sources */,
 				8BC8F75429011D0800EF83AE /* Frameworks */,
 				8BC8F75529011D0800EF83AE /* Resources */,
-				9DC14AE3169D577C34355371 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -955,7 +941,6 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 8BC8F82129011E3400EF83AE /* Build configuration list for PBXNativeTarget "kloudyWidgetExtension" */;
 			buildPhases = (
-				293981009B951B10D241A625 /* [CP] Check Pods Manifest.lock */,
 				8BC8F80B29011E3300EF83AE /* Sources */,
 				8BC8F80C29011E3300EF83AE /* Frameworks */,
 				8BC8F80D29011E3300EF83AE /* Resources */,
@@ -1005,6 +990,13 @@
 				ko,
 			);
 			mainGroup = 8BC8F72B29011D0700EF83AE;
+			packageReferences = (
+				E0FEB48A29628B5F006F1714 /* XCRemoteSwiftPackageReference "Charts" */,
+				E0FEB48D29628B6F006F1714 /* XCRemoteSwiftPackageReference "lottie-ios" */,
+				E0FEB49029628B82006F1714 /* XCRemoteSwiftPackageReference "RxSwift" */,
+				E0FEB49729628B8F006F1714 /* XCRemoteSwiftPackageReference "SnapKit" */,
+				E0FEB49A29628BA5006F1714 /* XCRemoteSwiftPackageReference "CHIPageControl" */,
+			);
 			productRefGroup = 8BC8F73529011D0700EF83AE /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -1086,131 +1078,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
-
-/* Begin PBXShellScriptBuildPhase section */
-		05B8DB0D1AF398524B286AAE /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Kloudy-KloudyUITests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		1224E4DC613C7963D5F54F87 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Kloudy-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		293981009B951B10D241A625 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-kloudyWidgetExtension-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		5E5E4841313882CDEA55E7E4 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kloudy/Pods-Kloudy-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kloudy/Pods-Kloudy-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kloudy/Pods-Kloudy-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9DC14AE3169D577C34355371 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Kloudy-KloudyUITests/Pods-Kloudy-KloudyUITests-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		D7CDE852B028B515A05D1F05 /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-KloudyTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		8BC8F73029011D0700EF83AE /* Sources */ = {
@@ -1519,7 +1386,6 @@
 		};
 		8BC8F76229011D0800EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 93E74CA68149D093A244D2AC /* Pods-Kloudy.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1558,7 +1424,6 @@
 		};
 		8BC8F76329011D0800EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = AEDA0E05AEF8E2B40A24AD54 /* Pods-Kloudy.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
@@ -1597,7 +1462,6 @@
 		};
 		8BC8F76529011D0800EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 08F092CB60A0B6FEC442CFF7 /* Pods-KloudyTests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1618,7 +1482,6 @@
 		};
 		8BC8F76629011D0800EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 184C398517CDBC60968BFCAE /* Pods-KloudyTests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
@@ -1639,7 +1502,6 @@
 		};
 		8BC8F76829011D0800EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 0218FF489808FE48FFEA57A9 /* Pods-Kloudy-KloudyUITests.debug.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1658,7 +1520,6 @@
 		};
 		8BC8F76929011D0800EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DD2C0539983A843A9EE660F6 /* Pods-Kloudy-KloudyUITests.release.xcconfig */;
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
@@ -1677,7 +1538,6 @@
 		};
 		8BC8F82229011E3400EF83AE /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 10CCD35D32A3178C668CB51D /* Pods-kloudyWidgetExtension.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1709,7 +1569,6 @@
 		};
 		8BC8F82329011E3400EF83AE /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = F42FC017813189015D164C2B /* Pods-kloudyWidgetExtension.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
@@ -1788,6 +1647,87 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		E0FEB48A29628B5F006F1714 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		E0FEB48D29628B6F006F1714 /* XCRemoteSwiftPackageReference "lottie-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/airbnb/lottie-ios.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.0;
+			};
+		};
+		E0FEB49029628B82006F1714 /* XCRemoteSwiftPackageReference "RxSwift" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ReactiveX/RxSwift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.0.0;
+			};
+		};
+		E0FEB49729628B8F006F1714 /* XCRemoteSwiftPackageReference "SnapKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SnapKit/SnapKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		E0FEB49A29628BA5006F1714 /* XCRemoteSwiftPackageReference "CHIPageControl" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ChiliLabs/CHIPageControl.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.2.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		E0FEB48B29628B5F006F1714 /* Charts */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB48A29628B5F006F1714 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = Charts;
+		};
+		E0FEB48E29628B6F006F1714 /* Lottie */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB48D29628B6F006F1714 /* XCRemoteSwiftPackageReference "lottie-ios" */;
+			productName = Lottie;
+		};
+		E0FEB49129628B82006F1714 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB49029628B82006F1714 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		E0FEB49329628B82006F1714 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB49029628B82006F1714 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		E0FEB49529628B82006F1714 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB49029628B82006F1714 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		E0FEB49829628B8F006F1714 /* SnapKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB49729628B8F006F1714 /* XCRemoteSwiftPackageReference "SnapKit" */;
+			productName = SnapKit;
+		};
+		E0FEB49B29628BA5006F1714 /* CHIPageControl */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = E0FEB49A29628BA5006F1714 /* XCRemoteSwiftPackageReference "CHIPageControl" */;
+			productName = CHIPageControl;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8BC8F77129011DB100EF83AE /* Kloudy.xcdatamodeld */ = {
